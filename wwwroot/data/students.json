@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 2,
+    "Email": "dhvani@gmail.com",
+    "Password": "dhvani@123",
+    "Name": "dhvani",
+    "Age": 18,
+    "Course": "BSCIT"
+  },
+  {
+    "Id": 3,
+    "Email": "charmi@gmail.com",
+    "Password": "charmi@123",
+    "Name": "charmi",
+    "Age": 21,
+    "Course": "BCA"
+  }
+]

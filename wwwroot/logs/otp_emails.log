@@ -1,0 +1,39 @@
+﻿
+[2026-01-02 18:00:32] To: dhvani@gmail.com | OTP: 2298
+[2026-01-02 18:02:47] To: dhvani@gmail.com | OTP: 1163
+[2026-01-02 18:05:17] To: dhvani@gmail.com | OTP: 6978
+[2026-01-02 18:08:25] To: dhvani@gmail.com | OTP: 8773
+[2026-01-05 12:58:55] To: charmi@gmail.com | OTP: 659630
+[2026-01-05 13:00:18] To: charmimarakana@gmail.com | OTP: 459919
+[2026-01-05 14:09:56] To: charmi@gmail.com | OTP: 916476
+[2026-01-05 14:21:54] To: charmi@gmail.com | OTP: 775303
+[2026-01-05 14:34:36] To: charmimarakana@gmail.com | OTP: 951486
+[2026-01-05 14:39:07] To: charmimarakana@gmail.com | OTP: 229781
+[ERROR] Failed to send email to charmimarakana@gmail.com: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+[2026-01-05 14:43:25] To: charmimarakana@gmail.com | OTP: 539530
+[2026-01-05 14:53:35] To: charmimarakana@gmail.com | OTP: 454319
+[2026-01-05 15:10:05] To: chamimarakana@gmail.com | OTP: 494802
+[2026-01-05 15:17:42] To: charmimarakana@gmail.com | OTP: 496926
+[2026-01-05 15:18:24] To: charmimarakana@gmail.com | OTP: 854720
+[2026-01-05 15:34:50] To: charmimarakana@gmail.com | OTP: 606943
+[2026-01-05 16:04:55] To: charmimarakana@gmail.com | OTP: 255465
+[2026-01-05 16:06:51] To: charmimarakana@gmail.com | OTP: 536645
+[2026-01-05 16:31:13] To: dhvanibutani09@gmail.com | OTP: 736713
+[2026-01-05 16:31:49] To: dhvanibutani09@gmail.com | OTP: 419534
+[2026-01-05 16:36:08] To: charmimarakana@gmail.com | OTP: 810150
+[2026-01-05 17:42:17] To: charmimarakana@gmail.com | OTP: 273275
+[2026-01-05 17:56:40] To: charmimarakana@gmail.com | OTP: 405673
+[2026-01-05 18:03:34] To: charmimarakana@gmail.com | OTP: 645247
+[2026-01-05 18:04:41] To: charmimarakana@gmail.com | OTP: 988588
+[2026-01-05 18:09:44] To: charmimarakana@gmail.com | OTP: 948542
+[2026-01-05 18:10:51] To: charmimarakana@gmail.com | OTP: 289448
+[2026-01-05 18:37:15] To: charmimarakana@gmail.com | OTP: 287759
+[ERROR] Failed to send email to charmimarakana@gmail.com: Failure sending mail.
+[2026-01-05 18:39:18] To: charmimarakana@gmail.com | OTP: 789080
+[ERROR] Failed to send email to charmimarakana@gmail.com: Failure sending mail.
+[2026-01-05 18:43:11] To: charmimarakana@gmail.com | OTP: 446604
+[2026-01-05 18:43:57] To: charmimarakana@gmail.com | OTP: 145499
+[2026-01-06 13:08:10] To: charmimarakana@gmail.com | OTP: 525115
+[2026-01-06 13:12:38] To: testuser@example.com | OTP: 845487
+[2026-01-06 13:14:42] To: testuser@example.com | OTP: 688153
+[2026-01-06 13:21:00] To: testuser2@example.com | OTP: 367803

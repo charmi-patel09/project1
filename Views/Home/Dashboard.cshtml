@@ -1,0 +1,362 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-container">
+    <div class="welcome-header">
+        <h1>Welcome back, @(Context.Session.GetString("AdminUser") ?? Context.Session.GetString("StudentUser") ??
+            "User")!</h1>
+        <p>Here's what's happening today.</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Weather Card -->
+        <div class="dashboard-card weather-card">
+            <div class="card-header">
+                <h3><i class="fas fa-cloud-sun"></i> Weather Details</h3>
+            </div>
+            <div class="card-body">
+                <div class="weather-search">
+                    <input type="text" id="cityInput" placeholder="Enter city name..." class="form-control">
+                    <button onclick="getWeather()" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                </div>
+                <div id="weatherResult" class="weather-info">
+                    <div class="loading">Loading weather...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Currency Converter Card -->
+        <div class="dashboard-card currency-card">
+            <div class="card-header">
+                <h3><i class="fas fa-money-bill-transfer"></i> Currency Conversion</h3>
+            </div>
+            <div class="card-body">
+                <div class="converter-box">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" id="amountInput" value="1" class="form-control">
+                    </div>
+                    <div class="currency-selectors">
+                        <div class="form-group">
+                            <label>From</label>
+                            <select id="fromCurrency" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>To</label>
+                            <select id="toCurrency" class="form-control"></select>
+                        </div>
+                    </div>
+                    <button onclick="convertCurrency()" class="btn btn-success btn-block mt-3 w-100">Convert</button>
+                    <div id="currencyResult" class="conversion-result mt-3">
+                        <span class="result-text">---</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time Conversion Card -->
+        <div class="dashboard-card time-card">
+            <div class="card-header">
+                <h3><i class="fas fa-clock"></i> Time Conversion</h3>
+            </div>
+            <div class="card-body">
+                <div class="time-box">
+                    <div class="current-time-section">
+                        <label>Your Local Time</label>
+                        <div id="localTime" class="time-display">--:--:--</div>
+                    </div>
+                    <hr>
+                    <div class="time-convert-section">
+                        <div class="form-group">
+                            <label>Target Timezone</label>
+                            <select id="timezoneSelect" class="form-control" onchange="updateConvertedTime()">
+                                <option value="UTC">UTC (Universal Time)</option>
+                                <option value="America/New_York">New York (EST/EDT)</option>
+                                <option value="Europe/London">London (GMT/BST)</option>
+                                <option value="Asia/Tokyo">Tokyo (JST)</option>
+                                <option value="Asia/Kolkata" selected>Mumbai (IST)</option>
+                                <option value="Australia/Sydney">Sydney (AEST)</option>
+                                <option value="Europe/Paris">Paris (CET/CEST)</option>
+                                <option value="Asia/Dubai">Dubai (GST)</option>
+                            </select>
+                        </div>
+                        <div class="converted-result mt-3">
+                            <div id="convertedTime" class="time-display secondary">--:--:--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --text-color: #2d3436;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-container {
+        padding: 20px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .welcome-header {
+        margin-bottom: 30px;
+    }
+
+    .welcome-header h1 {
+        font-weight: 800;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.5rem;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+    }
+
+    .dashboard-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: var(--shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        border-bottom: 2px solid #f1f1f1;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
+    .card-header h3 {
+        margin: 0;
+        font-size: 1.4rem;
+        color: #4834d4;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Weather Specific Styles */
+    .weather-search {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .weather-info {
+        text-align: center;
+        padding: 20px;
+        background: #f8faff;
+        border-radius: 15px;
+    }
+
+    .weather-temp {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #2d3436;
+    }
+
+    .weather-city {
+        font-size: 1.2rem;
+        color: #636e72;
+        margin-bottom: 10px;
+    }
+
+    .weather-desc {
+        text-transform: capitalize;
+        font-weight: 500;
+        color: #0984e3;
+    }
+
+    /* Currency Specific Styles */
+    .currency-selectors {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .conversion-result {
+        background: #eeefff;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        border: 1px dashed #667eea;
+    }
+
+    .result-text {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #4834d4;
+    }
+
+    /* Time Specific Styles */
+    .time-display {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2d3436;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .time-display.secondary {
+        color: #6c5ce7;
+        font-size: 1.8rem;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1.5px solid #dfe6e9;
+        padding: 10px 15px;
+    }
+
+    .btn {
+        border-radius: 10px;
+        font-weight: 600;
+        padding: 10px 20px;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // --- WEATHER LOGIC ---
+        async function getWeather(city = 'London') {
+            const resultDiv = document.getElementById('weatherResult');
+            const cityInput = document.getElementById('cityInput').value;
+            const searchCity = cityInput || city;
+
+            try {
+                // Using Open-Meteo for Geocoding first
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchCity}&count=1&language=en&format=json`);
+                const geoData = await geoRes.json();
+
+                if (!geoData.results || geoData.results.length === 0) {
+                    resultDiv.innerHTML = '<div class="text-danger">City not found</div>';
+                    return;
+                }
+
+                const { latitude, longitude, name, country } = geoData.results[0];
+
+                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+                const weatherData = await weatherRes.json();
+
+                const temp = weatherData.current_weather.temperature;
+                const code = weatherData.current_weather.weathercode;
+
+                // Map weather codes to descriptions (Simplified)
+                const weatherMap = {
+                    0: 'Clear sky',
+                    1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+                    45: 'Fog', 48: 'Depositing rime fog',
+                    51: 'Light drizzle', 53: 'Moderate drizzle', 55: 'Dense drizzle',
+                    61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
+                    71: 'Slight snow', 73: 'Moderate snow', 75: 'Heavy snow',
+                    95: 'Thunderstorm'
+                };
+
+                const desc = weatherMap[code] || 'Unknown';
+                const iconClass = code === 0 ? 'fa-sun' : code < 3 ? 'fa-cloud-sun' : 'fa-cloud';
+
+                resultDiv.innerHTML = `
+                        <div class="weather-city">${name}, ${country}</div>
+                        <div class="weather-temp">${temp}°C</div>
+                        <div class="weather-desc"><i class="fas ${iconClass}"></i> ${desc}</div>
+                    `;
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="text-danger">Failed to fetch weather</div>';
+            }
+        }
+
+        // --- CURRENCY LOGIC ---
+        let rates = {};
+        async function initCurrency() {
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/USD');
+                const data = await res.json();
+                rates = data.rates;
+
+                const fromSelect = document.getElementById('fromCurrency');
+                const toSelect = document.getElementById('toCurrency');
+
+                const currencies = Object.keys(rates);
+                currencies.forEach(cur => {
+                    const opt1 = new Option(cur, cur);
+                    const opt2 = new Option(cur, cur);
+                    fromSelect.add(opt1);
+                    toSelect.add(opt2);
+                });
+
+                fromSelect.value = 'USD';
+                toSelect.value = 'INR';
+            } catch (error) {
+                console.error('Currency init failed', error);
+            }
+        }
+
+        function convertCurrency() {
+            const amount = document.getElementById('amountInput').value;
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+            const resultSpan = document.getElementById('currencyResult');
+
+            if (!rates[from] || !rates[to]) return;
+
+            const converted = (amount / rates[from]) * rates[to];
+            resultSpan.innerHTML = `<span class="result-text">${amount} ${from} = ${converted.toFixed(2)} ${to}</span>`;
+        }
+
+        // --- TIME LOGIC ---
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('localTime').innerText = now.toLocaleTimeString();
+            updateConvertedTime();
+        }
+
+        function updateConvertedTime() {
+            const timezone = document.getElementById('timezoneSelect').value;
+            const now = new Date();
+            const options = {
+                timeZone: timezone,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            const convertedStr = new Intl.DateTimeFormat('en-US', options).format(now);
+            document.getElementById('convertedTime').innerText = convertedStr;
+        }
+
+        // Initialize
+        getWeather();
+        initCurrency();
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+}
