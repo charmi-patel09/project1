@@ -95,11 +95,11 @@ namespace JsonCrudApp.Controllers
                     if (purpose == "Registration")
                     {
                         // Finalize Registration
-                        _authService.RegisterUser(email, password);
+                        _authService.RegisterStudent(email, password);
 
                         // Auto-login after verification
-                        HttpContext.Session.SetString("AdminUser", email);
-                        TempData["SuccessMessage"] = "Email verified and account created successfully!";
+                        HttpContext.Session.SetString("StudentUser", email);
+                        TempData["SuccessMessage"] = "Student account created successfully!";
                         return RedirectToAction("Dashboard", "Home");
                     }
 

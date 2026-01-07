@@ -102,10 +102,29 @@ namespace JsonCrudApp.Services
             return true;
         }
 
+        public bool RegisterStudent(string email, string password)
+        {
+            if (UserExists(email)) return false;
+
+            var student = new Student
+            {
+                Email = email,
+                Password = HashPassword(password),
+                Name = "New Student",
+                Age = 18,
+                Course = "General"
+            };
+            _studentService.AddStudent(student);
+            return true;
+        }
+
         public bool UserExists(string email)
         {
             var users = GetAdminCredentials();
-            return users.Any(u => u.Email == email);
+            if (users.Any(u => u.Email == email)) return true;
+
+            var students = _studentService.GetStudents();
+            return students.Any(s => s.Email == email);
         }
 
         public AdminUser? GetUserByEmail(string email)

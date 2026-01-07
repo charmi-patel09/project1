@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Fiscal Exchange - Worldwide Currency Converter</title>
+    <meta name="description"
+        content="Convert currencies between all countries and major cities worldwide with real-time exchange rates">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/currency-exchange.css">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <h1>Global Fiscal Exchange</h1>
+            </div>
+            <p class="subtitle">Real-time currency conversion for 195+ countries and 500+ major cities worldwide</p>
+        </header>
+
+        <main class="exchange-container">
+            <div class="exchange-card">
+                <!-- From Section -->
+                <div class="currency-section from-section">
+                    <label for="from-select" class="section-label">From</label>
+                    <div class="select-wrapper">
+                        <div class="flag-display" id="from-flag">🌍</div>
+                        <select id="from-select" class="currency-select">
+                            <option value="">Select country or city...</option>
+                        </select>
+                    </div>
+                    <div class="currency-info" id="from-info">
+                        <span class="currency-code"></span>
+                        <span class="location-name"></span>
+                    </div>
+                    <div class="amount-wrapper">
+                        <input type="number" id="from-amount" class="amount-input" value="1000" min="0" step="0.01"
+                            placeholder="Enter amount">
+                        <span class="currency-symbol" id="from-symbol"></span>
+                    </div>
+                </div>
+
+                <!-- Swap Button -->
+                <div class="swap-container">
+                    <button class="swap-button" id="swap-btn" aria-label="Swap currencies">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 16V4M7 4L3 8M7 4L11 8" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17 8V20M17 20L21 16M17 20L13 16" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- To Section -->
+                <div class="currency-section to-section">
+                    <label for="to-select" class="section-label">To</label>
+                    <div class="select-wrapper">
+                        <div class="flag-display" id="to-flag">🌍</div>
+                        <select id="to-select" class="currency-select">
+                            <option value="">Select country or city...</option>
+                        </select>
+                    </div>
+                    <div class="currency-info" id="to-info">
+                        <span class="currency-code"></span>
+                        <span class="location-name"></span>
+                    </div>
+                    <div class="amount-wrapper">
+                        <input type="number" id="to-amount" class="amount-input" readonly
+                            placeholder="Converted amount">
+                        <span class="currency-symbol" id="to-symbol"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exchange Rate Display -->
+            <div class="rate-display" id="rate-display">
+                <div class="rate-info">
+                    <span class="rate-label">Exchange Rate</span>
+                    <span class="rate-value" id="rate-value">Select currencies to see rate</span>
+                </div>
+                <div class="last-updated" id="last-updated"></div>
+            </div>
+
+            <!-- Convert Button -->
+            <button class="convert-button" id="convert-btn">
+                <span class="button-text">Convert Currency</span>
+                <div class="button-loader"></div>
+            </button>
+
+            <!-- Error Display -->
+            <div class="error-message" id="error-message"></div>
+
+            <!-- Loading Indicator -->
+            <div class="loading-overlay" id="loading-overlay">
+                <div class="loader"></div>
+                <p>Fetching exchange rates...</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 Global Fiscal Exchange. Powered by real-time currency data.</p>
+        </footer>
+    </div>
+
+    <script src="js/currency-exchange.js"></script>
+</body>
+
+</html>
