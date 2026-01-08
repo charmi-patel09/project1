@@ -35,7 +35,7 @@
                             <i class="fas fa-satellite"></i>
                         </div>
                         <div class="title-text">
-                            <h3>Atmospheric Intelligence</h3>
+                            <h3>weather</h3>
                             <p>Deep-space meteorological telemetry</p>
                         </div>
                     </div>
@@ -53,13 +53,7 @@
                         </div>
                     </div>
 
-                    <div class="directory-filter">
-                        <div class="search-field mini">
-                            <i class="fas fa-filter"></i>
-                            <input type="text" id="directorySearch" placeholder="Filter global network nodes..."
-                                oninput="filterNodes()">
-                        </div>
-                    </div>
+
 
                     <div class="hub-display">
                         <div id="weatherResult" class="primary-result">
@@ -88,7 +82,7 @@
                             <i class="fas fa-vault"></i>
                         </div>
                         <div class="title-text">
-                            <h3>Fiscal Exchange</h3>
+                            <h3>currency exchange</h3>
                             <p>Global valuation protocols</p>
                         </div>
                     </div>
@@ -130,7 +124,7 @@
                             <i class="fas fa-clock"></i>
                         </div>
                         <div class="title-text">
-                            <h3>Chronos Sync</h3>
+                            <h3>TimeZone</h3>
                             <p>Universal time coordination</p>
                         </div>
                     </div>
@@ -160,715 +154,7 @@
     </div>
 </div>
 
-<style>
-    :root {
-        --bg-obsidian: #080a0f;
-        --bg-surface: #11141d;
-        --bg-card: #191d28;
-        --border-dim: rgba(255, 255, 255, 0.05);
-        --text-pure: #ffffff;
-        --text-dim: #94a3b8;
-        --text-muted: #64748b;
-        --accent-sky: #38bdf8;
-        --accent-emerald: #10b981;
-        --accent-indigo: #6366f1;
-        --font-main: 'Inter', system-ui, sans-serif;
-        --font-head: 'Plus Jakarta Sans', sans-serif;
-        --shadow-soft: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-
-    .dashboard-shell {
-        min-height: 100vh;
-        background-color: var(--bg-obsidian);
-        background-image:
-            radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
-        color: var(--text-pure);
-        font-family: var(--font-main);
-        padding: 48px;
-        margin: -24px;
-        box-sizing: border-box;
-    }
-
-    .dashboard-content {
-        max-width: 1440px;
-        margin: 0 auto;
-    }
-
-    /* Header */
-    .main-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: 56px;
-    }
-
-    .status-chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.65rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: var(--accent-emerald);
-        background: rgba(16, 185, 129, 0.1);
-        padding: 4px 12px;
-        border-radius: 100px;
-        margin-bottom: 12px;
-    }
-
-    .pulse-dot {
-        width: 6px;
-        height: 6px;
-        background: currentColor;
-        border-radius: 50%;
-        animation: pulse-glow 2s infinite;
-    }
-
-    @@keyframes pulse-glow {
-        0% {
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
-        }
-
-        70% {
-            box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
-        }
-
-        100% {
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-        }
-    }
-
-    .header-brief h1 {
-        font-family: var(--font-head);
-        font-size: 2.75rem;
-        margin: 0;
-        letter-spacing: -0.04em;
-    }
-
-    .header-brief p {
-        color: var(--text-dim);
-        margin: 8px 0 0 0;
-        font-size: 1.1rem;
-    }
-
-    .accent-text {
-        color: var(--accent-sky);
-        font-weight: 600;
-    }
-
-    .header-chrono {
-        text-align: right;
-    }
-
-    .chrono-date {
-        font-weight: 600;
-        font-size: 1.25rem;
-    }
-
-    .chrono-time {
-        color: var(--text-muted);
-        font-size: 1rem;
-        margin-top: 4px;
-        font-variant-numeric: tabular-nums;
-    }
-
-    /* Layout Grids */
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: 1fr 420px;
-        gap: 32px;
-    }
-
-    /* Common Card Styles */
-    section {
-        background: var(--bg-surface);
-        border: 1px solid var(--border-dim);
-        border-radius: 28px;
-        padding: 32px;
-        box-shadow: var(--shadow-soft);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .card-title {
-        display: flex;
-        gap: 20px;
-        align-items: center;
-        margin-bottom: 32px;
-    }
-
-    .title-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-    }
-
-    .sky-glow {
-        background: rgba(56, 189, 248, 0.1);
-        color: var(--accent-sky);
-    }
-
-    .emerald-glow {
-        background: rgba(16, 185, 129, 0.1);
-        color: var(--accent-emerald);
-    }
-
-    .indigo-glow {
-        background: rgba(99, 102, 241, 0.1);
-        color: var(--accent-indigo);
-    }
-
-    .card-title h3 {
-        font-family: var(--font-head);
-        font-size: 1.35rem;
-        margin: 0;
-    }
-
-    .card-title p {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        margin: 4px 0 0 0;
-    }
-
-    /* Controls & Inputs */
-    .hub-controls {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 24px;
-    }
-
-    .search-field {
-        position: relative;
-        flex: 1;
-    }
-
-    .search-field i {
-        position: absolute;
-        left: 18px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-muted);
-    }
-
-    .search-field input {
-        width: 100%;
-        background: var(--bg-obsidian);
-        border: 1px solid var(--border-dim);
-        border-radius: 14px;
-        padding: 16px 16px 16px 52px;
-        color: white;
-        font-family: inherit;
-        transition: all 0.3s;
-    }
-
-    .search-field input:focus {
-        outline: none;
-        border-color: var(--accent-sky);
-        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
-    }
-
-    .action-group {
-        display: flex;
-        gap: 8px;
-    }
-
-    .btn-primary {
-        background: var(--accent-sky);
-        color: #000;
-        border: none;
-        border-radius: 14px;
-        padding: 0 28px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .btn-icon {
-        background: var(--bg-card);
-        color: white;
-        border: 1px solid var(--border-dim);
-        border-radius: 14px;
-        width: 56px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .btn-primary:hover,
-    .btn-icon:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.1);
-    }
-
-    .directory-filter {
-        margin-bottom: 24px;
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 14px;
-        border: 1px solid var(--border-dim);
-    }
-
-    .search-field.mini i {
-        left: 14px;
-        font-size: 0.8rem;
-    }
-
-    .search-field.mini input {
-        padding: 12px 12px 12px 40px;
-        font-size: 0.85rem;
-        border-radius: 10px;
-    }
-
-    /* Weather Hub Specifics */
-    .hub-display {
-        display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 32px;
-        flex: 1;
-    }
-
-    .primary-result {
-        background: var(--bg-obsidian);
-        border-radius: 20px;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        justify-content: center;
-        border: 1px solid var(--border-dim);
-    }
-
-    .temp-hero {
-        font-family: var(--font-head);
-        font-size: 6.5rem;
-        font-weight: 800;
-        line-height: 1;
-        margin: 20px 0;
-        color: var(--accent-sky);
-    }
-
-    .loc-label {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--text-dim);
-    }
-
-    .weather-desc {
-        font-size: 1.2rem;
-        color: var(--text-muted);
-        margin-bottom: 40px;
-        text-transform: capitalize;
-    }
-
-    .stats-deep {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-        width: 100%;
-    }
-
-    .stat-box {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 16px;
-        align-items: flex-start;
-    }
-
-    .stat-box i {
-        color: var(--accent-sky);
-        font-size: 1.2rem;
-    }
-
-    .stat-box label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        letter-spacing: 1px;
-    }
-
-    .stat-box b {
-        font-size: 1.1rem;
-        color: var(--text-pure);
-    }
-
-    .forecast-panel {
-        margin-top: 48px;
-        width: 100%;
-        border-top: 1px solid var(--border-dim);
-        padding-top: 32px;
-    }
-
-    .forecast-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-    }
-
-    .forecast-node {
-        padding: 16px;
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.02);
-        text-align: center;
-        transition: background 0.2s;
-    }
-
-    .forecast-node:hover {
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .forecast-node span {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        font-weight: 600;
-    }
-
-    .forecast-node i {
-        display: block;
-        margin: 12px 0;
-        font-size: 1.5rem;
-        color: var(--accent-sky);
-    }
-
-    .forecast-node b {
-        font-size: 1rem;
-        display: block;
-    }
-
-    /* Node Directory */
-    .world-index {
-        background: var(--bg-obsidian);
-        border-radius: 20px;
-        padding: 24px;
-        border: 1px solid var(--border-dim);
-        max-height: 700px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .index-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-    }
-
-    .index-header label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--text-muted);
-        font-weight: 800;
-    }
-
-    .count-badge {
-        font-size: 0.65rem;
-        background: var(--accent-sky);
-        color: #000;
-        padding: 2px 10px;
-        border-radius: 20px;
-        font-weight: 800;
-    }
-
-    .index-scrollbox {
-        flex: 1;
-        overflow-y: auto;
-        padding-right: 8px;
-    }
-
-    .index-scrollbox::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    .index-scrollbox::-webkit-scrollbar-thumb {
-        background: var(--border-dim);
-        border-radius: 10px;
-    }
-
-    .node-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px;
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.02);
-        cursor: pointer;
-        transition: all 0.2s;
-        margin-bottom: 12px;
-    }
-
-    .node-item:hover {
-        background: rgba(255, 255, 255, 0.06);
-        transform: translateX(4px);
-    }
-
-    .node-item h4 {
-        margin: 0;
-        font-size: 0.95rem;
-        font-weight: 600;
-    }
-
-    .node-item span {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-    }
-
-    .node-data {
-        text-align: right;
-    }
-
-    .node-data b {
-        font-size: 1.1rem;
-        color: var(--accent-sky);
-        font-family: var(--font-head);
-    }
-
-    .node-data i {
-        font-size: 1rem;
-        display: block;
-        margin-bottom: 4px;
-        color: var(--accent-sky);
-    }
-
-    /* Operational Sidebar */
-    .grid-secondary {
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-    }
-
-    .tool-body {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-    }
-
-    .form-row {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .form-row label {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-    }
-
-    .modern-input,
-    .modern-select {
-        background: var(--bg-obsidian);
-        border: 1px solid var(--border-dim);
-        border-radius: 12px;
-        padding: 14px;
-        color: white;
-        font-family: inherit;
-        font-size: 0.95rem;
-    }
-
-    .modern-select:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
-        align-items: flex-end;
-        gap: 12px;
-    }
-
-    .swap-indicator {
-        height: 48px;
-        display: flex;
-        align-items: center;
-        color: var(--text-muted);
-    }
-
-    .btn-emerald {
-        background: var(--accent-emerald);
-        color: #000;
-        border: none;
-        padding: 18px;
-        border-radius: 14px;
-        font-weight: 800;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 1rem;
-    }
-
-    .btn-emerald:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 24px rgba(16, 185, 129, 0.2);
-    }
-
-    .valuation-output {
-        background: rgba(16, 185, 129, 0.05);
-        border: 1px dashed rgba(16, 185, 129, 0.3);
-        padding: 24px;
-        border-radius: 18px;
-        text-align: center;
-        font-weight: 800;
-        color: var(--accent-emerald);
-        font-size: 1.25rem;
-    }
-
-    .fiscal-directory {
-        margin-top: 24px;
-        border-top: 1px solid var(--border-dim);
-        padding-top: 20px;
-    }
-
-    .fiscal-directory label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        font-weight: 800;
-        letter-spacing: 1px;
-        margin-bottom: 12px;
-        display: block;
-    }
-
-    .reference-scroll {
-        max-height: 200px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .reference-scroll::-webkit-scrollbar {
-        width: 3px;
-    }
-
-    .reference-scroll::-webkit-scrollbar-thumb {
-        background: var(--border-dim);
-    }
-
-    .ref-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 12px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 8px;
-        font-size: 0.8rem;
-    }
-
-    .ref-item b {
-        color: var(--accent-emerald);
-    }
-
-    /* Chrono Core */
-    .digits-hero {
-        font-family: var(--font-head);
-        font-size: 3.75rem;
-        font-weight: 800;
-        color: var(--accent-sky);
-        letter-spacing: -3px;
-        line-height: 1;
-    }
-
-    .digits-accent {
-        font-family: var(--font-head);
-        font-size: 2.75rem;
-        font-weight: 700;
-        color: var(--accent-indigo);
-        margin-top: 12px;
-        letter-spacing: -2px;
-    }
-
-    .zone-sync {
-        margin-top: 24px;
-        border-top: 1px solid var(--border-dim);
-        padding-top: 32px;
-    }
-
-    .loading-state {
-        animation: pulse-text 2s infinite;
-        color: var(--text-muted);
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-
-    @@keyframes pulse-text {
-
-        0%,
-        100% {
-            opacity: 0.4;
-        }
-
-        50% {
-            opacity: 0.8;
-        }
-    }
-
-    /* Animation Utilities */
-    .slide-in {
-        animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @@keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Media Queries */
-    @@media (max-width: 1400px) {
-        .dashboard-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .grid-secondary {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    @@media (max-width: 1000px) {
-        .hub-display {
-            grid-template-columns: 1fr;
-        }
-
-        .world-index {
-            order: 2;
-        }
-
-        .primary-result {
-            order: 1;
-        }
-    }
-
-    @@media(max-width: 800px) {
-        .grid-secondary {
-            grid-template-columns: 1fr;
-        }
-
-        .dashboard-shell {
-            padding: 24px;
-        }
-
-        .header-brief h1 {
-            font-size: 2rem;
-        }
-    }
-</style>
+<link rel="stylesheet" href="~/css/dashboard.css" />
 
 @section Scripts {
     <script>
@@ -950,12 +236,12 @@
                 el.className = 'node-item slide-in';
                 el.onclick = () => fetchWeatherDeep(item.lat, item.lon, `${item.name}, ${item.cc}`);
                 el.innerHTML = `
-                        <div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
-                        <div class="node-data">
-                            <i class="fas ${getIcon(item.weather.weather_code)}"></i>
-                            <b>${Math.round(item.weather.temperature_2m)}°C</b>
-                        </div>
-                    `;
+                                <div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
+                                <div class="node-data">
+                                    <i class="fas ${getIcon(item.weather.weather_code)}"></i>
+                                    <b>${Math.round(item.weather.temperature_2m)}°C</b>
+                                </div>
+                            `;
                 container.appendChild(el);
             });
         }
@@ -1005,7 +291,7 @@
                 const daily = data.daily;
 
                 let forecast = '';
-                for (let i = 1; i <= 4; i++) {
+                for (let i = 0; i < 7; i++) {
                     const d = new Date(daily.time[i]);
                     forecast += `
                                 <div class="forecast-node">
@@ -1017,21 +303,21 @@
                 }
 
                 display.innerHTML = `
-                            <div class="loc-label slide-in">${label}</div>
-                            <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
-                            <div class="weather-desc slide-in">${weatherMap[cur.weather_code] || 'Optimized Atmosphere'}</div>
-                            <div class="stats-deep slide-in">
-                                <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
-                                <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
-                                <div class="stat-box"><i class="fas fa-sun"></i> <label>UV Peak</label> <b>${daily.uv_index_max[0]}</b></div>
-                                <div class="stat-box"><i class="fas fa-gauge"></i> <label>Pressure</label> <b>${Math.round(cur.surface_pressure)} hPa</b></div>
-                                <div class="stat-box"><i class="fas fa-eye"></i> <label>Visibility</label> <b>${(cur.visibility / 1000).toFixed(1)} km</b></div>
-                                <div class="stat-box"><i class="fas fa-cloud-sun"></i> <label>Apparent</label> <b>${Math.round(cur.apparent_temperature)}°</b></div>
-                            </div>
-                            <div class="forecast-panel slide-in">
-                                <div class="forecast-grid">${forecast}</div>
-                            </div>
-                        `;
+                                    <div class="loc-label slide-in">${label}</div>
+                                    <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
+                                    <div class="weather-desc slide-in">${weatherMap[cur.weather_code] || 'Optimized Atmosphere'}</div>
+                                    <div class="stats-deep slide-in">
+                                        <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
+                                        <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
+                                        <div class="stat-box"><i class="fas fa-sun"></i> <label>UV Peak</label> <b>${daily.uv_index_max[0]}</b></div>
+                                        <div class="stat-box"><i class="fas fa-gauge"></i> <label>Pressure</label> <b>${Math.round(cur.surface_pressure)} hPa</b></div>
+                                        <div class="stat-box"><i class="fas fa-eye"></i> <label>Visibility</label> <b>${(cur.visibility / 1000).toFixed(1)} km</b></div>
+                                        <div class="stat-box"><i class="fas fa-cloud-sun"></i> <label>Apparent</label> <b>${Math.round(cur.apparent_temperature)}°</b></div>
+                                    </div>
+                                    <div class="forecast-panel slide-in">
+                                        <div class="forecast-grid">${forecast}</div>
+                                    </div>
+                                `;
             } catch (e) { display.innerHTML = '<div class="text-danger">Satellite Link Failure</div>'; }
         }
 
@@ -1162,10 +448,32 @@
             const display = document.getElementById('currencyResult');
             if (!baseCurrencyRates[f] || !baseCurrencyRates[t]) return;
             const calc = (v / baseCurrencyRates[f]) * baseCurrencyRates[t];
-            display.innerHTML = `${v} ${f} ❱ ${calc.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${t}`;
+            
+            display.innerHTML = `
+                <div class="val-grid">
+                    <div class="val-box">
+                        <div class="val-label">Base</div>
+                        <div class="val-number">
+                            ${v} <span class="val-sub">${f}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="val-divider">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                    <div class="val-box">
+                        <div class="val-label">Target</div>
+                        <div class="val-number highlight">
+                            ${calc.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} 
+                            <span class="val-sub">${t}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        
+
         // --- CHRONOS LOCATION DATA ---
         const cityTimezones = {
             // Africa
@@ -1174,7 +482,7 @@
             'Egypt': 'Africa/Cairo', 'Cairo': 'Africa/Cairo', 'Alexandria': 'Africa/Cairo', 'Giza': 'Africa/Cairo',
             'Kenya': 'Africa/Nairobi', 'Nairobi': 'Africa/Nairobi', 'Mombasa': 'Africa/Nairobi', 'Kisumu': 'Africa/Nairobi',
             'Morocco': 'Africa/Casablanca', 'Casablanca': 'Africa/Casablanca', 'Rabat': 'Africa/Casablanca', 'Marrakech': 'Africa/Casablanca',
-            
+
             // Asia
             'China': 'Asia/Shanghai', 'Beijing': 'Asia/Shanghai', 'Shanghai': 'Asia/Shanghai', 'Guangzhou': 'Asia/Shanghai', 'Shenzhen': 'Asia/Shanghai', 'Hong Kong': 'Asia/Hong_Kong',
             'India': 'Asia/Kolkata', 'Mumbai': 'Asia/Kolkata', 'Delhi': 'Asia/Kolkata', 'Bangalore': 'Asia/Kolkata', 'Hyderabad': 'Asia/Kolkata', 'Chennai': 'Asia/Kolkata', 'Kolkata': 'Asia/Kolkata', 'Pune': 'Asia/Kolkata', 'Ahmedabad': 'Asia/Kolkata',
@@ -1246,7 +554,7 @@
         function initChronosLocations() {
             const select = document.getElementById('timezoneSelect');
             select.innerHTML = '';
-            
+
             // Default UTC
             select.add(new Option(' Universal (UTC)', 'UTC'));
 
@@ -1270,7 +578,7 @@
                 });
             }
             // Set default to Mumbai per user preference or context
-             select.value = 'Asia/Kolkata'; 
+            select.value = 'Asia/Kolkata';
         }
 
         // --- CHRONOS ENGINE ---

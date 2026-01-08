@@ -96,7 +96,6 @@ D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\JsonCrudApp.genruntimeconfig.cache
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\ref\JsonCrudApp.dll
 D:\Antigravity\JsonCrudApp\bin\Debug\net10.0\Data\admin_credentials.json
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\v2947hda20-{0}-nzlcmtka9h-nzlcmtka9h.gz
-D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\yarw8sh6ve-{0}-ub58tax8m3-ub58tax8m3.gz
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\JsonCrudApp.sourcelink.json
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\r4gx7iutpm-{0}-mqp190eezx-mqp190eezx.gz
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\tnzmiypy57-{0}-jza44eex3q-jza44eex3q.gz
@@ -105,3 +104,5 @@ D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\57w1d53ycq-{0}-wzizn64en
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\oazx89tifn-{0}-p7nfzl3sz5-p7nfzl3sz5.gz
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\kjd4alhzwx-{0}-mzcgknvrco-mzcgknvrco.gz
 D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\cyoi3fyq24-{0}-9lqxaed7ff-9lqxaed7ff.gz
+D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\yarw8sh6ve-{0}-oi9ycwlu33-oi9ycwlu33.gz
+D:\Antigravity\JsonCrudApp\obj\Debug\net10.0\compressed\wynoxkcakm-{0}-xm05ljj9yi-xm05ljj9yi.gz
