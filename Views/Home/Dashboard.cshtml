@@ -1,5 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Global Intelligence Dashboard";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["GlobalIntelligenceDashboard"];
+    ViewData["TitleKey"] = "GlobalIntelligenceDashboard";
 }
 
 <link
@@ -13,11 +16,12 @@
             <div class="header-brief">
                 <div class="status-chip">
                     <span class="pulse-dot"></span>
-                    Global Satellite Link Active
+                    <span data-i18n="GlobalSatelliteLinkActive">@Localizer["GlobalSatelliteLinkActive"]</span>
                 </div>
-                <h1>Intelligence Hub</h1>
-                <p>Telemetry for <span class="accent-text">@(Context.Session.GetString("AdminUser") ??
-                        Context.Session.GetString("StudentUser") ?? "Operator")</span>.</p>
+                <h1 data-i18n="IntelligenceHub">@Localizer["IntelligenceHub"]</h1>
+                <p><span data-i18n="TelemetryFor">@Localizer["TelemetryFor"]</span> <span
+                        class="accent-text">@(Context.Session.GetString("AdminUser") ??
+                        Context.Session.GetString("StudentUser") ?? Localizer["Operator"].Value)</span>.</p>
             </div>
             <div class="header-chrono">
                 <div class="chrono-date" id="headerDate">--/--/----</div>
@@ -26,146 +30,269 @@
         </header>
 
         <div class="dashboard-grid">
-            <!-- Left Column: Primary Insights -->
-            <div class="grid-primary">
-                <!-- Atmospheric Intelligence Card -->
-                <section class="mega-card weather-hub">
-                    <div class="card-title">
-                        <div class="title-icon sky-glow">
-                            <i class="fas fa-satellite"></i>
-                        </div>
-                        <div class="title-text">
-                            <h3>weather</h3>
-                            <p>Deep-space meteorological telemetry</p>
-                        </div>
+            <!-- Global Search Hub -->
+            <section class="tool-card global-search-hub">
+                <div class="card-title">
+                    <div class="title-icon cyan-glow">
+                        <i class="fas fa-globe-americas"></i>
                     </div>
-
-                    <div class="hub-controls">
-                        <div class="search-field">
-                            <i class="fas fa-magnifying-glass"></i>
-                            <input type="text" id="cityInput" placeholder="Locate any city or country..."
-                                onkeypress="if(event.key === 'Enter') getWeather()">
-                        </div>
-                        <div class="action-group">
-                            <button onclick="getWeather()" class="btn-primary">Analyze</button>
-                            <button onclick="getCurrentLocation()" class="btn-icon" title="Local coordinates"><i
-                                    class="fas fa-location-crosshairs"></i></button>
-                        </div>
+                    <div class="title-text">
+                        <h3 data-i18n="GlobalSearch">@Localizer["GlobalSearch"]</h3>
+                        <p data-i18n="SearchPlaceholder">@Localizer["SearchPlaceholder"]</p>
                     </div>
+                </div>
 
-
-
-                    <div class="hub-display">
-                        <div id="weatherResult" class="primary-result">
-                            <div class="loading-state">Initialising satellite link...</div>
-                        </div>
-
-                        <div class="world-index">
-                            <div class="index-header">
-                                <label>Live Network Nodes</label>
-                                <span id="nodeCount" class="count-badge">Monitoring...</span>
-                            </div>
-                            <div id="worldWeatherList" class="index-scrollbox">
-                                <!-- JS Populated -->
-                            </div>
-                        </div>
+                <div class="hub-controls">
+                    <div class="search-field">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="globalSearchInput" data-i18n-placeholder="SearchPlaceholder"
+                            placeholder="@Localizer["SearchPlaceholder"]"
+                            onkeypress="if(event.key === 'Enter') searchGlobalIntel()">
                     </div>
-                </section>
-            </div>
-
-            <!-- Right Column: Operational Tools -->
-            <div class="grid-secondary">
-                <!-- Fiscal Exchange Card -->
-                <section class="tool-card currency-hub">
-                    <div class="card-title">
-                        <div class="title-icon emerald-glow">
-                            <i class="fas fa-vault"></i>
-                        </div>
-                        <div class="title-text">
-                            <h3>currency exchange</h3>
-                            <p>Global valuation protocols</p>
-                        </div>
+                    <div class="action-group">
+                        <button onclick="searchGlobalIntel()" class="btn-primary"
+                            data-i18n="Analyze">@Localizer["Analyze"]</button>
                     </div>
+                </div>
 
-                    <div class="tool-body">
+                <div id="globalSearchResult" class="hub-display" style="gap: 12px;">
+                    <!-- Results -->
+                </div>
+            </section>
+
+            <!-- Weather Card -->
+            <section class="tool-card weather-hub">
+                <div class="card-title">
+                    <div class="title-icon sky-glow">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3 data-i18n="Weather">@Localizer["Weather"]</h3>
+                        <p data-i18n="DeepSpaceMeteorologicalTelemetry">@Localizer["DeepSpaceMeteorologicalTelemetry"]
+                        </p>
+                    </div>
+                </div>
+
+                <div class="hub-controls">
+                    <div class="search-field">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <input type="text" id="cityInput" data-i18n-placeholder="LocateAnyCityOrCountry"
+                            placeholder="@Localizer["LocateAnyCityOrCountry"]"
+                            onkeypress="if(event.key === 'Enter') getWeather()">
+                    </div>
+                    <div class="action-group">
+                        <button onclick="getWeather()" class="btn-primary"
+                            data-i18n="Analyze">@Localizer["Analyze"]</button>
+                        <button onclick="getCurrentLocation()" class="btn-icon" title="Local coordinates"><i
+                                class="fas fa-location-crosshairs"></i></button>
+                    </div>
+                </div>
+
+                <div class="hub-display">
+                    <div id="weatherResult" class="primary-result">
+                        <div class="loading-state" data-i18n="InitialisingSatelliteLink">
+                            @Localizer["InitialisingSatelliteLink"]</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fiscal Exchange Card -->
+            <section class="tool-card currency-hub">
+                <div class="card-title">
+                    <div class="title-icon emerald-glow">
+                        <i class="fas fa-vault"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3 data-i18n="CurrencyExchange">@Localizer["CurrencyExchange"]</h3>
+                        <p data-i18n="GlobalValuationProtocols">@Localizer["GlobalValuationProtocols"]</p>
+                    </div>
+                </div>
+
+                <div class="tool-body">
+                    <div class="form-row">
+                        <label data-i18n="TransactionVolume">@Localizer["TransactionVolume"]</label>
+                        <input type="number" id="amountInput" value="1.00" step="0.01" class="modern-input"
+                            oninput="convertCurrency()">
+                    </div>
+                    <div class="form-grid">
                         <div class="form-row">
-                            <label>Transaction Volume</label>
-                            <input type="number" id="amountInput" value="1.00" step="0.01" class="modern-input">
+                            <label data-i18n="BaseLocation">@Localizer["BaseLocation"]</label>
+                            <select id="fromCurrency" class="modern-select" onchange="convertCurrency()"></select>
                         </div>
-                        <div class="form-grid">
-                            <div class="form-row">
-                                <label>Base</label>
-                                <select id="fromCurrency" class="modern-select"></select>
-                            </div>
-                            <div class="swap-indicator"><i class="fas fa-right-left"></i></div>
-                            <div class="form-row">
-                                <label>Target</label>
-                                <select id="toCurrency" class="modern-select"></select>
+                        <div class="swap-indicator"><i class="fas fa-right-left"></i></div>
+                        <div class="form-row">
+                            <label data-i18n="TargetLocation">@Localizer["TargetLocation"]</label>
+                            <select id="toCurrency" class="modern-select" onchange="convertCurrency()"></select>
+                        </div>
+                    </div>
+                    <div class="action-row" style="margin-top: 10px;">
+                        <button onclick="convertCurrency()" class="btn-emerald" style="width: 100%;">
+                            <i class="fas fa-bolt"></i> <span
+                                data-i18n="RefreshValuation">@Localizer["RefreshValuation"]</span>
+                        </button>
+                    </div>
+                    <div class="result-section">
+                        <div class="result-status">
+                            <label class="result-header"
+                                data-i18n="RealTimeFiscalTelemetry">@Localizer["RealTimeFiscalTelemetry"]</label>
+                            <div class="live-tag">
+                                <span class="pulse-dot"></span>
+                                <span data-i18n="Live">@Localizer["Live"]</span>
                             </div>
                         </div>
-                        <button onclick="convertCurrency()" class="btn-emerald">Run Fiscal Valuation</button>
                         <div id="currencyResult" class="valuation-output">
-                            <span class="muted">Awaiting parameters...</span>
+                            <div class="loading-state" data-i18n="InitializingSensorLink">
+                                @Localizer["InitializingSensorLink"]</div>
                         </div>
-
-                        <div class="fiscal-directory" style="display: none;">
-                            <label>Currency Origin Reference</label>
-                            <div id="currencyReferenceList" class="reference-scroll">
-                                <!-- JS Populated -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Chronos Sync Card -->
-                <section class="tool-card chrono-hub">
-                    <div class="card-title">
-                        <div class="title-icon indigo-glow">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="title-text">
-                            <h3>TimeZone</h3>
-                            <p>Universal time coordination</p>
+                        <div class="update-info" id="lastExchangeUpdate">
+                            <span data-i18n="LastSync">@Localizer["LastSync"]</span>: --:--:--
                         </div>
                     </div>
 
-                    <div class="tool-body">
-                        <div class="clock-display">
-                            <label>System Base Time</label>
-                            <div id="localTimeLarge" class="digits-hero">00:00:00</div>
-                        </div>
-                        <div class="zone-sync">
-                            <label>Coordinate Zone</label>
-                            <select id="timezoneSelect" class="modern-select" onchange="updateConvertedTime()">
-                                <option value="UTC">Universal (UTC)</option>
-                                <option value="America/New_York">New York (EDT)</option>
-                                <option value="Europe/London">London (BST)</option>
-                                <option value="Asia/Tokyo">Tokyo (JST)</option>
-                                <option value="Asia/Kolkata" selected>Mumbai (IST)</option>
-                                <option value="Australia/Sydney">Sydney (AEST)</option>
-                                <option value="Asia/Dubai">Dubai (GST)</option>
-                            </select>
-                            <div id="convertedTime" class="digits-accent">00:00:00</div>
+                    <div class="fiscal-directory" style="display: none;">
+                        <label data-i18n="CurrencyOriginReference">@Localizer["CurrencyOriginReference"]</label>
+                        <div id="currencyReferenceList" class="reference-scroll">
+                            <!-- JS Populated -->
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
+
+            <!-- Chronos Sync Card -->
+            <section class="tool-card chrono-hub">
+                <div class="card-title">
+                    <div class="title-icon indigo-glow">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3 data-i18n="TimeZone">@Localizer["TimeZone"]</h3>
+                        <p data-i18n="UniversalTimeCoordination">@Localizer["UniversalTimeCoordination"]</p>
+                    </div>
+                </div>
+
+                <div class="tool-body">
+                    <div class="clock-display">
+                        <label data-i18n="SystemBaseTime">@Localizer["SystemBaseTime"]</label>
+                        <div id="localTimeLarge" class="digits-hero">00:00:00</div>
+                    </div>
+                    <div class="zone-sync">
+                        <label data-i18n="CoordinateZone">@Localizer["CoordinateZone"]</label>
+                        <select id="timezoneSelect" class="modern-select" onchange="updateConvertedTime()">
+                            <option value="UTC" data-i18n="Timezone_UTC">Universal (UTC)</option>
+                            <option value="America/New_York" data-i18n="Timezone_NY">New York (EDT)</option>
+                            <option value="Europe/London" data-i18n="Timezone_London">London (BST)</option>
+                            <option value="Asia/Tokyo" data-i18n="Timezone_Tokyo">Tokyo (JST)</option>
+                            <option value="Asia/Kolkata" selected data-i18n="Timezone_Mumbai">Mumbai (IST)</option>
+                            <option value="Australia/Sydney" data-i18n="Timezone_Sydney">Sydney (AEST)</option>
+                            <option value="Asia/Dubai" data-i18n="Timezone_Dubai">Dubai (GST)</option>
+                        </select>
+                        <div id="convertedTime" class="digits-accent">00:00:00</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- News Hub Card -->
+            <section class="tool-card news-hub">
+                <div class="card-title">
+                    <div class="title-icon rose-glow">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3 data-i18n="GlobalNewsFeed">@Localizer["GlobalNewsFeed"]</h3>
+                        <p data-i18n="LiveIntelStream">@Localizer["LiveIntelStream"]</p>
+                    </div>
+                </div>
+
+                <div class="hub-controls">
+                    <div class="search-field">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="newsInput" data-i18n-placeholder="SearchNews"
+                            placeholder="@Localizer["SearchNews"]"
+                            onkeypress="if(event.key === 'Enter') fetchNews(this.value)">
+                    </div>
+                    <div class="action-group">
+                        <button onclick="fetchNews(document.getElementById('newsInput').value)" class="btn-primary"
+                            data-i18n="Analyze">@Localizer["Analyze"]</button>
+                    </div>
+                </div>
+
+                <div class="news-list" id="newsFeed">
+                    <div class="loading-state" data-i18n="InitializingSensorLink">@Localizer["InitializingSensorLink"]
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notes Hub Card -->
+            <section class="tool-card notes-hub">
+                <div class="card-title">
+                    <div class="title-icon purple-glow">
+                        <i class="fas fa-sticky-note"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3 data-i18n="Notes">@Localizer["Notes"]</h3>
+                        <p data-i18n="PersonalLog">@Localizer["PersonalLog"]</p>
+                    </div>
+                </div>
+
+                <div class="hub-controls">
+                    <button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%">
+                        <i class="fas fa-plus"></i> <span data-i18n="NewNote">@Localizer["NewNote"]</span>
+                    </button>
+                </div>
+
+                <div id="noteFormArea"
+                    style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);"
+                    class="slide-in">
+                    <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle"
+                        data-i18n="NewNote">
+                        @Localizer["NewNote"]</div>
+                    <input type="hidden" id="noteId">
+                    <div class="form-row" style="margin-bottom:12px;">
+                        <input type="text" id="noteTitle" class="modern-input" placeholder="@Localizer["NoteTitle"]"
+                            data-i18n-placeholder="NoteTitle">
+                    </div>
+                    <div class="form-row" style="margin-bottom:12px;">
+                        <textarea id="noteDesc" class="modern-input" rows="3" placeholder="@Localizer["NoteDetails"]"
+                            data-i18n-placeholder="NoteDetails"></textarea>
+                    </div>
+                    <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
+                        <button onclick="saveNote()" class="btn-primary" style="flex: 1;"
+                            data-i18n="Save">@Localizer["Save"]</button>
+                        <button onclick="toggleNoteForm()" class="btn-icon"
+                            style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);"
+                            data-i18n="Cancel">@Localizer["Cancel"]</button>
+                    </div>
+                </div>
+
+                <div class="notes-list" id="notesList">
+                    <div class="loading-state" data-i18n="DecryptingLogs">@Localizer["InitialisingSatelliteLink"]</div>
+                </div>
+            </section>
+
+
+
+
         </div>
     </div>
 </div>
+
+
 
 <link rel="stylesheet" href="~/css/dashboard.css" />
 
 @section Scripts {
     <script>
-        const weatherMap = {
-            0: 'Clear skies', 1: 'Mainly clear', 2: 'Partially cloudy', 3: 'Overcast atmospheric density',
-            45: 'Fog presence', 48: 'Depositing rime fog', 51: 'Light drizzle', 53: 'Moderate drizzle',
-            55: 'Dense drizzle', 61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
-            71: 'Slight snowfall', 73: 'Moderate snowfall', 75: 'Heavy snowfall', 77: 'Ice particles detected',
-            80: 'Rain showers: Slight', 81: 'Rain showers: Moderate', 82: 'Rain showers: Extreme',
-            95: 'Thunderstorm: Active', 96: 'Storm with slight hail', 99: 'Storm with heavy hail'
-        };
+        function getWeatherDesc(code) {
+            const map = {
+                0: 'ClearSkies', 1: 'MainlyClear', 2: 'PartiallyCloudy', 3: 'Overcast',
+                45: 'FogPresence', 48: 'DepositingRimeFog', 51: 'LightDrizzle', 53: 'ModerateDrizzle',
+                55: 'DenseDrizzle', 61: 'SlightRain', 63: 'ModerateRain', 65: 'HeavyRain',
+                71: 'SlightSnowfall', 73: 'ModerateSnowfall', 75: 'HeavySnowfall', 77: 'IceParticles',
+                80: 'RainShowersSlight', 81: 'RainShowersModerate', 82: 'RainShowersExtreme',
+                95: 'ThunderstormActive', 96: 'StormSlightHail', 99: 'StormHeavyHail'
+            };
+            return window.i18n.t(map[code] || 'OptimizedAtmosphere');
+        }
 
         const weatherIcons = {
             0: 'fa-sun', 1: 'fa-cloud-sun', 2: 'fa-cloud-sun', 3: 'fa-cloud',
@@ -181,37 +308,20 @@
         // --- GLOBAL NETWORK NODES ---
         let allNodes = [];
         const initialNodes = [
-            // Gujarat Hubs
             { name: "Ahmedabad", lat: 23.0225, lon: 72.5714, cc: "GJ, IN" },
             { name: "Surat", lat: 21.1702, lon: 72.8311, cc: "GJ, IN" },
             { name: "Vadodara", lat: 22.3072, lon: 73.1812, cc: "GJ, IN" },
             { name: "Rajkot", lat: 22.3039, lon: 70.8022, cc: "GJ, IN" },
-            { name: "Gandhinagar", lat: 23.2156, lon: 72.6369, cc: "GJ, IN" },
-            { name: "Bhavnagar", lat: 21.7645, lon: 72.1519, cc: "GJ, IN" },
-            { name: "Jamnagar", lat: 22.4707, lon: 70.0577, cc: "GJ, IN" },
-            { name: "Junagadh", lat: 21.5222, lon: 70.4579, cc: "GJ, IN" },
-            { name: "Anand", lat: 22.5645, lon: 72.9289, cc: "GJ, IN" },
-            { name: "Navsari", lat: 20.9467, lon: 72.9520, cc: "GJ, IN" },
-            // Global Hubs
             { name: "London", lat: 51.5074, lon: -0.1278, cc: "GB" },
             { name: "New York", lat: 40.7128, lon: -74.0060, cc: "US" },
             { name: "Tokyo", lat: 35.6895, lon: 139.6917, cc: "JP" },
-            { name: "Dubai", lat: 25.2048, lon: 55.2708, cc: "AE" },
-            { name: "Singapore", lat: 1.3521, lon: 103.8198, cc: "SG" },
-            { name: "Sydney", lat: -33.8688, lon: 151.2093, cc: "AU" },
-            { name: "Paris", lat: 48.8566, lon: 2.3522, cc: "FR" },
-            { name: "Berlin", lat: 52.5200, lon: 13.4050, cc: "DE" },
             { name: "Mumbai", lat: 19.0760, lon: 72.8777, cc: "IN" },
-            { name: "Delhi", lat: 28.6139, lon: 77.2090, cc: "IN" },
-            { name: "Toronto", lat: 43.6532, lon: -79.3832, cc: "CA" },
-            { name: "Moscow", lat: 55.7558, lon: 37.6173, cc: "RU" },
-            { name: "Shanghai", lat: 31.2304, lon: 121.4737, cc: "CN" }
+            { name: "Delhi", lat: 28.6139, lon: 77.2090, cc: "IN" }
         ];
 
         async function initNodeDirectory() {
             const container = document.getElementById('worldWeatherList');
-            const nodeCount = document.getElementById('nodeCount');
-            container.innerHTML = '<div class="loading-state">Syncing Global Nodes...</div>';
+            if (container) container.innerHTML = `<div class="loading-state">${window.i18n.t('SyncingGlobalNodes')}</div>`;
 
             allNodes = [];
             for (const n of initialNodes) {
@@ -221,48 +331,34 @@
                     allNodes.push({ ...n, weather: data.current });
                 } catch (e) { }
             }
-
             renderNodes(allNodes);
         }
 
         function renderNodes(nodes) {
             const container = document.getElementById('worldWeatherList');
             const nodeCount = document.getElementById('nodeCount');
+            if (!container) return;
             container.innerHTML = '';
-            nodeCount.innerText = `${nodes.length} Nodes Active`;
+            if (nodeCount) nodeCount.innerText = `${nodes.length} ${window.i18n.t('NodesActive')}`;
 
             nodes.forEach(item => {
                 const el = document.createElement('div');
                 el.className = 'node-item slide-in';
-                el.onclick = () => fetchWeatherDeep(item.lat, item.lon, `${item.name}, ${item.cc}`);
-                el.innerHTML = `
-                                <div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
-                                <div class="node-data">
-                                    <i class="fas ${getIcon(item.weather.weather_code)}"></i>
-                                    <b>${Math.round(item.weather.temperature_2m)}°C</b>
-                                </div>
-                            `;
+                el.onclick = () => fetchWeatherDeep(item.lat, item.lon, `${window.i18n.t(item.name)}, ${item.cc}`);
+                el.innerHTML = `<div><h4>${window.i18n.t(item.name)}</h4><span>Region: ${item.cc}</span></div>
+                                                                                            <div class="node-data"><i class="fas ${getIcon(item.weather.weather_code)}"></i>
+                                                                                            <b>${Math.round(item.weather.temperature_2m)}°C</b></div>`;
                 container.appendChild(el);
             });
         }
 
-        function filterNodes() {
-            const q = document.getElementById('directorySearch').value.toLowerCase();
-            const filtered = allNodes.filter(n =>
-                n.name.toLowerCase().includes(q) ||
-                n.cc.toLowerCase().includes(q)
-            );
-            renderNodes(filtered);
-        }
-
-        // --- CORE WEATHER TELEMETRY ---
         async function getCurrentLocation() {
             const display = document.getElementById('weatherResult');
-            display.innerHTML = '<div class="loading-state">Triangulating satellite uplink...</div>';
+            display.innerHTML = `<div class="loading-state">${window.i18n.t('TriangulatingSatelliteUplink')}</div>`;
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (p) => fetchWeatherDeep(p.coords.latitude, p.coords.longitude, "Local Terminal"),
-                    () => { display.innerHTML = '<div class="text-danger">Uplink Interrupted: Geolocation Denied</div>'; }
+                    () => { display.innerHTML = `<div class="text-danger">${window.i18n.t('UplinkInterrupted')}</div>`; }
                 );
             }
         }
@@ -273,7 +369,7 @@
                 const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`);
                 const data = await res.json();
                 if (!data.results) {
-                    document.getElementById('weatherResult').innerHTML = '<div class="text-danger">Node Not Found</div>';
+                    document.getElementById('weatherResult').innerHTML = `<div class="text-danger">${window.i18n.t('NodeNotFound')}</div>`;
                     return;
                 }
                 const { latitude, longitude, name, country } = data.results[0];
@@ -284,331 +380,486 @@
         async function fetchWeatherDeep(lat, lon, label) {
             const display = document.getElementById('weatherResult');
             try {
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,surface_pressure,wind_speed_10m,visibility&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,sunrise,sunset&timezone=auto`;
-                const res = await fetch(url);
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`);
                 const data = await res.json();
                 const cur = data.current;
-                const daily = data.daily;
-
-                let forecast = '';
-                for (let i = 0; i < 7; i++) {
-                    const d = new Date(daily.time[i]);
-                    forecast += `
-                                <div class="forecast-node">
-                                    <span>${d.toLocaleDateString(undefined, { weekday: 'short' })}</span>
-                                    <i class="fas ${getIcon(daily.weather_code[i])}"></i>
-                                    <b>${Math.round(daily.temperature_2m_max[i])}°</b>
-                                </div>
-                            `;
-                }
-
                 display.innerHTML = `
-                                    <div class="loc-label slide-in">${label}</div>
-                                    <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
-                                    <div class="weather-desc slide-in">${weatherMap[cur.weather_code] || 'Optimized Atmosphere'}</div>
-                                    <div class="stats-deep slide-in">
-                                        <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
-                                        <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
-                                        <div class="stat-box"><i class="fas fa-sun"></i> <label>UV Peak</label> <b>${daily.uv_index_max[0]}</b></div>
-                                        <div class="stat-box"><i class="fas fa-gauge"></i> <label>Pressure</label> <b>${Math.round(cur.surface_pressure)} hPa</b></div>
-                                        <div class="stat-box"><i class="fas fa-eye"></i> <label>Visibility</label> <b>${(cur.visibility / 1000).toFixed(1)} km</b></div>
-                                        <div class="stat-box"><i class="fas fa-cloud-sun"></i> <label>Apparent</label> <b>${Math.round(cur.apparent_temperature)}°</b></div>
-                                    </div>
-                                    <div class="forecast-panel slide-in">
-                                        <div class="forecast-grid">${forecast}</div>
-                                    </div>
-                                `;
-            } catch (e) { display.innerHTML = '<div class="text-danger">Satellite Link Failure</div>'; }
+                                                                                <div class="loc-label slide-in">${label}</div>
+                                                                                <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
+                                                                                <div class="weather-desc slide-in">${getWeatherDesc(cur.weather_code)}</div>
+                                                                                <div class="stats-deep slide-in">
+                                                                                    <div class="stat-box"><i class="fas fa-droplet"></i> <label>${window.i18n.t('Humidity')}</label> <b>${cur.relative_humidity_2m}%</b></div>
+                                                                                    <div class="stat-box"><i class="fas fa-wind"></i> <label>${window.i18n.t('WindVelocity')}</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
+                                                                                </div>`;
+            } catch (e) { display.innerHTML = `<div class="text-danger">${window.i18n.t('SatelliteLinkFailure')}</div>`; }
         }
 
-        // --- FISCAL TELEMETRY ---
         let baseCurrencyRates = {};
-
-        // Comprehensive Global Location Database
         const globalLocations = [
-            // Africa
-            { name: 'South Africa', flag: '🇿🇦', currency: 'ZAR', cities: ['Johannesburg', 'Cape Town', 'Durban', 'Pretoria'] },
-            { name: 'Nigeria', flag: '🇳🇬', currency: 'NGN', cities: ['Lagos', 'Abuja', 'Kano', 'Ibadan'] },
-            { name: 'Egypt', flag: '🇪🇬', currency: 'EGP', cities: ['Cairo', 'Alexandria', 'Giza'] },
-            { name: 'Kenya', flag: '🇰🇪', currency: 'KES', cities: ['Nairobi', 'Mombasa', 'Kisumu'] },
-            { name: 'Morocco', flag: '🇲🇦', currency: 'MAD', cities: ['Casablanca', 'Rabat', 'Marrakech'] },
-            // Asia
-            { name: 'China', flag: '🇨🇳', currency: 'CNY', cities: ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen', 'Hong Kong'] },
-            { name: 'India', flag: '🇮🇳', currency: 'INR', cities: ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad'] },
-            { name: 'Japan', flag: '🇯🇵', currency: 'JPY', cities: ['Tokyo', 'Osaka', 'Kyoto', 'Yokohama'] },
-            { name: 'South Korea', flag: '🇰🇷', currency: 'KRW', cities: ['Seoul', 'Busan', 'Incheon'] },
-            { name: 'Indonesia', flag: '🇮🇩', currency: 'IDR', cities: ['Jakarta', 'Surabaya', 'Bandung', 'Bali'] },
-            { name: 'Thailand', flag: '🇹🇭', currency: 'THB', cities: ['Bangkok', 'Chiang Mai', 'Phuket'] },
-            { name: 'Vietnam', flag: '🇻🇳', currency: 'VND', cities: ['Hanoi', 'Ho Chi Minh City', 'Da Nang'] },
-            { name: 'Singapore', flag: '🇸🇬', currency: 'SGD', cities: ['Singapore'] },
-            { name: 'Malaysia', flag: '🇲🇾', currency: 'MYR', cities: ['Kuala Lumpur', 'Penang', 'Johor Bahru'] },
-            { name: 'Philippines', flag: '🇵🇭', currency: 'PHP', cities: ['Manila', 'Quezon City', 'Davao'] },
-            { name: 'Pakistan', flag: '🇵🇰', currency: 'PKR', cities: ['Karachi', 'Lahore', 'Islamabad'] },
-            { name: 'Bangladesh', flag: '🇧🇩', currency: 'BDT', cities: ['Dhaka', 'Chittagong'] },
-            { name: 'Saudi Arabia', flag: '🇸🇦', currency: 'SAR', cities: ['Riyadh', 'Jeddah', 'Mecca', 'Medina'] },
-            { name: 'United Arab Emirates', flag: '🇦🇪', currency: 'AED', cities: ['Dubai', 'Abu Dhabi', 'Sharjah'] },
-            { name: 'Turkey', flag: '🇹🇷', currency: 'TRY', cities: ['Istanbul', 'Ankara', 'Izmir'] },
-            { name: 'Israel', flag: '🇮🇱', currency: 'ILS', cities: ['Tel Aviv', 'Jerusalem', 'Haifa'] },
-            // Europe
-            { name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP', cities: ['London', 'Manchester', 'Birmingham', 'Edinburgh', 'Glasgow'] },
-            { name: 'Germany', flag: '🇩🇪', currency: 'EUR', cities: ['Berlin', 'Munich', 'Frankfurt', 'Hamburg', 'Cologne'] },
-            { name: 'France', flag: '🇫🇷', currency: 'EUR', cities: ['Paris', 'Lyon', 'Marseille', 'Nice'] },
-            { name: 'Italy', flag: '🇮🇹', currency: 'EUR', cities: ['Rome', 'Milan', 'Venice', 'Florence'] },
-            { name: 'Spain', flag: '🇪🇸', currency: 'EUR', cities: ['Madrid', 'Barcelona', 'Valencia', 'Seville'] },
-            { name: 'Netherlands', flag: '🇳🇱', currency: 'EUR', cities: ['Amsterdam', 'Rotterdam', 'The Hague'] },
-            { name: 'Switzerland', flag: '🇨🇭', currency: 'CHF', cities: ['Zurich', 'Geneva', 'Basel', 'Bern'] },
-            { name: 'Belgium', flag: '🇧🇪', currency: 'EUR', cities: ['Brussels', 'Antwerp', 'Ghent'] },
-            { name: 'Austria', flag: '🇦🇹', currency: 'EUR', cities: ['Vienna', 'Salzburg'] },
-            { name: 'Sweden', flag: '🇸🇪', currency: 'SEK', cities: ['Stockholm', 'Gothenburg'] },
-            { name: 'Norway', flag: '🇳🇴', currency: 'NOK', cities: ['Oslo', 'Bergen'] },
-            { name: 'Denmark', flag: '🇩🇰', currency: 'DKK', cities: ['Copenhagen', 'Aarhus'] },
-            { name: 'Finland', flag: '🇫🇮', currency: 'EUR', cities: ['Helsinki', 'Tampere'] },
-            { name: 'Poland', flag: '🇵🇱', currency: 'PLN', cities: ['Warsaw', 'Krakow'] },
-            { name: 'Russia', flag: '🇷🇺', currency: 'RUB', cities: ['Moscow', 'St. Petersburg'] },
-            { name: 'Czech Republic', flag: '🇨🇿', currency: 'CZK', cities: ['Prague', 'Brno'] },
-            { name: 'Portugal', flag: '🇵🇹', currency: 'EUR', cities: ['Lisbon', 'Porto'] },
-            { name: 'Greece', flag: '🇬🇷', currency: 'EUR', cities: ['Athens', 'Thessaloniki'] },
-            { name: 'Ireland', flag: '🇮🇪', currency: 'EUR', cities: ['Dublin', 'Cork'] },
-            { name: 'Romania', flag: '🇷🇴', currency: 'RON', cities: ['Bucharest', 'Cluj-Napoca'] },
-            { name: 'Hungary', flag: '🇭🇺', currency: 'HUF', cities: ['Budapest', 'Debrecen'] },
-            // North America
-            { name: 'United States', flag: '🇺🇸', currency: 'USD', cities: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Diego', 'Dallas', 'San Francisco', 'Miami', 'Seattle', 'Boston', 'Las Vegas'] },
-            { name: 'Canada', flag: '🇨🇦', currency: 'CAD', cities: ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa'] },
-            { name: 'Mexico', flag: '🇲🇽', currency: 'MXN', cities: ['Mexico City', 'Guadalajara', 'Monterrey', 'Cancun'] },
-            // South America
-            { name: 'Brazil', flag: '🇧🇷', currency: 'BRL', cities: ['São Paulo', 'Rio de Janeiro', 'Brasília'] },
-            { name: 'Argentina', flag: '🇦🇷', currency: 'ARS', cities: ['Buenos Aires', 'Córdoba'] },
-            { name: 'Chile', flag: '🇨🇱', currency: 'CLP', cities: ['Santiago', 'Valparaíso'] },
-            { name: 'Colombia', flag: '🇨🇴', currency: 'COP', cities: ['Bogotá', 'Medellín'] },
-            { name: 'Peru', flag: '🇵🇪', currency: 'PEN', cities: ['Lima', 'Cusco'] },
-            // Oceania
-            { name: 'Australia', flag: '🇦🇺', currency: 'AUD', cities: ['Sydney', 'Melbourne', 'Brisbane', 'Perth'] },
-            { name: 'New Zealand', flag: '🇳🇿', currency: 'NZD', cities: ['Auckland', 'Wellington'] },
-            // Additional
-            { name: 'Ukraine', flag: '🇺🇦', currency: 'UAH', cities: ['Kyiv', 'Kharkiv'] },
-            { name: 'Croatia', flag: '🇭🇷', currency: 'EUR', cities: ['Zagreb', 'Split'] },
-            { name: 'Qatar', flag: '🇶🇦', currency: 'QAR', cities: ['Doha'] },
-            { name: 'Kuwait', flag: '🇰🇼', currency: 'KWD', cities: ['Kuwait City'] },
-            { name: 'Oman', flag: '🇴🇲', currency: 'OMR', cities: ['Muscat'] },
-            { name: 'Sri Lanka', flag: '🇱🇰', currency: 'LKR', cities: ['Colombo'] },
-            { name: 'Nepal', flag: '🇳🇵', currency: 'NPR', cities: ['Kathmandu'] },
+            { name: 'India', flag: '🇮🇳', currency: 'INR' },
+            { name: 'United States', flag: '🇺🇸', currency: 'USD' },
+            { name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP' },
+            { name: 'Germany', flag: '🇩🇪', currency: 'EUR' },
+            { name: 'Japan', flag: '🇯🇵', currency: 'JPY' }
         ];
 
         async function initFiscal() {
             try {
-                const rateRes = await fetch('https://open.er-api.com/v6/latest/USD');
-                const rateData = await rateRes.json();
-                baseCurrencyRates = rateData.rates;
-
                 const f = document.getElementById('fromCurrency');
                 const t = document.getElementById('toCurrency');
+                // Preserve selection if just reloading
+                const selF = f.value;
+                const selT = t.value;
 
-                // Clear existing options
-                f.innerHTML = '';
-                t.innerHTML = '';
-
-                // Add countries and cities with flags
+                f.innerHTML = ''; t.innerHTML = '';
                 globalLocations.forEach(location => {
-                    // Add country option
-                    const countryOption = new Option(
-                        `${location.flag} ${location.name} (${location.currency})`,
-                        location.currency
-                    );
-                    f.add(countryOption.cloneNode(true));
-                    t.add(countryOption.cloneNode(true));
-
-                    // Add city options (mapped to country currency)
-                    if (location.cities && location.cities.length > 0) {
-                        location.cities.forEach(city => {
-                            const cityOption = new Option(
-                                `${location.flag} ${city}, ${location.name} (${location.currency})`,
-                                location.currency
-                            );
-                            f.add(cityOption.cloneNode(true));
-                            t.add(cityOption.cloneNode(true));
-                        });
-                    }
+                    const opt = new Option(`${location.flag} ${location.name} (${location.currency})`, location.currency);
+                    f.add(opt.cloneNode(true)); t.add(opt.cloneNode(true));
                 });
 
-                // Set defaults
-                f.value = 'USD';
-                t.value = 'INR';
+                if (selF) f.value = selF; else f.value = 'USD';
+                if (selT) t.value = selT; else t.value = 'INR';
 
-            } catch (e) {
-                console.error("Fiscal link error", e);
-                const display = document.getElementById('currencyResult');
-                display.innerHTML = '<span style="color: #ef4444;">Network Error: Unable to fetch exchange rates. Please check your connection.</span>';
-            }
+                await fetchLatestRates();
+            } catch (e) { }
         }
 
-        function convertCurrency() {
-            const v = document.getElementById('amountInput').value;
+        async function fetchLatestRates() {
+            const f = document.getElementById('fromCurrency').value;
+            try {
+                const res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
+                const data = await res.json();
+                baseCurrencyRates = data.rates;
+                const updateEl = document.getElementById('lastExchangeUpdate');
+                const lang = window.i18n.locale;
+                const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+                if (updateEl) updateEl.innerText = `${window.i18n.t('LastSync')}: ${new Date().toLocaleTimeString(locale)} (${f} Base)`;
+                convertCurrency();
+            } catch (e) { }
+        }
+
+        async function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amountInput').value) || 0;
             const f = document.getElementById('fromCurrency').value;
             const t = document.getElementById('toCurrency').value;
             const display = document.getElementById('currencyResult');
-            if (!baseCurrencyRates[f] || !baseCurrencyRates[t]) return;
-            const calc = (v / baseCurrencyRates[f]) * baseCurrencyRates[t];
-            
-            display.innerHTML = `
-                <div class="val-grid">
-                    <div class="val-box">
-                        <div class="val-label">Base</div>
-                        <div class="val-number">
-                            ${v} <span class="val-sub">${f}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="val-divider">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-
-                    <div class="val-box">
-                        <div class="val-label">Target</div>
-                        <div class="val-number highlight">
-                            ${calc.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} 
-                            <span class="val-sub">${t}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-
-        // --- CHRONOS LOCATION DATA ---
-        const cityTimezones = {
-            // Africa
-            'South Africa': 'Africa/Johannesburg', 'Johannesburg': 'Africa/Johannesburg', 'Cape Town': 'Africa/Johannesburg', 'Durban': 'Africa/Johannesburg', 'Pretoria': 'Africa/Johannesburg',
-            'Nigeria': 'Africa/Lagos', 'Lagos': 'Africa/Lagos', 'Abuja': 'Africa/Lagos', 'Kano': 'Africa/Lagos', 'Ibadan': 'Africa/Lagos',
-            'Egypt': 'Africa/Cairo', 'Cairo': 'Africa/Cairo', 'Alexandria': 'Africa/Cairo', 'Giza': 'Africa/Cairo',
-            'Kenya': 'Africa/Nairobi', 'Nairobi': 'Africa/Nairobi', 'Mombasa': 'Africa/Nairobi', 'Kisumu': 'Africa/Nairobi',
-            'Morocco': 'Africa/Casablanca', 'Casablanca': 'Africa/Casablanca', 'Rabat': 'Africa/Casablanca', 'Marrakech': 'Africa/Casablanca',
-
-            // Asia
-            'China': 'Asia/Shanghai', 'Beijing': 'Asia/Shanghai', 'Shanghai': 'Asia/Shanghai', 'Guangzhou': 'Asia/Shanghai', 'Shenzhen': 'Asia/Shanghai', 'Hong Kong': 'Asia/Hong_Kong',
-            'India': 'Asia/Kolkata', 'Mumbai': 'Asia/Kolkata', 'Delhi': 'Asia/Kolkata', 'Bangalore': 'Asia/Kolkata', 'Hyderabad': 'Asia/Kolkata', 'Chennai': 'Asia/Kolkata', 'Kolkata': 'Asia/Kolkata', 'Pune': 'Asia/Kolkata', 'Ahmedabad': 'Asia/Kolkata',
-            'Japan': 'Asia/Tokyo', 'Tokyo': 'Asia/Tokyo', 'Osaka': 'Asia/Tokyo', 'Kyoto': 'Asia/Tokyo', 'Yokohama': 'Asia/Tokyo',
-            'South Korea': 'Asia/Seoul', 'Seoul': 'Asia/Seoul', 'Busan': 'Asia/Seoul', 'Incheon': 'Asia/Seoul',
-            'Indonesia': 'Asia/Jakarta', 'Jakarta': 'Asia/Jakarta', 'Surabaya': 'Asia/Jakarta', 'Bandung': 'Asia/Jakarta', 'Bali': 'Asia/Makassar',
-            'Thailand': 'Asia/Bangkok', 'Bangkok': 'Asia/Bangkok', 'Chiang Mai': 'Asia/Bangkok', 'Phuket': 'Asia/Bangkok',
-            'Vietnam': 'Asia/Ho_Chi_Minh', 'Hanoi': 'Asia/Ho_Chi_Minh', 'Ho Chi Minh City': 'Asia/Ho_Chi_Minh', 'Da Nang': 'Asia/Ho_Chi_Minh',
-            'Singapore': 'Asia/Singapore',
-            'Malaysia': 'Asia/Kuala_Lumpur', 'Kuala Lumpur': 'Asia/Kuala_Lumpur', 'Penang': 'Asia/Kuala_Lumpur', 'Johor Bahru': 'Asia/Kuala_Lumpur',
-            'Philippines': 'Asia/Manila', 'Manila': 'Asia/Manila', 'Quezon City': 'Asia/Manila', 'Davao': 'Asia/Manila',
-            'Pakistan': 'Asia/Karachi', 'Karachi': 'Asia/Karachi', 'Lahore': 'Asia/Karachi', 'Islamabad': 'Asia/Karachi',
-            'Bangladesh': 'Asia/Dhaka', 'Dhaka': 'Asia/Dhaka', 'Chittagong': 'Asia/Dhaka',
-            'Saudi Arabia': 'Asia/Riyadh', 'Riyadh': 'Asia/Riyadh', 'Jeddah': 'Asia/Riyadh', 'Mecca': 'Asia/Riyadh', 'Medina': 'Asia/Riyadh',
-            'United Arab Emirates': 'Asia/Dubai', 'Dubai': 'Asia/Dubai', 'Abu Dhabi': 'Asia/Dubai', 'Sharjah': 'Asia/Dubai',
-            'Turkey': 'Europe/Istanbul', 'Istanbul': 'Europe/Istanbul', 'Ankara': 'Europe/Istanbul', 'Izmir': 'Europe/Istanbul',
-            'Israel': 'Asia/Jerusalem', 'Tel Aviv': 'Asia/Jerusalem', 'Jerusalem': 'Asia/Jerusalem', 'Haifa': 'Asia/Jerusalem',
-            'Iran': 'Asia/Tehran', 'Tehran': 'Asia/Tehran', 'Mashhad': 'Asia/Tehran', 'Isfahan': 'Asia/Tehran',
-
-            // Europe
-            'United Kingdom': 'Europe/London', 'London': 'Europe/London', 'Manchester': 'Europe/London', 'Birmingham': 'Europe/London', 'Edinburgh': 'Europe/London', 'Glasgow': 'Europe/London',
-            'Germany': 'Europe/Berlin', 'Berlin': 'Europe/Berlin', 'Munich': 'Europe/Berlin', 'Frankfurt': 'Europe/Berlin', 'Hamburg': 'Europe/Berlin', 'Cologne': 'Europe/Berlin',
-            'France': 'Europe/Paris', 'Paris': 'Europe/Paris', 'Lyon': 'Europe/Paris', 'Marseille': 'Europe/Paris', 'Nice': 'Europe/Paris',
-            'Italy': 'Europe/Rome', 'Rome': 'Europe/Rome', 'Milan': 'Europe/Rome', 'Venice': 'Europe/Rome', 'Florence': 'Europe/Rome',
-            'Spain': 'Europe/Madrid', 'Madrid': 'Europe/Madrid', 'Barcelona': 'Europe/Madrid', 'Valencia': 'Europe/Madrid', 'Seville': 'Europe/Madrid',
-            'Netherlands': 'Europe/Amsterdam', 'Amsterdam': 'Europe/Amsterdam', 'Rotterdam': 'Europe/Amsterdam', 'The Hague': 'Europe/Amsterdam',
-            'Switzerland': 'Europe/Zurich', 'Zurich': 'Europe/Zurich', 'Geneva': 'Europe/Zurich', 'Basel': 'Europe/Zurich', 'Bern': 'Europe/Zurich',
-            'Belgium': 'Europe/Brussels', 'Brussels': 'Europe/Brussels', 'Antwerp': 'Europe/Brussels', 'Ghent': 'Europe/Brussels',
-            'Austria': 'Europe/Vienna', 'Vienna': 'Europe/Vienna', 'Salzburg': 'Europe/Vienna',
-            'Sweden': 'Europe/Stockholm', 'Stockholm': 'Europe/Stockholm', 'Gothenburg': 'Europe/Stockholm',
-            'Norway': 'Europe/Oslo', 'Oslo': 'Europe/Oslo', 'Bergen': 'Europe/Oslo',
-            'Denmark': 'Europe/Copenhagen', 'Copenhagen': 'Europe/Copenhagen', 'Aarhus': 'Europe/Copenhagen',
-            'Finland': 'Europe/Helsinki', 'Helsinki': 'Europe/Helsinki', 'Tampere': 'Europe/Helsinki',
-            'Poland': 'Europe/Warsaw', 'Warsaw': 'Europe/Warsaw', 'Krakow': 'Europe/Warsaw',
-            'Russia': 'Europe/Moscow', 'Moscow': 'Europe/Moscow', 'St. Petersburg': 'Europe/Moscow', 'Novosibirsk': 'Asia/Novosibirsk',
-            'Czech Republic': 'Europe/Prague', 'Prague': 'Europe/Prague', 'Brno': 'Europe/Prague',
-            'Portugal': 'Europe/Lisbon', 'Lisbon': 'Europe/Lisbon', 'Porto': 'Europe/Lisbon',
-            'Greece': 'Europe/Athens', 'Athens': 'Europe/Athens', 'Thessaloniki': 'Europe/Athens',
-            'Ireland': 'Europe/Dublin', 'Dublin': 'Europe/Dublin', 'Cork': 'Europe/Dublin',
-            'Romania': 'Europe/Bucharest', 'Bucharest': 'Europe/Bucharest', 'Cluj-Napoca': 'Europe/Bucharest',
-            'Hungary': 'Europe/Budapest', 'Budapest': 'Europe/Budapest', 'Debrecen': 'Europe/Budapest',
-
-            // North America
-            'United States': 'America/New_York', 'New York': 'America/New_York', 'Los Angeles': 'America/Los_Angeles', 'Chicago': 'America/Chicago', 'Houston': 'America/Chicago', 'Phoenix': 'America/Phoenix', 'Philadelphia': 'America/New_York', 'San Diego': 'America/Los_Angeles', 'Dallas': 'America/Chicago', 'San Francisco': 'America/Los_Angeles', 'Miami': 'America/New_York', 'Seattle': 'America/Los_Angeles', 'Boston': 'America/New_York', 'Las Vegas': 'America/Los_Angeles',
-            'Canada': 'America/Toronto', 'Toronto': 'America/Toronto', 'Vancouver': 'America/Vancouver', 'Montreal': 'America/Toronto', 'Calgary': 'America/Edmonton', 'Ottawa': 'America/Toronto',
-            'Mexico': 'America/Mexico_City', 'Mexico City': 'America/Mexico_City', 'Guadalajara': 'America/Mexico_City', 'Monterrey': 'America/Monterrey', 'Cancun': 'America/Cancun',
-
-            // South America
-            'Brazil': 'America/Sao_Paulo', 'São Paulo': 'America/Sao_Paulo', 'Rio de Janeiro': 'America/Sao_Paulo', 'Brasília': 'America/Sao_Paulo', 'Salvador': 'America/Bahia',
-            'Argentina': 'America/Argentina/Buenos_Aires', 'Buenos Aires': 'America/Argentina/Buenos_Aires', 'Córdoba': 'America/Argentina/Cordoba',
-            'Chile': 'America/Santiago', 'Santiago': 'America/Santiago', 'Valparaíso': 'America/Santiago',
-            'Colombia': 'America/Bogota', 'Bogotá': 'America/Bogota', 'Medellín': 'America/Bogota', 'Cali': 'America/Bogota',
-            'Peru': 'America/Lima', 'Lima': 'America/Lima', 'Cusco': 'America/Lima',
-
-            // Oceania
-            'Australia': 'Australia/Sydney', 'Sydney': 'Australia/Sydney', 'Melbourne': 'Australia/Melbourne', 'Brisbane': 'Australia/Brisbane', 'Perth': 'Australia/Perth', 'Adelaide': 'Australia/Adelaide',
-            'New Zealand': 'Pacific/Auckland', 'Auckland': 'Pacific/Auckland', 'Wellington': 'Pacific/Auckland', 'Christchurch': 'Pacific/Auckland',
-
-            // Additional
-            'Ukraine': 'Europe/Kyiv', 'Kyiv': 'Europe/Kyiv', 'Kharkiv': 'Europe/Kyiv',
-            'Croatia': 'Europe/Zagreb', 'Zagreb': 'Europe/Zagreb', 'Split': 'Europe/Zagreb',
-            'Qatar': 'Asia/Qatar', 'Doha': 'Asia/Qatar',
-            'Kuwait': 'Asia/Kuwait', 'Kuwait City': 'Asia/Kuwait',
-            'Oman': 'Asia/Muscat', 'Muscat': 'Asia/Muscat',
-            'Sri Lanka': 'Asia/Colombo', 'Colombo': 'Asia/Colombo',
-            'Nepal': 'Asia/Kathmandu', 'Kathmandu': 'Asia/Kathmandu'
-        };
-
-        function initChronosLocations() {
-            const select = document.getElementById('timezoneSelect');
-            select.innerHTML = '';
-
-            // Default UTC
-            select.add(new Option(' Universal (UTC)', 'UTC'));
-
-            if (typeof globalLocations !== 'undefined') {
-                globalLocations.forEach(loc => {
-                    // Add Country
-                    const cTz = cityTimezones[loc.name];
-                    if (cTz) {
-                        select.add(new Option(`${loc.flag} ${loc.name} (Country)`, cTz));
-                    }
-
-                    // Add Cities
-                    if (loc.cities && loc.cities.length > 0) {
-                        loc.cities.forEach(city => {
-                            const tz = cityTimezones[city] || cityTimezones[loc.name]; // Fallback to country TZ
-                            if (tz) {
-                                select.add(new Option(`${loc.flag} ${city}, ${loc.name}`, tz));
-                            }
-                        });
-                    }
-                });
+            if (!baseCurrencyRates[t]) {
+                display.innerHTML = `<div class="loading-state">${window.i18n.t('SyncingNewBaseRates')}</div>`;
+                await fetchLatestRates(); return;
             }
-            // Set default to Mumbai per user preference or context
-            select.value = 'Asia/Kolkata';
+            const calc = amount * baseCurrencyRates[t];
+            const lang = window.i18n.locale;
+            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+            display.innerHTML = `
+                                                                            <div class="val-grid">
+                                                                                <div class="val-box slide-in highlight-border">
+                                                                                    <div class="val-label">${f}</div>
+                                                                                    <div class="val-number">${amount.toLocaleString(locale, { minimumFractionDigits: 2 })}</div>
+                                                                                    <div class="val-loc-meta">${window.i18n.t('RealCurrency')}</div>
+                                                                                </div>
+                                                                                <div class="val-box slide-in">
+                                                                                    <div class="val-label">${t}</div>
+                                                                                    <div class="val-number highlight">${calc.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                                                                    <div class="val-loc-meta">${window.i18n.t('ExchangeTarget')}</div>
+                                                                                </div>
+                                                                            </div>`;
         }
-
-        // --- CHRONOS ENGINE ---
 
         function runChronos() {
             const now = new Date();
-            const dateEl = document.getElementById('headerDate');
-            const timeEl = document.getElementById('headerTime');
-            const localEl = document.getElementById('localTimeLarge');
+            const lang = window.i18n.locale;
+            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
 
-            if (dateEl) dateEl.innerText = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            if (timeEl) timeEl.innerText = now.toLocaleTimeString();
-            if (localEl) localEl.innerText = now.toLocaleTimeString(undefined, { hour12: false });
-            updateConvertedTime();
+            const dateEl = document.getElementById('headerDate');
+            if (dateEl) dateEl.innerText = now.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            const timeEl = document.getElementById('headerTime');
+            if (timeEl) timeEl.innerText = now.toLocaleTimeString(locale);
+
+            const localLargeEl = document.getElementById('localTimeLarge');
+            if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString(locale);
         }
 
         function updateConvertedTime() {
-            const tz = document.getElementById('timezoneSelect').value;
-            const n = new Date();
-            const f = { timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            const el = document.getElementById('convertedTime');
-            if (el) el.innerText = new Intl.DateTimeFormat('en-GB', f).format(n);
+            const zone = document.getElementById('timezoneSelect').value;
+            const now = new Date();
+            const lang = window.i18n.locale;
+            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+
+            const timeString = now.toLocaleTimeString(locale, { timeZone: zone });
+            const dateString = now.toLocaleDateString(locale, { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
+
+            // Calculate Offset
+            const type = Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName').value;
+
+            document.getElementById('convertedTime').innerHTML = `${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span>`;
         }
 
-        // Master Link Protocol
-        runChronos();
+        // --- NEWS FEED ---
+        const newsApiKey = '947acf3b268e4d7da27bf2404e62e3e0';
+        let currentArticles = [];
+
+        async function fetchNews(query) {
+            const container = document.getElementById('newsFeed');
+            // Show loading state
+            if (container) container.innerHTML = `<div class="loading-state">${window.i18n.t('InitializingSensorLink')}</div>`;
+
+            try {
+                let url;
+                if (query && query.trim().length > 0) {
+                    // Search mode: uses "everything" endpoint sorted by date
+                    url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&sortBy=publishedAt&apiKey=${newsApiKey}`;
+                } else {
+                    // Default mode: Top Headlines for India
+                    const country = 'in';
+                    url = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${newsApiKey}`;
+                }
+
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (data.status === 'ok') {
+                    if (data.articles.length === 0) {
+                        container.innerHTML = `<div style="padding:40px; text-align:center; color: var(--text-muted);">${window.i18n.t('NoNewsFound')}</div>`;
+                    } else {
+                        currentArticles = data.articles;
+                        renderNews();
+                    }
+                } else {
+                    container.innerHTML = `<div class="text-danger" style="padding:20px;">${window.i18n.t('SatelliteLinkFailure')} (${data.message || 'API Error'})</div>`;
+                }
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = `<div class="text-danger" style="padding:20px;">${window.i18n.t('SatelliteLinkFailure')}</div>`;
+            }
+        }
+
+        function renderNews() {
+            const container = document.getElementById('newsFeed');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const locale = window.i18n.locale === 'en' ? 'en-US' : (window.i18n.locale === 'hi' ? 'hi-IN' : 'gu-IN');
+
+            currentArticles.slice(0, 15).forEach(article => {
+                const el = document.createElement('a');
+                el.className = 'news-item slide-in';
+                el.href = article.url;
+                el.target = '_blank';
+
+                // Fallback image
+                const imgUrl = article.urlToImage || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=100&auto=format&fit=crop';
+                const date = new Date(article.publishedAt).toLocaleDateString(locale, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+                el.innerHTML = `
+                                                    <img src="${imgUrl}" class="news-image" onerror="this.src='https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=100&auto=format&fit=crop'">
+                                                    <div class="news-content">
+                                                        <div class="news-title">${article.title}</div>
+                                                        <div class="news-meta">
+                                                            <span class="news-source">${article.source.name}</span>
+                                                            <span>${date}</span>
+                                                        </div>
+                                                        <div style="margin-top:8px; font-size:0.75rem; color:var(--accent-sky); font-weight:600;">
+                                                            ${window.i18n.t('ReadFullReport')} &rarr;
+                                                        </div>
+                                                    </div>
+                                                `;
+                container.appendChild(el);
+            });
+        }
+
+
+
+
+        // --- NOTES SYSTEM ---
+        let currentNotes = [];
+
+        async function initNotes() {
+            fetchNotes();
+        }
+
+        async function fetchNotes() {
+            const container = document.getElementById('notesList');
+            try {
+                const res = await fetch('/Notes/GetAll');
+                if (res.ok) {
+                    const notes = await res.json();
+                    renderNotes(notes);
+                } else {
+                    if (container) container.innerHTML = `<div class="text-danger">${window.i18n.t('LoadNotesError')}</div>`;
+                }
+            } catch (e) {
+                if (container) container.innerHTML = `<div class="text-danger">${window.i18n.t('ConnectionError')}</div>`;
+            }
+        }
+
+        function renderNotes(notes) {
+            currentNotes = notes;
+            const container = document.getElementById('notesList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (notes.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">${window.i18n.t('NoNotesFound')}</div>`;
+                return;
+            }
+
+            notes.forEach(note => {
+                const date = new Date(note.createdDate).toLocaleDateString();
+                const div = document.createElement('div');
+                div.className = 'note-item slide-in';
+                div.onclick = (e) => {
+                    if (e.target.closest('.btn-note-action')) return;
+                    editNote(note.id);
+                };
+                div.innerHTML = `
+                                        <div class="note-header">
+                                            <div class="note-title">${escapeHtml(note.title)}</div>
+                                            <div class="note-date">${date}</div>
+                                        </div>
+                                        <div class="note-desc">${escapeHtml(note.description)}</div>
+                                        <div class="note-actions">
+                                            <button class="btn-note-action" onclick="editNote(${note.id})"><i class="fas fa-edit"></i></button>
+                                            <button class="btn-note-action delete" onclick="deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    `;
+                container.appendChild(div);
+            });
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+        }
+
+        async function searchGlobalIntel() {
+            const query = document.getElementById('globalSearchInput').value;
+            const display = document.getElementById('globalSearchResult');
+
+            if (!query) return;
+
+            display.innerHTML = `<div class="loading-state">${window.i18n.t('InitializingSensorLink')}</div>`;
+
+            try {
+                // 1. Geocoding Search
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`);
+                const geoData = await geoRes.json();
+
+                if (!geoData.results || geoData.results.length === 0) {
+                    display.innerHTML = `<div class="text-danger" style="text-align:center; padding: 20px;">${window.i18n.t('NoResult')}</div>`;
+                    return;
+                }
+
+                const location = geoData.results[0];
+                const countryCode = location.country_code;
+
+                // 2. Fetch Country Details
+                let countryData = null;
+                try {
+                    if (countryCode) {
+                        const countryRes = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`);
+                        const cData = await countryRes.json();
+                        countryData = cData[0];
+                    }
+                } catch (e) { console.warn('Country data fetch failed'); }
+
+                // 3. Render
+                renderGlobalResult(location, countryData);
+
+            } catch (e) {
+                display.innerHTML = `<div class="text-danger">${window.i18n.t('SatelliteLinkFailure')}</div>`;
+            }
+        }
+
+        function renderGlobalResult(loc, country) {
+            const display = document.getElementById('globalSearchResult');
+            const currency = country && country.currencies ? Object.values(country.currencies)[0] : { name: 'N/A', symbol: '' };
+            const lang = window.i18n.locale;
+            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+
+            let html = `
+                                <div class="result-card slide-in" style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; border: 1px solid var(--border-dim);">
+                                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 16px;">
+                                        <div>
+                                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--text-bright);">${loc.name}</div>
+                                            <div style="color: var(--text-muted); font-size: 0.9rem;">${loc.admin1 || ''} ${country ? ', ' + country.name.common : ''}</div>
+                                        </div>
+                                        ${country ? `<div style="font-size: 2.5rem; line-height: 1;">${country.flag}</div>` : ''}
+                                    </div>
+
+                                    <div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 0;">
+                                        <div class="stat-box" style="padding: 12px;">
+                                            <label data-i18n="Coordinates">${window.i18n.t('Coordinates')}</label>
+                                            <b>${loc.latitude.toFixed(2)}, ${loc.longitude.toFixed(2)}</b>
+                                        </div>
+                                        <div class="stat-box" style="padding: 12px;">
+                                            <label data-i18n="TimeZone">${window.i18n.t('TimeZone')}</label>
+                                            <b style="font-size: 1rem;">${loc.timezone}</b>
+                                        </div>
+                                    </div>
+                            `;
+
+            if (country) {
+                html += `
+                                    <div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">
+                                        <div class="stat-box" style="padding: 12px;">
+                                            <label data-i18n="Currency">${window.i18n.t('Currency')}</label>
+                                            <b>${currency.symbol} ${currency.name}</b>
+                                        </div>
+                                        <div class="stat-box" style="padding: 12px;">
+                                            <label data-i18n="Population">${window.i18n.t('Population')}</label>
+                                            <b>${(country.population / 1000000).toFixed(1)}M</b>
+                                        </div>
+                                         <div class="stat-box" style="padding: 12px;">
+                                            <label data-i18n="Capital">${window.i18n.t('Capital')}</label>
+                                            <b>${country.capital ? country.capital[0] : 'N/A'}</b>
+                                        </div>
+                                         <div class="stat-box" style="padding: 12px;">
+                                            <label data-i18n="Region">${window.i18n.t('Region')}</label>
+                                            <b>${country.region}</b>
+                                        </div>
+                                    </div>
+                                `;
+            }
+
+            html += `</div>`;
+            display.innerHTML = html;
+        }
+
+        let isFormVisible = false;
+
+        function toggleNoteForm(forceState) {
+            const form = document.getElementById('noteFormArea');
+            const btn = document.getElementById('btnNewNote');
+
+            // If forceState is provided, set to that state, otherwise toggle
+            if (typeof forceState !== 'undefined') {
+                isFormVisible = forceState;
+            } else {
+                isFormVisible = !isFormVisible;
+            }
+
+            if (isFormVisible) {
+                // Show Form
+                form.style.display = 'block';
+                btn.style.display = 'none'; // Optional: Hide the "New Note" button while adding
+
+                // If it's a new note (no ID), clear fields
+                if (!document.getElementById('noteId').value) {
+                    document.getElementById('noteTitle').value = '';
+                    document.getElementById('noteDesc').value = '';
+                    document.getElementById('formTitle').innerText = window.i18n ? window.i18n.t('NewNote') : '@Localizer["NewNote"]';
+                    document.getElementById('formTitle').setAttribute('data-i18n', 'NewNote');
+                }
+            } else {
+                // Hide Form
+                form.style.display = 'none';
+                btn.style.display = 'block';
+                // Clear ID so next open is fresh
+                document.getElementById('noteId').value = '';
+            }
+        }
+
+        function editNote(id) {
+            const note = currentNotes.find(n => n.id === id);
+            if (!note) return;
+
+            document.getElementById('noteId').value = id;
+            document.getElementById('noteTitle').value = note.title;
+            document.getElementById('noteDesc').value = note.description;
+            document.getElementById('formTitle').innerText = window.i18n ? window.i18n.t('EditNote') : 'Edit Note';
+            document.getElementById('formTitle').setAttribute('data-i18n', 'EditNote');
+
+            toggleNoteForm(true);
+        }
+
+        async function saveNote() {
+            const title = document.getElementById('noteTitle').value;
+            const desc = document.getElementById('noteDesc').value;
+            const id = document.getElementById('noteId').value;
+
+            if (!title || !desc) {
+                alert(window.i18n.t('FillAllFields'));
+                return;
+            }
+
+            const url = id ? '/Notes/Update' : '/Notes/Create';
+            const body = { title: title, description: desc };
+            if (id) body.id = parseInt(id);
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                if (res.ok) {
+                    toggleNoteForm(false);
+                    fetchNotes();
+                } else {
+                    alert(window.i18n.t('SaveError'));
+                }
+            } catch (e) {
+                alert(window.i18n.t('SaveError'));
+            }
+        }
+
+        async function deleteNote(id) {
+            if (!confirm(window.i18n.t('DeleteNoteConfirm'))) return;
+            try {
+                const res = await fetch('/Notes/Delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(id)
+                });
+                if (res.ok) fetchNotes();
+            } catch (e) { console.error(e); }
+        }
+
+        $(document).ready(function () {
+            runChronos();
+            initNodeDirectory();
+            initFiscal();
+            getWeather('Ahmedabad');
+            updateConvertedTime();
+            fetchNews();
+            initNotes();
+        });
+
+        $(document).on('languageChanged', function (e, lang) {
+            console.log('Dashboard detected language change:', lang);
+            runChronos();
+            renderNodes(allNodes);
+            fetchLatestRates();
+            renderNews();
+            fetchNotes();
+            fetchNotes();
+        });
+
+        // Refresh dynamic form elements on language change
+        $(document).on('languageChanged', function (e, lang) {
+            const isEdit = document.getElementById('noteId').value !== '';
+            const titleKey = isEdit ? 'EditNote' : 'NewNote';
+            // Update form title state (other elements update via data-i18n automatically if the system parses them)
+            // If the system renders fetchNotes() it will rebuild the list with new strings.
+            // We just need to ensure the form title is correct if it is open
+            if (isFormVisible) {
+                const titleEl = document.getElementById('formTitle');
+                if (titleEl) {
+                    titleEl.setAttribute('data-i18n', titleKey);
+                    titleEl.innerText = window.i18n.t(titleKey);
+                }
+            }
+        });
+
         setInterval(runChronos, 1000);
-        getWeather();
-        initNodeDirectory();
-        initFiscal();
-        initChronosLocations();
+        setInterval(updateConvertedTime, 1000);
     </script>
 }

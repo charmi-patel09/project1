@@ -1,6 +1,8 @@
 @model JsonCrudApp.Models.AdminUser
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Admin Login";
+    ViewData["Title"] = Localizer["Login"];
 }
 
 <div class="container-fluid login-page">
@@ -8,8 +10,9 @@
         <div class="col-11 col-sm-8 col-md-5 col-lg-4 col-xl-3">
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
                 <div class="card-header bg-light py-4 text-center border-0 border-bottom">
-                    <h3 class="text-dark fw-bold mb-0">Login</h3>
-                    <p class="text-muted small mb-0 mt-1">Please sign in to your account</p>
+                    <h3 class="text-dark fw-bold mb-0" data-i18n="Login">@Localizer["Login"]</h3>
+                    <p class="text-muted small mb-0 mt-1" data-i18n="PleaseSignInToYourAccount">Please sign in to your
+                        account</p>
                 </div>
                 <div class="card-body p-4 p-md-5 bg-white">
                     @if (TempData["SuccessMessage"] != null)
@@ -27,50 +30,56 @@
                                     <i class="bi bi-x-circle-fill me-2"></i>
                                     @ViewBag.ErrorMessage
                                 </div>
-                                <a asp-action="ForgotPassword"
-                                    class="btn btn-sm btn-outline-danger border-0 fw-bold py-0">Forgot?</a>
+                                <a asp-action="ForgotPassword" class="btn btn-sm btn-outline-danger border-0 fw-bold py-0"
+                                    data-i18n="Forgot">Forgot?</a>
                             </div>
                         </div>
                     }
 
                     <form asp-action="Login" method="post" autocomplete="off">
                         <div class="mb-3">
-                            <label asp-for="Email" class="form-label text-muted small fw-bold">Email</label>
+                            <label asp-for="Email" class="form-label text-muted small fw-bold"
+                                data-i18n="Email">Email</label>
                             <input asp-for="Email" class="form-control bg-light border-0 shadow-none py-2"
-                                placeholder="enter email" required autocomplete="off" />
+                                data-i18n-placeholder="EnterEmail" placeholder="@Localizer["EnterEmail"]" required
+                                autocomplete="off" />
                             <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Password" class="form-label text-muted small fw-bold">Password</label>
+                            <label asp-for="Password" class="form-label text-muted small fw-bold"
+                                data-i18n="Password">Password</label>
                             <input asp-for="Password" type="password"
-                                class="form-control bg-light border-0 shadow-none py-2" placeholder="enter password"
-                                required autocomplete="new-password" />
+                                class="form-control bg-light border-0 shadow-none py-2"
+                                data-i18n-placeholder="EnterPassword" placeholder="@Localizer["EnterPassword"]" required
+                                autocomplete="new-password" />
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
 
                         <div class="text-end mb-4">
-                            <a asp-action="ForgotPassword"
-                                class="text-primary extra-small text-decoration-none fw-bold">Forgot Password?</a>
+                            <a asp-action="ForgotPassword" class="text-primary extra-small text-decoration-none fw-bold"
+                                data-i18n="ForgotPassword">Forgot Password?</a>
                         </div>
 
                         <div class="d-grid mt-4">
                             <button type="submit"
                                 class="btn btn-primary btn-lg rounded-3 py-2 fw-bold transition-all shadow-sm border-0"
                                 style="background: linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%); font-size: 1rem;">
-                                Login
+                                <span data-i18n="Login">@Localizer["Login"]</span>
                             </button>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer bg-light py-3 text-center border-0">
                     <div class="mb-2">
-                        <span class="text-muted extra-small">Don't have an account? </span>
-                        <a asp-action="SignUp"
-                            class="text-primary extra-small text-decoration-none fw-bold">Register</a>
+                        <span class="text-muted extra-small" data-i18n="DontHaveAnAccount">Don't have an account?
+                        </span>
+                        <a asp-action="SignUp" class="text-primary extra-small text-decoration-none fw-bold"
+                            data-i18n="Register">Register</a>
                     </div>
                     <hr class="my-2 opacity-25">
-                    <span class="text-muted extra-small">© @DateTime.Now.Year Secure Portal</span>
+                    <span class="text-muted extra-small">© @DateTime.Now.Year <span data-i18n="SecurePortal">Secure
+                            Portal</span></span>
                 </div>
             </div>
         </div>

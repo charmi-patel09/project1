@@ -1,12 +1,15 @@
 @model JsonCrudApp.Models.Student
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Edit Student";
+    ViewData["Title"] = Localizer["EditStudent"];
+    ViewData["TitleKey"] = "EditStudent";
 }
 
-<h1>Edit Student</h1>
+<h1 data-i18n="EditStudent">@Localizer["EditStudent"]</h1>
 
-<h4>Student</h4>
+<h4 data-i18n="Student">@Localizer["Student"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,33 +17,33 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group mb-3">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label" data-i18n="Name">@Localizer["Name"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label" data-i18n="Email">@Localizer["Email"]</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Password" class="control-label"></label>
+                <label asp-for="Password" class="control-label" data-i18n="Password">@Localizer["Password"]</label>
                 <input asp-for="Password" type="password" class="form-control" value="@Model.Password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Age" class="control-label"></label>
+                <label asp-for="Age" class="control-label" data-i18n="Age">@Localizer["Age"]</label>
                 <input asp-for="Age" class="form-control" />
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Course" class="control-label"></label>
+                <label asp-for="Course" class="control-label" data-i18n="Course">@Localizer["Course"]</label>
                 <input asp-for="Course" class="form-control" />
                 <span asp-validation-for="Course" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" data-i18n="Save" />
+                <a asp-action="Index" class="btn btn-secondary" data-i18n="BackToList">@Localizer["BackToList"]</a>
             </div>
         </form>
     </div>

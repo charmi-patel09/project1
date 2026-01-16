@@ -6,20 +6,20 @@ namespace JsonCrudApp.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "field is required")]
-        [EmailAddress(ErrorMessage = "Invalid email format")]
+        [Required(ErrorMessage = "Required")]
+        [EmailAddress(ErrorMessage = "InvalidEmail")]
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "field is required")]
+        [Required(ErrorMessage = "Required")]
         public string? Password { get; set; }
 
-        [Required(ErrorMessage = "field is required")]
+        [Required(ErrorMessage = "Required")]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "field is required")]
+        [Required(ErrorMessage = "Required")]
         public int? Age { get; set; }
 
-        [Required(ErrorMessage = "field is required")]
+        [Required(ErrorMessage = "Required")]
         public string? Course { get; set; }
     }
 }

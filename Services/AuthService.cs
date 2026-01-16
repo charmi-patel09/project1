@@ -102,7 +102,7 @@ namespace JsonCrudApp.Services
             return true;
         }
 
-        public bool RegisterStudent(string email, string password)
+        public bool RegisterStudent(string email, string password, string name = "New Student", int age = 18, string course = "General")
         {
             if (UserExists(email)) return false;
 
@@ -110,9 +110,9 @@ namespace JsonCrudApp.Services
             {
                 Email = email,
                 Password = HashPassword(password),
-                Name = "New Student",
-                Age = 18,
-                Course = "General"
+                Name = name,
+                Age = age,
+                Course = course
             };
             _studentService.AddStudent(student);
             return true;
@@ -204,68 +204,74 @@ namespace JsonCrudApp.Services
             }
         }
 
-        public bool ValidateUser(string email, string password, out string? errorMessage)
+        public bool ValidateAdmin(string email, string password, out string? errorMessage)
         {
             errorMessage = null;
-            bool isValid = false;
-            bool needsUpgrade = false;
-
-            // Check Registered Users
             var users = GetAdminCredentials();
             var user = users.FirstOrDefault(u => u.Email == email);
-            if (user != null)
+
+            if (user == null)
             {
-                if (user.AccessFailedCount >= 3)
-                {
-                    errorMessage = "Account locked due to 3 failed attempts. Please use Forgot Password to reset.";
-                    return false;
-                }
-
-                if (VerifyPassword(password, user.Password!))
-                {
-                    isValid = true;
-                    if (user.AccessFailedCount > 0) user.AccessFailedCount = 0;
-
-                    // If it was plain text, upgrade it to hash
-                    if (user.Password != HashPassword(password))
-                    {
-                        user.Password = HashPassword(password);
-                        needsUpgrade = true;
-                    }
-                }
-                else
-                {
-                    user.AccessFailedCount++;
-                    needsUpgrade = true; // Still need to save the incremented count
-                    errorMessage = $"Invalid credentials. Attempt {user.AccessFailedCount} of 3.";
-                    if (user.AccessFailedCount >= 3)
-                    {
-                        errorMessage = "Account locked. Please reset your password.";
-                    }
-                }
+                errorMessage = "Admin account not found.";
+                return false;
             }
 
-            if (needsUpgrade || isValid) // Always save if we incremented or reset
+            if (user.AccessFailedCount >= 3)
             {
+                errorMessage = "Account locked due to 3 failed attempts. Please use Forgot Password to reset.";
+                return false;
+            }
+
+            if (VerifyPassword(password, user.Password!))
+            {
+                if (user.AccessFailedCount > 0)
+                {
+                    user.AccessFailedCount = 0;
+                    var json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(JsonFileName, json);
+                }
+                return true;
+            }
+            else
+            {
+                user.AccessFailedCount++;
                 var json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(JsonFileName, json);
+                errorMessage = $"Invalid credentials. Attempt {user.AccessFailedCount} of 3.";
+                if (user.AccessFailedCount >= 3)
+                {
+                    errorMessage = "Account locked. Please reset your password.";
+                }
+                return false;
             }
+        }
 
-            if (isValid) return true;
-
-            // Check Students (Assuming students also have passwords)
+        public bool ValidateStudent(string email, string password, out string? errorMessage)
+        {
+            errorMessage = null;
             var students = _studentService.GetStudents();
             var student = students.FirstOrDefault(s => s.Email == email);
-            if (student != null)
+
+            if (student == null)
             {
-                if (VerifyPassword(password, student.Password!))
-                {
-                    return true;
-                }
+                errorMessage = "Student account not found (unregistered email).";
+                return false;
             }
 
-            if (errorMessage == null) errorMessage = "Invalid email or password";
+            if (VerifyPassword(password, student.Password!))
+            {
+                return true;
+            }
+
+            errorMessage = "Incorrect password.";
             return false;
+        }
+
+        [Obsolete("Use ValidateAdmin or ValidateStudent instead")]
+        public bool ValidateUser(string email, string password, out string? errorMessage)
+        {
+            if (ValidateAdmin(email, password, out errorMessage)) return true;
+            return ValidateStudent(email, password, out errorMessage);
         }
     }
 }

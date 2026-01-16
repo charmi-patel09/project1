@@ -7,10 +7,18 @@ namespace JsonCrudApp.Controllers
     public class StudentsController : BaseController
     {
         private readonly JsonFileStudentService _studentService;
+        private readonly AuthService _authService;
+        private readonly OtpService _otpService;
+        private readonly EmailService _emailService;
+        private readonly Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> _localizer;
 
-        public StudentsController(JsonFileStudentService studentService)
+        public StudentsController(JsonFileStudentService studentService, AuthService authService, OtpService otpService, EmailService emailService, Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> localizer)
         {
             _studentService = studentService;
+            _authService = authService;
+            _otpService = otpService;
+            _emailService = emailService;
+            _localizer = localizer;
         }
 
         public IActionResult Index()
@@ -30,12 +38,31 @@ namespace JsonCrudApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _studentService.AddStudent(student);
-                return RedirectToAction(nameof(Index));
+                if (!_authService.UserExists(student.Email!))
+                {
+                    // Initiate OTP Flow for Student Creation
+                    string otp = _otpService.GenerateOtp();
+                    DateTime expiry = DateTime.Now.AddMinutes(2);
+
+                    _emailService.SendOtpEmail(student.Email!, otp);
+
+                    // Store temp session
+                    HttpContext.Session.SetString("PendingUserEmail", student.Email ?? "");
+                    HttpContext.Session.SetString("PendingUserPassword", student.Password ?? "");
+                    HttpContext.Session.SetString("PendingUserName", student.Name ?? "");
+                    HttpContext.Session.SetString("PendingUserAge", student.Age.ToString());
+                    HttpContext.Session.SetString("PendingUserCourse", student.Course ?? "");
+                    HttpContext.Session.SetString("PendingUserType", "Student");
+                    HttpContext.Session.SetString("OtpPurpose", "StudentCreation");
+                    HttpContext.Session.SetString("OtpCode", otp);
+                    HttpContext.Session.SetString("OtpExpiry", expiry.ToString("O"));
+
+                    return RedirectToAction("VerifyOtp", "Account");
+                }
+                ModelState.AddModelError("Email", _localizer["UserWithEmailExists"]);
             }
-            // Always clear model state and return a blank model for a fresh UI
-            ModelState.Clear();
-            return View(new Student());
+
+            return View(student);
         }
 
         public IActionResult Edit(int id)

@@ -4,11 +4,11 @@ namespace JsonCrudApp.Models
 {
     public class AdminUser
     {
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email format")]
+        [Required(ErrorMessage = "Required")]
+        [EmailAddress(ErrorMessage = "InvalidEmail")]
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "Required")]
         public string? Password { get; set; }
 
         public int AccessFailedCount { get; set; } = 0;

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Dashboard" xml:space="preserve">
+    <value>डॅशबोर्ड</value>
+  </data>
+  <data name="Students" xml:space="preserve">
+    <value>विद्यार्थी</value>
+  </data>
+  <data name="Analytics" xml:space="preserve">
+    <value>विश्लेषण</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>गोपनीयता</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>तपशील</value>
+  </data>
+  <data name="StudentList" xml:space="preserve">
+    <value>विद्यार्थी यादी</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>तयार करा</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>यादीवर परत जा</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>संपादित करा</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>हटवा</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>जतन करा</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>नाव</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>वय</value>
+  </data>
+  <data name="Course" xml:space="preserve">
+    <value>अभ्यासक्रम</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ईमेल</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>पासवर्ड</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>कृती</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>अद्यतनित करा</value>
+  </data>
+  <data name="Student" xml:space="preserve">
+    <value>विद्यार्थी</value>
+  </data>
+  <data name="StudentDetails" xml:space="preserve">
+    <value>विद्यार्थी तपशील</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThis" xml:space="preserve">
+    <value>तुम्ही नक्की हटवू इच्छिता?</value>
+  </data>
+  <data name="DeleteStudent" xml:space="preserve">
+    <value>विद्यार्थी हटवा</value>
+  </data>
+  <data name="CreateStudent" xml:space="preserve">
+    <value>विद्यार्थी तयार करा</value>
+  </data>
+  <data name="EditStudent" xml:space="preserve">
+    <value>विद्यार्थी संपादित करा</value>
+  </data>
+  <data name="ManageAndViewAllRegisteredStudents" xml:space="preserve">
+    <value>सर्व नोंदणीकृत विद्यार्थी व्यवस्थापित करा आणि पहा</value>
+  </data>
+  <data name="AllStudents" xml:space="preserve">
+    <value>सर्व विद्यार्थी</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>एकूण</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>वर्षे</value>
+  </data>
+  <data name="StartByCreatingYourFirstStudentRecord" xml:space="preserve">
+    <value>तुमची पहिली विद्यार्थी नोंद तयार करून सुरुवात करा</value>
+  </data>
+  <data name="NoStudentsFound" xml:space="preserve">
+    <value>कोणतेही विद्यार्थी आढळले नाहीत</value>
+  </data>
+  <data name="GlobalIntelligenceDashboard" xml:space="preserve">
+    <value>जागतिक गुप्तचर डॅशबोर्ड</value>
+  </data>
+  <data name="GlobalSatelliteLinkActive" xml:space="preserve">
+    <value>जागतिक उपग्रह लिंक सक्रिय</value>
+  </data>
+  <data name="IntelligenceHub" xml:space="preserve">
+    <value>गुप्तचर केंद्र</value>
+  </data>
+  <data name="TelemetryFor" xml:space="preserve">
+    <value>साठी टेलिमेट्री:</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>ऑपरेटर</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>हवामान</value>
+  </data>
+  <data name="DeepSpaceMeteorologicalTelemetry" xml:space="preserve">
+    <value>डीप स्पेस हवामान टेलिमेट्री</value>
+  </data>
+  <data name="LocateAnyCityOrCountry" xml:space="preserve">
+    <value>कोणतेही शहर किंवा देश शोधा...</value>
+  </data>
+  <data name="Analyze" xml:space="preserve">
+    <value>विश्लेषण</value>
+  </data>
+  <data name="CurrencyExchange" xml:space="preserve">
+    <value>चलन विनिमय</value>
+  </data>
+  <data name="GlobalValuationProtocols" xml:space="preserve">
+    <value>जागतिक मूल्यांकन प्रोटोकॉल</value>
+  </data>
+  <data name="TransactionVolume" xml:space="preserve">
+    <value>व्यवहार खंड</value>
+  </data>
+  <data name="BaseLocation" xml:space="preserve">
+    <value>मूळ स्थान</value>
+  </data>
+  <data name="TargetLocation" xml:space="preserve">
+    <value>लक्ष्य स्थान</value>
+  </data>
+  <data name="RefreshValuation" xml:space="preserve">
+    <value>मूल्यांकन रिफ्रेश करा</value>
+  </data>
+  <data name="RealTimeFiscalTelemetry" xml:space="preserve">
+    <value>रिअल-टाइम आर्थिक टेलिमेट्री</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>थेट</value>
+  </data>
+  <data name="CurrencyOriginReference" xml:space="preserve">
+    <value>चलन मूळ संदर्भ</value>
+  </data>
+  <data name="TimeZone" xml:space="preserve">
+    <value>वेळ क्षेत्र</value>
+  </data>
+  <data name="UniversalTimeCoordination" xml:space="preserve">
+    <value>युनिव्हर्सल टाइम कोऑर्डिनेशन</value>
+  </data>
+  <data name="SystemBaseTime" xml:space="preserve">
+    <value>सिस्टम बेस टाइम</value>
+  </data>
+  <data name="CoordinateZone" xml:space="preserve">
+    <value>समन्वय झोन</value>
+  </data>
+  <data name="general" xml:space="preserve">
+    <value>सामान्य</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>सामान्य</value>
+  </data>
+  <data name="bca" xml:space="preserve">
+    <value>बीसीए</value>
+  </data>
+  <data name="BCA" xml:space="preserve">
+    <value>बीसीए</value>
+  </data>
+  <data name="GlobalSearch" xml:space="preserve">
+    <value>जागतिक शोध</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>शहर किंवा देश शोधा...</value>
+  </data>
+  <data name="CountryProfile" xml:space="preserve">
+    <value>देश प्रोफाइल</value>
+  </data>
+  <data name="CityDetails" xml:space="preserve">
+    <value>शहर तपशील</value>
+  </data>
+  <data name="Population" xml:space="preserve">
+    <value>लोकसंख्या</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>प्रदेश</value>
+  </data>
+  <data name="Capital" xml:space="preserve">
+    <value>राजधानी</value>
+  </data>
+  <data name="Coordinates" xml:space="preserve">
+    <value>निर्देशांक</value>
+  </data>
+  <data name="NoResult" xml:space="preserve">
+    <value>कोणताही परिणाम आढळला नाही</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>नोट्स</value>
+  </data>
+  <data name="PersonalLog" xml:space="preserve">
+    <value>वैयक्तिक लॉग</value>
+  </data>
+  <data name="NewNote" xml:space="preserve">
+    <value>नवीन नोट</value>
+  </data>
+  <data name="NoteTitle" xml:space="preserve">
+    <value>शीर्षक</value>
+  </data>
+  <data name="NoteDetails" xml:space="preserve">
+    <value>तपशील</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>रद्द करा</value>
+  </data>
+  <data name="SaveNote" xml:space="preserve">
+    <value>नोट जतन करा</value>
+  </data>
+</root>

@@ -1,54 +1,491 @@
 @model IEnumerable<JsonCrudApp.Models.Student>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Students";
+    ViewData["Title"] = Localizer["StudentList"];
+    ViewData["TitleKey"] = "StudentList";
 }
 
-<h1>Students</h1>
+<div class="students-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="header-text">
+                <h1 data-i18n="StudentList">@Localizer["StudentList"]</h1>
+                <p data-i18n="ManageAndViewAllRegisteredStudents">@Localizer["ManageAndViewAllRegisteredStudents"]</p>
+            </div>
+        </div>
+        <a asp-action="Create" class="btn-create">
+            <i class="fas fa-plus"></i> <span data-i18n="Create">@Localizer["Create"]</span>
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Course)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Course)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Update</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-            </tr>
+    <!-- Students Table Card -->
+    <div class="table-card">
+        <div class="table-card-header">
+            <h5 data-i18n="AllStudents">@Localizer["AllStudents"]</h5>
+            <div class="table-info">
+                <i class="fas fa-users"></i>
+                <span>@Model.Count() <span data-i18n="Total">@Localizer["Total"]</span></span>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="students-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="Name">
+                            <i class="fas fa-user"></i>
+                            <span data-i18n="Name">@Localizer["Name"]</span>
+                        </th>
+                        <th data-i18n="Email">
+                            <i class="fas fa-envelope"></i>
+                            <span data-i18n="Email">@Localizer["Email"]</span>
+                        </th>
+                        <th data-i18n="Age">
+                            <i class="fas fa-calendar"></i>
+                            <span data-i18n="Age">@Localizer["Age"]</span>
+                        </th>
+                        <th data-i18n="Course">
+                            <i class="fas fa-book"></i>
+                            <span data-i18n="Course">@Localizer["Course"]</span>
+                        </th>
+                        <th class="actions-column">
+                            <i class="fas fa-cog"></i>
+                            <span data-i18n="Actions">@Localizer["Actions"]</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="student-cell">
+                                        <div class="student-avatar">
+                                            @(item.Name?.Substring(0, 1).ToUpper() ?? "S")
+                                        </div>
+                                        <span class="student-name">@Html.DisplayFor(modelItem => item.Name)</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="email-text">@Html.DisplayFor(modelItem => item.Email)</span>
+                                </td>
+                                <td>
+                                    <span class="age-badge">@Html.DisplayFor(modelItem => item.Age) <span
+                                            data-i18n="Years">@Localizer["Years"]</span></span>
+                                </td>
+                                <td>
+                                    <span class="course-tag" data-i18n="@(item.Course ?? "")">@Localizer[item.Course ?? ""]</span>
+                                </td>
+                                <td class="actions-cell">
+                                    <div class="action-buttons">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-details"
+                                            title="Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete"
+                                            title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <div class="empty-content">
+                                    <i class="fas fa-inbox"></i>
+                                    <h4 data-i18n="NoStudentsFound">@Localizer["NoStudentsFound"]</h4>
+                                    <p data-i18n="StartByCreatingYourFirstStudentRecord">
+                                        @Localizer["StartByCreatingYourFirstStudentRecord"]</p>
+                                    <a asp-action="Create" class="btn-create-inline">
+                                        <i class="fas fa-plus"></i> <span data-i18n="Create">@Localizer["Create"]</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .students-container {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: #e6edf3;
+    }
+
+    /* Page Header */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 28px;
+        padding: 28px;
+        background: linear-gradient(135deg, #1c2128 0%, #2d333b 100%);
+        border: 1px solid rgba(48, 54, 61, 0.8);
+        border-radius: 16px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(circle, rgba(88, 166, 255, 0.08) 0%, transparent 70%);
+        border-radius: 50%;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .header-icon {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+    }
+
+    .header-text h1 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin: 0 0 4px 0;
+        color: #f0f6fc;
+    }
+
+    .header-text p {
+        margin: 0;
+        color: #8b949e;
+        font-size: 0.95rem;
+    }
+
+    .btn-create {
+        position: relative;
+        z-index: 1;
+        background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-create:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
+        color: #fff;
+    }
+
+    .btn-create i {
+        font-size: 0.9rem;
+    }
+
+    /* Table Card */
+    .table-card {
+        background: linear-gradient(135deg, #161b22 0%, #1c2128 100%);
+        border: 1px solid rgba(48, 54, 61, 0.8);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .table-card-header {
+        padding: 24px;
+        border-bottom: 1px solid rgba(48, 54, 61, 0.8);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(48, 54, 61, 0.2);
+    }
+
+    .table-card-header h5 {
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin: 0;
+        color: #f0f6fc;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .table-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #8b949e;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .table-info i {
+        color: #58a6ff;
+    }
+
+    /* Table Wrapper */
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    /* Students Table */
+    .students-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .students-table thead {
+        background: rgba(48, 54, 61, 0.3);
+    }
+
+    .students-table th {
+        padding: 18px 24px;
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #8b949e;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: none;
+    }
+
+    .students-table th i {
+        margin-right: 6px;
+        color: #58a6ff;
+    }
+
+    .students-table td {
+        padding: 18px 24px;
+        border-top: 1px solid rgba(48, 54, 61, 0.5);
+        color: #e6edf3;
+        font-size: 0.95rem;
+    }
+
+    .students-table tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .students-table tbody tr:hover {
+        background: rgba(88, 166, 255, 0.05);
+        transform: scale(1.01);
+    }
+
+    /* Student Cell */
+    .student-cell {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .student-avatar {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .student-name {
+        font-weight: 700;
+        color: #f0f6fc;
+    }
+
+    .email-text {
+        color: #8b949e;
+        font-size: 0.9rem;
+    }
+
+    .age-badge {
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(52, 211, 153, 0.15);
+        color: #34d399;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .course-tag {
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(88, 166, 255, 0.15);
+        color: #58a6ff;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    /* Actions Column */
+    .actions-column {
+        text-align: center;
+    }
+
+    .actions-cell {
+        text-align: center;
+    }
+
+    .action-buttons {
+        display: inline-flex;
+        gap: 8px;
+    }
+
+    .btn-action {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .btn-edit {
+        background: rgba(251, 191, 36, 0.15);
+        color: #fbbf24;
+        border-color: rgba(251, 191, 36, 0.3);
+    }
+
+    .btn-edit:hover {
+        background: rgba(251, 191, 36, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    }
+
+    .btn-details {
+        background: rgba(88, 166, 255, 0.15);
+        color: #58a6ff;
+        border-color: rgba(88, 166, 255, 0.3);
+    }
+
+    .btn-details:hover {
+        background: rgba(88, 166, 255, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+    }
+
+    .btn-delete {
+        background: rgba(248, 81, 73, 0.15);
+        color: #f85149;
+        border-color: rgba(248, 81, 73, 0.3);
+    }
+
+    .btn-delete:hover {
+        background: rgba(248, 81, 73, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(248, 81, 73, 0.3);
+    }
+
+    /* Empty State */
+    .empty-state {
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    .empty-content {
+        text-align: center;
+        padding: 80px 40px;
+    }
+
+    .empty-content i {
+        font-size: 4rem;
+        color: #6e7681;
+        margin-bottom: 20px;
+    }
+
+    .empty-content h4 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #f0f6fc;
+        margin: 0 0 8px 0;
+    }
+
+    .empty-content p {
+        color: #8b949e;
+        margin: 0 0 24px 0;
+        font-size: 0.95rem;
+    }
+
+    .btn-create-inline {
+        background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-create-inline:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
+        color: #fff;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start;
         }
-    </tbody>
-</table>
+
+        .students-table {
+            font-size: 0.85rem;
+        }
+
+        .students-table th,
+        .students-table td {
+            padding: 12px 16px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>

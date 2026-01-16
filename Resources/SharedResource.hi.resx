@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="0" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Dashboard" xml:space="preserve">
+    <value>डैशबोर्ड</value>
+  </data>
+  <data name="Analytics" xml:space="preserve">
+    <value>एनालिटिक्स</value>
+  </data>
+  <data name="Students" xml:space="preserve">
+    <value>छात्र</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>गोपनीयता</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>लॉगआउट</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>स्वागत है</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>सहेजें</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>संपादित करें</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>हटाएं</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>विवरण</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>सूची पर वापस जाएं</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>नया बनाएँ</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>कार्रवाई</value>
+  </data>
+  <data name="StudentPortal" xml:space="preserve">
+    <value>छात्र पोर्टल</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>मुख्य</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>प्रबंधन</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>प्रशासक</value>
+  </data>
+  <data name="Student" xml:space="preserve">
+    <value>छात्र</value>
+  </data>
+  <data name="GlobalIntelligenceDashboard" xml:space="preserve">
+    <value>वैश्विक इंटेलिजेंस डैशबोर्ड</value>
+  </data>
+  <data name="GlobalSatelliteLinkActive" xml:space="preserve">
+    <value>वैश्विक सैटेलाइट लिंक सक्रिय</value>
+  </data>
+  <data name="IntelligenceHub" xml:space="preserve">
+    <value>इंटेलिजेंस हब</value>
+  </data>
+  <data name="TelemetryFor" xml:space="preserve">
+    <value>टेलीमेट्री किसके लिए:</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>ऑपरेटर</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>मौसम</value>
+  </data>
+  <data name="DeepSpaceMeteorologicalTelemetry" xml:space="preserve">
+    <value>गहन अंतरिक्ष मौसम विज्ञान टेलीमेट्री</value>
+  </data>
+  <data name="LocateAnyCityOrCountry" xml:space="preserve">
+    <value>किसी भी शहर या देश का पता लगाएं...</value>
+  </data>
+  <data name="Analyze" xml:space="preserve">
+    <value>विश्लेषण करें</value>
+  </data>
+  <data name="CurrencyExchange" xml:space="preserve">
+    <value>मुद्रा विनिमय</value>
+  </data>
+  <data name="GlobalValuationProtocols" xml:space="preserve">
+    <value>वैश्विक मूल्यांकन प्रोटोकॉल</value>
+  </data>
+  <data name="TransactionVolume" xml:space="preserve">
+    <value>लेन-देन की मात्रा</value>
+  </data>
+  <data name="BaseLocation" xml:space="preserve">
+    <value>आधार स्थान</value>
+  </data>
+  <data name="TargetLocation" xml:space="preserve">
+    <value>लक्ष्य स्थान</value>
+  </data>
+  <data name="RefreshValuation" xml:space="preserve">
+    <value>मूल्यांकन ताज़ा करें</value>
+  </data>
+  <data name="RealTimeFiscalTelemetry" xml:space="preserve">
+    <value>रीअल-टाइम वित्तीय टेलीमेट्री</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>लाइव</value>
+  </data>
+  <data name="CurrencyOriginReference" xml:space="preserve">
+    <value>मुद्रा उत्पत्ति संदर्भ</value>
+  </data>
+  <data name="TimeZone" xml:space="preserve">
+    <value>समय क्षेत्र</value>
+  </data>
+  <data name="UniversalTimeCoordination" xml:space="preserve">
+    <value>यूनिवर्सल टाइम कोऑर्डिनेशन</value>
+  </data>
+  <data name="SystemBaseTime" xml:space="preserve">
+    <value>सिस्टम बेस समय</value>
+  </data>
+  <data name="CoordinateZone" xml:space="preserve">
+    <value>निर्देशांक क्षेत्र</value>
+  </data>
+  <data name="StudentList" xml:space="preserve">
+    <value>छात्र सूची</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>नाम</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ईमेल</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>उम्र</value>
+  </data>
+  <data name="Course" xml:space="preserve">
+    <value>कोर्स</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>यह फ़ील्ड अनिवार्य है</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>ईमेल प्रारूप अमान्य है</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>साइन अप करें</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>लॉगिन</value>
+  </data>
+  <data name="CreateYourAccount" xml:space="preserve">
+    <value>अपना खाता बनाएं</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>ईमेल पता</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>पासवर्ड की पुष्टि करें</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>ईमेल दर्ज करें</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>पासवर्ड दर्ज करें</value>
+  </data>
+  <data name="ConfirmPasswordPlaceholder" xml:space="preserve">
+    <value>पासवर्ड की पुष्टि करें</value>
+  </data>
+  <data name="AlreadyHaveAnAccount" xml:space="preserve">
+    <value>क्या आपके पास पहले से एक खाता है?</value>
+  </data>
+  <data name="UserWithEmailExists" xml:space="preserve">
+    <value>इस ईमेल वाला उपयोगकर्ता पहले से मौजूद है।</value>
+  </data>
+  <data name="StudentAccountCreated" xml:space="preserve">
+    <value>छात्र खाता सफलतापूर्वक बनाया गया!</value>
+  </data>
+  <data name="OtpExpired" xml:space="preserve">
+    <value>OTP की समय सीमा समाप्त हो गई है। कृपया फिर से लॉगिन करने का प्रयास करें।</value>
+  </data>
+  <data name="InvalidOtp" xml:space="preserve">
+    <value>अमान्य OTP कोड। कृपया अपना ईमेल जांचें और पुनः प्रयास करें।</value>
+  </data>
+  <data name="SessionExpired" xml:space="preserve">
+    <value>सत्र समाप्त हो गया। कृपया फिर से लॉग इन करने का प्रयास करें।</value>
+  </data>
+  <data name="EmailNotRegistered" xml:space="preserve">
+    <value>यह ईमेल हमारे सिस्टम में पंजीकृत नहीं है।</value>
+  </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value>गलत पासवर्ड। कृपया पुनः प्रयास करें।</value>
+  </data>
+  <data name="PasswordResetLinkSent" xml:space="preserve">
+    <value>आपके ईमेल पर पासवर्ड रीसेट लिंक भेज दिया गया है।</value>
+  </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>ईमेल नहीं मिला।</value>
+  </data>
+  <data name="InvalidResetToken" xml:space="preserve">
+    <value>अमान्य या समाप्त हो चुका रीसेट टोकन।</value>
+  </data>
+  <data name="PasswordResetSuccessful" xml:space="preserve">
+    <value>पासवर्ड रीसेट सफल रहा। अब आप लॉगिन कर सकते हैं।</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>पासवर्ड भूल गए</value>
+  </data>
+  <data name="EnterEmailToResetPassword" xml:space="preserve">
+    <value>अपना पासवर्ड रीसेट करने के लिए अपना ईमेल दर्ज करें</value>
+  </data>
+  <data name="SendResetLink" xml:space="preserve">
+    <value>रीसेट लिंक भेजें</value>
+  </data>
+  <data name="BackTo" xml:space="preserve">
+    <value>वापस</value>
+  </data>
+  <data name="Forgot" xml:space="preserve">
+    <value>भूल गए?</value>
+  </data>
+  <data name="VerifyOtp" xml:space="preserve">
+    <value>OTP सत्यापित करें</value>
+  </data>
+  <data name="CheckYourEmailForCode" xml:space="preserve">
+    <value>कोड के लिए अपना पंजीकृत ईमेल जांचें</value>
+  </data>
+  <data name="VerificationCode" xml:space="preserve">
+    <value>सत्यापन कोड</value>
+  </data>
+  <data name="VerifyCode" xml:space="preserve">
+    <value>कोड सत्यापित करें</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>पासवर्ड रीसेट करें</value>
+  </data>
+  <data name="SetYourNewPassword" xml:space="preserve">
+    <value>अपना नया पासवर्ड सेट करें</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>नया पासवर्ड</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>नया पासवर्ड दर्ज करें</value>
+  </data>
+  <data name="ConfirmNewPasswordPlaceholder" xml:space="preserve">
+    <value>नए पासवर्ड की पुष्टि करें</value>
+  </data>
+  <data name="CreateStudent" xml:space="preserve">
+    <value>छात्र बनाएं</value>
+  </data>
+  <data name="EditStudent" xml:space="preserve">
+    <value>छात्र संपादित करें</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>सूची पर वापस जाएं</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>सहेजें</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>नवीनीकरण</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>विवरण</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>मिटाना</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThis" xml:space="preserve">
+    <value>क्या आप वाकई इसे हटाना चाहते हैं?</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>पासवर्ड</value>
+  </data>
+  <data name="PleaseSignInToYourAccount" xml:space="preserve">
+    <value>कृपया अपने खाते में लॉगिन करें</value>
+  </data>
+  <data name="DontHaveAnAccount" xml:space="preserve">
+    <value>खाता नहीं है?</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>पंजीकरण करें</value>
+  </data>
+  <data name="SecurePortal" xml:space="preserve">
+    <value>सुरक्षित पोर्टल</value>
+  </data>
+  <data name="ManageAndViewAllRegisteredStudents" xml:space="preserve">
+    <value>सभी पंजीकृत छात्रों को प्रबंधित करें और देखें</value>
+  </data>
+  <data name="AllStudents" xml:space="preserve">
+    <value>सभी छात्र</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>कुल</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>वर्ष</value>
+  </data>
+  <data name="NoStudentsFound" xml:space="preserve">
+    <value>कोई छात्र नहीं मिला</value>
+  </data>
+  <data name="StartByCreatingYourFirstStudentRecord" xml:space="preserve">
+    <value>अपना पहला छात्र रिकॉर्ड बनाकर शुरुआत करें</value>
+  </data>
+  <data name="Humidity" xml:space="preserve">
+    <value>नमी</value>
+  </data>
+  <data name="WindVelocity" xml:space="preserve">
+    <value>हवा की गति</value>
+  </data>
+  <data name="NodeNotFound" xml:space="preserve">
+    <value>नोड नहीं मिला</value>
+  </data>
+  <data name="InitialisingSatelliteLink" xml:space="preserve">
+    <value>सैटेलाइट लिंक शुरू किया जा रहा है...</value>
+  </data>
+  <data name="TriangulatingSatelliteUplink" xml:space="preserve">
+    <value>सैटेलाइट अपलिंक की गणना की जा रही है...</value>
+  </data>
+  <data name="UplinkInterrupted" xml:space="preserve">
+    <value>अपलिंक बाधित: जियोलोकेशन से इनकार किया गया</value>
+  </data>
+  <data name="SyncingGlobalNodes" xml:space="preserve">
+    <value>वैश्विक नोड्स सिंक किए जा रहे हैं...</value>
+  </data>
+  <data name="NodesActive" xml:space="preserve">
+    <value>नोड्स सक्रिय</value>
+  </data>
+  <data name="NodeActive" xml:space="preserve">
+    <value>नोड सक्रिय</value>
+  </data>
+  <data name="LastSync" xml:space="preserve">
+    <value>अंतिम सिंक</value>
+  </data>
+  <data name="InitializingSensorLink" xml:space="preserve">
+    <value>सेंसर लिंक शुरू किया जा रहा है...</value>
+  </data>
+  <data name="SatelliteLinkFailure" xml:space="preserve">
+    <value>सैटेलाइट लिंक विफलता</value>
+  </data>
+  <data name="SyncingNewBaseRates" xml:space="preserve">
+    <value>नई आधार दरें सिंक की जा रही हैं...</value>
+  </data>
+  <data name="RealCurrency" xml:space="preserve">
+    <value>असली मुद्रा</value>
+  </data>
+  <data name="ExchangeTarget" xml:space="preserve">
+    <value>विनिमय लक्ष्य</value>
+  </data>
+  <data name="OptimizedAtmosphere" xml:space="preserve">
+    <value>अनुकूलित वातावरण</value>
+  </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>ईमेल पता नहीं मिला।</value>
+  </data>
+  <data name="InvalidResetToken" xml:space="preserve">
+    <value>अमान्य या समाप्त हो चुका रीसेट टोकन।</value>
+  </data>
+  <data name="PasswordResetSuccessful" xml:space="preserve">
+    <value>पासवर्ड सफलतापूर्वक रीसेट हो गया! अब आप लॉगिन कर सकते हैं।</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>पासवर्ड भूल गए</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>पासवर्ड रीसेट करें</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>नया पासवर्ड</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>नए पासवर्ड की पुष्टि करें</value>
+  </data>
+  <data name="SendResetLink" xml:space="preserve">
+    <value>रीसेट लिंक भेजें</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>सत्यापित करें</value>
+  </data>
+  <data name="ResendOtp" xml:space="preserve">
+    <value>ओटीपी पुनः भेजें</value>
+  </data>
+  <data name="CheckYourEmailForCode" xml:space="preserve">
+    <value>कृपया सत्यापन कोड के लिए अपना ईमेल जांचें।</value>
+  </data>
+  <data name="EnterCode" xml:space="preserve">
+    <value>कोड दर्ज करें</value>
+  </data>
+  <data name="VerificationHeader" xml:space="preserve">
+    <value>सत्यापन आवश्यक</value>
+  </data>
+  <data name="EnterEmailToResetPassword" xml:space="preserve">
+    <value>रीसेट लिंक प्राप्त करने के लिए अपना ईमेल दर्ज करें।</value>
+  </data>
+  <data name="BackTo" xml:space="preserve">
+    <value>पीछे</value>
+  </data>
+  <data name="VerifyCode" xml:space="preserve">
+    <value>कोड सत्यापित करें</value>
+  </data>
+  <data name="VerificationCode" xml:space="preserve">
+    <value>सत्यापन कोड</value>
+  </data>
+  <data name="SetYourNewPassword" xml:space="preserve">
+    <value>नीचे अपना नया पासवर्ड सेट करें।</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>नया पासवर्ड दर्ज करें</value>
+  </data>
+  <data name="ConfirmNewPasswordPlaceholder" xml:space="preserve">
+    <value>नए पासवर्ड की पुष्टि करें</value>
+  </data>
+  <data name="AreYouSureYouWantToDeleteThis" xml:space="preserve">
+    <value>क्या आप वाकई इसे हटाना चाहते हैं?</value>
+  </data>
+  <data name="DeleteStudent" xml:space="preserve">
+    <value>छात्र हटाएं</value>
+  </data>
+  <data name="StudentDetails" xml:space="preserve">
+    <value>छात्र विवरण</value>
+  </data>
+  <data name="Analytics" xml:space="preserve">
+    <value>विश्लेषण</value>
+  </data>
+  <data name="AnalyticsDashboard" xml:space="preserve">
+    <value>एनालिटिक्स डैशबोर्ड</value>
+  </data>
+  <data name="WelcomeBack" xml:space="preserve">
+    <value>वापस स्वागत है</value>
+  </data>
+  <data name="HeresYourOverview" xml:space="preserve">
+    <value>यहाँ आपका अवलोकन है।</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>प्रशासक</value>
+  </data>
+  <data name="TotalStudents" xml:space="preserve">
+    <value>कुल छात्र</value>
+  </data>
+  <data name="AverageAge" xml:space="preserve">
+    <value>औसत आयु</value>
+  </data>
+  <data name="ActiveCourses" xml:space="preserve">
+    <value>सक्रिय पाठ्यक्रम</value>
+  </data>
+  <data name="SystemStatus" xml:space="preserve">
+    <value>सिस्टम स्थिति</value>
+  </data>
+  <data name="Healthy" xml:space="preserve">
+    <value>स्वस्थ</value>
+  </data>
+  <data name="RecentlyAddedStudents" xml:space="preserve">
+    <value>हाल ही में जोड़े गए छात्र</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>सभी देखें</value>
+  </data>
+  <data name="Student" xml:space="preserve">
+    <value>छात्र</value>
+  </data>
+  <data name="Course" xml:space="preserve">
+    <value>पाठ्य क्रम</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>आयु</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>स्थिति</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>सक्रिय</value>
+  </data>
+  <data name="NoStudentsFoundDatabase" xml:space="preserve">
+    <value>डेटाबेस में कोई छात्र नहीं मिला।</value>
+  </data>
+  <data name="CourseDistribution" xml:space="preserve">
+    <value>पाठ्यक्रम वितरण</value>
+  </data>
+  <data name="StudentsLower" xml:space="preserve">
+    <value>छात्र</value>
+  </data>
+  <data name="NoCoursesAvailable" xml:space="preserve">
+    <value>कोई पाठ्यक्रम उपलब्ध नहीं है।</value>
+  </data>
+  <data name="QuickActions" xml:space="preserve">
+    <value>त्वरित कार्रवाई</value>
+  </data>
+  <data name="AddNewStudent" xml:space="preserve">
+    <value>नया छात्र जोड़ें</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>गोपनीयता नीति</value>
+  </data>
+  <data name="PrivacyDescription" xml:space="preserve">
+    <value>अपनी साइट की गोपनीयता नीति का विवरण देने के लिए इस पृष्ठ का उपयोग करें।</value>
+  </data>
+  <data name="GlobalNewsFeed" xml:space="preserve">
+    <value>वैश्विक समाचार फीड</value>
+  </data>
+  <data name="LiveIntelStream" xml:space="preserve">
+    <value>लाइव खुफिया स्ट्रीम</value>
+  </data>
+  <data name="TopHeadlines" xml:space="preserve">
+    <value>शीर्ष सुर्खियाँ</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>स्रोत</value>
+  </data>
+  <data name="ReadFullReport" xml:space="preserve">
+    <value>पूरी रिपोर्ट पढ़ें</value>
+  </data>
+  <data name="SearchNews" xml:space="preserve">
+    <value>वैश्विक सुर्खियों की खोज करें...</value>
+  </data>
+  <data name="NoNewsFound" xml:space="preserve">
+    <value>कोई प्रासंगिक जानकारी नहीं मिली।</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>नोट्स</value>
+  </data>
+  <data name="PersonalLog" xml:space="preserve">
+    <value>व्यक्तिगत लॉग</value>
+  </data>
+  <data name="NewNote" xml:space="preserve">
+    <value>नया नोट</value>
+  </data>
+  <data name="NoteTitle" xml:space="preserve">
+    <value>शीर्षक</value>
+  </data>
+  <data name="NoteDetails" xml:space="preserve">
+    <value>विवरण</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>रद्द करें</value>
+  </data>
+  <data name="SaveNote" xml:space="preserve">
+    <value>नोट सहेजें</value>
+  </data>
+  <data name="GlobalSearch" xml:space="preserve">
+    <value>वैश्विक खोज</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>शहर या देश खोजें...</value>
+  </data>
+  <data name="CountryProfile" xml:space="preserve">
+    <value>देश प्रोफ़ाइल</value>
+  </data>
+  <data name="CityDetails" xml:space="preserve">
+    <value>शहर का विवरण</value>
+  </data>
+  <data name="Population" xml:space="preserve">
+    <value>जनसंख्या</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>क्षेत्र</value>
+  </data>
+  <data name="Capital" xml:space="preserve">
+    <value>राजधानी</value>
+  </data>
+  <data name="Coordinates" xml:space="preserve">
+    <value>निर्देशांक</value>
+  </data>
+  <data name="NoResult" xml:space="preserve">
+    <value>कोई परिणाम नहीं मिला</value>
+  </data>
+  <data name="general" xml:space="preserve">
+    <value>सामान्य</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>सामान्य</value>
+  </data>
+  <data name="bca" xml:space="preserve">
+    <value>बीसीए</value>
+  </data>
+  <data name="BCA" xml:space="preserve">
+    <value>बीसीए</value>
+  </data>
+</root>

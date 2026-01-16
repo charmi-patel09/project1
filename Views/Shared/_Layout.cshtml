@@ -1,16 +1,85 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - StudentsDetails</title>
-    <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JsonCrudApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .language-selector {
+            position: relative;
+            display: inline-block;
+            margin-left: 15px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-tertiary, #1c2128);
+            min-width: 160px;
+            box-shadow: var(--shadow-lg, 0 8px 24px rgba(0, 0, 0, 0.5));
+            border-radius: 12px;
+            display: none;
+            z-index: 1000;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-primary, rgba(48, 54, 61, 0.8));
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-item {
+            padding: 12px 16px;
+            color: var(--text-secondary, #8b949e);
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lang-item:last-child {
+            border-bottom: none;
+        }
+
+        .lang-item:hover {
+            background: var(--bg-hover, #21262d);
+            color: var(--text-primary, #e6edf3);
+        }
+
+        .lang-item.active {
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,25 +90,66 @@
         <div class="admin-wrapper">
             <!-- Sidebar -->
             <aside class="sidebar">
-                <div class="sidebar-header">
-                    <h3>Students details</h3>
+                <div class="sidebar-brand">
+                    <div class="brand-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h3>EduAdmin</h3>
+                        <span data-i18n="StudentPortal">@Localizer["StudentPortal"]</span>
+                    </div>
                 </div>
+
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-info">
+                        <h4>@(Context.Session.GetString("AdminUser") ?? Context.Session.GetString("StudentUser") ?? "User")
+                        </h4>
+                        <span data-i18n="@(Context.Session.GetString("AdminUser") != null ? "Administrator" : "Student")">
+                            @Localizer[Context.Session.GetString("AdminUser") != null ? "Administrator" : "Student"]
+                        </span>
+                    </div>
+                </div>
+
                 <nav class="sidebar-nav">
-                    <ul>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Dashboard"><i
-                                    class="fas fa-tachometer-alt"></i>
-                                Dashboard</a>
-                        </li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-chart-line"></i>
-                                Statistics</a>
-                        </li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fas fa-lock"></i>
-                                Privacy</a></li>
-                        <li><a asp-area="" asp-controller="Students" asp-action="Index"><i class="fas fa-user-graduate"></i>
-                                Students</a></li>
-                        <li class="logout-link"><a asp-area="" asp-controller="Account" asp-action="Logout"><i
-                                    class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
+                    <div class="nav-section">
+                        <span class="nav-section-title" data-i18n="Main">@Localizer["Main"]</span>
+                        <ul>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Dashboard" class="nav-link">
+                                    <i class="fas fa-th-large"></i>
+                                    <span data-i18n="Dashboard">@Localizer["Dashboard"]</span>
+                                </a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span data-i18n="Analytics">@Localizer["Analytics"]</span>
+                                </a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <span class="nav-section-title" data-i18n="Management">@Localizer["Management"]</span>
+                        <ul>
+                            <li><a asp-area="" asp-controller="Students" asp-action="Index" class="nav-link">
+                                    <i class="fas fa-user-graduate"></i>
+                                    <span data-i18n="Students">@Localizer["Students"]</span>
+                                </a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="nav-link">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span data-i18n="Privacy">@Localizer["Privacy"]</span>
+                                </a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section nav-section-bottom">
+                        <ul>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Logout" class="nav-link logout-link">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span data-i18n="Logout">@Localizer["Logout"]</span>
+                                </a></li>
+                        </ul>
+                    </div>
                 </nav>
             </aside>
 
@@ -47,14 +157,35 @@
             <div class="main-area">
                 <!-- Topbar -->
                 <header class="topbar">
+                    <div class="topbar-left">
+                        <div class="breadcrumb-wrapper">
+                            <span class="breadcrumb-text" data-i18n="@ViewData["TitleKey"]">@ViewData["Title"]</span>
+                        </div>
+                    </div>
                     <div class="topbar-right">
-                        <button class="topbar-btn"><i class="fas fa-search"></i></button>
-                        <button class="topbar-btn"><i class="fas fa-cog"></i></button>
+                        <div class="language-selector">
+                            <button class="lang-btn" id="langBtn" onclick="toggleLangDropdown()">
+                                <i class="fas fa-globe"></i>
+                                <span id="currentLang">English</span>
+                                <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                            </button>
+                            <div class="lang-dropdown" id="langDropdown">
+                                <a class="lang-item" onclick="setLanguage('en')">English</a>
+                                <a class="lang-item" onclick="setLanguage('hi')">हिन्दी (Hindi)</a>
+                                <a class="lang-item" onclick="setLanguage('gu')">ગુજરાતી (Gujarati)</a>
+                                <a class="lang-item" onclick="setLanguage('mr')">मराठी (Marathi)</a>
+                                <a class="lang-item" onclick="setLanguage('fr')">Français (French)</a>
+                                <a class="lang-item" onclick="setLanguage('es')">Español (Spanish)</a>
+                                <a class="lang-item" onclick="setLanguage('de')">Deutsch (German)</a>
+                                <a class="lang-item" onclick="setLanguage('ar')">العربية (Arabic)</a>
+                                <a class="lang-item" onclick="setLanguage('zh')">中文 (Chinese)</a>
+                            </div>
+                        </div>
                     </div>
                 </header>
 
                 <!-- Content -->
-                <main role="main" class="p-4">
+                <main role="main" class="content-wrapper">
                     @RenderBody()
                 </main>
             </div>
@@ -63,6 +194,27 @@
     else
     {
         <div class="auth-wrapper">
+            <div style="position: absolute; top: 20px; right: 20px;">
+                <div class="language-selector">
+                    <button class="lang-btn" id="langBtn" style="color: #333; background: rgba(0,0,0,0.05);"
+                        onclick="toggleLangDropdown()">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">English</span>
+                        <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <a class="lang-item" onclick="setLanguage('en')">English</a>
+                        <a class="lang-item" onclick="setLanguage('hi')">हिन्दी (Hindi)</a>
+                        <a class="lang-item" onclick="setLanguage('gu')">ગુજરાતી (Gujarati)</a>
+                        <a class="lang-item" onclick="setLanguage('mr')">मराठी (Marathi)</a>
+                        <a class="lang-item" onclick="setLanguage('fr')">Français (French)</a>
+                        <a class="lang-item" onclick="setLanguage('es')">Español (Spanish)</a>
+                        <a class="lang-item" onclick="setLanguage('de')">Deutsch (German)</a>
+                        <a class="lang-item" onclick="setLanguage('ar')">العربية (Arabic)</a>
+                        <a class="lang-item" onclick="setLanguage('zh')">中文 (Chinese)</a>
+                    </div>
+                </div>
+            </div>
             <main role="main">
                 @RenderBody()
             </main>
@@ -71,13 +223,126 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - JsonCrudApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - JsonCrudApp - <a asp-area="" asp-controller="Home" asp-action="Privacy"
+                data-i18n="Privacy">@Localizer["Privacy"]</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Global Translation Engine
+        window.i18n = {
+            locale: localStorage.getItem('user_lang') || 'en',
+            translations: {},
+            t: function (key) {
+                return this.translations[key] || key;
+            }
+        };
+
+        const langNames = {
+            'en': 'English',
+            'hi': 'हिन्दी',
+            'gu': 'ગુજરાતી',
+            'mr': 'मराठी',
+            'fr': 'Français',
+            'es': 'Español',
+            'de': 'Deutsch',
+            'ar': 'العربية',
+            'zh': '中文'
+        };
+
+        function toggleLangDropdown() {
+            $('#langDropdown').fadeToggle(200);
+        }
+
+        async function setLanguage(lang) {
+            try {
+                // 1. Load Resource
+                // 1. Load Resource with Cache Busting
+                const res = await fetch(`/locales/${lang}.json?v=${new Date().getTime()}`);
+                if (!res.ok) throw new Error('Lang file not found');
+                const data = await res.json();
+
+                // 2. Update State
+                window.i18n.translations = data;
+                window.i18n.locale = lang;
+                localStorage.setItem('user_lang', lang);
+                document.cookie = `.AspNetCore.Culture=c=${lang}|uic=${lang};path=/;max-age=31536000`;
+
+                // 3. Update UI
+                updateUI();
+
+                // 4. Trigger Events
+                $(document).trigger('languageChanged', lang);
+
+            } catch (e) { console.error('Localization Error:', e); }
+        }
+
+        function updateUI() {
+            const lang = window.i18n.locale;
+
+            // Update Toggle Button
+            $('#currentLang').text(langNames[lang]);
+            $('#langDropdown').fadeOut(200);
+
+            // Text Content
+            $('[data-i18n]').each(function () {
+                const key = $(this).data('i18n');
+                const trans = window.i18n.t(key);
+                if (trans) $(this).text(trans);
+            });
+
+            // Placeholders
+            $('[data-i18n-placeholder]').each(function () {
+                const key = $(this).data('i18n-placeholder');
+                const trans = window.i18n.t(key);
+                if (trans) $(this).attr('placeholder', trans);
+            });
+
+            localizeFormats();
+        }
+
+        function localizeFormats() {
+            const lang = window.i18n.locale;
+            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+
+            $('[data-format="date"]').each(function () {
+                const rawDate = $(this).data('value');
+                if (rawDate) {
+                    const date = new Date(rawDate);
+                    $(this).text(new Intl.DateTimeFormat(locale).format(date));
+                }
+            });
+
+            $('[data-format="currency"]').each(function () {
+                const rawValue = $(this).data('value');
+                if (rawValue !== undefined) {
+                    const currency = lang === 'en' ? 'USD' : 'INR';
+                    $(this).text(new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(rawValue));
+                }
+            });
+
+            $('[data-format="number"]').each(function () {
+                const rawValue = $(this).data('value');
+                if (rawValue !== undefined) {
+                    $(this).text(new Intl.NumberFormat(locale).format(rawValue));
+                }
+            });
+        }
+
+        // Initialize
+        $(document).ready(function () {
+            // Close dropdown when clicking outside
+            $(document).click(function (e) {
+                if (!$(e.target).closest('.language-selector').length) {
+                    $('#langDropdown').fadeOut(200);
+                }
+            });
+
+            // Load saved language
+            setLanguage(window.i18n.locale);
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
-</html>

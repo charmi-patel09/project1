@@ -1,34 +1,42 @@
 [
   {
-    "Id": 5,
-    "Email": "heavenfashion312@gmail.com",
-    "Password": "Wr2oHPzXcwhneBcEvmNhyElkOcUAUyu3pGJ/XLo5a7U=",
-    "Name": "heaven",
-    "Age": 18,
-    "Course": "BSCIT"
-  },
-  {
-    "Id": 7,
-    "Email": "charmimarakana@gmail.com",
-    "Password": "RRL7x84ryJ99h\u002BKtm6LuP2vQ7eTQij8aD5DLsBkihtc=",
+    "Id": 11,
+    "Email": "fisoce5167@akixpres.com",
+    "Password": "123",
     "Name": "charmi",
-    "Age": 21,
-    "Course": "General"
+    "Age": 20,
+    "Course": "general"
   },
   {
-    "Id": 8,
-    "Email": "projtest28@gmail.com",
-    "Password": "6xdqLPDhOeLsBalGqLWjK4hYk8aRyuwz\u002BPCnroDX4eY=",
-    "Name": "New Student",
-    "Age": 18,
-    "Course": "General"
-  },
-  {
-    "Id": 9,
+    "Id": 18,
     "Email": "dhvanibutani09@gmail.com",
     "Password": "kEsO0z573oIjaV/1Dyec2kZ3/UqerlSlCJYAUaMoXw8=",
+    "Name": "dhvani",
+    "Age": 21,
+    "Course": "bca"
+  },
+  {
+    "Id": 20,
+    "Email": "projtest28@gmail.com",
+    "Password": "6xdqLPDhOeLsBalGqLWjK4hYk8aRyuwz\u002BPCnroDX4eY=",
+    "Name": "avsar",
+    "Age": 21,
+    "Course": "bca"
+  },
+  {
+    "Id": 21,
+    "Email": "charmimarakana@gmail.com",
+    "Password": "I0afF6WuTNrHDVy0P23bg1UPSH/o3UQ5a\u002BOOxgobvFk=",
     "Name": "New Student",
-    "Age": 23,
+    "Age": 18,
+    "Course": "General"
+  },
+  {
+    "Id": 22,
+    "Email": "pcharmi230@gmail.com",
+    "Password": "RRL7x84ryJ99h\u002BKtm6LuP2vQ7eTQij8aD5DLsBkihtc=",
+    "Name": "New Student",
+    "Age": 18,
     "Course": "General"
   }
 ]

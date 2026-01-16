@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using JsonCrudApp.Services;
 using JsonCrudApp.Models;
+using Microsoft.Extensions.Localization;
 
 namespace JsonCrudApp.Controllers
 {
@@ -12,12 +13,14 @@ namespace JsonCrudApp.Controllers
         private readonly AuthService _authService;
         private readonly EmailService _emailService;
         private readonly OtpService _otpService;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public AccountController(AuthService authService, EmailService emailService, OtpService otpService)
+        public AccountController(AuthService authService, EmailService emailService, OtpService otpService, IStringLocalizer<SharedResource> localizer)
         {
             _authService = authService;
             _emailService = emailService;
             _otpService = otpService;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -51,7 +54,7 @@ namespace JsonCrudApp.Controllers
                     return RedirectToAction("VerifyOtp");
                 }
 
-                ModelState.AddModelError("Email", "User with this email already exists.");
+                ModelState.AddModelError("Email", _localizer["UserWithEmailExists"]);
             }
 
             return View(model);
@@ -99,11 +102,30 @@ namespace JsonCrudApp.Controllers
 
                         // Auto-login after verification
                         HttpContext.Session.SetString("StudentUser", email);
-                        TempData["SuccessMessage"] = "Student account created successfully!";
+                        TempData["SuccessMessage"] = _localizer["StudentAccountCreated"].Value;
                         return RedirectToAction("Dashboard", "Home");
                     }
 
+                    if (purpose == "StudentCreation")
+                    {
+                        string name = HttpContext.Session.GetString("PendingUserName") ?? "New Student";
+                        string ageStr = HttpContext.Session.GetString("PendingUserAge") ?? "18";
+                        string course = HttpContext.Session.GetString("PendingUserCourse") ?? "General";
+                        int age = int.TryParse(ageStr, out int a) ? a : 18;
 
+                        // Finalize Creation
+                        _authService.RegisterStudent(email, password, name, age, course);
+
+                        // Clear creation-specific data
+                        HttpContext.Session.Remove("PendingUserName");
+                        HttpContext.Session.Remove("PendingUserAge");
+                        HttpContext.Session.Remove("PendingUserCourse");
+
+                        // Auto-login after verification
+                        HttpContext.Session.SetString("StudentUser", email);
+                        TempData["SuccessMessage"] = _localizer["StudentAccountCreated"].Value;
+                        return RedirectToAction("Dashboard", "Home");
+                    }
 
                     // For Login flow
                     if (userType == "Student")
@@ -116,9 +138,20 @@ namespace JsonCrudApp.Controllers
                     }
                     return RedirectToAction("Dashboard", "Home");
                 }
+                else if (DateTime.Now > expiry)
+                {
+                    ViewBag.ErrorMessage = _localizer["OtpExpired"].Value;
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = _localizer["InvalidOtp"].Value;
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = _localizer["SessionExpired"].Value;
             }
 
-            ViewBag.ErrorMessage = "invalid otp";
             ModelState.Clear();
             return View();
         }
@@ -127,6 +160,11 @@ namespace JsonCrudApp.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Login()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("AdminUser")) ||
+                !string.IsNullOrEmpty(HttpContext.Session.GetString("StudentUser")))
+            {
+                return RedirectToAction("Dashboard", "Home");
+            }
             ModelState.Clear();
             return View(new AdminUser());
         }
@@ -136,13 +174,31 @@ namespace JsonCrudApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_authService.ValidateUser(model.Email!, model.Password!, out string? error))
+                // 1. Try Admin Login first
+                if (_authService.ValidateAdmin(model.Email!, model.Password!, out string? adminError))
                 {
                     HttpContext.Session.SetString("AdminUser", model.Email!);
                     return RedirectToAction("Dashboard", "Home");
                 }
 
-                ViewBag.ErrorMessage = error;
+                // 2. Try Student Login if Admin fails (or if email not found in Admin)
+                if (_authService.ValidateStudent(model.Email!, model.Password!, out string? studentError))
+                {
+                    // Direct Login without OTP for Students as per user request
+                    HttpContext.Session.SetString("StudentUser", model.Email!);
+                    return RedirectToAction("Dashboard", "Home");
+                }
+
+                // If both fail, determine which error to show
+                // If the email belongs to neither, show "unregistered email" message
+                if (!_authService.UserExists(model.Email!))
+                {
+                    ViewBag.ErrorMessage = _localizer["EmailNotRegistered"].Value;
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = _localizer["IncorrectPassword"].Value;
+                }
             }
 
             ModelState.Clear();
@@ -153,6 +209,10 @@ namespace JsonCrudApp.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult StudentLogin()
         {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("StudentUser")))
+            {
+                return RedirectToAction("Dashboard", "Home");
+            }
             ModelState.Clear();
             return View(new AdminUser());
         }
@@ -162,13 +222,22 @@ namespace JsonCrudApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_authService.ValidateUser(model.Email!, model.Password!, out string? error))
+                if (_authService.ValidateStudent(model.Email!, model.Password!, out string? error))
                 {
+                    // Direct Login without OTP for Students as per user request
                     HttpContext.Session.SetString("StudentUser", model.Email!);
                     return RedirectToAction("Dashboard", "Home");
                 }
 
-                ViewBag.ErrorMessage = error;
+                // Unified error handling
+                if (!_authService.UserExists(model.Email!))
+                {
+                    ViewBag.ErrorMessage = _localizer["EmailNotRegistered"].Value;
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = _localizer["IncorrectPassword"].Value;
+                }
             }
 
             ModelState.Clear();
@@ -201,10 +270,10 @@ namespace JsonCrudApp.Controllers
 
                     _emailService.SendResetLinkEmail(model.Email, resetLink);
 
-                    ViewBag.SuccessMessage = "A password reset link has been sent to your email.";
+                    ViewBag.SuccessMessage = _localizer["PasswordResetLinkSent"].Value;
                     return View();
                 }
-                ViewBag.ErrorMessage = "Email not found.";
+                ViewBag.ErrorMessage = _localizer["EmailNotFound"].Value;
             }
             return View(model);
         }
@@ -219,7 +288,7 @@ namespace JsonCrudApp.Controllers
 
             if (!_authService.ValidateResetToken(email, token))
             {
-                TempData["ErrorMessage"] = "Invalid or expired reset token.";
+                TempData["ErrorMessage"] = _localizer["InvalidResetToken"].Value;
                 return RedirectToAction("Login");
             }
 
@@ -233,10 +302,10 @@ namespace JsonCrudApp.Controllers
             {
                 if (_authService.ResetPassword(model.Email, model.NewPassword, model.Token))
                 {
-                    TempData["SuccessMessage"] = "Password reset successful. You can now login.";
+                    TempData["SuccessMessage"] = _localizer["PasswordResetSuccessful"].Value;
                     return RedirectToAction("Login");
                 }
-                ViewBag.ErrorMessage = "Invalid or expired reset token.";
+                ViewBag.ErrorMessage = _localizer["InvalidResetToken"].Value;
             }
             return View(model);
         }
