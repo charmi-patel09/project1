@@ -11,24 +11,24 @@
     --text-secondary: #6b7280;
     --border-color: rgba(102, 126, 234, 0.2);
     --hover-bg: rgba(102, 126, 234, 0.05);
-    
+
     /* Typography */
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-display: 'Outfit', sans-serif;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
-    
+
     /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
     --radius-xl: 24px;
-    
+
     /* Transitions */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -90,9 +90,19 @@ body {
 }
 
 @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(100px, -100px) scale(1.1); }
-    66% { transform: translate(-100px, 100px) scale(0.9); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(100px, -100px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-100px, 100px) scale(0.9);
+    }
 }
 
 /* ==================== Container ==================== */
@@ -138,8 +148,17 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
-    50% { transform: scale(1.05); box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6); }
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+    }
 }
 
 .header h1 {
@@ -228,7 +247,7 @@ body {
     font-size: 1rem;
     font-family: var(--font-primary);
     font-weight: 500;
-    color: var(--text-primary);
+    color: #000;
     background: white;
     border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -467,7 +486,9 @@ body {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ==================== Error Message ==================== */
@@ -488,9 +509,19 @@ body {
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
 }
 
 /* ==================== Loading Overlay ==================== */
@@ -544,6 +575,7 @@ body {
         opacity: 0;
         transform: translateY(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -555,6 +587,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -566,24 +599,24 @@ body {
     .container {
         padding: var(--spacing-sm);
     }
-    
+
     .header h1 {
         font-size: 2rem;
     }
-    
+
     .subtitle {
         font-size: 0.875rem;
     }
-    
+
     .exchange-card {
         padding: var(--spacing-lg);
     }
-    
+
     .amount-input {
         font-size: 1.25rem;
         padding: 1rem 1.25rem;
     }
-    
+
     .rate-display {
         flex-direction: column;
         align-items: flex-start;
@@ -595,24 +628,28 @@ body {
     .header h1 {
         font-size: 1.5rem;
     }
-    
+
     .logo-icon {
         width: 40px;
         height: 40px;
     }
-    
+
     .logo-icon svg {
         width: 24px;
         height: 24px;
     }
-    
+
     .exchange-card {
         padding: var(--spacing-md);
     }
-    
+
     .flag-display {
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
     }
+}
+.currency-select option {
+    color: #000;
+    background: #fff;
 }

@@ -30,20 +30,34 @@
                             stroke-linejoin="round" />
                     </svg>
                 </div>
-                <h1>Global Fiscal Exchange</h1>
+                <h1 data-i18n="CurrencyExchange">Global Fiscal Exchange</h1>
             </div>
-            <p class="subtitle">Real-time currency conversion for 195+ countries and 500+ major cities worldwide</p>
+
+            <div class="header-controls" style="display:flex; align-items:center; gap:15px; margin-top: 10px;">
+                <select id="lang-select" onchange="setLanguage(this.value)"
+                    style="padding: 5px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="de">Deutsch</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="gu">ગુજરાતી</option>
+                </select>
+            </div>
+
+            <p class="subtitle" data-i18n="GlobalValuationProtocols">Real-time currency conversion for 195+ countries
+                and 500+ major cities worldwide</p>
         </header>
 
         <main class="exchange-container">
             <div class="exchange-card">
                 <!-- From Section -->
                 <div class="currency-section from-section">
-                    <label for="from-select" class="section-label">From</label>
+                    <label for="from-select" class="section-label" data-i18n="BaseLocation">From</label>
                     <div class="select-wrapper">
                         <div class="flag-display" id="from-flag">🌍</div>
                         <select id="from-select" class="currency-select">
-                            <option value="">Select country or city...</option>
+                            <option value="" data-i18n="SelectCountry">Select country or city...</option>
                         </select>
                     </div>
                     <div class="currency-info" id="from-info">
@@ -52,7 +66,7 @@
                     </div>
                     <div class="amount-wrapper">
                         <input type="number" id="from-amount" class="amount-input" value="1000" min="0" step="0.01"
-                            placeholder="Enter amount">
+                            placeholder="Enter amount" data-i18n-placeholder="TransactionVolume">
                         <span class="currency-symbol" id="from-symbol"></span>
                     </div>
                 </div>
@@ -71,11 +85,11 @@
 
                 <!-- To Section -->
                 <div class="currency-section to-section">
-                    <label for="to-select" class="section-label">To</label>
+                    <label for="to-select" class="section-label" data-i18n="TargetLocation">To</label>
                     <div class="select-wrapper">
                         <div class="flag-display" id="to-flag">🌍</div>
                         <select id="to-select" class="currency-select">
-                            <option value="">Select country or city...</option>
+                            <option value="" data-i18n="SelectCountry">Select country or city...</option>
                         </select>
                     </div>
                     <div class="currency-info" id="to-info">
@@ -83,8 +97,8 @@
                         <span class="location-name"></span>
                     </div>
                     <div class="amount-wrapper">
-                        <input type="number" id="to-amount" class="amount-input" readonly
-                            placeholder="Converted amount">
+                        <input type="number" id="to-amount" class="amount-input" readonly placeholder="Converted amount"
+                            data-i18n-placeholder="ConvertedAmount">
                         <span class="currency-symbol" id="to-symbol"></span>
                     </div>
                 </div>
@@ -93,7 +107,7 @@
             <!-- Exchange Rate Display -->
             <div class="rate-display" id="rate-display">
                 <div class="rate-info">
-                    <span class="rate-label">Exchange Rate</span>
+                    <span class="rate-label" data-i18n="ExchangeRate">Exchange Rate</span>
                     <span class="rate-value" id="rate-value">Select currencies to see rate</span>
                 </div>
                 <div class="last-updated" id="last-updated"></div>
@@ -101,7 +115,7 @@
 
             <!-- Convert Button -->
             <button class="convert-button" id="convert-btn">
-                <span class="button-text">Convert Currency</span>
+                <span class="button-text" data-i18n="ConvertCurrency">Convert Currency</span>
                 <div class="button-loader"></div>
             </button>
 
@@ -111,7 +125,7 @@
             <!-- Loading Indicator -->
             <div class="loading-overlay" id="loading-overlay">
                 <div class="loader"></div>
-                <p>Fetching exchange rates...</p>
+                <p data-i18n="FetchingRates">Fetching exchange rates...</p>
             </div>
         </main>
 
@@ -120,6 +134,7 @@
         </footer>
     </div>
 
+    <script src="js/site.js"></script>
     <script src="js/currency-exchange.js"></script>
 </body>
 
