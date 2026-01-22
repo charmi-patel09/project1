@@ -1,0 +1,91 @@
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
+
+namespace JsonCrudApp.Services
+{
+    public class GlobalTranslationService
+    {
+        private readonly HttpClient _httpClient;
+        private readonly IMemoryCache _cache;
+
+        public GlobalTranslationService(HttpClient httpClient, IMemoryCache cache)
+        {
+            _httpClient = httpClient;
+            _cache = cache;
+        }
+
+        public async Task<string> TranslateAsync(string text, string targetLang)
+        {
+            if (string.IsNullOrWhiteSpace(text) || targetLang == "en") return text;
+
+            string cacheKey = $"trans_{targetLang}_{text.GetHashCode()}";
+            if (_cache.TryGetValue(cacheKey, out string cachedTranslation))
+            {
+                // Can contain null if cache corrupted?
+                return cachedTranslation ?? text;
+            }
+
+            int maxRetries = 3;
+            int delay = 1000;
+
+            for (int i = 0; i < maxRetries; i++)
+            {
+                try
+                {
+                    // Using the robust 'gtx' endpoint
+                    var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={targetLang}&dt=t&q={System.Web.HttpUtility.UrlEncode(text)}";
+
+                    // Set User-Agent to avoid some blocks
+                    _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+
+                    var response = await _httpClient.GetStringAsync(url);
+
+                    using var doc = JsonDocument.Parse(response);
+                    var root = doc.RootElement;
+
+                    if (root.ValueKind == JsonValueKind.Array && root.GetArrayLength() > 0)
+                    {
+                        var sentences = root[0];
+                        string fullTranslation = "";
+                        foreach (var s in sentences.EnumerateArray())
+                        {
+                            if (s.ValueKind == JsonValueKind.Array && s.GetArrayLength() > 0)
+                            {
+                                fullTranslation += s[0].GetString();
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(fullTranslation))
+                        {
+                            // Fix blank strings
+                            if (string.IsNullOrWhiteSpace(fullTranslation)) return text;
+
+                            _cache.Set(cacheKey, fullTranslation, TimeSpan.FromHours(1));
+                            return fullTranslation;
+                        }
+                    }
+
+                    // If we got here, parse failed or empty. Break loop? No, retrying won't fix data format, but might fix bad gateway?
+                    // Usually format error is permanent.
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    if (i == maxRetries - 1)
+                    {
+                        Console.WriteLine($"Translation Error after {maxRetries} attempts: {ex.Message}");
+                        // Return original on fatal error
+                        return text;
+                    }
+                    await Task.Delay(delay * (i + 1));
+                }
+            }
+
+            return text;
+        }
+    }
+}

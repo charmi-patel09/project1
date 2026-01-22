@@ -1,7 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-@{
-    ViewData["Title"] = Localizer["GlobalIntelligenceDashboard"];
+﻿@{
+    ViewData["Title"] = "Global Intelligence Dashboard";
     ViewData["TitleKey"] = "GlobalIntelligenceDashboard";
 }
 
@@ -16,12 +14,11 @@
             <div class="header-brief">
                 <div class="status-chip">
                     <span class="pulse-dot"></span>
-                    <span data-i18n="GlobalSatelliteLinkActive">@Localizer["GlobalSatelliteLinkActive"]</span>
+                    <span>Global Satellite Link Active</span>
                 </div>
-                <h1 data-i18n="IntelligenceHub">@Localizer["IntelligenceHub"]</h1>
-                <p><span data-i18n="TelemetryFor">@Localizer["TelemetryFor"]</span> <span
-                        class="accent-text">@(Context.Session.GetString("AdminUser") ??
-                        Context.Session.GetString("StudentUser") ?? Localizer["Operator"].Value)</span>.</p>
+                <h1>Intelligence Hub</h1>
+                <p>Telemetry For <span class="accent-text">@(Context.Session.GetString("AdminUser") ??
+                        Context.Session.GetString("StudentUser") ?? "User")</span>.</p>
             </div>
             <div class="header-chrono">
                 <div class="chrono-date" id="headerDate">--/--/----</div>
@@ -37,21 +34,20 @@
                         <i class="fas fa-globe-americas"></i>
                     </div>
                     <div class="title-text">
-                        <h3 data-i18n="GlobalSearch">@Localizer["GlobalSearch"]</h3>
-                        <p data-i18n="SearchPlaceholder">@Localizer["SearchPlaceholder"]</p>
+                        <h3>Global Search</h3>
+                        <p>Search Global Intelligence Database...</p>
                     </div>
                 </div>
 
                 <div class="hub-controls">
                     <div class="search-field">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="globalSearchInput" data-i18n-placeholder="SearchPlaceholder"
-                            placeholder="@Localizer["SearchPlaceholder"]"
+                        <input type="text" id="globalSearchInput"
+                            placeholder="Search Global Intelligence Database..."
                             onkeypress="if(event.key === 'Enter') searchGlobalIntel()">
                     </div>
                     <div class="action-group">
-                        <button onclick="searchGlobalIntel()" class="btn-primary"
-                            data-i18n="Analyze">@Localizer["Analyze"]</button>
+                        <button onclick="searchGlobalIntel()" class="btn-primary">Analyze</button>
                     </div>
                 </div>
 
@@ -67,22 +63,20 @@
                         <i class="fas fa-satellite"></i>
                     </div>
                     <div class="title-text">
-                        <h3 data-i18n="Weather">@Localizer["Weather"]</h3>
-                        <p data-i18n="DeepSpaceMeteorologicalTelemetry">@Localizer["DeepSpaceMeteorologicalTelemetry"]
-                        </p>
+                        <h3>Weather</h3>
+                        <p>Deep Space Meteorological Telemetry</p>
                     </div>
                 </div>
 
                 <div class="hub-controls">
                     <div class="search-field">
                         <i class="fas fa-magnifying-glass"></i>
-                        <input type="text" id="cityInput" data-i18n-placeholder="LocateAnyCityOrCountry"
-                            placeholder="@Localizer["LocateAnyCityOrCountry"]"
+                        <input type="text" id="cityInput"
+                            placeholder="Locate Any City or Country"
                             onkeypress="if(event.key === 'Enter') getWeather()">
                     </div>
                     <div class="action-group">
-                        <button onclick="getWeather()" class="btn-primary"
-                            data-i18n="Analyze">@Localizer["Analyze"]</button>
+                        <button onclick="getWeather()" class="btn-primary">Analyze</button>
                         <button onclick="getCurrentLocation()" class="btn-icon" title="Local coordinates"><i
                                 class="fas fa-location-crosshairs"></i></button>
                     </div>
@@ -92,7 +86,7 @@
                     <div id="weatherResult" class="primary-result">
                         <div style="padding: 20px; text-align: center; color: var(--text-muted); opacity: 0.8;">
                             <i class="fas fa-satellite" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
-                            <p data-i18n="LocateAnyCityOrCountry">@Localizer["LocateAnyCityOrCountry"]</p>
+                            <p>Locate Any City or Country</p>
                         </div>
                     </div>
                 </div>
@@ -105,58 +99,55 @@
                         <i class="fas fa-vault"></i>
                     </div>
                     <div class="title-text">
-                        <h3 data-i18n="CurrencyExchange">@Localizer["CurrencyExchange"]</h3>
-                        <p data-i18n="GlobalValuationProtocols">@Localizer["GlobalValuationProtocols"]</p>
+                        <h3>Currency Exchange</h3>
+                        <p>Global Valuation Protocols</p>
                     </div>
                 </div>
 
                 <div class="tool-body">
                     <div class="form-row">
-                        <label data-i18n="TransactionVolume">@Localizer["TransactionVolume"]</label>
+                        <label>Transaction Volume</label>
                         <input type="number" id="amountInput" value="1.00" step="0.01" class="modern-input"
                             oninput="convertCurrency()">
                     </div>
                     <div class="form-grid">
                         <div class="form-row">
-                            <label data-i18n="BaseLocation">@Localizer["BaseLocation"]</label>
+                            <label>Base Location</label>
                             <select id="fromCurrency" class="modern-select" onchange="convertCurrency()"></select>
                         </div>
                         <div class="swap-indicator"><i class="fas fa-right-left"></i></div>
                         <div class="form-row">
-                            <label data-i18n="TargetLocation">@Localizer["TargetLocation"]</label>
+                            <label>Target Location</label>
                             <select id="toCurrency" class="modern-select" onchange="convertCurrency()"></select>
                         </div>
                     </div>
                     <div class="action-row" style="margin-top: 10px;">
                         <button onclick="convertCurrency()" class="btn-emerald" style="width: 100%;">
-                            <i class="fas fa-bolt"></i> <span
-                                data-i18n="RefreshValuation">@Localizer["RefreshValuation"]</span>
+                            <i class="fas fa-bolt"></i> <span>Refresh</span>
                         </button>
                     </div>
                     <div class="result-section">
                         <div class="result-status">
-                            <label class="result-header"
-                                data-i18n="RealTimeFiscalTelemetry">@Localizer["RealTimeFiscalTelemetry"]</label>
+                            <label class="result-header">Real Currency</label>
                             <div class="live-tag">
                                 <span class="pulse-dot"></span>
-                                <span data-i18n="Live">@Localizer["Live"]</span>
+                                <span>LIVE</span>
                             </div>
                         </div>
                         <div id="currencyResult" class="valuation-output">
                             <!-- Hidden until action -->
                             <div
                                 style="padding: 20px; text-align: center; color: var(--text-muted); opacity: 0.6; font-size: 0.9rem;">
-                                <i class="fas fa-coins"></i> <span
-                                    data-i18n="ConvertCurrency">@Localizer["ConvertCurrency"]</span>
+                                <i class="fas fa-coins"></i> <span>Convert Currency</span>
                             </div>
                         </div>
                         <div class="update-info no-translate" id="lastExchangeUpdate">
-                            <span data-i18n="LastSync">@Localizer["LastSync"]</span>: --:--:--
+                            <span>Last Sync</span>: --:--:--
                         </div>
                     </div>
 
                     <div class="fiscal-directory" style="display: none;">
-                        <label data-i18n="CurrencyOriginReference">@Localizer["CurrencyOriginReference"]</label>
+                        <label>Currency Origin Reference</label>
                         <div id="currencyReferenceList" class="reference-scroll">
                             <!-- JS Populated -->
                         </div>
@@ -171,26 +162,26 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="title-text">
-                        <h3 data-i18n="TimeZone">@Localizer["TimeZone"]</h3>
-                        <p data-i18n="UniversalTimeCoordination">@Localizer["UniversalTimeCoordination"]</p>
+                        <h3>Chronos Sync</h3>
+                        <p>Universal Time Coordination</p>
                     </div>
                 </div>
 
                 <div class="tool-body">
                     <div class="clock-display">
-                        <label data-i18n="SystemBaseTime">@Localizer["SystemBaseTime"]</label>
+                        <label>System Base Time</label>
                         <div id="localTimeLarge" class="digits-hero no-translate">00:00:00</div>
                     </div>
                     <div class="zone-sync">
-                        <label data-i18n="CoordinateZone">@Localizer["CoordinateZone"]</label>
+                        <label>Coordinate Zone</label>
                         <select id="timezoneSelect" class="modern-select" onchange="updateConvertedTime()">
-                            <option value="UTC" data-i18n="Timezone_UTC">Universal (UTC)</option>
-                            <option value="America/New_York" data-i18n="Timezone_NY">New York (EDT)</option>
-                            <option value="Europe/London" data-i18n="Timezone_London">London (BST)</option>
-                            <option value="Asia/Tokyo" data-i18n="Timezone_Tokyo">Tokyo (JST)</option>
-                            <option value="Asia/Kolkata" selected data-i18n="Timezone_Mumbai">Mumbai (IST)</option>
-                            <option value="Australia/Sydney" data-i18n="Timezone_Sydney">Sydney (AEST)</option>
-                            <option value="Asia/Dubai" data-i18n="Timezone_Dubai">Dubai (GST)</option>
+                            <option value="UTC">Universal (UTC)</option>
+                            <option value="America/New_York">New York (EDT)</option>
+                            <option value="Europe/London">London (BST)</option>
+                            <option value="Asia/Tokyo">Tokyo (JST)</option>
+                            <option value="Asia/Kolkata" selected>Mumbai (IST)</option>
+                            <option value="Australia/Sydney">Sydney (AEST)</option>
+                            <option value="Asia/Dubai">Dubai (GST)</option>
                         </select>
                         <div id="convertedTime" class="digits-accent no-translate">00:00:00</div>
                     </div>
@@ -204,16 +195,15 @@
                         <i class="fas fa-newspaper"></i>
                     </div>
                     <div class="title-text">
-                        <h3 data-i18n="GlobalNewsFeed">@Localizer["GlobalNewsFeed"]</h3>
-                        <p data-i18n="LiveIntelStream">@Localizer["LiveIntelStream"]</p>
+                        <h3>Global News Feed</h3>
+                        <p>Live Intel Stream</p>
                     </div>
                 </div>
 
                 <div class="hub-controls">
                     <div class="search-field" style="display:flex; gap:8px;">
-                        <input type="text" id="newsInput" data-i18n-placeholder="SearchNews"
-                            placeholder="@Localizer["SearchNews"]" style="flex-grow:1;"
-                            onkeypress="if(event.key === 'Enter') triggerNewsSearch()">
+                        <input type="text" id="newsInput" placeholder="Search News"
+                            style="flex-grow:1;" onkeypress="if(event.key === 'Enter') triggerNewsSearch()">
                         <button class="btn-glass" onclick="triggerNewsSearch()" style="padding: 0 16px; color: #000;">
                             <i class="fas fa-search"></i>
                         </button>
@@ -224,7 +214,7 @@
                     <!-- News will load here only upon user search -->
                     <div style="padding: 30px; text-align: center; color: var(--text-muted); opacity: 0.6;">
                         <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                        <p data-i18n="SearchNews">@Localizer["SearchNews"]</p>
+                        <p>Search News</p>
                     </div>
                 </div>
             </section>
@@ -236,43 +226,41 @@
                         <i class="fas fa-sticky-note"></i>
                     </div>
                     <div class="title-text">
-                        <h3 data-i18n="Notes">@Localizer["Notes"]</h3>
-                        <p data-i18n="PersonalLog">@Localizer["PersonalLog"]</p>
+                        <h3>Notes</h3>
+                        <p>Personal Log</p>
                     </div>
                 </div>
 
                 <div class="hub-controls">
                     <button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%">
-                        <i class="fas fa-plus"></i> <span data-i18n="NewNote">@Localizer["NewNote"]</span>
+                        <i class="fas fa-plus"></i> <span>New Note</span>
                     </button>
                 </div>
 
                 <div id="noteFormArea"
                     style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);"
                     class="slide-in">
-                    <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle"
-                        data-i18n="NewNote">
-                        @Localizer["NewNote"]</div>
+                    <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">
+                        New Note</div>
                     <input type="hidden" id="noteId">
                     <div class="form-row" style="margin-bottom:12px;">
-                        <input type="text" id="noteTitle" class="modern-input" placeholder="@Localizer["NoteTitle"]"
-                            data-i18n-placeholder="NoteTitle">
+                        <input type="text" id="noteTitle" class="modern-input"
+                            placeholder="Note Title">
                     </div>
                     <div class="form-row" style="margin-bottom:12px;">
-                        <textarea id="noteDesc" class="modern-input" rows="3" placeholder="@Localizer["NoteDetails"]"
-                            data-i18n-placeholder="NoteDetails"></textarea>
+                        <textarea id="noteDesc" class="modern-input" rows="3"
+                            placeholder="Note Details"></textarea>
                     </div>
                     <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
-                        <button onclick="saveNote()" class="btn-primary" style="flex: 1;"
-                            data-i18n="Save">@Localizer["Save"]</button>
+                        <button onclick="saveNote()" class="btn-primary"
+                            style="flex: 1;">Save</button>
                         <button onclick="toggleNoteForm()" class="btn-icon"
-                            style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);"
-                            data-i18n="Cancel">@Localizer["Cancel"]</button>
+                            style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
                     </div>
                 </div>
 
                 <div class="notes-list" id="notesList">
-                    <div class="loading-state" data-i18n="DecryptingLogs">@Localizer["InitialisingSatelliteLink"]</div>
+                    <div class="loading-state">Establishing Secure Link...</div>
                 </div>
             </section>
 
@@ -289,7 +277,7 @@
 
 @section Scripts {
     <script>
-        async function getWeatherDesc(code) {
+        function getWeatherDesc(code) {
             const map = {
                 0: 'Clear skies', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
                 45: 'Fog', 48: 'Depositing rime fog', 51: 'Light drizzle', 53: 'Moderate drizzle',
@@ -298,8 +286,7 @@
                 80: 'Slight rain showers', 81: 'Moderate rain showers', 82: 'Violent rain showers',
                 95: 'Thunderstorm', 96: 'Thunderstorm with slight hail', 99: 'Thunderstorm with heavy hail'
             };
-            const text = map[code] || 'Clear skies';
-            return await window.translator.translateText(text);
+            return map[code] || 'Clear skies';
         }
 
         const weatherIcons = {
@@ -330,8 +317,7 @@
         async function initNodeDirectory() {
             const container = document.getElementById('worldWeatherList');
             if (container) {
-                const syncText = await window.translator.translateText('Syncing Global Nodes...');
-                container.innerHTML = `<div class="loading-state">${syncText}</div>`;
+                container.innerHTML = `<div class="loading-state">Syncing Global Nodes...</div>`;
             }
 
             allNodes = [];
@@ -342,49 +328,45 @@
                     allNodes.push({ ...n, weather: data.current });
                 } catch (e) { }
             }
-            await renderNodes(allNodes);
+            renderNodes(allNodes);
         }
 
-        async function renderNodes(nodes) {
+        function renderNodes(nodes) {
             const container = document.getElementById('worldWeatherList');
             const nodeCount = document.getElementById('nodeCount');
             if (!container) return;
             container.innerHTML = '';
 
             if (nodeCount) {
-                const activeText = await window.translator.translateText('Nodes Active');
-                nodeCount.innerText = `${nodes.length} ${activeText}`;
+                nodeCount.innerText = `${nodes.length} Nodes Active`;
             }
 
             for (const item of nodes) {
                 const el = document.createElement('div');
                 el.className = 'node-item slide-in';
-                const translatedName = await window.translator.translateText(item.name);
 
                 el.onclick = () => {
-                    fetchWeatherDeep(item.lat, item.lon, `${translatedName}, ${item.cc}`);
+                    fetchWeatherDeep(item.lat, item.lon, `${item.name}, ${item.cc}`);
                 };
 
                 const iconClass = getIcon(item.weather.weather_code);
                 const temp = Math.round(item.weather.temperature_2m);
-                el.innerHTML = `<div><h4>${translatedName}</h4><span>Region: ${item.cc}</span></div>
-                                    <div class="node-data"><i class="fas ${iconClass}"></i>
-                                    <b>${temp}°C</b></div>`;
+                el.innerHTML = `<div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
+                                                                                    <div class="node-data"><i class="fas ${iconClass}"></i>
+                                                                                    <b>${temp}°C</b></div>`;
                 container.appendChild(el);
             }
         }
 
-        async function getCurrentLocation() {
+        function getCurrentLocation() {
             const display = document.getElementById('weatherResult');
-            const loadText = await window.translator.translateText('Triangulating Satellite Uplink...');
-            display.innerHTML = `<div class="loading-state">${loadText}</div>`;
+            display.innerHTML = `<div class="loading-state">Triangulating Satellite Uplink...</div>`;
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (p) => fetchWeatherDeep(p.coords.latitude, p.coords.longitude, "Local Terminal"),
-                    async () => {
-                        const errText = await window.translator.translateText('Uplink Interrupted');
-                        display.innerHTML = `<div class="text-danger">${errText}</div>`;
+                    () => {
+                        display.innerHTML = `<div class="text-danger">Uplink Interrupted</div>`;
                     }
                 );
             }
@@ -396,16 +378,13 @@
                 const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`);
                 const data = await res.json();
                 if (!data.results) {
-                    const errMsg = await window.translator.translateText('City not found');
-                    document.getElementById('weatherResult').innerHTML = `<div class="text-danger">${errMsg}</div>`;
+                    document.getElementById('weatherResult').innerHTML = `<div class="text-danger">City not found</div>`;
                     return;
                 }
                 const { latitude, longitude, name, country } = data.results[0];
-                const displayName = await window.translator.translateText(`${name}, ${country}`);
-                fetchWeatherDeep(latitude, longitude, displayName);
+                fetchWeatherDeep(latitude, longitude, `${name}, ${country}`);
             } catch (e) {
-                const errMsg = await window.translator.translateText('City not found');
-                document.getElementById('weatherResult').innerHTML = `<div class="text-danger">${errMsg}</div>`;
+                document.getElementById('weatherResult').innerHTML = `<div class="text-danger">City not found</div>`;
             }
         }
 
@@ -417,31 +396,28 @@
                 const cur = data.current;
                 const timezone = data.timezone;
 
-                const weatherDesc = await getWeatherDesc(cur.weather_code);
-                const humidityLabel = await window.translator.translateText('Humidity');
-                const windLabel = await window.translator.translateText('Wind Velocity');
+                const weatherDesc = getWeatherDesc(cur.weather_code);
 
                 // Calculate Local Time
                 let localTimeStr = "--:--";
                 try {
-                    const now = new Date();
-                    const lang = window.i18n.locale;
-                    const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
-                    localTimeStr = now.toLocaleString(locale, { timeZone: timezone, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+                    const date = new Date();
+                    localTimeStr = new Intl.DateTimeFormat('en-US', {
+                        timeZone: timezone, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                    }).format(date);
                 } catch (e) { console.error("Time calc error", e); }
 
                 display.innerHTML = `
-                                                                        <div class="loc-label slide-in">${label}</div>
-                                                                        <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
-                                                                        <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
-                                                                        <div class="weather-desc slide-in">${weatherDesc}</div>
-                                                                        <div class="stats-deep slide-in">
-                                                                            <div class="stat-box"><i class="fas fa-droplet"></i> <label>${humidityLabel}</label> <b>${cur.relative_humidity_2m}%</b></div>
-                                                                            <div class="stat-box"><i class="fas fa-wind"></i> <label>${windLabel}</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
-                                                                        </div>`;
+                                                                                                                        <div class="loc-label slide-in">${label}</div>
+                                                                                                                        <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
+                                                                                                                        <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
+                                                                                                                        <div class="weather-desc slide-in">${weatherDesc}</div>
+                                                                                                                        <div class="stats-deep slide-in">
+                                                                                                                            <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
+                                                                                                                            <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
+                                                                                                                        </div>`;
             } catch (e) {
-                const failText = await window.translator.translateText('Satellite Link Failure');
-                display.innerHTML = `<div class="text-danger">${failText}</div>`;
+                display.innerHTML = `<div class="text-danger">Satellite Link Failure</div>`;
             }
         }
 
@@ -495,23 +471,10 @@
                 return opt;
             };
 
-            const appendGroup = async (parent, label, items) => {
+            const appendGroup = (parent, label, items) => {
                 if (items.length === 0) return;
                 const group = document.createElement('optgroup');
-
-                let translatedLabel = label;
-                try {
-                    // Check if translator exists and works
-                    if (window.translator && typeof window.translator.translateText === 'function') {
-                        // Short timeout for safety
-                        const p = window.translator.translateText(label);
-                        const t = new Promise(r => setTimeout(r, 500)); // 500ms timeout
-                        const res = await Promise.race([p, t]);
-                        if (res) translatedLabel = res;
-                    }
-                } catch (e) {/* ignore */ }
-
-                group.label = translatedLabel;
+                group.label = label;
                 items.forEach(c => group.appendChild(createOpt(c)));
                 parent.appendChild(group);
             };
@@ -531,11 +494,11 @@
                 const topLocs = sorted.filter(c => popNames.includes(c.country));
                 const otherLocs = sorted.filter(c => !popNames.includes(c.country));
 
-                try { await appendGroup(f, 'Popular', topLocs); } catch (e) { }
-                try { await appendGroup(f, 'Global Locations', otherLocs); } catch (e) { }
+                appendGroup(f, 'Popular', topLocs);
+                appendGroup(f, 'Global Locations', otherLocs);
 
-                try { await appendGroup(t, 'Popular', topLocs); } catch (e) { }
-                try { await appendGroup(t, 'Global Locations', otherLocs); } catch (e) { }
+                appendGroup(t, 'Popular', topLocs);
+                appendGroup(t, 'Global Locations', otherLocs);
 
                 // Restore or Default
                 if (preserveState && currentVals.f && currentVals.t) {
@@ -634,12 +597,9 @@
                 baseCurrencyRates = data.rates;
 
                 const updateEl = document.getElementById('lastExchangeUpdate');
-                const lang = window.i18n.locale;
-                const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
 
                 if (updateEl) {
-                    const txt = await window.translator.translateText('Last Synced');
-                    updateEl.innerText = `${txt}: ${new Date().toLocaleTimeString(locale)} (${f})`;
+                    updateEl.innerText = `Last Synced: ${new Date().toLocaleTimeString()} (${f})`;
                 }
 
                 // Only convert if requested (user action)
@@ -682,16 +642,13 @@
             const display = document.getElementById('currencyResult');
 
             if (!baseCurrencyRates || !baseCurrencyRates[t]) {
-                const syncText = await window.translator.translateText('Syncing New Base Rates...');
-                display.innerHTML = `<div class="loading-state">${syncText}</div>`;
+                display.innerHTML = `<div class="loading-state">Syncing New Base Rates...</div>`;
                 await fetchLatestRates();
                 if (!baseCurrencyRates[t]) return;
             }
 
             const rate = baseCurrencyRates[t];
             const calc = amount * rate;
-            const lang = window.i18n.locale;
-            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
 
             // Check Context for Location Display
             let locationDisplay = '';
@@ -707,48 +664,47 @@
                     if (currencyContext.timezone) {
                         try {
                             const now = new Date();
-                            const time = now.toLocaleTimeString(locale, { timeZone: currencyContext.timezone, hour: '2-digit', minute: '2-digit' });
-                            const date = now.toLocaleDateString(locale, { timeZone: currencyContext.timezone, day: 'numeric', month: 'short' });
+                            const time = now.toLocaleTimeString('en-US', { timeZone: currencyContext.timezone, hour: '2-digit', minute: '2-digit' });
+                            const date = now.toLocaleDateString('en-US', { timeZone: currencyContext.timezone, day: 'numeric', month: 'short' });
                             timeStr = `<div style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">
-                                                                                                                                                     <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
-                                                                                                                                                   </div>`;
+                                                                                                                                                                                                     <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
+                                                                                                                                                                                                   </div>`;
                         } catch (e) { }
                     }
 
                     const label = contextMatch === 'Base' ? 'Base Location' : 'Target Location';
-                    const translatedLabel = await window.translator.translateText(label);
-                    const city = await window.translator.translateText(currencyContext.city);
-                    const country = await window.translator.translateText(currencyContext.country);
+                    const city = currencyContext.city;
+                    const country = currencyContext.country;
 
                     const colorVar = contextMatch === 'Base' ? 'var(--accent-primary)' : 'var(--accent-emerald)';
                     const bgVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.1)' : 'rgba(52, 211, 153, 0.1)';
                     const borderVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(52, 211, 153, 0.2)';
 
                     locationDisplay = `<div style="text-align:center; margin-bottom: 12px; color: ${colorVar}; background: ${bgVar}; padding: 8px; border-radius: 8px; border: 1px solid ${borderVar};">
-                                                                                                                                                     <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${translatedLabel}</div>
-                                                                                                                                                     <div style="font-weight: 700; font-size: 0.95rem;">
-                                                                                                                                                        <i class="fas fa-location-dot"></i> ${city}, ${country}
-                                                                                                                                                     </div>
-                                                                                                                                                     ${timeStr}
-                                                                                                                                                   </div>`;
+                                                                                                                                                                                                     <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${label}</div>
+                                                                                                                                                                                                     <div style="font-weight: 700; font-size: 0.95rem;">
+                                                                                                                                                                                                        <i class="fas fa-location-dot"></i> ${city}, ${country}
+                                                                                                                                                                                                     </div>
+                                                                                                                                                                                                     ${timeStr}
+                                                                                                                                                                                                   </div>`;
                 }
             }
 
-            const realCurrencyLabel = await window.translator.translateText('Real Currency');
+
             display.innerHTML = `
-                                                                                                                            ${locationDisplay}
-                                                                                                                                <div class="val-grid">
-                                                                                                                                    <div class="val-box slide-in highlight-border">
-                                                                                                                                        <div class="val-label">${f}</div>
-                                                                                                                                        <div class="val-number">${amount.toLocaleString(locale, { minimumFractionDigits: 2 })}</div>
-                                                                                                                                        <div class="val-loc-meta">${realCurrencyLabel}</div>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="val-box slide-in">
-                                                                                                                                        <div class="val-label">${t}</div>
-                                                                                                                                        <div class="val-number highlight">${calc.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                                                                                                                         <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
-                                                                                                                                    </div>
-                                                                                                                                </div>`;
+                                                                                                                                                                            ${locationDisplay}
+                                                                                                                                                                                <div class="val-grid">
+                                                                                                                                                                                    <div class="val-box slide-in highlight-border">
+                                                                                                                                                                                        <div class="val-label">${f}</div>
+                                                                                                                                                                                        <div class="val-number">${amount.toLocaleString(locale, { minimumFractionDigits: 2 })}</div>
+                                                                                                                                                                                        <div class="val-loc-meta">${realCurrencyLabel}</div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <div class="val-box slide-in">
+                                                                                                                                                                                        <div class="val-label">${t}</div>
+                                                                                                                                                                                        <div class="val-number highlight">${calc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                                                                                                                                                                         <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                </div>`;
         }
 
         /* --- TIMEZONE LOGIC --- */
@@ -795,22 +751,15 @@
         function runChronos() {
             try {
                 const now = new Date();
-                // Safe Locale Detection
-                let locale = 'en-US';
-                try {
-                    const lang = (window.i18n && window.i18n.locale) ? window.i18n.locale : 'en';
-                    if (lang === 'hi') locale = 'hi-IN';
-                    else if (lang === 'gu') locale = 'gu-IN';
-                } catch (e) { }
 
                 const dateEl = document.getElementById('headerDate');
-                if (dateEl) dateEl.innerText = now.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                if (dateEl) dateEl.innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
                 const timeEl = document.getElementById('headerTime');
-                if (timeEl) timeEl.innerText = now.toLocaleTimeString(locale);
+                if (timeEl) timeEl.innerText = now.toLocaleTimeString('en-US');
 
                 const localLargeEl = document.getElementById('localTimeLarge');
-                if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString(locale);
+                if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString('en-US');
 
                 // Also update the accent box if it exists
                 if (typeof updateConvertedTime === 'function') updateConvertedTime();
@@ -827,15 +776,13 @@
         function updateConvertedTime() {
             const zone = document.getElementById('timezoneSelect').value;
             const now = new Date();
-            const lang = window.i18n.locale;
-            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
 
             try {
-                const timeString = now.toLocaleTimeString(locale, { timeZone: zone });
-                const dateString = now.toLocaleDateString(locale, { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
+                const timeString = now.toLocaleTimeString('en-US', { timeZone: zone });
+                const dateString = now.toLocaleDateString('en-US', { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
 
                 // Get offset safely
-                const typePart = Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName');
+                const typePart = Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName');
                 const type = typePart ? typePart.value : zone;
 
                 document.getElementById('convertedTime').innerHTML = `${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span>`;
@@ -889,30 +836,27 @@
                 const res = await fetch('/Notes/GetAll');
                 if (res.ok) {
                     const notes = await res.json();
-                    await renderNotes(notes);
+                    renderNotes(notes);
                 } else {
                     if (container) {
-                        const errText = await window.translator.translateText('Error loading notes');
-                        container.innerHTML = `<div class="text-danger">${errText}</div>`;
+                        container.innerHTML = `<div class="text-danger">Error loading notes</div>`;
                     }
                 }
             } catch (e) {
                 if (container) {
-                    const connErr = await window.translator.translateText('Connection Error');
-                    container.innerHTML = `<div class="text-danger">${connErr}</div>`;
+                    container.innerHTML = `<div class="text-danger">Connection Error</div>`;
                 }
             }
         }
 
-        async function renderNotes(notes) {
+        function renderNotes(notes) {
             currentNotes = notes;
             const container = document.getElementById('notesList');
             if (!container) return;
             container.innerHTML = '';
 
             if (notes.length === 0) {
-                const noNotesText = await window.translator.translateText('No Notes Found');
-                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">${noNotesText}</div>`;
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No Notes Found</div>`;
                 return;
             }
 
@@ -925,16 +869,16 @@
                     editNote(note.id);
                 };
                 div.innerHTML = `
-                                                                                                                                                                    <div class="note-header">
-                                                                                                                                                                        <div class="note-title">${escapeHtml(note.title)}</div>
-                                                                                                                                                                        <div class="note-date">${date}</div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                    <div class="note-desc">${escapeHtml(note.description)}</div>
-                                                                                                                                                                    <div class="note-actions">
-                                                                                                                                                                        <button class="btn-note-action" onclick="editNote(${note.id})"><i class="fas fa-edit"></i></button>
-                                                                                                                                                                        <button class="btn-note-action delete" onclick="deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
-                                                                                                                                                                    </div>
-                                                                                                                                                                `;
+                                                                                                                                                                                                                    <div class="note-header">
+                                                                                                                                                                                                                        <div class="note-title">${escapeHtml(note.title)}</div>
+                                                                                                                                                                                                                        <div class="note-date">${date}</div>
+                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                    <div class="note-desc">${escapeHtml(note.description)}</div>
+                                                                                                                                                                                                                    <div class="note-actions">
+                                                                                                                                                                                                                        <button class="btn-note-action" onclick="editNote(${note.id})"><i class="fas fa-edit"></i></button>
+                                                                                                                                                                                                                        <button class="btn-note-action delete" onclick="deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
+                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                `;
                 container.appendChild(div);
             });
         }

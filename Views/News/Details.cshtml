@@ -336,11 +336,11 @@
             // Only show loader on initial load or totally new search
             if (grid.innerHTML.indexOf('news-card') === -1 || grid.innerHTML.indexOf('loading-state') === -1) {
                 grid.innerHTML = `
-                                            <div class="loading-state-full">
-                                                 <div class="loader-spinner"></div>
-                                                 <p>${window.i18n.t('AccessingGlobalFeeds')}...</p>
-                                            </div>
-                                        `;
+                                                <div class="loading-state-full">
+                                                     <div class="loader-spinner"></div>
+                                                     <p>${window.i18n.t('AccessingGlobalFeeds')}...</p>
+                                                </div>
+                                            `;
             }
 
             try {
@@ -401,12 +401,12 @@
 
                     // No results
                     grid.innerHTML = `
-                                                    <div class="loading-state-full">
-                                                        <i class="fas fa-satellite-dish" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                                                        <p>${window.i18n.t('NoNewsFound')}</p>
-                                                        <button onclick="window.history.back()" class="btn-primary" style="margin-top:20px;">${window.i18n.t('ReturnToBase')}</button>
-                                                    </div>
-                                                `;
+                                                        <div class="loading-state-full">
+                                                            <i class="fas fa-satellite-dish" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                                                            <p>${window.i18n.t('NoNewsFound')}</p>
+                                                            <button onclick="window.history.back()" class="btn-primary" style="margin-top:20px;">${window.i18n.t('ReturnToBase')}</button>
+                                                        </div>
+                                                    `;
                 }
 
             } catch (e) {
@@ -450,7 +450,7 @@
             return fallbackImages[Math.abs(hash) % fallbackImages.length];
         }
 
-        function renderNewsItems(items) {
+        async function renderNewsItems(items) {
             const grid = document.getElementById('newsGrid');
             grid.innerHTML = '';
 
@@ -463,6 +463,10 @@
 
             const usedImages = new Set();
             const now = new Date();
+
+            // Pre-translate labels
+            const labelLive = await window.translator.translateText('LIVE');
+            const labelReadMore = await window.translator.translateText('ReadFullReport');
 
             items.forEach(item => {
                 let imgUrl = null;
@@ -498,24 +502,24 @@
                 const card = document.createElement('article');
                 card.className = 'news-card fade-in';
                 card.innerHTML = `
-                                                        <div class="news-image-wrapper">
-                                                            <img src="${imgUrl}" class="news-image" onerror="this.onerror=null;this.src='${generatedFallback}'">
-                                                            <div class="news-badge">${source}</div>
-                                                            ${isFresh ? `<div class="live-badge" style="position:absolute; top:15px; left:15px; background:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; font-size:0.75rem; box-shadow:0 2px 5px rgba(0,0,0,0.3); animation: pulse 2s infinite;">${window.i18n.t('LIVE')}</div>` : ''}
-                                                        </div>
-                                                        <div class="news-content">
-                                                            <div class="news-meta">
-                                                                <span><i class="far fa-clock"></i> ${dateStr}</span>
+                                                            <div class="news-image-wrapper">
+                                                                <img src="${imgUrl}" class="news-image" onerror="this.onerror=null;this.src='${generatedFallback}'">
+                                                                <div class="news-badge">${source}</div>
+                                                                ${isFresh ? `<div class="live-badge" style="position:absolute; top:15px; left:15px; background:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; font-size:0.75rem; box-shadow:0 2px 5px rgba(0,0,0,0.3); animation: pulse 2s infinite;">${labelLive}</div>` : ''}
                                                             </div>
-                                                            <a href="${item.link}" target="_blank" class="news-title-link">${title}</a>
-                                                            <div class="news-desc">${cleanDesc}</div>
-                                                            <div class="news-footer">
-                                                                <a href="${item.link}" target="_blank" class="read-more">
-                                                                    ${window.i18n.t('ReadFullReport')} <i class="fas fa-arrow-right"></i>
-                                                                </a>
+                                                            <div class="news-content">
+                                                                <div class="news-meta">
+                                                                    <span><i class="far fa-clock"></i> ${dateStr}</span>
+                                                                </div>
+                                                                <a href="${item.link}" target="_blank" class="news-title-link">${title}</a>
+                                                                <div class="news-desc">${cleanDesc}</div>
+                                                                <div class="news-footer">
+                                                                    <a href="${item.link}" target="_blank" class="read-more">
+                                                                        ${labelReadMore} <i class="fas fa-arrow-right"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                     `;
+                                                         `;
                 grid.appendChild(card);
             });
         }

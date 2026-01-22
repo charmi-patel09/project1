@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using JsonCrudApp.Services;
 using JsonCrudApp.Models;
-using Microsoft.Extensions.Localization;
 
 namespace JsonCrudApp.Controllers
 {
@@ -13,14 +12,12 @@ namespace JsonCrudApp.Controllers
         private readonly AuthService _authService;
         private readonly EmailService _emailService;
         private readonly OtpService _otpService;
-        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public AccountController(AuthService authService, EmailService emailService, OtpService otpService, IStringLocalizer<SharedResource> localizer)
+        public AccountController(AuthService authService, EmailService emailService, OtpService otpService)
         {
             _authService = authService;
             _emailService = emailService;
             _otpService = otpService;
-            _localizer = localizer;
         }
 
         [HttpGet]
@@ -54,7 +51,7 @@ namespace JsonCrudApp.Controllers
                     return RedirectToAction("VerifyOtp");
                 }
 
-                ModelState.AddModelError("Email", _localizer["UserWithEmailExists"]);
+                ModelState.AddModelError("Email", "User with this email already exists");
             }
 
             return View(model);
@@ -102,7 +99,7 @@ namespace JsonCrudApp.Controllers
 
                         // Auto-login after verification
                         HttpContext.Session.SetString("StudentUser", email);
-                        TempData["SuccessMessage"] = _localizer["StudentAccountCreated"].Value;
+                        TempData["SuccessMessage"] = "Student account created successfully";
                         return RedirectToAction("Dashboard", "Home");
                     }
 
@@ -123,7 +120,7 @@ namespace JsonCrudApp.Controllers
 
                         // Auto-login after verification
                         HttpContext.Session.SetString("StudentUser", email);
-                        TempData["SuccessMessage"] = _localizer["StudentAccountCreated"].Value;
+                        TempData["SuccessMessage"] = "Student account created successfully";
                         return RedirectToAction("Dashboard", "Home");
                     }
 
@@ -140,16 +137,16 @@ namespace JsonCrudApp.Controllers
                 }
                 else if (DateTime.Now > expiry)
                 {
-                    ViewBag.ErrorMessage = _localizer["OtpExpired"].Value;
+                    ViewBag.ErrorMessage = "OTP has expired";
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = _localizer["InvalidOtp"].Value;
+                    ViewBag.ErrorMessage = "Invalid OTP";
                 }
             }
             else
             {
-                ViewBag.ErrorMessage = _localizer["SessionExpired"].Value;
+                ViewBag.ErrorMessage = "Session expired or invalid";
             }
 
             ModelState.Clear();
@@ -193,11 +190,11 @@ namespace JsonCrudApp.Controllers
                 // If the email belongs to neither, show "unregistered email" message
                 if (!_authService.UserExists(model.Email!))
                 {
-                    ViewBag.ErrorMessage = _localizer["EmailNotRegistered"].Value;
+                    ViewBag.ErrorMessage = "Email not registered";
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = _localizer["IncorrectPassword"].Value;
+                    ViewBag.ErrorMessage = "Incorrect password";
                 }
             }
 
@@ -232,11 +229,11 @@ namespace JsonCrudApp.Controllers
                 // Unified error handling
                 if (!_authService.UserExists(model.Email!))
                 {
-                    ViewBag.ErrorMessage = _localizer["EmailNotRegistered"].Value;
+                    ViewBag.ErrorMessage = "Email not registered";
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = _localizer["IncorrectPassword"].Value;
+                    ViewBag.ErrorMessage = "Incorrect password";
                 }
             }
 
@@ -270,10 +267,10 @@ namespace JsonCrudApp.Controllers
 
                     _emailService.SendResetLinkEmail(model.Email, resetLink);
 
-                    ViewBag.SuccessMessage = _localizer["PasswordResetLinkSent"].Value;
+                    ViewBag.SuccessMessage = "Password reset link sent to your email";
                     return View();
                 }
-                ViewBag.ErrorMessage = _localizer["EmailNotFound"].Value;
+                ViewBag.ErrorMessage = "Email not found";
             }
             return View(model);
         }
@@ -288,7 +285,7 @@ namespace JsonCrudApp.Controllers
 
             if (!_authService.ValidateResetToken(email, token))
             {
-                TempData["ErrorMessage"] = _localizer["InvalidResetToken"].Value;
+                TempData["ErrorMessage"] = "Invalid or expired reset token";
                 return RedirectToAction("Login");
             }
 
@@ -302,10 +299,10 @@ namespace JsonCrudApp.Controllers
             {
                 if (_authService.ResetPassword(model.Email, model.NewPassword, model.Token))
                 {
-                    TempData["SuccessMessage"] = _localizer["PasswordResetSuccessful"].Value;
+                    TempData["SuccessMessage"] = "Password reset successful. You can now login.";
                     return RedirectToAction("Login");
                 }
-                ViewBag.ErrorMessage = _localizer["InvalidResetToken"].Value;
+                ViewBag.ErrorMessage = "Invalid or expired reset token";
             }
             return View(model);
         }

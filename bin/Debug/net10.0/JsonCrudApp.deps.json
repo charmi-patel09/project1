@@ -9,11 +9,6 @@
       "JsonCrudApp/1.0.0": {
         "runtime": {
           "JsonCrudApp.dll": {}
-        },
-        "resources": {
-          "en/JsonCrudApp.resources.dll": {
-            "locale": "en"
-          }
         }
       }
     }

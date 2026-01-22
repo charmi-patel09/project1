@@ -1,48 +1,46 @@
 @model JsonCrudApp.Models.Student
-@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["CreateUser"];
+    ViewData["Title"] = "Create User";
     ViewData["TitleKey"] = "CreateUser";
 }
 
-<h1 data-i18n="CreateUser">@Localizer["CreateUser"]</h1>
+<h1>Create User</h1>
 
-<h4 data-i18n="User">@Localizer["User"]</h4>
+<h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-3">
-                <label asp-for="Name" class="control-label" data-i18n="Name">@Localizer["Name"]</label>
+                <label asp-for="Name" class="control-label">Name</label>
                 <input asp-for="Name" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Email" class="control-label" data-i18n="Email">@Localizer["Email"]</label>
+                <label asp-for="Email" class="control-label">Email</label>
                 <input asp-for="Email" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Password" class="control-label" data-i18n="Password">@Localizer["Password"]</label>
+                <label asp-for="Password" class="control-label">Password</label>
                 <input asp-for="Password" type="password" class="form-control" autocomplete="new-password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Age" class="control-label" data-i18n="Age">@Localizer["Age"]</label>
+                <label asp-for="Age" class="control-label">Age</label>
                 <input asp-for="Age" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Course" class="control-label" data-i18n="Course">@Localizer["Course"]</label>
+                <label asp-for="Course" class="control-label">Course</label>
                 <input asp-for="Course" class="form-control" autocomplete="off" />
                 <span asp-validation-for="Course" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" data-i18n="Create" />
-                <a asp-action="Index" class="btn btn-secondary" data-i18n="BackToList">@Localizer["BackToList"]</a>
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>

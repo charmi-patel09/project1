@@ -10,15 +10,13 @@ namespace JsonCrudApp.Controllers
         private readonly AuthService _authService;
         private readonly OtpService _otpService;
         private readonly EmailService _emailService;
-        private readonly Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> _localizer;
 
-        public StudentsController(JsonFileStudentService studentService, AuthService authService, OtpService otpService, EmailService emailService, Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> localizer)
+        public StudentsController(JsonFileStudentService studentService, AuthService authService, OtpService otpService, EmailService emailService)
         {
             _studentService = studentService;
             _authService = authService;
             _otpService = otpService;
             _emailService = emailService;
-            _localizer = localizer;
         }
 
         public IActionResult Index()
@@ -59,7 +57,7 @@ namespace JsonCrudApp.Controllers
 
                     return RedirectToAction("VerifyOtp", "Account");
                 }
-                ModelState.AddModelError("Email", _localizer["UserWithEmailExists"]);
+                ModelState.AddModelError("Email", "User with this email already exists");
             }
 
             return View(student);
