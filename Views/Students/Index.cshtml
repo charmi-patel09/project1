@@ -3,11 +3,11 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["StudentList"];
-    ViewData["TitleKey"] = "StudentList";
+    ViewData["Title"] = Localizer["UserList"];
+    ViewData["TitleKey"] = "UserList";
 }
 
-<div class="students-container">
+<div class="users-container">
     <!-- Page Header -->
     <div class="page-header">
         <div class="header-content">
@@ -15,8 +15,8 @@
                 <i class="fas fa-user-graduate"></i>
             </div>
             <div class="header-text">
-                <h1 data-i18n="StudentList">@Localizer["StudentList"]</h1>
-                <p data-i18n="ManageAndViewAllRegisteredStudents">@Localizer["ManageAndViewAllRegisteredStudents"]</p>
+                <h1 data-i18n="UserList">@Localizer["UserList"]</h1>
+                <p data-i18n="ManageAndViewAllRegisteredUsers">@Localizer["ManageAndViewAllRegisteredUsers"]</p>
             </div>
         </div>
         <a asp-action="Create" class="btn-create">
@@ -27,7 +27,7 @@
     <!-- Students Table Card -->
     <div class="table-card">
         <div class="table-card-header">
-            <h5 data-i18n="AllStudents">@Localizer["AllStudents"]</h5>
+            <h5 data-i18n="AllUsers">@Localizer["AllUsers"]</h5>
             <div class="table-info">
                 <i class="fas fa-users"></i>
                 <span>@Model.Count() <span data-i18n="Total">@Localizer["Total"]</span></span>
@@ -64,58 +64,58 @@
                     {
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    <div class="student-cell">
-                                        <div class="student-avatar">
+                                    <tr>
+                                        <td>
+                                            <div class="user-cell">
+                                                <div class="user-avatar">
                                             @(item.Name?.Substring(0, 1).ToUpper() ?? "S")
-                                        </div>
-                                        <span class="student-name">@Html.DisplayFor(modelItem => item.Name)</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="email-text">@Html.DisplayFor(modelItem => item.Email)</span>
-                                </td>
-                                <td>
-                                    <span class="age-badge">@Html.DisplayFor(modelItem => item.Age) <span
-                                            data-i18n="Years">@Localizer["Years"]</span></span>
-                                </td>
-                                <td>
-                                    <span class="course-tag" data-i18n="@(item.Course ?? "")">@Localizer[item.Course ?? ""]</span>
-                                </td>
-                                <td class="actions-cell">
-                                    <div class="action-buttons">
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-details"
-                                            title="Details">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete"
-                                            title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                                                </div>
+                                                <span class="user-name">@Html.DisplayFor(modelItem => item.Name)</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="email-text">@Html.DisplayFor(modelItem => item.Email)</span>
+                                        </td>
+                                        <td>
+                                            <span class="age-badge">@Html.DisplayFor(modelItem => item.Age) <span
+                                                    data-i18n="Years">@Localizer["Years"]</span></span>
+                                        </td>
+                                        <td>
+                                            <span class="course-tag" data-i18n="@(item.Course ?? "")">@Localizer[item.Course ?? ""]</span>
+                                        </td>
+                                        <td class="actions-cell">
+                                            <div class="action-buttons">
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-details"
+                                                    title="Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete"
+                                                    title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                         }
                     }
                     else
                     {
-                        <tr>
-                            <td colspan="5" class="empty-state">
-                                <div class="empty-content">
-                                    <i class="fas fa-inbox"></i>
-                                    <h4 data-i18n="NoStudentsFound">@Localizer["NoStudentsFound"]</h4>
-                                    <p data-i18n="StartByCreatingYourFirstStudentRecord">
-                                        @Localizer["StartByCreatingYourFirstStudentRecord"]</p>
-                                    <a asp-action="Create" class="btn-create-inline">
-                                        <i class="fas fa-plus"></i> <span data-i18n="Create">@Localizer["Create"]</span>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <div class="empty-content">
+                                        <i class="fas fa-inbox"></i>
+                                        <h4 data-i18n="NoUsersFound">@Localizer["NoUsersFound"]</h4>
+                                        <p data-i18n="StartByCreatingYourFirstUserRecord">
+                                        @Localizer["StartByCreatingYourFirstUserRecord"]</p>
+                                        <a asp-action="Create" class="btn-create-inline">
+                                            <i class="fas fa-plus"></i> <span data-i18n="Create">@Localizer["Create"]</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                     }
                 </tbody>
             </table>
@@ -124,7 +124,7 @@
 </div>
 
 <style>
-    .students-container {
+    .users-container {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         color: #e6edf3;
     }
@@ -262,16 +262,16 @@
     }
 
     /* Students Table */
-    .students-table {
+    .users-table {
         width: 100%;
         border-collapse: collapse;
     }
 
-    .students-table thead {
+    .users-table thead {
         background: rgba(48, 54, 61, 0.3);
     }
 
-    .students-table th {
+    .users-table th {
         padding: 18px 24px;
         text-align: left;
         font-size: 0.75rem;
@@ -294,23 +294,23 @@
         font-size: 0.95rem;
     }
 
-    .students-table tbody tr {
+    .users-table tbody tr {
         transition: all 0.3s ease;
     }
 
-    .students-table tbody tr:hover {
+    .users-table tbody tr:hover {
         background: rgba(88, 166, 255, 0.05);
         transform: scale(1.01);
     }
 
-    /* Student Cell */
-    .student-cell {
+    /* User Cell */
+    .user-cell {
         display: flex;
         align-items: center;
         gap: 14px;
     }
 
-    .student-avatar {
+    .user-avatar {
         width: 40px;
         height: 40px;
         background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
@@ -324,7 +324,7 @@
         flex-shrink: 0;
     }
 
-    .student-name {
+    .user-name {
         font-weight: 700;
         color: #f0f6fc;
     }
@@ -475,12 +475,12 @@
             align-items: flex-start;
         }
 
-        .students-table {
+        .users-table {
             font-size: 0.85rem;
         }
 
-        .students-table th,
-        .students-table td {
+        .users-table th,
+        .users-table td {
             padding: 12px 16px;
         }
 

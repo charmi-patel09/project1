@@ -25,7 +25,7 @@
             </div>
             <div class="header-chrono">
                 <div class="chrono-date" id="headerDate">--/--/----</div>
-                <div class="chrono-time" id="headerTime">00:00:00</div>
+                <div class="chrono-time no-translate" id="headerTime">00:00:00</div>
             </div>
         </header>
 
@@ -90,8 +90,10 @@
 
                 <div class="hub-display">
                     <div id="weatherResult" class="primary-result">
-                        <div class="loading-state" data-i18n="InitialisingSatelliteLink">
-                            @Localizer["InitialisingSatelliteLink"]</div>
+                        <div style="padding: 20px; text-align: center; color: var(--text-muted); opacity: 0.8;">
+                            <i class="fas fa-satellite" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
+                            <p data-i18n="LocateAnyCityOrCountry">@Localizer["LocateAnyCityOrCountry"]</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -141,10 +143,14 @@
                             </div>
                         </div>
                         <div id="currencyResult" class="valuation-output">
-                            <div class="loading-state" data-i18n="InitializingSensorLink">
-                                @Localizer["InitializingSensorLink"]</div>
+                            <!-- Hidden until action -->
+                            <div
+                                style="padding: 20px; text-align: center; color: var(--text-muted); opacity: 0.6; font-size: 0.9rem;">
+                                <i class="fas fa-coins"></i> <span
+                                    data-i18n="ConvertCurrency">@Localizer["ConvertCurrency"]</span>
+                            </div>
                         </div>
-                        <div class="update-info" id="lastExchangeUpdate">
+                        <div class="update-info no-translate" id="lastExchangeUpdate">
                             <span data-i18n="LastSync">@Localizer["LastSync"]</span>: --:--:--
                         </div>
                     </div>
@@ -173,7 +179,7 @@
                 <div class="tool-body">
                     <div class="clock-display">
                         <label data-i18n="SystemBaseTime">@Localizer["SystemBaseTime"]</label>
-                        <div id="localTimeLarge" class="digits-hero">00:00:00</div>
+                        <div id="localTimeLarge" class="digits-hero no-translate">00:00:00</div>
                     </div>
                     <div class="zone-sync">
                         <label data-i18n="CoordinateZone">@Localizer["CoordinateZone"]</label>
@@ -186,7 +192,7 @@
                             <option value="Australia/Sydney" data-i18n="Timezone_Sydney">Sydney (AEST)</option>
                             <option value="Asia/Dubai" data-i18n="Timezone_Dubai">Dubai (GST)</option>
                         </select>
-                        <div id="convertedTime" class="digits-accent">00:00:00</div>
+                        <div id="convertedTime" class="digits-accent no-translate">00:00:00</div>
                     </div>
                 </div>
             </section>
@@ -204,20 +210,21 @@
                 </div>
 
                 <div class="hub-controls">
-                    <div class="search-field">
-                        <i class="fas fa-search"></i>
+                    <div class="search-field" style="display:flex; gap:8px;">
                         <input type="text" id="newsInput" data-i18n-placeholder="SearchNews"
-                            placeholder="@Localizer["SearchNews"]"
-                            onkeypress="if(event.key === 'Enter') fetchNews(this.value)">
-                    </div>
-                    <div class="action-group">
-                        <button onclick="fetchNews(document.getElementById('newsInput').value)" class="btn-primary"
-                            data-i18n="Analyze">@Localizer["Analyze"]</button>
+                            placeholder="@Localizer["SearchNews"]" style="flex-grow:1;"
+                            onkeypress="if(event.key === 'Enter') triggerNewsSearch()">
+                        <button class="btn-glass" onclick="triggerNewsSearch()" style="padding: 0 16px; color: #000;">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
 
                 <div class="news-list" id="newsFeed">
-                    <div class="loading-state" data-i18n="InitializingSensorLink">@Localizer["InitializingSensorLink"]
+                    <!-- News will load here only upon user search -->
+                    <div style="padding: 30px; text-align: center; color: var(--text-muted); opacity: 0.6;">
+                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p data-i18n="SearchNews">@Localizer["SearchNews"]</p>
                     </div>
                 </div>
             </section>
@@ -282,16 +289,17 @@
 
 @section Scripts {
     <script>
-        function getWeatherDesc(code) {
+        async function getWeatherDesc(code) {
             const map = {
-                0: 'ClearSkies', 1: 'MainlyClear', 2: 'PartiallyCloudy', 3: 'Overcast',
-                45: 'FogPresence', 48: 'DepositingRimeFog', 51: 'LightDrizzle', 53: 'ModerateDrizzle',
-                55: 'DenseDrizzle', 61: 'SlightRain', 63: 'ModerateRain', 65: 'HeavyRain',
-                71: 'SlightSnowfall', 73: 'ModerateSnowfall', 75: 'HeavySnowfall', 77: 'IceParticles',
-                80: 'RainShowersSlight', 81: 'RainShowersModerate', 82: 'RainShowersExtreme',
-                95: 'ThunderstormActive', 96: 'StormSlightHail', 99: 'StormHeavyHail'
+                0: 'Clear skies', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+                45: 'Fog', 48: 'Depositing rime fog', 51: 'Light drizzle', 53: 'Moderate drizzle',
+                55: 'Dense drizzle', 61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
+                71: 'Slight snow', 73: 'Moderate snow', 75: 'Heavy snow', 77: 'Snow grains',
+                80: 'Slight rain showers', 81: 'Moderate rain showers', 82: 'Violent rain showers',
+                95: 'Thunderstorm', 96: 'Thunderstorm with slight hail', 99: 'Thunderstorm with heavy hail'
             };
-            return window.i18n.t(map[code] || 'OptimizedAtmosphere');
+            const text = map[code] || 'Clear skies';
+            return await window.translator.translateText(text);
         }
 
         const weatherIcons = {
@@ -321,7 +329,10 @@
 
         async function initNodeDirectory() {
             const container = document.getElementById('worldWeatherList');
-            if (container) container.innerHTML = `<div class="loading-state">${window.i18n.t('SyncingGlobalNodes')}</div>`;
+            if (container) {
+                const syncText = await window.translator.translateText('Syncing Global Nodes...');
+                container.innerHTML = `<div class="loading-state">${syncText}</div>`;
+            }
 
             allNodes = [];
             for (const n of initialNodes) {
@@ -331,34 +342,50 @@
                     allNodes.push({ ...n, weather: data.current });
                 } catch (e) { }
             }
-            renderNodes(allNodes);
+            await renderNodes(allNodes);
         }
 
-        function renderNodes(nodes) {
+        async function renderNodes(nodes) {
             const container = document.getElementById('worldWeatherList');
             const nodeCount = document.getElementById('nodeCount');
             if (!container) return;
             container.innerHTML = '';
-            if (nodeCount) nodeCount.innerText = `${nodes.length} ${window.i18n.t('NodesActive')}`;
 
-            nodes.forEach(item => {
+            if (nodeCount) {
+                const activeText = await window.translator.translateText('Nodes Active');
+                nodeCount.innerText = `${nodes.length} ${activeText}`;
+            }
+
+            for (const item of nodes) {
                 const el = document.createElement('div');
                 el.className = 'node-item slide-in';
-                el.onclick = () => fetchWeatherDeep(item.lat, item.lon, `${window.i18n.t(item.name)}, ${item.cc}`);
-                el.innerHTML = `<div><h4>${window.i18n.t(item.name)}</h4><span>Region: ${item.cc}</span></div>
-                                                                                            <div class="node-data"><i class="fas ${getIcon(item.weather.weather_code)}"></i>
-                                                                                            <b>${Math.round(item.weather.temperature_2m)}°C</b></div>`;
+                const translatedName = await window.translator.translateText(item.name);
+
+                el.onclick = () => {
+                    fetchWeatherDeep(item.lat, item.lon, `${translatedName}, ${item.cc}`);
+                };
+
+                const iconClass = getIcon(item.weather.weather_code);
+                const temp = Math.round(item.weather.temperature_2m);
+                el.innerHTML = `<div><h4>${translatedName}</h4><span>Region: ${item.cc}</span></div>
+                                    <div class="node-data"><i class="fas ${iconClass}"></i>
+                                    <b>${temp}°C</b></div>`;
                 container.appendChild(el);
-            });
+            }
         }
 
         async function getCurrentLocation() {
             const display = document.getElementById('weatherResult');
-            display.innerHTML = `<div class="loading-state">${window.i18n.t('TriangulatingSatelliteUplink')}</div>`;
+            const loadText = await window.translator.translateText('Triangulating Satellite Uplink...');
+            display.innerHTML = `<div class="loading-state">${loadText}</div>`;
+
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (p) => fetchWeatherDeep(p.coords.latitude, p.coords.longitude, "Local Terminal"),
-                    () => { display.innerHTML = `<div class="text-danger">${window.i18n.t('UplinkInterrupted')}</div>`; }
+                    async () => {
+                        const errText = await window.translator.translateText('Uplink Interrupted');
+                        display.innerHTML = `<div class="text-danger">${errText}</div>`;
+                    }
                 );
             }
         }
@@ -369,12 +396,17 @@
                 const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`);
                 const data = await res.json();
                 if (!data.results) {
-                    document.getElementById('weatherResult').innerHTML = `<div class="text-danger">${window.i18n.t('NodeNotFound')}</div>`;
+                    const errMsg = await window.translator.translateText('City not found');
+                    document.getElementById('weatherResult').innerHTML = `<div class="text-danger">${errMsg}</div>`;
                     return;
                 }
                 const { latitude, longitude, name, country } = data.results[0];
-                fetchWeatherDeep(latitude, longitude, `${name}, ${country}`);
-            } catch (e) { console.error(e); }
+                const displayName = await window.translator.translateText(`${name}, ${country}`);
+                fetchWeatherDeep(latitude, longitude, displayName);
+            } catch (e) {
+                const errMsg = await window.translator.translateText('City not found');
+                document.getElementById('weatherResult').innerHTML = `<div class="text-danger">${errMsg}</div>`;
+            }
         }
 
         async function fetchWeatherDeep(lat, lon, label) {
@@ -383,101 +415,413 @@
                 const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`);
                 const data = await res.json();
                 const cur = data.current;
+                const timezone = data.timezone;
+
+                const weatherDesc = await getWeatherDesc(cur.weather_code);
+                const humidityLabel = await window.translator.translateText('Humidity');
+                const windLabel = await window.translator.translateText('Wind Velocity');
+
+                // Calculate Local Time
+                let localTimeStr = "--:--";
+                try {
+                    const now = new Date();
+                    const lang = window.i18n.locale;
+                    const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+                    localTimeStr = now.toLocaleString(locale, { timeZone: timezone, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+                } catch (e) { console.error("Time calc error", e); }
+
                 display.innerHTML = `
-                                                                                <div class="loc-label slide-in">${label}</div>
-                                                                                <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
-                                                                                <div class="weather-desc slide-in">${getWeatherDesc(cur.weather_code)}</div>
-                                                                                <div class="stats-deep slide-in">
-                                                                                    <div class="stat-box"><i class="fas fa-droplet"></i> <label>${window.i18n.t('Humidity')}</label> <b>${cur.relative_humidity_2m}%</b></div>
-                                                                                    <div class="stat-box"><i class="fas fa-wind"></i> <label>${window.i18n.t('WindVelocity')}</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
-                                                                                </div>`;
-            } catch (e) { display.innerHTML = `<div class="text-danger">${window.i18n.t('SatelliteLinkFailure')}</div>`; }
+                                                                        <div class="loc-label slide-in">${label}</div>
+                                                                        <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
+                                                                        <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
+                                                                        <div class="weather-desc slide-in">${weatherDesc}</div>
+                                                                        <div class="stats-deep slide-in">
+                                                                            <div class="stat-box"><i class="fas fa-droplet"></i> <label>${humidityLabel}</label> <b>${cur.relative_humidity_2m}%</b></div>
+                                                                            <div class="stat-box"><i class="fas fa-wind"></i> <label>${windLabel}</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
+                                                                        </div>`;
+            } catch (e) {
+                const failText = await window.translator.translateText('Satellite Link Failure');
+                display.innerHTML = `<div class="text-danger">${failText}</div>`;
+            }
         }
 
-        let baseCurrencyRates = {};
-        const globalLocations = [
-            { name: 'India', flag: '🇮🇳', currency: 'INR' },
-            { name: 'United States', flag: '🇺🇸', currency: 'USD' },
-            { name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP' },
-            { name: 'Germany', flag: '🇩🇪', currency: 'EUR' },
-            { name: 'Japan', flag: '🇯🇵', currency: 'JPY' }
-        ];
 
-        async function initFiscal() {
-            try {
-                const f = document.getElementById('fromCurrency');
-                const t = document.getElementById('toCurrency');
-                // Preserve selection if just reloading
-                const selF = f.value;
-                const selT = t.value;
+        // --- FISCAL & TIMEZONE DATA ---
+        let currencyContext = null; // Stores { city: string, country: string, currency: string }
 
+        /* --- SHARED DATASET --- */
+        let globalLocationData = []; // The master list for both Currency and Timezone
+
+        async function initFiscal(preserveState = false) {
+            const f = document.getElementById('fromCurrency');
+            const t = document.getElementById('toCurrency');
+
+            // Capture current selection if preserving state
+            let currentVals = {};
+            if (preserveState) {
+                currentVals = { f: f.value, t: t.value };
+            }
+
+            // Major Non-Capital Cities (IANA Timezones) to ensure comprehensive global coverage
+            const extraCities = [
+                { country: "United States", city: "New York", currency: "USD", timezone: "America/New_York" },
+                { country: "United States", city: "Los Angeles", currency: "USD", timezone: "America/Los_Angeles" },
+                { country: "United States", city: "Chicago", currency: "USD", timezone: "America/Chicago" },
+                { country: "India", city: "Mumbai", currency: "INR", timezone: "Asia/Kolkata" },
+                { country: "India", city: "Bengaluru", currency: "INR", timezone: "Asia/Kolkata" },
+                { country: "India", city: "Delhi", currency: "INR", timezone: "Asia/Kolkata" },
+                { country: "United Kingdom", city: "London", currency: "GBP", timezone: "Europe/London" },
+                { country: "Japan", city: "Tokyo", currency: "JPY", timezone: "Asia/Tokyo" },
+                { country: "China", city: "Shanghai", currency: "CNY", timezone: "Asia/Shanghai" },
+                { country: "Germany", city: "Berlin", currency: "EUR", timezone: "Europe/Berlin" },
+                { country: "France", city: "Paris", currency: "EUR", timezone: "Europe/Paris" },
+                { country: "Australia", city: "Sydney", currency: "AUD", timezone: "Australia/Sydney" },
+                { country: "Canada", city: "Toronto", currency: "CAD", timezone: "America/Toronto" },
+                { country: "United Arab Emirates", city: "Dubai", currency: "AED", timezone: "Asia/Dubai" },
+                { country: "Singapore", city: "Singapore", currency: "SGD", timezone: "Asia/Singapore" }
+            ];
+
+            // IMMEDIATE RENDER of reliable static data (Popular)
+            globalLocationData = [...extraCities];
+
+            // Define Helper Functions LOCALLY to ensure they exist
+            const createOpt = (c) => {
+                const val = `${c.currency}|${c.country}`;
+                const opt = new Option(`${c.city}, ${c.country}`, val);
+                opt.setAttribute('data-city', c.city);
+                opt.setAttribute('data-country', c.country);
+                opt.setAttribute('data-currency', c.currency);
+                opt.setAttribute('data-timezone', c.timezone);
+                return opt;
+            };
+
+            const appendGroup = async (parent, label, items) => {
+                if (items.length === 0) return;
+                const group = document.createElement('optgroup');
+
+                let translatedLabel = label;
+                try {
+                    // Check if translator exists and works
+                    if (window.translator && typeof window.translator.translateText === 'function') {
+                        // Short timeout for safety
+                        const p = window.translator.translateText(label);
+                        const t = new Promise(r => setTimeout(r, 500)); // 500ms timeout
+                        const res = await Promise.race([p, t]);
+                        if (res) translatedLabel = res;
+                    }
+                } catch (e) {/* ignore */ }
+
+                group.label = translatedLabel;
+                items.forEach(c => group.appendChild(createOpt(c)));
+                parent.appendChild(group);
+            };
+
+            // Helper to populate
+            const populateDropdowns = async (data) => {
                 f.innerHTML = ''; t.innerHTML = '';
-                globalLocations.forEach(location => {
-                    const opt = new Option(`${location.flag} ${location.name} (${location.currency})`, location.currency);
-                    f.add(opt.cloneNode(true)); t.add(opt.cloneNode(true));
+                const uniqueLocs = [];
+                const seen = new Set();
+                data.forEach(loc => {
+                    const key = `${loc.city}|${loc.country}`;
+                    if (!seen.has(key)) { seen.add(key); uniqueLocs.push(loc); }
                 });
+                const sorted = uniqueLocs.sort((a, b) => a.city.localeCompare(b.city));
 
-                if (selF) f.value = selF; else f.value = 'USD';
-                if (selT) t.value = selT; else t.value = 'INR';
+                const popNames = ['United States', 'India', 'United Kingdom', 'Japan', 'China', 'Germany', 'France', 'Australia', 'Canada', 'Switzerland', 'United Arab Emirates', 'Singapore'];
+                const topLocs = sorted.filter(c => popNames.includes(c.country));
+                const otherLocs = sorted.filter(c => !popNames.includes(c.country));
 
-                await fetchLatestRates();
-            } catch (e) { }
+                try { await appendGroup(f, 'Popular', topLocs); } catch (e) { }
+                try { await appendGroup(f, 'Global Locations', otherLocs); } catch (e) { }
+
+                try { await appendGroup(t, 'Popular', topLocs); } catch (e) { }
+                try { await appendGroup(t, 'Global Locations', otherLocs); } catch (e) { }
+
+                // Restore or Default
+                if (preserveState && currentVals.f && currentVals.t) {
+                    f.value = currentVals.f; t.value = currentVals.t;
+                } else {
+                    const setDefault = (el, country) => {
+                        for (let i = 0; i < el.options.length; i++) {
+                            if (el.options[i].getAttribute('data-country') === country) {
+                                el.selectedIndex = i; break;
+                            }
+                        }
+                    };
+                    setDefault(f, 'United States');
+                    setDefault(t, 'India');
+                }
+            };
+
+            // 1. Render Defaults Immediately
+            await populateDropdowns(globalLocationData);
+            initTimezones(); // Needed for clock
+
+            try {
+                // 2. Fetch Country/Currency Data (Background Enhancement)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+                const res = await fetch('https://restcountries.com/v3.1/all?fields=name,currencies,flags,cca2,capital,timezones', { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                const data = await res.json();
+
+                // 2. Build Base List from Countries (Capitals)
+                let apiLocations = data
+                    .filter(c => c.currencies && Object.keys(c.currencies).length > 0)
+                    .map(c => {
+                        const code = Object.keys(c.currencies)[0];
+                        const city = (c.capital && c.capital.length > 0) ? c.capital[0] : c.name.common;
+                        return {
+                            country: c.name.common,
+                            city: city,
+                            flag: c.flags.svg || '',
+                            currency: code,
+                            symbol: c.currencies[code].symbol,
+                            timezone: (c.timezones && c.timezones.length > 0 && (c.timezones[0] === 'UTC' || c.timezones[0].includes('/')))
+                                ? c.timezones[0]
+                                : null
+                        };
+                    });
+
+                // 3. Merge and Sort
+                const finalApiList = [...extraCities, ...apiLocations];
+                // Update Global List
+                globalLocationData = finalApiList;
+
+                // Re-Render with Full Data
+                await populateDropdowns(globalLocationData);
+
+            } catch (e) {
+                console.warn('Fiscal API failed or timed out, keeping default list.', e);
+            }
+            // End Init
         }
 
-        async function fetchLatestRates() {
-            const f = document.getElementById('fromCurrency').value;
+        function initTimezones() {
+            const select = document.getElementById('timezoneSelect');
+            if (!select) return;
+
+            // Check existing so we don't dupe
+            const existing = new Set(Array.from(select.options).map(o => o.value));
+
+            if (globalLocationData && globalLocationData.length > 0) {
+                globalLocationData.forEach(loc => {
+                    if (loc.timezone && !existing.has(loc.timezone)) {
+                        // Create readable label
+                        const label = `${loc.city}, ${loc.country}`;
+                        const opt = new Option(label, loc.timezone);
+                        select.add(opt);
+                        existing.add(loc.timezone);
+                    }
+                });
+            }
+        }
+
+
+
+        async function fetchLatestRates(shouldConvert = true) {
+            const rawVal = document.getElementById('fromCurrency').value;
+            // Ensure we have a value. If list empty (load error), return.
+            if (!rawVal) return;
+
+            const f = rawVal.split('|')[0];
             try {
+                // Using a fallback or free API
                 const res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
                 const data = await res.json();
                 baseCurrencyRates = data.rates;
+
                 const updateEl = document.getElementById('lastExchangeUpdate');
                 const lang = window.i18n.locale;
                 const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
-                if (updateEl) updateEl.innerText = `${window.i18n.t('LastSync')}: ${new Date().toLocaleTimeString(locale)} (${f} Base)`;
-                convertCurrency();
-            } catch (e) { }
+
+                if (updateEl) {
+                    const txt = await window.translator.translateText('Last Synced');
+                    updateEl.innerText = `${txt}: ${new Date().toLocaleTimeString(locale)} (${f})`;
+                }
+
+                // Only convert if requested (user action)
+                if (shouldConvert) convertCurrency();
+
+            } catch (e) { console.error('Rate Fetch Error:', e); }
         }
 
         async function convertCurrency() {
             const amount = parseFloat(document.getElementById('amountInput').value) || 0;
-            const f = document.getElementById('fromCurrency').value;
-            const t = document.getElementById('toCurrency').value;
-            const display = document.getElementById('currencyResult');
-            if (!baseCurrencyRates[t]) {
-                display.innerHTML = `<div class="loading-state">${window.i18n.t('SyncingNewBaseRates')}</div>`;
-                await fetchLatestRates(); return;
+            const fEl = document.getElementById('fromCurrency');
+            const tEl = document.getElementById('toCurrency');
+
+            const rawF = fEl.value;
+            const rawT = tEl.value;
+            if (!rawF || !rawT) return;
+
+            const f = rawF.split('|')[0];
+            const t = rawT.split('|')[0];
+
+            // Logic to update stored context based on user interaction
+            const getMeta = (el) => {
+                const opt = el.options[el.selectedIndex];
+                if (!opt) return null;
+                return {
+                    city: opt.getAttribute('data-city'),
+                    country: opt.getAttribute('data-country'),
+                    currency: opt.getAttribute('data-currency'),
+                    timezone: opt.getAttribute('data-timezone')
+                };
+            };
+
+            let targetMeta = getMeta(tEl);
+            let baseMeta = getMeta(fEl);
+
+            if (!currencyContext || (currencyContext.country !== baseMeta.country && currencyContext.country !== targetMeta.country)) {
+                currencyContext = targetMeta;
             }
-            const calc = amount * baseCurrencyRates[t];
+
+            const display = document.getElementById('currencyResult');
+
+            if (!baseCurrencyRates || !baseCurrencyRates[t]) {
+                const syncText = await window.translator.translateText('Syncing New Base Rates...');
+                display.innerHTML = `<div class="loading-state">${syncText}</div>`;
+                await fetchLatestRates();
+                if (!baseCurrencyRates[t]) return;
+            }
+
+            const rate = baseCurrencyRates[t];
+            const calc = amount * rate;
             const lang = window.i18n.locale;
             const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+
+            // Check Context for Location Display
+            let locationDisplay = '';
+
+            if (currencyContext) {
+                let contextMatch = null;
+                if (currencyContext.country === baseMeta.country) contextMatch = 'Base';
+                else if (currencyContext.country === targetMeta.country) contextMatch = 'Target';
+
+                if (contextMatch) {
+                    // Calculate Time
+                    let timeStr = '';
+                    if (currencyContext.timezone) {
+                        try {
+                            const now = new Date();
+                            const time = now.toLocaleTimeString(locale, { timeZone: currencyContext.timezone, hour: '2-digit', minute: '2-digit' });
+                            const date = now.toLocaleDateString(locale, { timeZone: currencyContext.timezone, day: 'numeric', month: 'short' });
+                            timeStr = `<div style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">
+                                                                                                                                                     <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
+                                                                                                                                                   </div>`;
+                        } catch (e) { }
+                    }
+
+                    const label = contextMatch === 'Base' ? 'Base Location' : 'Target Location';
+                    const translatedLabel = await window.translator.translateText(label);
+                    const city = await window.translator.translateText(currencyContext.city);
+                    const country = await window.translator.translateText(currencyContext.country);
+
+                    const colorVar = contextMatch === 'Base' ? 'var(--accent-primary)' : 'var(--accent-emerald)';
+                    const bgVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.1)' : 'rgba(52, 211, 153, 0.1)';
+                    const borderVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(52, 211, 153, 0.2)';
+
+                    locationDisplay = `<div style="text-align:center; margin-bottom: 12px; color: ${colorVar}; background: ${bgVar}; padding: 8px; border-radius: 8px; border: 1px solid ${borderVar};">
+                                                                                                                                                     <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${translatedLabel}</div>
+                                                                                                                                                     <div style="font-weight: 700; font-size: 0.95rem;">
+                                                                                                                                                        <i class="fas fa-location-dot"></i> ${city}, ${country}
+                                                                                                                                                     </div>
+                                                                                                                                                     ${timeStr}
+                                                                                                                                                   </div>`;
+                }
+            }
+
+            const realCurrencyLabel = await window.translator.translateText('Real Currency');
             display.innerHTML = `
-                                                                            <div class="val-grid">
-                                                                                <div class="val-box slide-in highlight-border">
-                                                                                    <div class="val-label">${f}</div>
-                                                                                    <div class="val-number">${amount.toLocaleString(locale, { minimumFractionDigits: 2 })}</div>
-                                                                                    <div class="val-loc-meta">${window.i18n.t('RealCurrency')}</div>
-                                                                                </div>
-                                                                                <div class="val-box slide-in">
-                                                                                    <div class="val-label">${t}</div>
-                                                                                    <div class="val-number highlight">${calc.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                                                                    <div class="val-loc-meta">${window.i18n.t('ExchangeTarget')}</div>
-                                                                                </div>
-                                                                            </div>`;
+                                                                                                                            ${locationDisplay}
+                                                                                                                                <div class="val-grid">
+                                                                                                                                    <div class="val-box slide-in highlight-border">
+                                                                                                                                        <div class="val-label">${f}</div>
+                                                                                                                                        <div class="val-number">${amount.toLocaleString(locale, { minimumFractionDigits: 2 })}</div>
+                                                                                                                                        <div class="val-loc-meta">${realCurrencyLabel}</div>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="val-box slide-in">
+                                                                                                                                        <div class="val-label">${t}</div>
+                                                                                                                                        <div class="val-number highlight">${calc.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                                                                                                                         <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
+                                                                                                                                    </div>
+                                                                                                                                </div>`;
+        }
+
+        /* --- TIMEZONE LOGIC --- */
+        function initTimezones() {
+            const select = document.getElementById('timezoneSelect');
+            if (!select) return;
+
+            // Preserve current selection if possible
+            const currentVal = select.value;
+            select.innerHTML = '';
+
+            // USE globalLocationData (Shared Dataset)
+            // Filter out entries that have garbage timezones (like "UTC+05:00") if we want strict IANA,
+            // BUT for the "System" to work, we accept what we have.
+            // Ideally we prioritized the `extraCities` for good IANA zones.
+
+            globalLocationData.forEach(loc => {
+                let tzValue = loc.timezone;
+                // Only add if we have a valid timezone string
+                if (!tzValue) return;
+
+                const opt = document.createElement('option');
+                opt.value = tzValue;
+                opt.text = `${loc.city}, ${loc.country}`;
+                opt.setAttribute('data-full', tzValue);
+                if (tzValue === currentVal) opt.selected = true;
+                select.appendChild(opt);
+            });
+
+            // Default if nothing selected
+            if (select.selectedIndex === -1) {
+                // Try to select Mumbai or New York
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value.includes('Kolkata') || select.options[i].value.includes('New_York')) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            updateConvertedTime();
         }
 
         function runChronos() {
-            const now = new Date();
-            const lang = window.i18n.locale;
-            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+            try {
+                const now = new Date();
+                // Safe Locale Detection
+                let locale = 'en-US';
+                try {
+                    const lang = (window.i18n && window.i18n.locale) ? window.i18n.locale : 'en';
+                    if (lang === 'hi') locale = 'hi-IN';
+                    else if (lang === 'gu') locale = 'gu-IN';
+                } catch (e) { }
 
-            const dateEl = document.getElementById('headerDate');
-            if (dateEl) dateEl.innerText = now.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                const dateEl = document.getElementById('headerDate');
+                if (dateEl) dateEl.innerText = now.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-            const timeEl = document.getElementById('headerTime');
-            if (timeEl) timeEl.innerText = now.toLocaleTimeString(locale);
+                const timeEl = document.getElementById('headerTime');
+                if (timeEl) timeEl.innerText = now.toLocaleTimeString(locale);
 
-            const localLargeEl = document.getElementById('localTimeLarge');
-            if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString(locale);
+                const localLargeEl = document.getElementById('localTimeLarge');
+                if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString(locale);
+
+                // Also update the accent box if it exists
+                if (typeof updateConvertedTime === 'function') updateConvertedTime();
+            } catch (e) {
+                console.error("Chronos Error:", e);
+                // Hard Fallback
+                try {
+                    const fb = new Date().toLocaleTimeString();
+                    if (document.getElementById('headerTime')) document.getElementById('headerTime').innerText = fb;
+                } catch (z) { }
+            }
         }
 
         function updateConvertedTime() {
@@ -486,89 +830,50 @@
             const lang = window.i18n.locale;
             const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
 
-            const timeString = now.toLocaleTimeString(locale, { timeZone: zone });
-            const dateString = now.toLocaleDateString(locale, { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
-
-            // Calculate Offset
-            const type = Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName').value;
-
-            document.getElementById('convertedTime').innerHTML = `${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span>`;
-        }
-
-        // --- NEWS FEED ---
-        const newsApiKey = '947acf3b268e4d7da27bf2404e62e3e0';
-        let currentArticles = [];
-
-        async function fetchNews(query) {
-            const container = document.getElementById('newsFeed');
-            // Show loading state
-            if (container) container.innerHTML = `<div class="loading-state">${window.i18n.t('InitializingSensorLink')}</div>`;
-
             try {
-                let url;
-                if (query && query.trim().length > 0) {
-                    // Search mode: uses "everything" endpoint sorted by date
-                    url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&sortBy=publishedAt&apiKey=${newsApiKey}`;
-                } else {
-                    // Default mode: Top Headlines for India
-                    const country = 'in';
-                    url = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${newsApiKey}`;
-                }
+                const timeString = now.toLocaleTimeString(locale, { timeZone: zone });
+                const dateString = now.toLocaleDateString(locale, { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
 
-                const res = await fetch(url);
-                const data = await res.json();
+                // Get offset safely
+                const typePart = Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName');
+                const type = typePart ? typePart.value : zone;
 
-                if (data.status === 'ok') {
-                    if (data.articles.length === 0) {
-                        container.innerHTML = `<div style="padding:40px; text-align:center; color: var(--text-muted);">${window.i18n.t('NoNewsFound')}</div>`;
-                    } else {
-                        currentArticles = data.articles;
-                        renderNews();
-                    }
-                } else {
-                    container.innerHTML = `<div class="text-danger" style="padding:20px;">${window.i18n.t('SatelliteLinkFailure')} (${data.message || 'API Error'})</div>`;
-                }
+                document.getElementById('convertedTime').innerHTML = `${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span>`;
             } catch (e) {
-                console.error(e);
-                container.innerHTML = `<div class="text-danger" style="padding:20px;">${window.i18n.t('SatelliteLinkFailure')}</div>`;
+                console.error("Time calc error", e);
             }
         }
 
-        function renderNews() {
-            const container = document.getElementById('newsFeed');
-            if (!container) return;
-            container.innerHTML = '';
+        // --- NEWS FEED ---
+        // Redirects to dedicated Details page
 
-            const locale = window.i18n.locale === 'en' ? 'en-US' : (window.i18n.locale === 'hi' ? 'hi-IN' : 'gu-IN');
+        function triggerNewsSearch() {
+            const val = document.getElementById('newsInput').value;
+            if (!val) {
+                // Default to Global Technology if empty? Or do nothing?
+                // Requirement: "When the user searches..." implication is explicit action.
+                // But let's provide a default if they click empty search.
+                window.location.href = '/News/Details?query=Global%20Technology';
+                return;
+            }
 
-            currentArticles.slice(0, 15).forEach(article => {
-                const el = document.createElement('a');
-                el.className = 'news-item slide-in';
-                el.href = article.url;
-                el.target = '_blank';
+            // Treat comma as strict location signal
+            let query = val;
+            let fallback = '';
 
-                // Fallback image
-                const imgUrl = article.urlToImage || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=100&auto=format&fit=crop';
-                const date = new Date(article.publishedAt).toLocaleDateString(locale, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            if (val.includes(',')) {
+                // If "City, Country", pass both.
+                // details page logic uses fallbackQuery if query fails.
+                // But wait, the Details page expects "query" to be the main search.
+                // If I pass "Paris, France", logic there handles it.
+                // We can separate for fallback purposes.
+                fallback = val.split(',').pop().trim();
+            }
 
-                el.innerHTML = `
-                                                    <img src="${imgUrl}" class="news-image" onerror="this.src='https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=100&auto=format&fit=crop'">
-                                                    <div class="news-content">
-                                                        <div class="news-title">${article.title}</div>
-                                                        <div class="news-meta">
-                                                            <span class="news-source">${article.source.name}</span>
-                                                            <span>${date}</span>
-                                                        </div>
-                                                        <div style="margin-top:8px; font-size:0.75rem; color:var(--accent-sky); font-weight:600;">
-                                                            ${window.i18n.t('ReadFullReport')} &rarr;
-                                                        </div>
-                                                    </div>
-                                                `;
-                container.appendChild(el);
-            });
+            window.location.href = `/News/Details?query=${encodeURIComponent(query)}&fallbackQuery=${encodeURIComponent(fallback)}`;
         }
 
-
+        // Removed fetchGlobalNews and related rendering logic as results are now shown on separate page.
 
 
         // --- NOTES SYSTEM ---
@@ -584,23 +889,30 @@
                 const res = await fetch('/Notes/GetAll');
                 if (res.ok) {
                     const notes = await res.json();
-                    renderNotes(notes);
+                    await renderNotes(notes);
                 } else {
-                    if (container) container.innerHTML = `<div class="text-danger">${window.i18n.t('LoadNotesError')}</div>`;
+                    if (container) {
+                        const errText = await window.translator.translateText('Error loading notes');
+                        container.innerHTML = `<div class="text-danger">${errText}</div>`;
+                    }
                 }
             } catch (e) {
-                if (container) container.innerHTML = `<div class="text-danger">${window.i18n.t('ConnectionError')}</div>`;
+                if (container) {
+                    const connErr = await window.translator.translateText('Connection Error');
+                    container.innerHTML = `<div class="text-danger">${connErr}</div>`;
+                }
             }
         }
 
-        function renderNotes(notes) {
+        async function renderNotes(notes) {
             currentNotes = notes;
             const container = document.getElementById('notesList');
             if (!container) return;
             container.innerHTML = '';
 
             if (notes.length === 0) {
-                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">${window.i18n.t('NoNotesFound')}</div>`;
+                const noNotesText = await window.translator.translateText('No Notes Found');
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">${noNotesText}</div>`;
                 return;
             }
 
@@ -613,16 +925,16 @@
                     editNote(note.id);
                 };
                 div.innerHTML = `
-                                        <div class="note-header">
-                                            <div class="note-title">${escapeHtml(note.title)}</div>
-                                            <div class="note-date">${date}</div>
-                                        </div>
-                                        <div class="note-desc">${escapeHtml(note.description)}</div>
-                                        <div class="note-actions">
-                                            <button class="btn-note-action" onclick="editNote(${note.id})"><i class="fas fa-edit"></i></button>
-                                            <button class="btn-note-action delete" onclick="deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    `;
+                                                                                                                                                                    <div class="note-header">
+                                                                                                                                                                        <div class="note-title">${escapeHtml(note.title)}</div>
+                                                                                                                                                                        <div class="note-date">${date}</div>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div class="note-desc">${escapeHtml(note.description)}</div>
+                                                                                                                                                                    <div class="note-actions">
+                                                                                                                                                                        <button class="btn-note-action" onclick="editNote(${note.id})"><i class="fas fa-edit"></i></button>
+                                                                                                                                                                        <button class="btn-note-action delete" onclick="deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
+                                                                                                                                                                    </div>
+                                                                                                                                                                `;
                 container.appendChild(div);
             });
         }
@@ -640,105 +952,202 @@
 
         async function searchGlobalIntel() {
             const query = document.getElementById('globalSearchInput').value;
-            const display = document.getElementById('globalSearchResult');
-
             if (!query) return;
-
-            display.innerHTML = `<div class="loading-state">${window.i18n.t('InitializingSensorLink')}</div>`;
-
-            try {
-                // 1. Geocoding Search
-                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`);
-                const geoData = await geoRes.json();
-
-                if (!geoData.results || geoData.results.length === 0) {
-                    display.innerHTML = `<div class="text-danger" style="text-align:center; padding: 20px;">${window.i18n.t('NoResult')}</div>`;
-                    return;
-                }
-
-                const location = geoData.results[0];
-                const countryCode = location.country_code;
-
-                // 2. Fetch Country Details
-                let countryData = null;
-                try {
-                    if (countryCode) {
-                        const countryRes = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`);
-                        const cData = await countryRes.json();
-                        countryData = cData[0];
-                    }
-                } catch (e) { console.warn('Country data fetch failed'); }
-
-                // 3. Render
-                renderGlobalResult(location, countryData);
-
-            } catch (e) {
-                display.innerHTML = `<div class="text-danger">${window.i18n.t('SatelliteLinkFailure')}</div>`;
-            }
+            window.location.href = `/Home/CountryDetails?name=${encodeURIComponent(query)}`;
         }
 
-        function renderGlobalResult(loc, country) {
+        async function renderGlobalResult(loc, country) {
             const display = document.getElementById('globalSearchResult');
-            const currency = country && country.currencies ? Object.values(country.currencies)[0] : { name: 'N/A', symbol: '' };
-            const lang = window.i18n.locale;
-            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
 
-            let html = `
-                                <div class="result-card slide-in" style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; border: 1px solid var(--border-dim);">
-                                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 16px;">
-                                        <div>
-                                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--text-bright);">${loc.name}</div>
-                                            <div style="color: var(--text-muted); font-size: 0.9rem;">${loc.admin1 || ''} ${country ? ', ' + country.name.common : ''}</div>
-                                        </div>
-                                        ${country ? `<div style="font-size: 2.5rem; line-height: 1;">${country.flag}</div>` : ''}
-                                    </div>
-
-                                    <div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 0;">
-                                        <div class="stat-box" style="padding: 12px;">
-                                            <label data-i18n="Coordinates">${window.i18n.t('Coordinates')}</label>
-                                            <b>${loc.latitude.toFixed(2)}, ${loc.longitude.toFixed(2)}</b>
-                                        </div>
-                                        <div class="stat-box" style="padding: 12px;">
-                                            <label data-i18n="TimeZone">${window.i18n.t('TimeZone')}</label>
-                                            <b style="font-size: 1rem;">${loc.timezone}</b>
-                                        </div>
-                                    </div>
-                            `;
-
-            if (country) {
-                html += `
-                                    <div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">
-                                        <div class="stat-box" style="padding: 12px;">
-                                            <label data-i18n="Currency">${window.i18n.t('Currency')}</label>
-                                            <b>${currency.symbol} ${currency.name}</b>
-                                        </div>
-                                        <div class="stat-box" style="padding: 12px;">
-                                            <label data-i18n="Population">${window.i18n.t('Population')}</label>
-                                            <b>${(country.population / 1000000).toFixed(1)}M</b>
-                                        </div>
-                                         <div class="stat-box" style="padding: 12px;">
-                                            <label data-i18n="Capital">${window.i18n.t('Capital')}</label>
-                                            <b>${country.capital ? country.capital[0] : 'N/A'}</b>
-                                        </div>
-                                         <div class="stat-box" style="padding: 12px;">
-                                            <label data-i18n="Region">${window.i18n.t('Region')}</label>
-                                            <b>${country.region}</b>
-                                        </div>
-                                    </div>
-                                `;
+            // Safe currency access
+            let currency = { name: 'N/A', symbol: '' };
+            if (country && country.currencies) {
+                const keys = Object.keys(country.currencies);
+                if (keys.length > 0) currency = country.currencies[keys[0]];
             }
 
-            html += `</div>`;
+            // Await all translations independently
+            const cityName = await window.translator.translateText(loc.name);
+            const countryName = country ? await window.translator.translateText(country.name.common) : '';
+            const region = country ? await window.translator.translateText(country.region) : '';
+            const capital = (country && country.capital && country.capital.length > 0) ? await window.translator.translateText(country.capital[0]) : 'N/A';
+            const currName = currency.name !== 'N/A' ? await window.translator.translateText(currency.name) : 'N/A';
+
+            // Labels
+            const l_coords = await window.translator.translateText('Coordinates');
+            const l_timezone = await window.translator.translateText('Time Zone');
+            const l_curr = await window.translator.translateText('Currency');
+            const l_pop = await window.translator.translateText('Population');
+            const l_cap = await window.translator.translateText('Capital');
+            const l_reg = await window.translator.translateText('Region');
+
+            // --- BUILD HTML SAFELY ---
+
+            let html = '<div class="result-card slide-in" style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; border: 1px solid var(--border-dim);">';
+
+            // Header
+            html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 16px;">';
+            html += '<div>';
+            html += '<div style="font-size: 1.5rem; font-weight: 800; color: var(--text-bright);">' + cityName + '</div>';
+
+            let subText = (loc.admin1 || '') + (country ? ', ' + countryName : '');
+            html += '<div style="color: var(--text-muted); font-size: 0.9rem;">' + subText + '</div>';
+            html += '</div>';
+
+            if (country && country.flag) {
+                html += '<div style="font-size: 2.5rem; line-height: 1;">' + country.flag + '</div>';
+            }
+            html += '</div>'; // End Header
+
+            // Stats
+            html += '<div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 0;">';
+
+            // Coords
+            html += '<div class="stat-box" style="padding: 12px;">';
+            html += '<label>' + l_coords + '</label>';
+            html += '<b>' + loc.latitude.toFixed(2) + ', ' + loc.longitude.toFixed(2) + '</b>';
+            html += '</div>';
+
+            // Timezone
+            html += '<div class="stat-box" style="padding: 12px;">';
+            html += '<label>' + l_timezone + '</label>';
+            html += '<b style="font-size: 1rem;">' + loc.timezone + '</b>';
+            html += '</div>';
+
+            html += '</div>'; // End Top Stats
+
+            // Bottom Stats (Country only)
+            if (country) {
+                const popM = (country.population / 1000000).toFixed(1) + 'M';
+
+                html += '<div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">';
+
+                // Currency
+                html += '<div class="stat-box" style="padding: 12px;">';
+                html += '<label>' + l_curr + '</label>';
+                html += '<b>' + currency.symbol + ' ' + currName + '</b>';
+                html += '</div>';
+
+                // Pop
+                html += '<div class="stat-box" style="padding: 12px;">';
+                html += '<label>' + l_pop + '</label>';
+                html += '<b>' + popM + '</b>';
+                html += '</div>';
+
+                // Cap
+                html += '<div class="stat-box" style="padding: 12px;">';
+                html += '<label>' + l_cap + '</label>';
+                html += '<b>' + capital + '</b>';
+                html += '</div>';
+
+                // Reg
+                html += '<div class="stat-box" style="padding: 12px;">';
+                html += '<label>' + l_reg + '</label>';
+                html += '<b>' + region + '</b>';
+                html += '</div>';
+
+                html += '</div>';
+            }
+
+            // Sync Badge
+            html += '<div style="margin-top:16px; text-align:center;">';
+            html += '<span style="color:var(--accent-success); font-size:0.8rem; display:block; margin-bottom:8px;">';
+            html += '<i class="fas fa-check-circle"></i> Dashboard Synced';
+            html += '</span></div></div>';
+
             display.innerHTML = html;
+
+            // Auto-Sync Dashboard
+            syncDashboardToLocation(loc, country);
+        }
+
+        async function syncDashboardToLocation(loc, country) {
+            // 1. Sync Weather
+            if (loc.latitude && loc.longitude) {
+                fetchWeatherDeep(loc.latitude, loc.longitude, `${loc.name}, ${loc.country_code}`);
+            }
+
+            // 2. Sync Timezone
+            if (loc.timezone) {
+                const tzSelect = document.getElementById('timezoneSelect');
+                let exists = false;
+                for (let i = 0; i < tzSelect.options.length; i++) {
+                    if (tzSelect.options[i].value === loc.timezone) {
+                        tzSelect.selectedIndex = i;
+                        exists = true;
+                        break;
+                    }
+                }
+
+                // If not in list (rare given we load all), attempt to add it or find formatted match
+                if (!exists) {
+                    // Try to find by raw value
+                    const opt = document.createElement('option');
+                    opt.value = loc.timezone;
+                    opt.text = `${loc.name} (${loc.timezone.split('/')[0]})`;
+                    opt.selected = true;
+                    tzSelect.add(opt);
+                }
+                updateConvertedTime();
+
+                // Highlight effect
+                const chronoCard = document.querySelector('.chrono-hub');
+                if (chronoCard) {
+                    chronoCard.style.borderColor = 'var(--accent-indigo)';
+                    setTimeout(() => chronoCard.style.borderColor = '', 1500);
+                }
+            }
+
+            // 3. Sync Currency
+            if (country && country.currencies) {
+                const currencyCode = Object.keys(country.currencies)[0];
+                const tSelect = document.getElementById('toCurrency');
+
+                // Update Context
+                currencyContext = {
+                    city: loc.name,
+                    country: country.name.common,
+                    currency: currencyCode,
+                    timezone: loc.timezone
+                };
+
+                // Find matching option for country/currency
+                // We prioritize country match
+                let found = false;
+                for (let i = 0; i < tSelect.options.length; i++) {
+                    const opt = tSelect.options[i];
+                    if (opt.getAttribute('data-country') === country.name.common || opt.value.split('|')[0] === currencyCode) {
+                        tSelect.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    convertCurrency();
+
+                    // Highlight effect
+                    const currencyCard = document.querySelector('.currency-hub');
+                    if (currencyCard) {
+                        currencyCard.style.borderColor = 'var(--accent-emerald)';
+                        setTimeout(() => currencyCard.style.borderColor = '', 1500);
+                    }
+                }
+            }
+
+            // 4. News Sync - DISABLED AUTO FETCH
+            // User must manually trigger news search to save bandwidth/quota
+            // const cityQuery = `"${loc.name}" "${country.name.common}"`;
+            // const countryQuery = `"${country.name.common}"`;
+            // fetchGlobalNews(cityQuery, countryQuery);
         }
 
         let isFormVisible = false;
 
-        function toggleNoteForm(forceState) {
+        async function toggleNoteForm(forceState) {
             const form = document.getElementById('noteFormArea');
             const btn = document.getElementById('btnNewNote');
 
-            // If forceState is provided, set to that state, otherwise toggle
             if (typeof forceState !== 'undefined') {
                 isFormVisible = forceState;
             } else {
@@ -746,34 +1155,32 @@
             }
 
             if (isFormVisible) {
-                // Show Form
                 form.style.display = 'block';
-                btn.style.display = 'none'; // Optional: Hide the "New Note" button while adding
+                btn.style.display = 'none';
 
-                // If it's a new note (no ID), clear fields
                 if (!document.getElementById('noteId').value) {
                     document.getElementById('noteTitle').value = '';
                     document.getElementById('noteDesc').value = '';
-                    document.getElementById('formTitle').innerText = window.i18n ? window.i18n.t('NewNote') : '@Localizer["NewNote"]';
+                    const newNoteTitle = await window.translator.translateText('New Note');
+                    document.getElementById('formTitle').innerText = newNoteTitle;
                     document.getElementById('formTitle').setAttribute('data-i18n', 'NewNote');
                 }
             } else {
-                // Hide Form
                 form.style.display = 'none';
                 btn.style.display = 'block';
-                // Clear ID so next open is fresh
                 document.getElementById('noteId').value = '';
             }
         }
 
-        function editNote(id) {
+        async function editNote(id) {
             const note = currentNotes.find(n => n.id === id);
             if (!note) return;
 
             document.getElementById('noteId').value = id;
             document.getElementById('noteTitle').value = note.title;
             document.getElementById('noteDesc').value = note.description;
-            document.getElementById('formTitle').innerText = window.i18n ? window.i18n.t('EditNote') : 'Edit Note';
+            const editTitle = await window.translator.translateText('Edit Note');
+            document.getElementById('formTitle').innerText = editTitle;
             document.getElementById('formTitle').setAttribute('data-i18n', 'EditNote');
 
             toggleNoteForm(true);
@@ -785,7 +1192,7 @@
             const id = document.getElementById('noteId').value;
 
             if (!title || !desc) {
-                alert(window.i18n.t('FillAllFields'));
+                alert(await window.translator.translateText('Please fill all fields'));
                 return;
             }
 
@@ -804,15 +1211,18 @@
                     toggleNoteForm(false);
                     fetchNotes();
                 } else {
-                    alert(window.i18n.t('SaveError'));
+                    const errSave = await window.translator.translateText('Error saving note');
+                    alert(errSave);
                 }
             } catch (e) {
-                alert(window.i18n.t('SaveError'));
+                const errSave = await window.translator.translateText('Error saving note');
+                alert(errSave);
             }
         }
 
         async function deleteNote(id) {
-            if (!confirm(window.i18n.t('DeleteNoteConfirm'))) return;
+            const confirmText = await window.translator.translateText('Are you sure you want to delete this note?');
+            if (!confirm(confirmText)) return;
             try {
                 const res = await fetch('/Notes/Delete', {
                     method: 'POST',
@@ -824,42 +1234,43 @@
         }
 
         $(document).ready(function () {
-            runChronos();
-            initNodeDirectory();
-            initFiscal();
-            getWeather('Ahmedabad');
-            updateConvertedTime();
-            fetchNews();
-            initNotes();
-        });
+            // 1. Critical Base Systems (Clock, basic UI)
+            if (typeof runChronos === 'function') {
+                runChronos();
+                setInterval(runChronos, 1000);
+            } else {
+                console.error("runChronos not defined!");
+            }
 
+            // 2. Data Initialization (Fail-safe wrapper)
+            try { initNodeDirectory(); } catch (e) { console.error('NodeDir failed:', e); }
+            try { initFiscal(); } catch (e) { console.error('Fiscal failed:', e); }
+            try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
+
+            // Re-bind events to ensure interactivity persists
+            const fC = document.getElementById('fromCurrency');
+            const tC = document.getElementById('toCurrency');
+            const aI = document.getElementById('amountInput');
+            if (fC) fC.onchange = fetchLatestRates;
+            if (tC) tC.onchange = convertCurrency;
+            if (aI) aI.oninput = convertCurrency;
+        });
         $(document).on('languageChanged', function (e, lang) {
             console.log('Dashboard detected language change:', lang);
             runChronos();
             renderNodes(allNodes);
-            fetchLatestRates();
-            renderNews();
-            fetchNotes();
-            fetchNotes();
+            initFiscal(true); // Re-render dropdowns with new language labels, PRESERVING SELECTION
+            // renderNews(); // Removed as it is not defined
+            fetchNotes(); // Re-fetch notes (if we had server-side loc, but actually notes are user content)
         });
 
         // Refresh dynamic form elements on language change
         $(document).on('languageChanged', function (e, lang) {
             const isEdit = document.getElementById('noteId').value !== '';
             const titleKey = isEdit ? 'EditNote' : 'NewNote';
-            // Update form title state (other elements update via data-i18n automatically if the system parses them)
-            // If the system renders fetchNotes() it will rebuild the list with new strings.
-            // We just need to ensure the form title is correct if it is open
             if (isFormVisible) {
-                const titleEl = document.getElementById('formTitle');
-                if (titleEl) {
-                    titleEl.setAttribute('data-i18n', titleKey);
-                    titleEl.innerText = window.i18n.t(titleKey);
-                }
+                document.getElementById('formTitle').innerText = window.i18n.t(titleKey);
             }
         });
-
-        setInterval(runChronos, 1000);
-        setInterval(updateConvertedTime, 1000);
     </script>
 }

@@ -1,0 +1,188 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["CountryDetails"];
+    string query = ViewData["SearchQuery"] as string ?? "";
+}
+
+<div class="dashboard-shell">
+    <div class="dashboard-content">
+        <header class="main-header">
+            <div class="header-brief">
+                <a href="/Home/Dashboard" class="btn-icon"
+                    style="margin-right: 15px; color: var(--text-primary); text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="status-chip">
+                    <span class="pulse-dot"></span>
+                    <span data-i18n="GlobalIntelActive">@Localizer["GlobalIntelActive"]</span>
+                </div>
+                <h1 data-i18n="CountryDetails">@Localizer["CountryDetails"]</h1>
+            </div>
+            <div class="header-chrono">
+                <div class="chrono-date" id="headerDate">--/--/----</div>
+                <div class="chrono-time no-translate" id="headerTime">00:00:00</div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+            <section class="tool-card">
+                <div id="detailsContainer" class="hub-display"
+                    style="padding: 40px; min-height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <!-- Content injected via JS -->
+                    <div class="loading-state">
+                        <i class="fas fa-satellite-dish fa-spin" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                        <div data-i18n="AcquiringTargetData">@Localizer["AcquiringTargetData"]</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const initialQuery = "@query";
+
+        $(document).ready(function () {
+            if (initialQuery) {
+                fetchCountryDetails(initialQuery);
+            } else {
+                showError("No target specified.");
+            }
+
+            // Start Clock
+            setInterval(() => {
+                const now = new Date();
+                let locale = 'en-US';
+                try {
+                    const lang = (window.i18n && window.i18n.locale) ? window.i18n.locale : 'en';
+                    if (lang === 'hi') locale = 'hi-IN';
+                    else if (lang === 'gu') locale = 'gu-IN';
+                } catch (e) { }
+
+                document.getElementById('headerDate').innerText = now.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                document.getElementById('headerTime').innerText = now.toLocaleTimeString(locale);
+            }, 1000);
+        });
+
+        async function fetchCountryDetails(query) {
+            const container = document.getElementById('detailsContainer');
+
+            try {
+                // Fetch by Name
+                const res = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(query)}?fullText=true`);
+
+                if (!res.ok) {
+                    // Try partial match if full text failed, or show error
+                    if (res.status === 404) {
+                        // Fallback to loose search?
+                        const looseRes = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(query)}`);
+                        if (looseRes.ok) {
+                            const looseData = await looseRes.json();
+                            renderCountry(looseData[0]);
+                            return;
+                        }
+                    }
+                    throw new Error("Country not found");
+                }
+
+                const data = await res.json();
+                renderCountry(data[0]);
+
+            } catch (error) {
+                showError(await window.translator.translateText("Target Coordinates Not Found: Invalid Country Name"));
+            }
+        }
+
+        async function renderCountry(data) {
+            const container = document.getElementById('detailsContainer');
+
+            // Extract Data
+            const name = data.name.common;
+            const officialName = data.name.official;
+            const flag = data.flags.svg;
+            const region = data.region;
+            const subregion = data.subregion || 'N/A';
+            const capital = data.capital ? data.capital[0] : 'N/A';
+            const population = data.population.toLocaleString();
+            const timezone = data.timezones ? data.timezones[0] : 'UTC';
+
+            let currencyName = 'N/A';
+            let currencySymbol = '';
+            if (data.currencies) {
+                const curKey = Object.keys(data.currencies)[0];
+                currencyName = data.currencies[curKey].name;
+                currencySymbol = data.currencies[curKey].symbol;
+            }
+
+            // Translations
+            const t_name = await window.translator.translateText(name);
+            const t_official = await window.translator.translateText(officialName);
+            const t_region = await window.translator.translateText(region);
+            const t_subregion = await window.translator.translateText(subregion);
+            const t_capital = await window.translator.translateText(capital);
+            const t_curr = await window.translator.translateText(currencyName);
+
+            const l_capital = await window.translator.translateText("Capital");
+            const l_region = await window.translator.translateText("Region");
+            const l_subregion = await window.translator.translateText("Sub-Region");
+            const l_pop = await window.translator.translateText("Population");
+            const l_curr = await window.translator.translateText("Currency");
+            const l_timezone = await window.translator.translateText("Timezone");
+
+            container.innerHTML = `
+                    <div class="result-card slide-in" style="width: 100%; max-width: 800px; background: transparent; border: none; padding: 0;">
+
+                        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px;">
+                            <img src="${flag}" alt="${name} Flag" style="width: 200px; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px;">
+                            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 5px;">${t_name}</h2>
+                            <div style="color: var(--text-muted); font-size: 1.1rem;">${t_official}</div>
+                        </div>
+
+                        <div class="stats-deep" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                            <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                <i class="fas fa-landmark" style="font-size: 1.5rem; color: var(--accent-cyan); margin-bottom: 10px;"></i>
+                                <label>${l_capital}</label>
+                                <b style="font-size: 1.2rem;">${t_capital}</b>
+                            </div>
+                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                <i class="fas fa-globe-americas" style="font-size: 1.5rem; color: var(--accent-indigo); margin-bottom: 10px;"></i>
+                                <label>${l_region}</label>
+                                <b style="font-size: 1.2rem;">${t_region}</b>
+                                <div style="font-size: 0.8rem; opacity: 0.7;">${t_subregion}</div>
+                            </div>
+                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                <i class="fas fa-users" style="font-size: 1.5rem; color: var(--accent-rose); margin-bottom: 10px;"></i>
+                                <label>${l_pop}</label>
+                                <b style="font-size: 1.2rem;">${population}</b>
+                            </div>
+                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                <i class="fas fa-coins" style="font-size: 1.5rem; color: var(--accent-emerald); margin-bottom: 10px;"></i>
+                                <label>${l_curr}</label>
+                                <b style="font-size: 1.2rem;">${currencySymbol} ${t_curr}</b>
+                            </div>
+                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                <i class="fas fa-clock" style="font-size: 1.5rem; color: var(--accent-purple); margin-bottom: 10px;"></i>
+                                <label>${l_timezone}</label>
+                                <b style="font-size: 1.2rem;">${timezone}</b>
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+        }
+
+        async function showError(msg) {
+            const container = document.getElementById('detailsContainer');
+            container.innerHTML = `
+                    <div style="text-align: center; color: var(--accent-danger);">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <h3 style="margin-bottom: 10px;">Data Link Severed</h3>
+                        <p style="font-size: 1.1rem; opacity: 0.8;">${msg}</p>
+                        <a href="/Home/Dashboard" class="btn-primary" style="margin-top: 20px; display: inline-block;">Return to Hub</a>
+                    </div>
+                 `;
+        }
+    </script>
+}

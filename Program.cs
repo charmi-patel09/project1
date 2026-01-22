@@ -28,6 +28,7 @@ builder.Services.AddTransient<JsonCrudApp.Services.AuthService>();
 builder.Services.AddTransient<JsonCrudApp.Services.EmailService>();
 builder.Services.AddTransient<JsonCrudApp.Services.OtpService>();
 builder.Services.AddTransient<JsonCrudApp.Services.NotesService>();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

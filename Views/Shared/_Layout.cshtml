@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StudentsDetails</title>
+    <title>@ViewData["Title"] - UserDetails</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JsonCrudApp.styles.css" asp-append-version="true" />
@@ -54,6 +54,26 @@
             backdrop-filter: blur(10px);
         }
 
+        .lang-search {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-search input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .lang-list-scroll {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
         .lang-item {
             padding: 12px 16px;
             color: var(--text-secondary, #8b949e);
@@ -77,7 +97,44 @@
         .lang-item.active {
             background: rgba(88, 166, 255, 0.1);
             color: var(--accent-primary);
+            color: var(--accent-primary);
             font-weight: 600;
+        }
+
+        /* Global Dark Theme Overrides for "White Box" Issues */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            background: #1a1a2e;
+            /* Dark background for track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        input,
+        select,
+        textarea {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            color: #e0e0e0 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Fix for potential white backgrounds in cards */
+        .card,
+        .tool-card,
+        .news-list,
+        .dropdown-menu {
+            background-color: #16213e !important;
+            /* Force dark navy/bg */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+            color: #fff !important;
         }
     </style>
 </head>
@@ -95,8 +152,8 @@
                         <i class="fas fa-graduation-cap"></i>
                     </div>
                     <div class="brand-text">
-                        <h3>EduAdmin</h3>
-                        <span data-i18n="StudentPortal">@Localizer["StudentPortal"]</span>
+                        <h3>UserAdmin</h3>
+                        <span data-i18n="UserPortal">@Localizer["UserPortal"]</span>
                     </div>
                 </div>
 
@@ -107,8 +164,8 @@
                     <div class="user-info">
                         <h4>@(Context.Session.GetString("AdminUser") ?? Context.Session.GetString("StudentUser") ?? "User")
                         </h4>
-                        <span data-i18n="@(Context.Session.GetString("AdminUser") != null ? "Administrator" : "Student")">
-                            @Localizer[Context.Session.GetString("AdminUser") != null ? "Administrator" : "Student"]
+                        <span data-i18n="@(Context.Session.GetString("AdminUser") != null ? "Administrator" : "User")">
+                            @Localizer[Context.Session.GetString("AdminUser") != null ? "Administrator" : "User"]
                         </span>
                     </div>
                 </div>
@@ -121,10 +178,7 @@
                                     <i class="fas fa-th-large"></i>
                                     <span data-i18n="Dashboard">@Localizer["Dashboard"]</span>
                                 </a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span data-i18n="Analytics">@Localizer["Analytics"]</span>
-                                </a></li>
+
                         </ul>
                     </div>
 
@@ -132,13 +186,10 @@
                         <span class="nav-section-title" data-i18n="Management">@Localizer["Management"]</span>
                         <ul>
                             <li><a asp-area="" asp-controller="Students" asp-action="Index" class="nav-link">
-                                    <i class="fas fa-user-graduate"></i>
-                                    <span data-i18n="Students">@Localizer["Students"]</span>
+                                    <i class="fas fa-users-cog"></i>
+                                    <span data-i18n="Users">@Localizer["Users"]</span>
                                 </a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="nav-link">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span data-i18n="Privacy">@Localizer["Privacy"]</span>
-                                </a></li>
+
                         </ul>
                     </div>
 
@@ -162,23 +213,23 @@
                             <span class="breadcrumb-text" data-i18n="@ViewData["TitleKey"]">@ViewData["Title"]</span>
                         </div>
                     </div>
-                    <div class="topbar-right">
-                        <div class="language-selector">
-                            <button class="lang-btn" id="langBtn" onclick="toggleLangDropdown()">
-                                <i class="fas fa-globe"></i>
-                                <span id="currentLang">English</span>
-                                <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                    <div class="topbar-right" style="display: flex; align-items: center; gap: 15px;">
+                        <!-- Dynamic Translation Module -->
+                        <div class="lang-container">
+                            <button class="lang-btn-new" onclick="toggleLangMenu()">
+                                <i class="fas fa-language"></i>
+                                <span id="currentLangLabel">Language</span>
+                                <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i>
                             </button>
-                            <div class="lang-dropdown" id="langDropdown">
-                                <a class="lang-item" onclick="setLanguage('en')">English</a>
-                                <a class="lang-item" onclick="setLanguage('hi')">हिन्दी (Hindi)</a>
-                                <a class="lang-item" onclick="setLanguage('gu')">ગુજરાતી (Gujarati)</a>
-                                <a class="lang-item" onclick="setLanguage('mr')">मराठी (Marathi)</a>
-                                <a class="lang-item" onclick="setLanguage('fr')">Français (French)</a>
-                                <a class="lang-item" onclick="setLanguage('es')">Español (Spanish)</a>
-                                <a class="lang-item" onclick="setLanguage('de')">Deutsch (German)</a>
-                                <a class="lang-item" onclick="setLanguage('ar')">العربية (Arabic)</a>
-                                <a class="lang-item" onclick="setLanguage('zh')">中文 (Chinese)</a>
+                            <div class="lang-dropdown-menu" id="langMenu">
+                                <div style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <input type="text" placeholder="Filter languages..."
+                                        style="width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); padding: 6px; border-radius: 6px; color: white; font-size: 0.8rem;"
+                                        oninput="filterLanguages(this.value)">
+                                </div>
+                                <div id="langListContainer">
+                                    <div style="padding: 15px; text-align: center; color: #888;">Loading...</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -194,24 +245,23 @@
     else
     {
         <div class="auth-wrapper">
-            <div style="position: absolute; top: 20px; right: 20px;">
-                <div class="language-selector">
-                    <button class="lang-btn" id="langBtn" style="color: #333; background: rgba(0,0,0,0.05);"
-                        onclick="toggleLangDropdown()">
-                        <i class="fas fa-globe"></i>
-                        <span id="currentLang">English</span>
-                        <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+            <div style="position: absolute; top: 15px; right: 20px; z-index: 1000;">
+                <div class="lang-container">
+                    <button class="lang-btn-new" onclick="toggleLangMenu()"
+                        style="background: rgba(255,255,255,0.2); color:white;">
+                        <i class="fas fa-language"></i>
+                        <span id="currentLangLabel">Language</span>
+                        <i class="fas fa-chevron-down" style="font-size: 0.7em;"></i>
                     </button>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <a class="lang-item" onclick="setLanguage('en')">English</a>
-                        <a class="lang-item" onclick="setLanguage('hi')">हिन्दी (Hindi)</a>
-                        <a class="lang-item" onclick="setLanguage('gu')">ગુજરાતી (Gujarati)</a>
-                        <a class="lang-item" onclick="setLanguage('mr')">मराठी (Marathi)</a>
-                        <a class="lang-item" onclick="setLanguage('fr')">Français (French)</a>
-                        <a class="lang-item" onclick="setLanguage('es')">Español (Spanish)</a>
-                        <a class="lang-item" onclick="setLanguage('de')">Deutsch (German)</a>
-                        <a class="lang-item" onclick="setLanguage('ar')">العربية (Arabic)</a>
-                        <a class="lang-item" onclick="setLanguage('zh')">中文 (Chinese)</a>
+                    <div class="lang-dropdown-menu" id="langMenu">
+                        <div style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <input type="text" placeholder="Filter languages..."
+                                style="width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); padding: 6px; border-radius: 6px; color: white; font-size: 0.8rem;"
+                                oninput="filterLanguages(this.value)">
+                        </div>
+                        <div id="langListContainer">
+                            <div style="padding: 15px; text-align: center; color: #888;">Loading...</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,126 +273,73 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - JsonCrudApp - <a asp-area="" asp-controller="Home" asp-action="Privacy"
-                data-i18n="Privacy">@Localizer["Privacy"]</a>
+
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/translation-service.js" asp-append-version="true"></script>
     <script>
-        // Global Translation Engine
-        window.i18n = {
-            locale: localStorage.getItem('user_lang') || 'en',
-            translations: {},
-            t: function (key) {
-                return this.translations[key] || key;
+        // UI Logic for Language Menu
+        const langMenu = document.getElementById('langMenu');
+        const langList = document.getElementById('langListContainer');
+        let allLanguages = [];
+
+        function toggleLangMenu() {
+            if (!langMenu) return;
+            langMenu.classList.toggle('show');
+            if (langMenu.classList.contains('show') && allLanguages.length === 0) {
+                loadLanguagesUI();
             }
-        };
-
-        const langNames = {
-            'en': 'English',
-            'hi': 'हिन्दी',
-            'gu': 'ગુજરાતી',
-            'mr': 'मराठी',
-            'fr': 'Français',
-            'es': 'Español',
-            'de': 'Deutsch',
-            'ar': 'العربية',
-            'zh': '中文'
-        };
-
-        function toggleLangDropdown() {
-            $('#langDropdown').fadeToggle(200);
         }
 
-        async function setLanguage(lang) {
-            try {
-                // 1. Load Resource
-                // 1. Load Resource with Cache Busting
-                const res = await fetch(`/locales/${lang}.json?v=${new Date().getTime()}`);
-                if (!res.ok) throw new Error('Lang file not found');
-                const data = await res.json();
-
-                // 2. Update State
-                window.i18n.translations = data;
-                window.i18n.locale = lang;
-                localStorage.setItem('user_lang', lang);
-                document.cookie = `.AspNetCore.Culture=c=${lang}|uic=${lang};path=/;max-age=31536000`;
-
-                // 3. Update UI
-                updateUI();
-
-                // 4. Trigger Events
-                $(document).trigger('languageChanged', lang);
-
-            } catch (e) { console.error('Localization Error:', e); }
-        }
-
-        function updateUI() {
-            const lang = window.i18n.locale;
-
-            // Update Toggle Button
-            $('#currentLang').text(langNames[lang]);
-            $('#langDropdown').fadeOut(200);
-
-            // Text Content
-            $('[data-i18n]').each(function () {
-                const key = $(this).data('i18n');
-                const trans = window.i18n.t(key);
-                if (trans) $(this).text(trans);
-            });
-
-            // Placeholders
-            $('[data-i18n-placeholder]').each(function () {
-                const key = $(this).data('i18n-placeholder');
-                const trans = window.i18n.t(key);
-                if (trans) $(this).attr('placeholder', trans);
-            });
-
-            localizeFormats();
-        }
-
-        function localizeFormats() {
-            const lang = window.i18n.locale;
-            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
-
-            $('[data-format="date"]').each(function () {
-                const rawDate = $(this).data('value');
-                if (rawDate) {
-                    const date = new Date(rawDate);
-                    $(this).text(new Intl.DateTimeFormat(locale).format(date));
-                }
-            });
-
-            $('[data-format="currency"]').each(function () {
-                const rawValue = $(this).data('value');
-                if (rawValue !== undefined) {
-                    const currency = lang === 'en' ? 'USD' : 'INR';
-                    $(this).text(new Intl.NumberFormat(locale, { style: 'currency', currency: currency }).format(rawValue));
-                }
-            });
-
-            $('[data-format="number"]').each(function () {
-                const rawValue = $(this).data('value');
-                if (rawValue !== undefined) {
-                    $(this).text(new Intl.NumberFormat(locale).format(rawValue));
-                }
-            });
-        }
-
-        // Initialize
-        $(document).ready(function () {
-            // Close dropdown when clicking outside
-            $(document).click(function (e) {
-                if (!$(e.target).closest('.language-selector').length) {
-                    $('#langDropdown').fadeOut(200);
-                }
-            });
-
-            // Load saved language
-            setLanguage(window.i18n.locale);
+        // Close on click outside
+        document.addEventListener('click', (e) => {
+            if (langMenu && !e.target.closest('.lang-container')) {
+                langMenu.classList.remove('show');
+            }
         });
+
+        async function loadLanguagesUI() {
+            if (!window.translator) return;
+
+            allLanguages = await window.translator.getSupportedLanguages();
+            renderLangList(allLanguages);
+
+            // Update label
+            const current = localStorage.getItem('app_lang') || 'en';
+            const curObj = allLanguages.find(l => l.language === current);
+            if (curObj && document.getElementById('currentLangLabel')) {
+                document.getElementById('currentLangLabel').innerText = curObj.name;
+            }
+        }
+
+        function renderLangList(list) {
+            if (!langList) return;
+            langList.innerHTML = '';
+            const current = localStorage.getItem('app_lang') || 'en';
+
+            list.forEach(l => {
+                const div = document.createElement('div');
+                div.className = `lang-option ${l.language === current ? 'active' : ''}`;
+                div.innerHTML = `<span>${l.name}</span> <span style="opacity:0.5; font-size:0.7em">${l.language.toUpperCase()}</span>`;
+                div.onclick = () => {
+                    const label = document.getElementById('currentLangLabel');
+                    if (label) label.innerText = l.name;
+                    window.translator.setLanguage(l.language);
+                    toggleLangMenu();
+                };
+                langList.appendChild(div);
+            });
+        }
+
+        function filterLanguages(term) {
+            if (!term) return renderLangList(allLanguages);
+            const lower = term.toLowerCase();
+            const filtered = allLanguages.filter(l => l.name.toLowerCase().includes(lower) || l.language.includes(lower));
+            renderLangList(filtered);
+        }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

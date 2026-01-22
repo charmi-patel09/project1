@@ -1,0 +1,554 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Live News Intelligence";
+    string query = ViewData["Query"] as string ?? "";
+    string fallbackQuery = ViewData["FallbackQuery"] as string ?? "";
+}
+
+<div class="news-details-container fade-in">
+    <!-- Header Section -->
+    <header class="news-header-section">
+        <div class="header-content">
+            <div class="back-nav">
+                <a asp-controller="Home" asp-action="Dashboard" class="btn-glass">
+                    <i class="fas fa-arrow-left"></i> <span
+                        data-i18n="BackToDashboard">@Localizer["BackToDashboard"]</span>
+                </a>
+            </div>
+            <div class="title-wrapper">
+                <div class="live-indicator">
+                    <span class="pulse-dot"></span>
+                    <span data-i18n="LiveIntelFeed">@Localizer["LiveIntelFeed"]</span>
+                </div>
+                <h1>@query</h1>
+                <p class="subtitle" data-i18n="RealTimeNewsCoverage">@Localizer["RealTimeNewsCoverage"]</p>
+            </div>
+            <div class="header-actions">
+                <button onclick="fetchNews()" class="btn-primary" title="@Localizer["RefreshFeed"]">
+                    <i class="fas fa-sync-alt"></i> <span data-i18n="Refresh">@Localizer["Refresh"]</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- News Grid -->
+    <div id="newsGrid" class="news-grid">
+        <!-- Loading State -->
+        <div class="loading-state-full">
+            <div class="loader-spinner"></div>
+            <p data-i18n="EstablishingSecureLink">@Localizer["EstablishingSecureLink"]...</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --accent-news: #f72585;
+        /* Vibrant Pink/Red for News */
+    }
+
+    .news-details-container {
+        padding: 2rem;
+        max-width: 1600px;
+        margin: 0 auto;
+        min-height: 80vh;
+    }
+
+    /* Header Styling */
+    .news-header-section {
+        margin-bottom: 3rem;
+        background: linear-gradient(135deg, rgba(20, 20, 30, 0.8), rgba(30, 30, 45, 0.6));
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 2rem;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .title-wrapper h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #fff, #a5b4fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0.5rem 0;
+        text-transform: capitalize;
+    }
+
+    .live-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent-news);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
+    }
+
+    .pulse-dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent-news);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--accent-news);
+        animation: pulse-red 2s infinite;
+    }
+
+    @@keyframes pulse-red {
+        0% {
+            box-shadow: 0 0 0 0 rgba(247, 37, 133, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(247, 37, 133, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(247, 37, 133, 0);
+        }
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .btn-glass {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+        padding: 10px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-glass:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+        color: #fff;
+    }
+
+    /* Grid Layout */
+    .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 24px;
+    }
+
+    /* News Card */
+    .news-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        position: relative;
+    }
+
+    .news-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .news-image-wrapper {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .news-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .news-card:hover .news-image {
+        transform: scale(1.05);
+    }
+
+    .news-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .news-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .news-meta {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .news-title-link {
+        color: var(--text-bright);
+        text-decoration: none;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+        display: block;
+        transition: color 0.2s;
+    }
+
+    .news-title-link:hover {
+        color: var(--accent-primary);
+    }
+
+    .news-desc {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .news-footer {
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .read-more {
+        color: var(--accent-primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: gap 0.2s;
+    }
+
+    .read-more:hover {
+        gap: 10px;
+    }
+
+    .loading-state-full {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 100px;
+        color: var(--text-muted);
+    }
+
+    .loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--accent-news);
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+    }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+@section Scripts {
+    <script>
+        const initialQuery = @Json.Serialize(query);
+        const fallbackQuery = @Json.Serialize(fallbackQuery);
+
+        // Cache bust mechanism
+        const getCacheBuster = () => `&_=${new Date().getTime()}`;
+
+        async function fetchNews(queryOverride, skipTimeLimit = false) {
+            const grid = document.getElementById('newsGrid');
+            const targetQuery = queryOverride || initialQuery;
+            const currentLang = window.i18n.locale || 'en';
+            const params = getGoogleNewsParams(currentLang);
+
+            if (!grid) return;
+
+            // Only show loader on initial load or totally new search
+            if (grid.innerHTML.indexOf('news-card') === -1 || grid.innerHTML.indexOf('loading-state') === -1) {
+                grid.innerHTML = `
+                                            <div class="loading-state-full">
+                                                 <div class="loader-spinner"></div>
+                                                 <p>${window.i18n.t('AccessingGlobalFeeds')}...</p>
+                                            </div>
+                                        `;
+            }
+
+            try {
+                // Construct Query
+                let finalQuery = targetQuery;
+
+                // Strict Location Logic: If comma present, force quotes for exact match on City, Country
+                // This prevents "Paris, Texas" news when searching "Paris, France"
+                if (finalQuery.includes(',') && !finalQuery.startsWith('"')) {
+                    finalQuery = `"${finalQuery}"`;
+                }
+
+                if (!skipTimeLimit && !finalQuery.includes('when:')) {
+                    finalQuery += ' when:3d';
+                }
+
+                // Construct RSS URL
+                const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=${params.hl}&gl=${params.gl}&ceid=${params.ceid}`;
+                const finalUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}${getCacheBuster()}`;
+
+                const res = await fetch(finalUrl);
+                const data = await res.json();
+
+                if (data.status === 'ok' && data.items.length > 0) {
+                    renderNewsItems(data.items);
+                } else {
+                    // FALLBACK LOGIC
+                    console.warn('No news found for:', finalQuery);
+
+                    if (!skipTimeLimit) {
+                        // 1. First Fallback: Relax Time Constraint
+                        console.log('Retrying without time limit...');
+                        await fetchNews(targetQuery, true);
+                        return;
+                    }
+
+                    // 2. Second Fallback: Use explicit fallbackQuery (Region/Country)
+                    if (fallbackQuery && targetQuery !== fallbackQuery && targetQuery.indexOf(fallbackQuery) === -1) {
+                        console.log('Trying fallback region:', fallbackQuery);
+                        // Update UI
+                        const titleEl = document.querySelector('.title-wrapper h1');
+                        if (titleEl) titleEl.innerText = fallbackQuery + ' (' + window.i18n.t('Region') + ')';
+                        await fetchNews(fallbackQuery);
+                        return;
+                    }
+
+                    // 3. Third Fallback: Extract Country from "City, Country" pattern
+                    if (targetQuery.includes(',')) {
+                        const extractedCountry = targetQuery.split(',').pop().trim();
+                        if (extractedCountry && extractedCountry !== targetQuery) {
+                            console.log('Trying extracted country:', extractedCountry);
+                            const titleEl = document.querySelector('.title-wrapper h1');
+                            if (titleEl) titleEl.innerText = extractedCountry;
+                            await fetchNews(extractedCountry);
+                            return;
+                        }
+                    }
+
+                    // No results
+                    grid.innerHTML = `
+                                                    <div class="loading-state-full">
+                                                        <i class="fas fa-satellite-dish" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                                                        <p>${window.i18n.t('NoNewsFound')}</p>
+                                                        <button onclick="window.history.back()" class="btn-primary" style="margin-top:20px;">${window.i18n.t('ReturnToBase')}</button>
+                                                    </div>
+                                                `;
+                }
+
+            } catch (e) {
+                console.error(e);
+                grid.innerHTML = `<div class="text-danger" style="text-align:center; padding: 50px;">${window.i18n.t('SatelliteLinkFailure')}</div>`;
+            }
+        }
+
+        const fallbackImages = [
+            'https://images.unsplash.com/photo-1566378243939-593571dd9b74?q=80&w=600&fit=crop', // General News (Paper)
+            'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=600&fit=crop', // Business/Finance
+            'https://images.unsplash.com/photo-1526304640152-d4619684e484?q=80&w=600&fit=crop', // Charts/Stocks
+            'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&fit=crop', // Tech/Chip
+            'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=600&fit=crop', // Tech Code
+            'https://images.unsplash.com/photo-1444653614773-995cb7542bbf?q=80&w=600&fit=crop', // Weather/Clouds
+            'https://images.unsplash.com/photo-1561484930-998b6a7b22e8?q=80&w=600&fit=crop', // Storm/Rain
+            'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=600&fit=crop', // City/Urban
+            'https://images.unsplash.com/photo-1480796927426-f609979314bd?q=80&w=600&fit=crop', // Tokyo/City
+            'https://images.unsplash.com/photo-1596524430615-b46476ddff6e?q=80&w=600&fit=crop', // Politics/Meeting
+            'https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=600&fit=crop', // Arts/Culture
+            'https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=600&fit=crop'  // Science/Lab
+        ];
+
+        function getRelevantFallbackImage(title) {
+            const t = title.toLowerCase();
+            // Simple keyword mapping
+            if (t.includes('market') || t.includes('stock') || t.includes('economy')) return fallbackImages[2];
+            if (t.includes('business') || t.includes('money') || t.includes('finance')) return fallbackImages[1];
+            if (t.includes('tech') || t.includes('ai ') || t.includes('cyber')) return fallbackImages[3];
+            if (t.includes('code') || t.includes('app ')) return fallbackImages[4];
+            if (t.includes('weather') || t.includes('rain')) return fallbackImages[6];
+            if (t.includes('climate') || t.includes('cloud')) return fallbackImages[5];
+            if (t.includes('city') || t.includes('urban')) return fallbackImages[7];
+            if (t.includes('travel') || t.includes('tourist')) return fallbackImages[8];
+            if (t.includes('politic') || t.includes('election')) return fallbackImages[9];
+            if (t.includes('art') || t.includes('culture')) return fallbackImages[10];
+            if (t.includes('science') || t.includes('space')) return fallbackImages[11];
+
+            let hash = 0;
+            for (let i = 0; i < title.length; i++) hash = title.charCodeAt(i) + ((hash << 5) - hash);
+            return fallbackImages[Math.abs(hash) % fallbackImages.length];
+        }
+
+        function renderNewsItems(items) {
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = '';
+
+            // Sort by date new to old
+            items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+            // Get locale for date formatting
+            const lang = window.i18n.locale;
+            const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
+
+            const usedImages = new Set();
+            const now = new Date();
+
+            items.forEach(item => {
+                let imgUrl = null;
+                if (item.enclosure && item.enclosure.link) imgUrl = item.enclosure.link;
+                else if (item.thumbnail) imgUrl = item.thumbnail;
+
+                // Unique Fallback Logic
+                const generatedFallback = getRelevantFallbackImage(item.title || 'News');
+                if (!imgUrl || usedImages.has(imgUrl)) {
+                    imgUrl = generatedFallback;
+                }
+                usedImages.add(imgUrl);
+
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = item.description;
+                const rawDesc = tempDiv.textContent || tempDiv.innerText || '';
+                const cleanDesc = rawDesc.length > 150 ? rawDesc.substring(0, 150) + '...' : rawDesc;
+
+                let title = item.title;
+                let source = item.author || 'News Wire';
+
+                const lastDash = title.lastIndexOf(' - ');
+                if (lastDash > 0) {
+                    source = title.substring(lastDash + 3);
+                    title = title.substring(0, lastDash);
+                }
+
+                const date = new Date(item.pubDate);
+                const isFresh = (now - date) < (24 * 60 * 60 * 1000); // 24 hours
+
+                const dateStr = date.toLocaleDateString(locale) + ' ' + date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+
+                const card = document.createElement('article');
+                card.className = 'news-card fade-in';
+                card.innerHTML = `
+                                                        <div class="news-image-wrapper">
+                                                            <img src="${imgUrl}" class="news-image" onerror="this.onerror=null;this.src='${generatedFallback}'">
+                                                            <div class="news-badge">${source}</div>
+                                                            ${isFresh ? `<div class="live-badge" style="position:absolute; top:15px; left:15px; background:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; font-size:0.75rem; box-shadow:0 2px 5px rgba(0,0,0,0.3); animation: pulse 2s infinite;">${window.i18n.t('LIVE')}</div>` : ''}
+                                                        </div>
+                                                        <div class="news-content">
+                                                            <div class="news-meta">
+                                                                <span><i class="far fa-clock"></i> ${dateStr}</span>
+                                                            </div>
+                                                            <a href="${item.link}" target="_blank" class="news-title-link">${title}</a>
+                                                            <div class="news-desc">${cleanDesc}</div>
+                                                            <div class="news-footer">
+                                                                <a href="${item.link}" target="_blank" class="read-more">
+                                                                    ${window.i18n.t('ReadFullReport')} <i class="fas fa-arrow-right"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                     `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial fetch handled above if needed, or by user interaction.
+            // But existing code called fetchNews() here.
+            // We keep the call if it was there, or remove it if user wants strict "no global news on load" 
+            // Logic says: Details page usually shows query results.
+            if (initialQuery) {
+                fetchNews();
+            } else {
+                // Should have a query if we are on this page
+            }
+
+            // Re-fetch on language change
+            $(document).on('languageChanged', function () {
+                console.log('Language changed, refreshing news feed...');
+                fetchNews();
+            });
+        });
+
+        // Listen for global language change event
+        $(document).on('languageChanged', function (e, lang) {
+            console.log('News Details: Language changed to ' + lang);
+
+            // 1. Refresh News Content
+            fetchNews();
+
+            // 2. Update Static UI Text immediately (handled nicely by _Layout's global handler, but we ensure specificity here if needed)
+            // Note: The global handler in _Layout updates all [data-i18n] elements automatically.
+            // We just need to trigger the fetch.
+        });
+
+    </script>
+}

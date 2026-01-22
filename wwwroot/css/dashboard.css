@@ -1266,3 +1266,15 @@ section:hover .title-icon::after {
     box-shadow: 0 4px 24px rgba(167, 139, 250, 0.2);
 }
 
+
+/* UI Updates for Currency and News */
+.modern-select {
+    color: #000 !important;
+}
+.modern-select option {
+    color: #000;
+    background: #fff;
+}
+.btn-glass {
+    color: #000 !important;
+}

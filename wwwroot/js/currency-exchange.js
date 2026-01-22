@@ -11,7 +11,7 @@ const globalLocations = {
         { name: "Ghana", code: "GH", currency: "GHS", flag: "🇬🇭", cities: ["Accra", "Kumasi", "Tamale", "Takoradi"] },
         { name: "Ethiopia", code: "ET", currency: "ETB", flag: "🇪🇹", cities: ["Addis Ababa", "Dire Dawa", "Mekelle", "Gondar"] },
         { name: "Tanzania", code: "TZ", currency: "TZS", flag: "🇹🇿", cities: ["Dar es Salaam", "Dodoma", "Mwanza", "Arusha"] },
-        
+
         // Asia
         { name: "China", code: "CN", currency: "CNY", flag: "🇨🇳", cities: ["Beijing", "Shanghai", "Guangzhou", "Shenzhen", "Chengdu", "Hong Kong"] },
         { name: "India", code: "IN", currency: "INR", flag: "🇮🇳", cities: ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"] },
@@ -31,7 +31,7 @@ const globalLocations = {
         { name: "Israel", code: "IL", currency: "ILS", flag: "🇮🇱", cities: ["Tel Aviv", "Jerusalem", "Haifa", "Eilat"] },
         { name: "Iran", code: "IR", currency: "IRR", flag: "🇮🇷", cities: ["Tehran", "Mashhad", "Isfahan", "Shiraz"] },
         { name: "Iraq", code: "IQ", currency: "IQD", flag: "🇮🇶", cities: ["Baghdad", "Basra", "Mosul", "Erbil"] },
-        
+
         // Europe
         { name: "United Kingdom", code: "GB", currency: "GBP", flag: "🇬🇧", cities: ["London", "Manchester", "Birmingham", "Edinburgh", "Glasgow", "Liverpool"] },
         { name: "Germany", code: "DE", currency: "EUR", flag: "🇩🇪", cities: ["Berlin", "Munich", "Frankfurt", "Hamburg", "Cologne", "Stuttgart"] },
@@ -54,12 +54,12 @@ const globalLocations = {
         { name: "Ireland", code: "IE", currency: "EUR", flag: "🇮🇪", cities: ["Dublin", "Cork", "Galway", "Limerick"] },
         { name: "Romania", code: "RO", currency: "RON", flag: "🇷🇴", cities: ["Bucharest", "Cluj-Napoca", "Timisoara", "Iasi"] },
         { name: "Hungary", code: "HU", currency: "HUF", flag: "🇭🇺", cities: ["Budapest", "Debrecen", "Szeged", "Miskolc"] },
-        
+
         // North America
         { name: "United States", code: "US", currency: "USD", flag: "🇺🇸", cities: ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Francisco", "Miami", "Seattle", "Boston", "Las Vegas"] },
         { name: "Canada", code: "CA", currency: "CAD", flag: "🇨🇦", cities: ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa", "Edmonton"] },
         { name: "Mexico", code: "MX", currency: "MXN", flag: "🇲🇽", cities: ["Mexico City", "Guadalajara", "Monterrey", "Cancun", "Tijuana"] },
-        
+
         // South America
         { name: "Brazil", code: "BR", currency: "BRL", flag: "🇧🇷", cities: ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador", "Fortaleza"] },
         { name: "Argentina", code: "AR", currency: "ARS", flag: "🇦🇷", cities: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"] },
@@ -67,11 +67,11 @@ const globalLocations = {
         { name: "Colombia", code: "CO", currency: "COP", flag: "🇨🇴", cities: ["Bogotá", "Medellín", "Cali", "Cartagena"] },
         { name: "Peru", code: "PE", currency: "PEN", flag: "🇵🇪", cities: ["Lima", "Cusco", "Arequipa", "Trujillo"] },
         { name: "Venezuela", code: "VE", currency: "VES", flag: "🇻🇪", cities: ["Caracas", "Maracaibo", "Valencia", "Barquisimeto"] },
-        
+
         // Oceania
         { name: "Australia", code: "AU", currency: "AUD", flag: "🇦🇺", cities: ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Gold Coast"] },
         { name: "New Zealand", code: "NZ", currency: "NZD", flag: "🇳🇿", cities: ["Auckland", "Wellington", "Christchurch", "Queenstown"] },
-        
+
         // Additional Countries
         { name: "Ukraine", code: "UA", currency: "UAH", flag: "🇺🇦", cities: ["Kyiv", "Kharkiv", "Odesa", "Lviv"] },
         { name: "Croatia", code: "HR", currency: "EUR", flag: "🇭🇷", cities: ["Zagreb", "Split", "Dubrovnik", "Rijeka"] },
@@ -191,7 +191,10 @@ const errorMessage = document.getElementById('error-message');
 const loadingOverlay = document.getElementById('loading-overlay');
 
 // ==================== Initialization ====================
-function init() {
+async function init() {
+    // Localization is handled globally by site.js now.
+    // specific page logic:
+
     populateSelects();
     attachEventListeners();
     setDefaultSelections();
@@ -201,7 +204,7 @@ function init() {
 // ==================== Populate Dropdowns ====================
 function populateSelects() {
     const fragment = document.createDocumentFragment();
-    
+
     // Add countries
     globalLocations.countries.forEach(country => {
         const option = document.createElement('option');
@@ -215,7 +218,7 @@ function populateSelects() {
         option.textContent = `${country.flag} ${country.name} (${country.currency})`;
         fragment.appendChild(option.cloneNode(true));
     });
-    
+
     // Add cities
     globalLocations.countries.forEach(country => {
         if (country.cities && country.cities.length > 0) {
@@ -234,7 +237,7 @@ function populateSelects() {
             });
         }
     });
-    
+
     fromSelect.appendChild(fragment.cloneNode(true));
     toSelect.appendChild(fragment);
 }
@@ -251,35 +254,35 @@ function attachEventListeners() {
 // ==================== Event Handlers ====================
 function handleFromChange(e) {
     if (!e.target.value) return;
-    
+
     const data = JSON.parse(e.target.value);
     fromCurrency = data.currency;
-    
+
     fromFlag.textContent = data.flag;
     fromSymbol.textContent = currencySymbols[data.currency] || data.currency;
-    
+
     const codeEl = fromInfo.querySelector('.currency-code');
     const nameEl = fromInfo.querySelector('.location-name');
     codeEl.textContent = data.currency;
     nameEl.textContent = data.type === 'city' ? `${data.name}, ${data.country}` : data.name;
-    
+
     updateConversion();
 }
 
 function handleToChange(e) {
     if (!e.target.value) return;
-    
+
     const data = JSON.parse(e.target.value);
     toCurrency = data.currency;
-    
+
     toFlag.textContent = data.flag;
     toSymbol.textContent = currencySymbols[data.currency] || data.currency;
-    
+
     const codeEl = toInfo.querySelector('.currency-code');
     const nameEl = toInfo.querySelector('.location-name');
     codeEl.textContent = data.currency;
     nameEl.textContent = data.type === 'city' ? `${data.name}, ${data.country}` : data.name;
-    
+
     updateConversion();
 }
 
@@ -290,30 +293,30 @@ function handleAmountInput() {
 function handleSwap() {
     const fromValue = fromSelect.value;
     const toValue = toSelect.value;
-    
+
     if (!fromValue || !toValue) {
-        showError('Please select both currencies before swapping');
+        showError(window.i18n.t('SelectCurrencies'));
         return;
     }
-    
+
     fromSelect.value = toValue;
     toSelect.value = fromValue;
-    
+
     handleFromChange({ target: fromSelect });
     handleToChange({ target: toSelect });
 }
 
 async function handleConvert() {
     if (!fromCurrency || !toCurrency) {
-        showError('Please select both source and target currencies');
+        showError(window.i18n.t('SelectCurrencies'));
         return;
     }
-    
+
     if (!fromAmount.value || parseFloat(fromAmount.value) <= 0) {
-        showError('Please enter a valid amount');
+        showError(window.i18n.t('EnterAmount'));
         return;
     }
-    
+
     await fetchExchangeRates();
     updateConversion();
 }
@@ -323,32 +326,33 @@ function updateConversion() {
     if (!fromCurrency || !toCurrency || !fromAmount.value) {
         return;
     }
-    
+
     const amount = parseFloat(fromAmount.value);
     if (isNaN(amount) || amount <= 0) {
         toAmount.value = '';
         return;
     }
-    
+
     if (Object.keys(exchangeRates).length === 0) {
-        showError('Exchange rates not loaded. Please try again.');
+        // Soft error or just wait?
+        showError(window.i18n.t('ExchangeRatesNotLoaded'));
         return;
     }
-    
+
     // Convert from base currency (USD) to target
     const fromRate = exchangeRates[fromCurrency] || 1;
     const toRate = exchangeRates[toCurrency] || 1;
-    
+
     // Convert: amount in fromCurrency -> USD -> toCurrency
     const amountInUSD = amount / fromRate;
     const convertedAmount = amountInUSD * toRate;
-    
+
     toAmount.value = convertedAmount.toFixed(2);
-    
+
     // Update exchange rate display
     const rate = toRate / fromRate;
     rateValue.textContent = `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}`;
-    
+
     hideError();
 }
 
@@ -356,25 +360,25 @@ function updateConversion() {
 async function fetchExchangeRates() {
     try {
         showLoading();
-        
+
         // Using ExchangeRate-API (free tier)
         const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-        
+
         if (!response.ok) {
-            throw new Error('Failed to fetch exchange rates');
+            throw new Error(window.i18n.t('FetchError'));
         }
-        
+
         const data = await response.json();
         exchangeRates = data.rates;
         lastUpdateTime = new Date();
-        
+
         lastUpdated.textContent = `Last updated: ${lastUpdateTime.toLocaleString()}`;
-        
+
         hideLoading();
         hideError();
     } catch (error) {
         hideLoading();
-        showError('Unable to fetch exchange rates. Please check your internet connection and try again.');
+        showError(window.i18n.t('FetchError'));
         console.error('Exchange rate fetch error:', error);
     }
 }
@@ -387,19 +391,19 @@ function setDefaultSelections() {
         const data = JSON.parse(opt.value);
         return data.type === 'country' && data.code === 'US';
     });
-    
+
     if (usOption) {
         fromSelect.value = usOption.value;
         handleFromChange({ target: fromSelect });
     }
-    
+
     // Set EUR (Germany) as default to
     const eurOption = Array.from(toSelect.options).find(opt => {
         if (!opt.value) return false;
         const data = JSON.parse(opt.value);
         return data.type === 'country' && data.code === 'DE';
     });
-    
+
     if (eurOption) {
         toSelect.value = eurOption.value;
         handleToChange({ target: toSelect });
@@ -420,7 +424,7 @@ function hideLoading() {
 function showError(message) {
     errorMessage.textContent = message;
     errorMessage.classList.add('show');
-    
+
     setTimeout(() => {
         hideError();
     }, 5000);

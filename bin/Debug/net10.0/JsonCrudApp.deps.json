@@ -13,12 +13,6 @@
         "resources": {
           "en/JsonCrudApp.resources.dll": {
             "locale": "en"
-          },
-          "gu/JsonCrudApp.resources.dll": {
-            "locale": "gu"
-          },
-          "hi/JsonCrudApp.resources.dll": {
-            "locale": "hi"
           }
         }
       }

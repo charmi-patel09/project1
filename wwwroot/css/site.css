@@ -615,3 +615,21 @@ body {
 .slide-in {
     animation: slideIn 0.5s ease;
 }
+/* Login Page Overrides */
+.login-page input.form-control {
+    color: #000 !important;
+}
+.login-page input.form-control::placeholder {
+    color: #666 !important;
+    opacity: 1;
+}
+
+/* Translation UI */
+.lang-container { position: relative; display: inline-block; }
+.lang-btn-new { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+.lang-btn-new:hover { background: rgba(255,255,255,0.2); }
+.lang-dropdown-menu { display: none; position: absolute; top: 100%; right: 0; background: #1a1f2c; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-top: 8px; min-width: 200px; max-height: 300px; overflow-y: auto; shadow: 0 4px 20px rgba(0,0,0,0.5); z-index: 1000; }
+.lang-dropdown-menu.show { display: block; }
+.lang-option { padding: 8px 16px; color: #e0e0e0; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; transition: background 0.2s; }
+.lang-option:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.lang-option.active { color: #34d399; font-weight: bold; background: rgba(52, 211, 153, 0.1); }

@@ -14,29 +14,20 @@ public class HomeController : BaseController
         _studentService = studentService;
     }
 
-    public IActionResult Index()
-    {
-        var students = _studentService.GetStudents().ToList();
 
-        ViewBag.TotalStudents = students.Count;
-        ViewBag.AverageAge = students.Any() ? students.Average(s => s.Age ?? 0) : 0;
-        ViewBag.RecentStudents = students.OrderByDescending(s => s.Id).Take(5).ToList();
-        ViewBag.CourseStats = students.GroupBy(s => s.Course)
-                                     .Select(g => new { Course = g.Key, Count = g.Count() })
-                                     .ToList();
-
-        return View();
-    }
 
     public IActionResult Dashboard()
     {
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult CountryDetails(string name)
     {
+        ViewData["SearchQuery"] = name;
         return View();
     }
+
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
