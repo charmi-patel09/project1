@@ -68,30 +68,52 @@
 
         async function fetchCountryDetails(query) {
             const container = document.getElementById('detailsContainer');
+            if (!query) {
+                showError("No target specified.");
+                return;
+            }
 
             try {
-                // Fetch by Name
-                const res = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(query)}?fullText=true`);
+                console.log("Initiating Sequence: " + query);
+
+                // Fetch by Name with Timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s limit
+
+                const res = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(query)}?fullText=true`, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
 
                 if (!res.ok) {
-                    // Try partial match if full text failed, or show error
                     if (res.status === 404) {
-                        // Fallback to loose search?
+                        // Fallback: Partial Search
+                        console.log("Primary target lost. Attempting partial acquisition...");
                         const looseRes = await fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(query)}`);
                         if (looseRes.ok) {
                             const looseData = await looseRes.json();
-                            renderCountry(looseData[0]);
+                            await renderCountry(looseData[0]);
                             return;
                         }
                     }
-                    throw new Error("Country not found");
+                    throw new Error("Target not found in global registry.");
                 }
 
                 const data = await res.json();
-                renderCountry(data[0]);
+                await renderCountry(data[0]);
 
             } catch (error) {
-                showError(await window.translator.translateText("Target Coordinates Not Found: Invalid Country Name"));
+                console.error("Fetch Error:", error);
+                let msg = "Target Coordinates Not Found: Invalid Country Name";
+                if (error.name === 'AbortError') msg = "Connection Timed Out";
+
+                try {
+                    if (window.translator && typeof window.translator.translateText === 'function') {
+                        msg = await window.translator.translateText(msg);
+                    }
+                } catch (e) { }
+
+                showError(msg);
             }
         }
 
@@ -132,57 +154,57 @@
             const l_timezone = await window.translator.translateText("Timezone");
 
             container.innerHTML = `
-                    <div class="result-card slide-in" style="width: 100%; max-width: 800px; background: transparent; border: none; padding: 0;">
+                        <div class="result-card slide-in" style="width: 100%; max-width: 800px; background: transparent; border: none; padding: 0;">
 
-                        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px;">
-                            <img src="${flag}" alt="${name} Flag" style="width: 200px; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px;">
-                            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 5px;">${t_name}</h2>
-                            <div style="color: var(--text-muted); font-size: 1.1rem;">${t_official}</div>
+                            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px;">
+                                <img src="${flag}" alt="${name} Flag" style="width: 200px; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px;">
+                                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 5px;">${t_name}</h2>
+                                <div style="color: var(--text-muted); font-size: 1.1rem;">${t_official}</div>
+                            </div>
+
+                            <div class="stats-deep" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                                <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                    <i class="fas fa-landmark" style="font-size: 1.5rem; color: var(--accent-cyan); margin-bottom: 10px;"></i>
+                                    <label>${l_capital}</label>
+                                    <b style="font-size: 1.2rem;">${t_capital}</b>
+                                </div>
+                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                    <i class="fas fa-globe-americas" style="font-size: 1.5rem; color: var(--accent-indigo); margin-bottom: 10px;"></i>
+                                    <label>${l_region}</label>
+                                    <b style="font-size: 1.2rem;">${t_region}</b>
+                                    <div style="font-size: 0.8rem; opacity: 0.7;">${t_subregion}</div>
+                                </div>
+                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                    <i class="fas fa-users" style="font-size: 1.5rem; color: var(--accent-rose); margin-bottom: 10px;"></i>
+                                    <label>${l_pop}</label>
+                                    <b style="font-size: 1.2rem;">${population}</b>
+                                </div>
+                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                    <i class="fas fa-coins" style="font-size: 1.5rem; color: var(--accent-emerald); margin-bottom: 10px;"></i>
+                                    <label>${l_curr}</label>
+                                    <b style="font-size: 1.2rem;">${currencySymbol} ${t_curr}</b>
+                                </div>
+                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
+                                    <i class="fas fa-clock" style="font-size: 1.5rem; color: var(--accent-purple); margin-bottom: 10px;"></i>
+                                    <label>${l_timezone}</label>
+                                    <b style="font-size: 1.2rem;">${timezone}</b>
+                                </div>
+                            </div>
+
                         </div>
-
-                        <div class="stats-deep" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                            <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                <i class="fas fa-landmark" style="font-size: 1.5rem; color: var(--accent-cyan); margin-bottom: 10px;"></i>
-                                <label>${l_capital}</label>
-                                <b style="font-size: 1.2rem;">${t_capital}</b>
-                            </div>
-                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                <i class="fas fa-globe-americas" style="font-size: 1.5rem; color: var(--accent-indigo); margin-bottom: 10px;"></i>
-                                <label>${l_region}</label>
-                                <b style="font-size: 1.2rem;">${t_region}</b>
-                                <div style="font-size: 0.8rem; opacity: 0.7;">${t_subregion}</div>
-                            </div>
-                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                <i class="fas fa-users" style="font-size: 1.5rem; color: var(--accent-rose); margin-bottom: 10px;"></i>
-                                <label>${l_pop}</label>
-                                <b style="font-size: 1.2rem;">${population}</b>
-                            </div>
-                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                <i class="fas fa-coins" style="font-size: 1.5rem; color: var(--accent-emerald); margin-bottom: 10px;"></i>
-                                <label>${l_curr}</label>
-                                <b style="font-size: 1.2rem;">${currencySymbol} ${t_curr}</b>
-                            </div>
-                             <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                <i class="fas fa-clock" style="font-size: 1.5rem; color: var(--accent-purple); margin-bottom: 10px;"></i>
-                                <label>${l_timezone}</label>
-                                <b style="font-size: 1.2rem;">${timezone}</b>
-                            </div>
-                        </div>
-
-                    </div>
-                `;
+                    `;
         }
 
         async function showError(msg) {
             const container = document.getElementById('detailsContainer');
             container.innerHTML = `
-                    <div style="text-align: center; color: var(--accent-danger);">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                        <h3 style="margin-bottom: 10px;">Data Link Severed</h3>
-                        <p style="font-size: 1.1rem; opacity: 0.8;">${msg}</p>
-                        <a href="/Home/Dashboard" class="btn-primary" style="margin-top: 20px; display: inline-block;">Return to Hub</a>
-                    </div>
-                 `;
+                        <div style="text-align: center; color: var(--accent-danger);">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                            <h3 style="margin-bottom: 10px;">Data Link Severed</h3>
+                            <p style="font-size: 1.1rem; opacity: 0.8;">${msg}</p>
+                            <a href="/Home/Dashboard" class="btn-primary" style="margin-top: 20px; display: inline-block;">Return to Hub</a>
+                        </div>
+                     `;
         }
     </script>
 }

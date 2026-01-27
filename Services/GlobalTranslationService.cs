@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -42,7 +43,8 @@ namespace JsonCrudApp.Services
                     // Set User-Agent to avoid some blocks
                     _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
 
-                    var response = await _httpClient.GetStringAsync(url);
+                    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+                    var response = await _httpClient.GetStringAsync(url, cts.Token);
 
                     using var doc = JsonDocument.Parse(response);
                     var root = doc.RootElement;

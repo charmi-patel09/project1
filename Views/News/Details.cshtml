@@ -322,96 +322,115 @@
         const initialQuery = @Json.Serialize(query);
         const fallbackQuery = @Json.Serialize(fallbackQuery);
 
-        // Cache bust mechanism
-        const getCacheBuster = () => `&_=${new Date().getTime()}`;
+        // Cache bust mechanism (Per minute to reduce API load)
+        const getCacheBuster = () => `&_=${Math.floor(Date.now() / 60000)}`;
+
+        function getGoogleNewsParams(lang) {
+            const map = {
+                'en': { hl: 'en-US', gl: 'US', ceid: 'US:en' },
+                'es': { hl: 'es-419', gl: 'US', ceid: 'US:es-419' },
+                'fr': { hl: 'fr-FR', gl: 'FR', ceid: 'FR:fr' },
+                'de': { hl: 'de-DE', gl: 'DE', ceid: 'DE:de' },
+                'hi': { hl: 'hi-IN', gl: 'IN', ceid: 'IN:hi' },
+                'gu': { hl: 'gu-IN', gl: 'IN', ceid: 'IN:gu' },
+                'zh': { hl: 'zh-CN', gl: 'CN', ceid: 'CN:zh-Hans' },
+                'ja': { hl: 'ja-JP', gl: 'JP', ceid: 'JP:ja' },
+                'ru': { hl: 'ru-RU', gl: 'RU', ceid: 'RU:ru' },
+                'ar': { hl: 'ar', gl: 'EG', ceid: 'EG:ar' }
+            };
+            return map[lang] || map['en'];
+        }
 
         async function fetchNews(queryOverride, skipTimeLimit = false) {
             const grid = document.getElementById('newsGrid');
             const targetQuery = queryOverride || initialQuery;
-            const currentLang = window.i18n.locale || 'en';
+
+            // Safe Locale Access
+            let currentLang = 'en';
+            try { if (window.i18n && window.i18n.locale) currentLang = window.i18n.locale; } catch (e) { }
+
             const params = getGoogleNewsParams(currentLang);
 
             if (!grid) return;
 
-            // Only show loader on initial load or totally new search
-            if (grid.innerHTML.indexOf('news-card') === -1 || grid.innerHTML.indexOf('loading-state') === -1) {
+            // Only show loader if empty
+            if (!grid.innerHTML.trim() || grid.innerHTML.indexOf('loading-state') > -1) {
                 grid.innerHTML = `
-                                                <div class="loading-state-full">
-                                                     <div class="loader-spinner"></div>
-                                                     <p>${window.i18n.t('AccessingGlobalFeeds')}...</p>
-                                                </div>
-                                            `;
+                                        <div class="loading-state-full">
+                                             <div class="loader-spinner"></div>
+                                             <p>Accessing Global Feeds...</p>
+                                        </div>`;
             }
 
             try {
-                // Construct Query
                 let finalQuery = targetQuery;
 
-                // Strict Location Logic: If comma present, force quotes for exact match on City, Country
-                // This prevents "Paris, Texas" news when searching "Paris, France"
+                // STRICT REAL NEWS REQ:
+                // Google News RSS is best for "Real News".
+                // If query is "City, Country", we search exactly that.
+                // We do NOT restrict time artificially (e.g. 'when:3d') because for smaller cities 
+                // it might yield 0 results, whereas we want *latest available* real news.
+                // The RSS feed is already sorted by date/relevance.
+
                 if (finalQuery.includes(',') && !finalQuery.startsWith('"')) {
-                    finalQuery = `"${finalQuery}"`;
+                    finalQuery = `"${finalQuery}"`; // Force exact phrase for location accuracy
                 }
 
-                if (!skipTimeLimit && !finalQuery.includes('when:')) {
-                    finalQuery += ' when:3d';
-                }
-
-                // Construct RSS URL
                 const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(finalQuery)}&hl=${params.hl}&gl=${params.gl}&ceid=${params.ceid}`;
+                // Use per-minute cache buster
                 const finalUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}${getCacheBuster()}`;
 
-                const res = await fetch(finalUrl);
+                console.log("Fetching News: " + finalQuery);
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s Limit
+
+                const res = await fetch(finalUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
                 const data = await res.json();
 
                 if (data.status === 'ok' && data.items.length > 0) {
-                    renderNewsItems(data.items);
+                    await renderNewsItems(data.items);
                 } else {
-                    // FALLBACK LOGIC
+                    // Fallback Logic
                     console.warn('No news found for:', finalQuery);
 
-                    if (!skipTimeLimit) {
-                        // 1. First Fallback: Relax Time Constraint
-                        console.log('Retrying without time limit...');
-                        await fetchNews(targetQuery, true);
-                        return;
-                    }
-
-                    // 2. Second Fallback: Use explicit fallbackQuery (Region/Country)
+                    // 1. Try Fallback Query (Region/Country)
                     if (fallbackQuery && targetQuery !== fallbackQuery && targetQuery.indexOf(fallbackQuery) === -1) {
-                        console.log('Trying fallback region:', fallbackQuery);
-                        // Update UI
+                        console.log('Falling back to region:', fallbackQuery);
                         const titleEl = document.querySelector('.title-wrapper h1');
-                        if (titleEl) titleEl.innerText = fallbackQuery + ' (' + window.i18n.t('Region') + ')';
-                        await fetchNews(fallbackQuery);
+                        if (titleEl) titleEl.innerText = fallbackQuery;
+                        await fetchNews(fallbackQuery, true); // True = skip recursion safeguards if needed
                         return;
                     }
 
-                    // 3. Third Fallback: Extract Country from "City, Country" pattern
+                    // 2. Try Extracting Country (if comma exists)
                     if (targetQuery.includes(',')) {
-                        const extractedCountry = targetQuery.split(',').pop().trim();
-                        if (extractedCountry && extractedCountry !== targetQuery) {
-                            console.log('Trying extracted country:', extractedCountry);
-                            const titleEl = document.querySelector('.title-wrapper h1');
-                            if (titleEl) titleEl.innerText = extractedCountry;
-                            await fetchNews(extractedCountry);
+                        const extracted = targetQuery.split(',').pop().trim();
+                        if (extracted && extracted !== targetQuery) {
+                            console.log('Falling back to extracted country:', extracted);
+                            await fetchNews(extracted, true);
                             return;
                         }
                     }
 
-                    // No results
+                    // FINAL STATE: NO DATA
                     grid.innerHTML = `
-                                                        <div class="loading-state-full">
-                                                            <i class="fas fa-satellite-dish" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                                                            <p>${window.i18n.t('NoNewsFound')}</p>
-                                                            <button onclick="window.history.back()" class="btn-primary" style="margin-top:20px;">${window.i18n.t('ReturnToBase')}</button>
-                                                        </div>
-                                                    `;
+                                             <div class="loading-state-full">
+                                                 <i class="fas fa-satellite-dish" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                                                 <p>No Intel Found</p>
+                                                 <button onclick="window.history.back()" class="btn-primary" style="margin-top:20px;">Return to Base</button>
+                                             </div>
+                                        `;
                 }
 
             } catch (e) {
-                console.error(e);
-                grid.innerHTML = `<div class="text-danger" style="text-align:center; padding: 50px;">${window.i18n.t('SatelliteLinkFailure')}</div>`;
+                console.error("News Fetch Error:", e);
+                grid.innerHTML = `<div class="text-danger" style="text-align:center; padding: 50px;">
+                                                        <i class="fas fa-exclamation-triangle"></i><br>
+                                                        Satellite Link Failure (API/Network Error)
+                                                      </div>`;
             }
         }
 
@@ -462,6 +481,7 @@
             const locale = lang === 'en' ? 'en-US' : (lang === 'hi' ? 'hi-IN' : 'gu-IN');
 
             const usedImages = new Set();
+            const seenTitles = new Set(); // Deduplication
             const now = new Date();
 
             // Pre-translate labels
@@ -469,15 +489,33 @@
             const labelReadMore = await window.translator.translateText('ReadFullReport');
 
             items.forEach(item => {
-                let imgUrl = null;
-                if (item.enclosure && item.enclosure.link) imgUrl = item.enclosure.link;
-                else if (item.thumbnail) imgUrl = item.thumbnail;
+                // Deduplicate
+                if (seenTitles.has(item.title)) return;
+                seenTitles.add(item.title);
 
-                // Unique Fallback Logic
+                let imgUrl = item.thumbnail || (item.enclosure ? item.enclosure.link : null);
+
+                // Generate a specific fallback for this article
+                // Note: We use title + index to ensure uniqueness if needed, but title hash is usually good enough.
                 const generatedFallback = getRelevantFallbackImage(item.title || 'News');
+
+                // If no image, OR if this exact image URL was already used in this grid
+                // (e.g. source icon used as article image) -> Force Fallback
                 if (!imgUrl || usedImages.has(imgUrl)) {
-                    imgUrl = generatedFallback;
+                    // Even fallbacks might repeat if we have 5 "Tech" articles.
+                    // To ensure visual variety, if the fallback is ALSO used, we might want to rotate?
+                    // For now, allow fallback repetition as they are "theme" images.
+                    // BUT, to satisfy "Prevent using the same poster image", we can try to find an unused one.
+
+                    if (usedImages.has(generatedFallback)) {
+                        // Fallback collision. Try to find *any* unused fallback from our set.
+                        const unused = fallbackImages.find(f => !usedImages.has(f));
+                        imgUrl = unused || generatedFallback; // If all used, succumb to repetition.
+                    } else {
+                        imgUrl = generatedFallback;
+                    }
                 }
+
                 usedImages.add(imgUrl);
 
                 const tempDiv = document.createElement('div');
@@ -501,25 +539,25 @@
 
                 const card = document.createElement('article');
                 card.className = 'news-card fade-in';
+                // Text Only Mode
                 card.innerHTML = `
-                                                            <div class="news-image-wrapper">
-                                                                <img src="${imgUrl}" class="news-image" onerror="this.onerror=null;this.src='${generatedFallback}'">
-                                                                <div class="news-badge">${source}</div>
-                                                                ${isFresh ? `<div class="live-badge" style="position:absolute; top:15px; left:15px; background:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; font-size:0.75rem; box-shadow:0 2px 5px rgba(0,0,0,0.3); animation: pulse 2s infinite;">${labelLive}</div>` : ''}
-                                                            </div>
-                                                            <div class="news-content">
-                                                                <div class="news-meta">
-                                                                    <span><i class="far fa-clock"></i> ${dateStr}</span>
-                                                                </div>
-                                                                <a href="${item.link}" target="_blank" class="news-title-link">${title}</a>
-                                                                <div class="news-desc">${cleanDesc}</div>
-                                                                <div class="news-footer">
-                                                                    <a href="${item.link}" target="_blank" class="read-more">
-                                                                        ${labelReadMore} <i class="fas fa-arrow-right"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                         `;
+                            <div class="news-content" style="padding: 1.5rem; height: 100%;">
+                                <div class="news-meta" style="margin-bottom: 0.8rem; display:flex; justify-content:space-between; align-items:center;">
+                                    <span class="news-badge" style="position:static; background:rgba(255,255,255,0.1); margin:0;">${source}</span>
+                                    <span><i class="far fa-clock"></i> ${dateStr}</span>
+                                </div>
+                                ${isFresh ? `<div style="color:#ef4444; font-weight:bold; font-size:0.75rem; margin-bottom:8px;">${labelLive}</div>` : ''}
+
+                                <a href="${item.link}" target="_blank" class="news-title-link" style="font-size:1.1rem; margin-bottom:0.8rem;">${title}</a>
+                                <div class="news-desc" style="font-size:0.9rem;">${cleanDesc}</div>
+
+                                <div class="news-footer" style="margin-top:auto; padding-top:1rem;">
+                                    <a href="${item.link}" target="_blank" class="read-more">
+                                        ${labelReadMore} <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                    `;
                 grid.appendChild(card);
             });
         }

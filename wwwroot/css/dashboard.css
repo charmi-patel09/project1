@@ -1,4 +1,5 @@
 :root {
+    /* Dark Theme (Default) */
     --bg-obsidian: #0f1419;
     --bg-surface: #161b22;
     --bg-card: #1c2128;
@@ -13,20 +14,48 @@
     --accent-emerald: #34d399;
     --accent-indigo: #818cf8;
     --accent-purple: #a78bfa;
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-head: 'Plus Jakarta Sans', sans-serif;
     --shadow-soft: 0 20px 60px -12px rgba(0, 0, 0, 0.7);
     --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
     --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.12);
+
+    /* Fonts */
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-head: 'Plus Jakarta Sans', sans-serif;
+}
+
+[data-theme="light"] {
+    /* Light Theme Overrides */
+    --bg-obsidian: #f3f4f6;
+    --bg-surface: #ffffff;
+    --bg-card: #ffffff;
+    --bg-shell: #f9fafb;
+    --border-dim: rgba(0, 0, 0, 0.08);
+    --border-accent: rgba(99, 102, 241, 0.2);
+    --text-pure: #111827;
+    --text-bright: #1f2937;
+    --text-dim: #4b5563;
+    --text-muted: #6b7280;
+    --accent-sky: #2563eb;
+    /* Darker blue for light mode contrast */
+    --accent-emerald: #059669;
+    /* Darker green */
+    --accent-indigo: #4f46e5;
+    /* Darker indigo */
+    --accent-purple: #7c3aed;
+    /* Darker purple */
+    --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+}
+
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dashboard-shell {
     min-height: calc(100vh - 70px);
-    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
-    background-image:
-        radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(52, 211, 153, 0.04) 0%, transparent 50%),
-        linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    /* Default Dark Gradient */
+    background: linear-gradient(135deg, var(--bg-shell) 0%, var(--bg-surface) 50%, var(--bg-shell) 100%);
     color: var(--text-bright);
     font-family: var(--font-main);
     padding: 32px;
@@ -35,6 +64,11 @@
     position: relative;
     overflow-x: hidden;
     background-attachment: fixed;
+    transition: background 0.3s ease;
+}
+
+[data-theme="light"] .dashboard-shell {
+    background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
 }
 
 .dashboard-content {
@@ -1112,6 +1146,7 @@ section:hover .title-icon::after {
     color: #f43f5e;
     font-weight: 600;
 }
+
 /* Notes Hub */
 .notes-hub {
     /* inherit from tool-card */
@@ -1207,7 +1242,7 @@ section:hover .title-icon::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1269,12 +1304,429 @@ section:hover .title-icon::after {
 
 /* UI Updates for Currency and News */
 .modern-select {
-    color: #000 !important;
+    color: #f7f1f1 !important;
 }
+
 .modern-select option {
     color: #000;
     background: #fff;
 }
+
 .btn-glass {
     color: #000 !important;
 }
+
+/* Emergency Hub */
+.title-icon.red-glow {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+    color: #ef4444;
+    box-shadow: 0 4px 24px rgba(239, 68, 68, 0.2);
+}
+
+.emergency-display {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    opacity: 0.6;
+    height: 100%;
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.emergency-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.emergency-number-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid var(--border-dim);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.emergency-number-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.emergency-number-card.unavailable {
+    opacity: 0.6;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.card-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-dim);
+}
+
+.emergency-number-card.police .card-icon-wrapper {
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    border-color: rgba(96, 165, 250, 0.2);
+}
+
+.emergency-number-card.police:hover {
+    border-color: rgba(96, 165, 250, 0.4);
+}
+
+.emergency-number-card.ambulance .card-icon-wrapper {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.1);
+    border-color: rgba(248, 113, 113, 0.2);
+}
+
+.emergency-number-card.ambulance:hover {
+    border-color: rgba(248, 113, 113, 0.4);
+}
+
+.emergency-number-card.fire .card-icon-wrapper {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+    border-color: rgba(251, 191, 36, 0.2);
+}
+
+.emergency-number-card.fire:hover {
+    border-color: rgba(251, 191, 36, 0.4);
+}
+
+.emergency-number-card.dispatch .card-icon-wrapper {
+    color: #a78bfa;
+    background: rgba(167, 139, 250, 0.1);
+    border-color: rgba(167, 139, 250, 0.2);
+}
+
+.emergency-number-card.dispatch:hover {
+    border-color: rgba(167, 139, 250, 0.4);
+}
+
+
+.em-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.em-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    margin-bottom: 4px;
+}
+
+.em-number {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-bright);
+    letter-spacing: -0.5px;
+    font-variant-numeric: tabular-nums;
+}
+
+.emergency-number-card.unavailable .em-number {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+    font-weight: 500;
+}
+
+.copy-btn {
+    background: transparent;
+    border: 1px solid var(--border-dim);
+    color: var(--text-muted);
+    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(5px);
+}
+
+.copy-btn:hover {
+    color: var(--text-bright);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-bright);
+    transform: scale(1.05);
+}
+/* Emergency Search Dropdown */
+.dropdown-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    margin-top: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: var(--shadow-card);
+    display: none;
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    transition: background 0.2s;
+    border-bottom: 1px solid var(--border-dim);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover, .suggestion-item.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-bright);
+}
+
+
+/* Unified Emergency Card */
+.emergency-number-card.unified-card {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+    border-color: rgba(239, 68, 68, 0.4);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
+}
+
+.unified-card .card-icon-wrapper {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+    animation: unified-pulse 2s infinite;
+}
+
+.unified-card .em-number {
+    font-size: 1.4rem;
+    color: #ef4444;
+}
+
+.unified-card .em-label {
+    color: rgba(239, 68, 68, 0.8);
+}
+
+@keyframes unified-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+
+/* Translator Hub */
+.title-icon.orange-glow {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0.05) 100%);
+    color: #f97316;
+    box-shadow: 0 4px 24px rgba(249, 115, 22, 0.2);
+}
+
+.copy-text-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.copy-text-btn:hover {
+    color: var(--text-bright);
+}
+
+
+/* Habit Tracker */
+.habit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.habit-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 12px;
+    transition: all 0.2s ease;
+}
+
+.habit-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.habit-item.completed {
+    border-color: rgba(34, 197, 94, 0.2);
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.custom-checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.custom-checkbox.checked {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+.habit-name {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-bright);
+}
+
+.habit-item.completed .habit-name {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.habit-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.badge-daily {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.badge-weekly {
+    background: rgba(234, 179, 8, 0.1);
+    color: #eab308;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.progress-bar-bg {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.delete-habit-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.habit-item:hover .delete-habit-btn {
+    opacity: 1;
+}
+
+.delete-habit-btn:hover {
+    color: #ef4444;
+}
+
+.title-icon.green-glow {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%);
+    color: #22c55e;
+    box-shadow: 0 4px 24px rgba(34, 197, 94, 0.2);
+}
+
+
+.edit-habit-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.habit-item:hover .edit-habit-btn {
+    opacity: 1;
+}
+
+.edit-habit-btn:hover {
+    color: var(--accent-sky);
+}
+
+.icon-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.icon-btn:hover {
+    background: rgba(255,255,255,0.05);
+}
+

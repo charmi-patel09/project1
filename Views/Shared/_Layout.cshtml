@@ -20,14 +20,6 @@
         <div class="admin-wrapper">
             <!-- Sidebar -->
             <aside class="sidebar">
-                <div class="sidebar-brand">
-                    <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="brand-text">
-                        <h3>UserAdmin</h3>
-                        <span>User Portal</span>
-                    </div>
-                </div>
-
                 <div class="sidebar-user">
                     <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
                     <div class="user-info">
@@ -39,7 +31,6 @@
 
                 <nav class="sidebar-nav">
                     <div class="nav-section">
-                        <span class="nav-section-title">Main</span>
                         <ul>
                             <li><a asp-area="" asp-controller="Home" asp-action="Dashboard" class="nav-link">
                                     <i class="fas fa-th-large"></i>
@@ -48,7 +39,6 @@
                         </ul>
                     </div>
                     <div class="nav-section">
-                        <span class="nav-section-title">Management</span>
                         <ul>
                             <li><a asp-area="" asp-controller="Students" asp-action="Index" class="nav-link">
                                     <i class="fas fa-users-cog"></i>
@@ -73,25 +63,69 @@
                 <header class="topbar">
                     <div class="topbar-left">
                         <div class="breadcrumb-wrapper">
-                            <span class="breadcrumb-text">@ViewData["Title"]</span>
+                            <span class="breadcrumb-text"></span>
                         </div>
                     </div>
                     <div class="topbar-right" style="display: flex; align-items: center; gap: 15px;">
-                        <div class="topbar-right" style="display: flex; align-items: center; gap: 15px;">
-                            <select class="form-select form-select-sm" id="languageSelector"
-                                onchange="Translator.setLanguage(this.value)" style="width: auto; cursor: pointer;">
-                                <option value="en">English</option>
-                                <option value="es">Español (Spanish)</option>
-                                <option value="fr">Français (French)</option>
-                                <option value="de">Deutsch (German)</option>
-                                <option value="hi">हिन्दी (Hindi)</option>
-                                <option value="gu">ગુજરાતી (Gujarati)</option>
-                                <option value="zh">中文 (Chinese)</option>
-                                <option value="ja">日本語 (Japanese)</option>
-                                <option value="ru">Русский (Russian)</option>
-                                <option value="ar">العربية (Arabic)</option>
-                            </select>
-                        </div>
+
+                        <select class="form-select form-select-sm" id="languageSelector"
+                            onchange="Translator.setLanguage(this.value)"
+                            style="width: auto; cursor: pointer; margin-right: 12px;">
+                            <option value="en">English</option>
+                            <option value="es">Español (Spanish)</option>
+                            <option value="fr">Français (French)</option>
+                            <option value="de">Deutsch (German)</option>
+                            <option value="hi">हिन्दी (Hindi)</option>
+                            <option value="gu">ગુજરાતી (Gujarati)</option>
+                            <option value="zh">中文 (Chinese)</option>
+                            <option value="ja">日本語 (Japanese)</option>
+                            <option value="ru">Русский (Russian)</option>
+                            <option value="ar">العربية (Arabic)</option>
+                        </select>
+
+                        <!-- Theme Toggle -->
+                        <button id="themeToggle" class="btn btn-sm btn-outline-secondary"
+                            style="border-radius: 50%; width: 32px; height: 32px; padding: 0; display:flex; align-items:center; justify-content:center;">
+                            <i class="fas fa-moon"></i>
+                        </button>
+
+                        <script>
+                            (function () {
+                                const toggle = document.getElementById('themeToggle');
+                                const icon = toggle.querySelector('i');
+                                const html = document.documentElement;
+
+                                // 1. Load Saved Theme
+                                const saved = localStorage.getItem('appTheme') || 'dark';
+                                html.setAttribute('data-theme', saved);
+                                updateIcon(saved);
+
+                                // 2. Toggle Handler
+                                toggle.addEventListener('click', () => {
+                                    const current = html.getAttribute('data-theme');
+                                    const next = current === 'dark' ? 'light' : 'dark';
+
+                                    html.setAttribute('data-theme', next);
+                                    localStorage.setItem('appTheme', next);
+                                    updateIcon(next);
+                                });
+
+                                function updateIcon(theme) {
+                                    if (theme === 'dark') {
+                                        icon.className = 'fas fa-moon';
+                                        toggle.classList.remove('btn-warning');
+                                        toggle.classList.add('btn-outline-secondary');
+                                        toggle.style.color = '';
+                                    } else {
+                                        icon.className = 'fas fa-sun';
+                                        toggle.classList.remove('btn-outline-secondary');
+                                        toggle.classList.add('btn-warning');
+                                        toggle.style.color = 'orange'; // ensure visible
+                                    }
+                                }
+                            })();
+                        </script>
+                    </div>
                 </header>
 
                 <!-- Content -->

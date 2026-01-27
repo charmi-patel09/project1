@@ -1,6 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Global Intelligence Dashboard";
-    ViewData["TitleKey"] = "GlobalIntelligenceDashboard";
+    ViewData["Title"] = "Dashboard";
+    ViewData["TitleKey"] = "Dashboard";
 }
 
 <link
@@ -12,16 +12,10 @@
         <!-- Persistent Header -->
         <header class="main-header">
             <div class="header-brief">
-                <div class="status-chip">
-                    <span class="pulse-dot"></span>
-                    <span>Global Satellite Link Active</span>
-                </div>
-                <h1>Intelligence Hub</h1>
-                <p>Telemetry For <span class="accent-text">@(Context.Session.GetString("AdminUser") ??
-                        Context.Session.GetString("StudentUser") ?? "User")</span>.</p>
+                <h1>Dashboard</h1>
             </div>
             <div class="header-chrono">
-                <div class="chrono-date" id="headerDate">--/--/----</div>
+                <div class="chrono-date no-translate" id="headerDate">--/--/----</div>
                 <div class="chrono-time no-translate" id="headerTime">00:00:00</div>
             </div>
         </header>
@@ -42,12 +36,11 @@
                 <div class="hub-controls">
                     <div class="search-field">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="globalSearchInput"
-                            placeholder="Search Global Intelligence Database..."
+                        <input type="text" id="globalSearchInput" placeholder="Search Global Intelligence Database..."
                             onkeypress="if(event.key === 'Enter') searchGlobalIntel()">
                     </div>
                     <div class="action-group">
-                        <button onclick="searchGlobalIntel()" class="btn-primary">Analyze</button>
+                        <button onclick="searchGlobalIntel()" class="btn-primary">Search</button>
                     </div>
                 </div>
 
@@ -71,12 +64,11 @@
                 <div class="hub-controls">
                     <div class="search-field">
                         <i class="fas fa-magnifying-glass"></i>
-                        <input type="text" id="cityInput"
-                            placeholder="Locate Any City or Country"
+                        <input type="text" id="cityInput" placeholder="Locate Any City or Country"
                             onkeypress="if(event.key === 'Enter') getWeather()">
                     </div>
                     <div class="action-group">
-                        <button onclick="getWeather()" class="btn-primary">Analyze</button>
+                        <button onclick="getWeather()" class="btn-primary">Search</button>
                         <button onclick="getCurrentLocation()" class="btn-icon" title="Local coordinates"><i
                                 class="fas fa-location-crosshairs"></i></button>
                     </div>
@@ -162,7 +154,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="title-text">
-                        <h3>Chronos Sync</h3>
+                        <h3>Timezone</h3>
                         <p>Universal Time Coordination</p>
                     </div>
                 </div>
@@ -173,15 +165,23 @@
                         <div id="localTimeLarge" class="digits-hero no-translate">00:00:00</div>
                     </div>
                     <div class="zone-sync">
-                        <label>Coordinate Zone</label>
+                        <label>Chronos Sync</label>
                         <select id="timezoneSelect" class="modern-select" onchange="updateConvertedTime()">
-                            <option value="UTC">Universal (UTC)</option>
-                            <option value="America/New_York">New York (EDT)</option>
-                            <option value="Europe/London">London (BST)</option>
-                            <option value="Asia/Tokyo">Tokyo (JST)</option>
-                            <option value="Asia/Kolkata" selected>Mumbai (IST)</option>
-                            <option value="Australia/Sydney">Sydney (AEST)</option>
-                            <option value="Asia/Dubai">Dubai (GST)</option>
+                            <option value="UTC">UTC, Universal</option>
+                            <option value="America/New_York">New York, United States</option>
+                            <option value="Europe/London">London, United Kingdom</option>
+                            <option value="Asia/Tokyo">Tokyo, Japan</option>
+                            <option value="Asia/Kolkata" selected>Mumbai, India</option>
+                            <option value="Asia/Dubai">Dubai, United Arab Emirates</option>
+                            <option value="Australia/Sydney">Sydney, Australia</option>
+                            <option value="Europe/Paris">Paris, France</option>
+                            <option value="Europe/Berlin">Berlin, Germany</option>
+                            <option value="Asia/Singapore">Singapore, Singapore</option>
+                            <option value="Asia/Shanghai">Shanghai, China</option>
+                            <option value="America/Los_Angeles">Los Angeles, United States</option>
+                            <option value="America/Chicago">Chicago, United States</option>
+                            <option value="America/Toronto">Toronto, Canada</option>
+                            <option value="Europe/Moscow">Moscow, Russia</option>
                         </select>
                         <div id="convertedTime" class="digits-accent no-translate">00:00:00</div>
                     </div>
@@ -201,12 +201,13 @@
                 </div>
 
                 <div class="hub-controls">
-                    <div class="search-field" style="display:flex; gap:8px;">
+                    <div class="search-field">
+                        <i class="fas fa-magnifying-glass"></i>
                         <input type="text" id="newsInput" placeholder="Search News"
-                            style="flex-grow:1;" onkeypress="if(event.key === 'Enter') triggerNewsSearch()">
-                        <button class="btn-glass" onclick="triggerNewsSearch()" style="padding: 0 16px; color: #000;">
-                            <i class="fas fa-search"></i>
-                        </button>
+                            onkeypress="if(event.key === 'Enter') triggerNewsSearch()">
+                    </div>
+                    <div class="action-group">
+                        <button onclick="triggerNewsSearch()" class="btn-primary">Search</button>
                     </div>
                 </div>
 
@@ -244,16 +245,13 @@
                         New Note</div>
                     <input type="hidden" id="noteId">
                     <div class="form-row" style="margin-bottom:12px;">
-                        <input type="text" id="noteTitle" class="modern-input"
-                            placeholder="Note Title">
+                        <input type="text" id="noteTitle" class="modern-input" placeholder="Note Title">
                     </div>
                     <div class="form-row" style="margin-bottom:12px;">
-                        <textarea id="noteDesc" class="modern-input" rows="3"
-                            placeholder="Note Details"></textarea>
+                        <textarea id="noteDesc" class="modern-input" rows="3" placeholder="Note Details"></textarea>
                     </div>
                     <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
-                        <button onclick="saveNote()" class="btn-primary"
-                            style="flex: 1;">Save</button>
+                        <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
                         <button onclick="toggleNoteForm()" class="btn-icon"
                             style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
                     </div>
@@ -265,6 +263,143 @@
             </section>
 
 
+
+
+            </section>
+
+            <!-- Translator Hub Card -->
+            <section class="tool-card translator-hub">
+                <div class="card-title">
+                    <div class="title-icon orange-glow">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3>Translator</h3>
+                        <p>Universal Language Relay</p>
+                    </div>
+                </div>
+
+                <div class="tool-body">
+                    <div class="form-row">
+                        <label>Input Text</label>
+                        <textarea id="transInput" class="modern-input" rows="3" placeholder="Enter text to translate..." style="resize:none; padding:12px;"></textarea>
+                    </div>
+
+                    <div class="form-grid" style="margin-top:12px; align-items:flex-end;">
+                        <div class="form-row" style="flex:1;">
+                            <label>Target Language</label>
+                            <select id="transLangSelect" class="modern-select">
+                                <option value="en">English (EN)</option>
+                                <option value="es">Spanish (ES)</option>
+                                <option value="fr">French (FR)</option>
+                                <option value="de">German (DE)</option>
+                                <option value="hi">Hindi (HI)</option>
+                                <option value="gu">Gujarati (GU)</option>
+                                <option value="zh">Chinese (ZH)</option>
+                                <option value="ja">Japanese (JA)</option>
+                                <option value="ru">Russian (RU)</option>
+                                <option value="ar">Arabic (AR)</option>
+                                <option value="pt">Portuguese (PT)</option>
+                                <option value="it">Italian (IT)</option>
+                                <option value="ko">Korean (KO)</option>
+                            </select>
+                        </div>
+                        <button onclick="translateWidget()" class="btn-primary" id="btnTranslateAction" style="height:48px; border-radius:12px;">
+                            <i class="fas fa-arrow-right-arrow-left"></i>
+                        </button>
+                    </div>
+
+                    <div class="result-section" style="margin-top:20px;">
+                        <div class="result-status" style="justify-content: space-between; display: flex;">
+                            <label class="result-header">Translation Output</label>
+                            <button class="copy-text-btn" onclick="copyTranslation()" title="Copy to Clipboard" style="display:none;" id="btnCopyTrans">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div id="transOutput" class="valuation-output" style="align-items: flex-start; text-align: left; min-height: 100px; padding: 16px; font-size: 0.95rem; line-height: 1.5; color: var(--text-bright);">
+                            <div style="width:100%; text-align:center; color:var(--text-muted); opacity:0.6; margin-top:24px;">
+                                <i class="fas fa-language" style="font-size:1.5rem; margin-bottom:8px;"></i>
+                                <p>Ready to Translate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Emergency Hub Card -->
+            <section class="tool-card emergency-hub">
+                <div class="card-title">
+                    <div class="title-icon red-glow">
+                        <i class="fas fa-kit-medical"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3>Emergency Contacts</h3>
+                        <p>Global Distress Signal</p>
+                    </div>
+                </div>
+
+                <div class="tool-body">
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div class="search-field" style="position:relative;">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="emergencyInput" class="modern-input"
+                                placeholder="Type Country Name..." autocomplete="off" oninput="handleEmergencySearch()">
+                            <div id="emergencyDropdown" class="dropdown-suggestions"></div>
+                        </div>
+                    </div>
+
+                    <div id="emergencyResult" class="emergency-display">
+                        <div class="empty-state">
+                            <i class="fas fa-shield-heart"></i>
+                            <p>Select a country to view emergency lines</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Habit Tracker Card -->
+            <section class="tool-card habit-hub">
+                <div class="card-title">
+                    <div class="title-icon green-glow">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3>Habit Tracker</h3>
+                        <p>Consistent Growth</p>
+                    </div>
+                </div>
+
+                <div class="tool-body">
+                    <div id="habitList" class="habit-list">
+                        <!-- Habits rendered here -->
+                        <div class="empty-state">
+                            <i class="fas fa-seedling"></i>
+                            <p>Start a new habit today!</p>
+                        </div>
+                    </div>
+
+                    <div class="add-habit-section" style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
+                        <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
+                            <div class="form-row" style="margin-bottom:8px;">
+                                <input type="text" id="newHabitName" class="modern-input" placeholder="Habit Name (e.g. Read 10 pages)" style="padding:10px;">
+                            </div>
+                            <div class="form-grid" style="grid-template-columns: 1fr auto; gap:8px;">
+                                <select id="newHabitType" class="modern-select" style="padding:10px;">
+                                    <option value="daily">Daily Goal</option>
+                                    <option value="weekly">Weekly Goal</option>
+                                </select>
+                                <button onclick="saveNewHabit()" class="btn-primary" style="padding:0 20px; border-radius:8px;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <button onclick="toggleAddHabitForm()" class="text-btn" style="width:100%; margin-top:8px; font-size:0.8rem; opacity:0.7;">Cancel</button>
+                        </div>
+                        <button id="showAddHabitBtn" onclick="toggleAddHabitForm()" class="btn-secondary" style="width:100%; border-radius:12px; padding:12px;">
+                            <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Habit
+                        </button>
+                    </div>
+                </div>
+            </section>
 
 
         </div>
@@ -352,8 +487,8 @@
                 const iconClass = getIcon(item.weather.weather_code);
                 const temp = Math.round(item.weather.temperature_2m);
                 el.innerHTML = `<div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
-                                                                                    <div class="node-data"><i class="fas ${iconClass}"></i>
-                                                                                    <b>${temp}°C</b></div>`;
+                                                                                                                                            <div class="node-data"><i class="fas ${iconClass}"></i>
+                                                                                                                                            <b>${temp}°C</b></div>`;
                 container.appendChild(el);
             }
         }
@@ -408,14 +543,14 @@
                 } catch (e) { console.error("Time calc error", e); }
 
                 display.innerHTML = `
-                                                                                                                        <div class="loc-label slide-in">${label}</div>
-                                                                                                                        <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
-                                                                                                                        <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
-                                                                                                                        <div class="weather-desc slide-in">${weatherDesc}</div>
-                                                                                                                        <div class="stats-deep slide-in">
-                                                                                                                            <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
-                                                                                                                            <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
-                                                                                                                        </div>`;
+                                                                                                                                                                                <div class="loc-label slide-in">${label}</div>
+                                                                                                                                                                                <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
+                                                                                                                                                                                <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
+                                                                                                                                                                                <div class="weather-desc slide-in">${weatherDesc}</div>
+                                                                                                                                                                                <div class="stats-deep slide-in">
+                                                                                                                                                                                    <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
+                                                                                                                                                                                    <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
+                                                                                                                                                                                </div>`;
             } catch (e) {
                 display.innerHTML = `<div class="text-danger">Satellite Link Failure</div>`;
             }
@@ -426,7 +561,9 @@
         let currencyContext = null; // Stores { city: string, country: string, currency: string }
 
         /* --- SHARED DATASET --- */
+        /* --- SHARED DATASET --- */
         let globalLocationData = []; // The master list for both Currency and Timezone
+        let emergencyCountryList = []; // Master list for Emergency Search
 
         async function initFiscal(preserveState = false) {
             const f = document.getElementById('fromCurrency');
@@ -440,21 +577,21 @@
 
             // Major Non-Capital Cities (IANA Timezones) to ensure comprehensive global coverage
             const extraCities = [
-                { country: "United States", city: "New York", currency: "USD", timezone: "America/New_York" },
-                { country: "United States", city: "Los Angeles", currency: "USD", timezone: "America/Los_Angeles" },
-                { country: "United States", city: "Chicago", currency: "USD", timezone: "America/Chicago" },
-                { country: "India", city: "Mumbai", currency: "INR", timezone: "Asia/Kolkata" },
-                { country: "India", city: "Bengaluru", currency: "INR", timezone: "Asia/Kolkata" },
-                { country: "India", city: "Delhi", currency: "INR", timezone: "Asia/Kolkata" },
-                { country: "United Kingdom", city: "London", currency: "GBP", timezone: "Europe/London" },
-                { country: "Japan", city: "Tokyo", currency: "JPY", timezone: "Asia/Tokyo" },
-                { country: "China", city: "Shanghai", currency: "CNY", timezone: "Asia/Shanghai" },
-                { country: "Germany", city: "Berlin", currency: "EUR", timezone: "Europe/Berlin" },
-                { country: "France", city: "Paris", currency: "EUR", timezone: "Europe/Paris" },
-                { country: "Australia", city: "Sydney", currency: "AUD", timezone: "Australia/Sydney" },
-                { country: "Canada", city: "Toronto", currency: "CAD", timezone: "America/Toronto" },
-                { country: "United Arab Emirates", city: "Dubai", currency: "AED", timezone: "Asia/Dubai" },
-                { country: "Singapore", city: "Singapore", currency: "SGD", timezone: "Asia/Singapore" }
+                { country: "United States", city: "New York", currency: "USD", timezone: "America/New_York", code: "US" },
+                { country: "United States", city: "Los Angeles", currency: "USD", timezone: "America/Los_Angeles", code: "US" },
+                { country: "United States", city: "Chicago", currency: "USD", timezone: "America/Chicago", code: "US" },
+                { country: "India", city: "Mumbai", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
+                { country: "India", city: "Bengaluru", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
+                { country: "India", city: "Delhi", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
+                { country: "United Kingdom", city: "London", currency: "GBP", timezone: "Europe/London", code: "GB" },
+                { country: "Japan", city: "Tokyo", currency: "JPY", timezone: "Asia/Tokyo", code: "JP" },
+                { country: "China", city: "Shanghai", currency: "CNY", timezone: "Asia/Shanghai", code: "CN" },
+                { country: "Germany", city: "Berlin", currency: "EUR", timezone: "Europe/Berlin", code: "DE" },
+                { country: "France", city: "Paris", currency: "EUR", timezone: "Europe/Paris", code: "FR" },
+                { country: "Australia", city: "Sydney", currency: "AUD", timezone: "Australia/Sydney", code: "AU" },
+                { country: "Canada", city: "Toronto", currency: "CAD", timezone: "America/Toronto", code: "CA" },
+                { country: "United Arab Emirates", city: "Dubai", currency: "AED", timezone: "Asia/Dubai", code: "AE" },
+                { country: "Singapore", city: "Singapore", currency: "SGD", timezone: "Asia/Singapore", code: "SG" }
             ];
 
             // IMMEDIATE RENDER of reliable static data (Popular)
@@ -517,7 +654,11 @@
             };
 
             // 1. Render Defaults Immediately
+            // 1. Render Defaults Immediately
             await populateDropdowns(globalLocationData);
+            // Pre-fill emergency list with static data
+            emergencyCountryList = extraCities.map(c => ({ name: c.country, code: c.code }));
+
             initTimezones(); // Needed for clock
 
             try {
@@ -530,6 +671,8 @@
 
                 const data = await res.json();
 
+
+
                 // 2. Build Base List from Countries (Capitals)
                 let apiLocations = data
                     .filter(c => c.currencies && Object.keys(c.currencies).length > 0)
@@ -538,6 +681,7 @@
                         const city = (c.capital && c.capital.length > 0) ? c.capital[0] : c.name.common;
                         return {
                             country: c.name.common,
+                            code: c.cca2,
                             city: city,
                             flag: c.flags.svg || '',
                             currency: code,
@@ -553,34 +697,50 @@
                 // Update Global List
                 globalLocationData = finalApiList;
 
-                // Re-Render with Full Data
+                // Populate Emergency List with FULL data: Countries + Cities
+                // Add unique countries with Rich Data
+                // countryMap stores: name -> { code, official }
+                const countryMap = new Map();
+                data.forEach(c => {
+                    countryMap.set(c.name.common, { code: c.cca2, official: c.name.official });
+                });
+
+                let eList = [];
+
+                // 1. Add Countries
+                countryMap.forEach((meta, name) => {
+                    eList.push({ name: name, official: meta.official, code: meta.code, type: 'country' });
+                });
+
+                // 2. Add Cities
+                globalLocationData.forEach(loc => {
+                    if (loc.city && loc.code) {
+                        // Find parent official name
+                        let parentMeta = countryMap.get(loc.country);
+                        let parentOfficial = parentMeta ? parentMeta.official : loc.country;
+                        eList.push({ 
+                            name: loc.city, 
+                            official: parentOfficial, // City inherits country official name for display context
+                            code: loc.code, 
+                            type: 'city', 
+                            parent: loc.country 
+                        });
+                    }
+                });
+
+                emergencyCountryList = eList;
+
                 await populateDropdowns(globalLocationData);
 
             } catch (e) {
                 console.warn('Fiscal API failed or timed out, keeping default list.', e);
             }
+
+
             // End Init
         }
 
-        function initTimezones() {
-            const select = document.getElementById('timezoneSelect');
-            if (!select) return;
 
-            // Check existing so we don't dupe
-            const existing = new Set(Array.from(select.options).map(o => o.value));
-
-            if (globalLocationData && globalLocationData.length > 0) {
-                globalLocationData.forEach(loc => {
-                    if (loc.timezone && !existing.has(loc.timezone)) {
-                        // Create readable label
-                        const label = `${loc.city}, ${loc.country}`;
-                        const opt = new Option(label, loc.timezone);
-                        select.add(opt);
-                        existing.add(loc.timezone);
-                    }
-                });
-            }
-        }
 
 
 
@@ -594,7 +754,7 @@
                 // Using a fallback or free API
                 const res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
                 const data = await res.json();
-                baseCurrencyRates = data.rates;
+                window.baseCurrencyRates = data.rates;
 
                 const updateEl = document.getElementById('lastExchangeUpdate');
 
@@ -641,13 +801,14 @@
 
             const display = document.getElementById('currencyResult');
 
-            if (!baseCurrencyRates || !baseCurrencyRates[t]) {
+            if (!window.baseCurrencyRates || !window.baseCurrencyRates[t]) {
                 display.innerHTML = `<div class="loading-state">Syncing New Base Rates...</div>`;
                 await fetchLatestRates();
-                if (!baseCurrencyRates[t]) return;
+                // Check again
+                if (!window.baseCurrencyRates || !window.baseCurrencyRates[t]) return;
             }
 
-            const rate = baseCurrencyRates[t];
+            const rate = window.baseCurrencyRates[t];
             const calc = amount * rate;
 
             // Check Context for Location Display
@@ -667,8 +828,8 @@
                             const time = now.toLocaleTimeString('en-US', { timeZone: currencyContext.timezone, hour: '2-digit', minute: '2-digit' });
                             const date = now.toLocaleDateString('en-US', { timeZone: currencyContext.timezone, day: 'numeric', month: 'short' });
                             timeStr = `<div style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">
-                                                                                                                                                                                                     <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
-                                                                                                                                                                                                   </div>`;
+                                                                                                                                                                                                                                                             <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
+                                                                                                                                                                                                                                                           </div>`;
                         } catch (e) { }
                     }
 
@@ -681,30 +842,30 @@
                     const borderVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(52, 211, 153, 0.2)';
 
                     locationDisplay = `<div style="text-align:center; margin-bottom: 12px; color: ${colorVar}; background: ${bgVar}; padding: 8px; border-radius: 8px; border: 1px solid ${borderVar};">
-                                                                                                                                                                                                     <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${label}</div>
-                                                                                                                                                                                                     <div style="font-weight: 700; font-size: 0.95rem;">
-                                                                                                                                                                                                        <i class="fas fa-location-dot"></i> ${city}, ${country}
-                                                                                                                                                                                                     </div>
-                                                                                                                                                                                                     ${timeStr}
-                                                                                                                                                                                                   </div>`;
+                                                                                                                                                                                                                                                             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${label}</div>
+                                                                                                                                                                                                                                                             <div style="font-weight: 700; font-size: 0.95rem;">
+                                                                                                                                                                                                                                                                <i class="fas fa-location-dot"></i> ${city}, ${country}
+                                                                                                                                                                                                                                                             </div>
+                                                                                                                                                                                                                                                             ${timeStr}
+                                                                                                                                                                                                                                                           </div>`;
                 }
             }
 
 
             display.innerHTML = `
-                                                                                                                                                                            ${locationDisplay}
-                                                                                                                                                                                <div class="val-grid">
-                                                                                                                                                                                    <div class="val-box slide-in highlight-border">
-                                                                                                                                                                                        <div class="val-label">${f}</div>
-                                                                                                                                                                                        <div class="val-number">${amount.toLocaleString(locale, { minimumFractionDigits: 2 })}</div>
-                                                                                                                                                                                        <div class="val-loc-meta">${realCurrencyLabel}</div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="val-box slide-in">
-                                                                                                                                                                                        <div class="val-label">${t}</div>
-                                                                                                                                                                                        <div class="val-number highlight">${calc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                                                                                                                                                                         <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                </div>`;
+                                                                                                                                                                                                                                    ${locationDisplay}
+                                                                                                                                                                                                                                        <div class="val-grid">
+                                                                                                                                                                                                                                            <div class="val-box slide-in highlight-border">
+                                                                                                                                                                                                                                                <div class="val-label">${f}</div>
+                                                                                                                                                                                                                                                <div class="val-number">${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+                                                                                                                                                                                                                                                <div class="val-loc-meta">Base Amount</div>
+                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                            <div class="val-box slide-in">
+                                                                                                                                                                                                                                                <div class="val-label">${t}</div>
+                                                                                                                                                                                                                                                <div class="val-number highlight">${calc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                                                                                                                                                                                                                                 <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
+                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                        </div>`;
         }
 
         /* --- TIMEZONE LOGIC --- */
@@ -748,18 +909,55 @@
             updateConvertedTime();
         }
 
+        // Helper to get rigorous locale for formatting
+        function getCurrentLocale() {
+            const lang = (window.translator && window.translator.currentLang) ? window.translator.currentLang : 'en';
+            const map = {
+                'en': 'en-US',
+                'es': 'es-ES',
+                'fr': 'fr-FR',
+                'de': 'de-DE',
+                'hi': 'hi-IN',
+                'gu': 'gu-IN',
+                'zh': 'zh-CN',
+                'ja': 'ja-JP',
+                'ru': 'ru-RU',
+                'ar': 'ar-EG'
+            };
+            return map[lang] || 'en-US';
+        }
+
         function runChronos() {
             try {
                 const now = new Date();
+                const locale = getCurrentLocale();
 
                 const dateEl = document.getElementById('headerDate');
-                if (dateEl) dateEl.innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                if (dateEl) {
+                    // Use format: Weekday, Month Day, Year (in locale)
+                    // e.g. Friday, January 23, 2026
+                    dateEl.innerText = now.toLocaleDateString(locale, {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                }
 
                 const timeEl = document.getElementById('headerTime');
-                if (timeEl) timeEl.innerText = now.toLocaleTimeString('en-US');
+                if (timeEl) {
+                    timeEl.innerText = now.toLocaleTimeString(locale, { hour12: false });
+                    // Should we use hour12 based on locale? Default is usually good.
+                    // But military time is often preferred in dashboards. 
+                    // Let's stick to locale default but maybe force 2-digit? 
+                    // User said "clean, readable format similar to English".
+                    // Most locales do HH:mm:ss nicely.
+                    // Actually, let's trust the locale default for TimeString.
+                    timeEl.innerText = now.toLocaleTimeString(locale);
+                }
 
                 const localLargeEl = document.getElementById('localTimeLarge');
-                if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString('en-US');
+                if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString(locale);
 
                 // Also update the accent box if it exists
                 if (typeof updateConvertedTime === 'function') updateConvertedTime();
@@ -776,16 +974,18 @@
         function updateConvertedTime() {
             const zone = document.getElementById('timezoneSelect').value;
             const now = new Date();
+            const locale = getCurrentLocale();
 
             try {
-                const timeString = now.toLocaleTimeString('en-US', { timeZone: zone });
-                const dateString = now.toLocaleDateString('en-US', { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
+                const timeString = now.toLocaleTimeString(locale, { timeZone: zone });
+                const dateString = now.toLocaleDateString(locale, { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
 
-                // Get offset safely
-                const typePart = Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName');
+                // Get offset safely - keeping this part English-y or technical is often better for "GMT+5" etc.
+                // But let's try locale.
+                const typePart = Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName');
                 const type = typePart ? typePart.value : zone;
 
-                document.getElementById('convertedTime').innerHTML = `${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span>`;
+                document.getElementById('convertedTime').innerHTML = `<div class="no-translate">${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span></div>`;
             } catch (e) {
                 console.error("Time calc error", e);
             }
@@ -861,7 +1061,8 @@
             }
 
             notes.forEach(note => {
-                const date = new Date(note.createdDate).toLocaleDateString();
+                const locale = getCurrentLocale();
+                const date = new Date(note.createdDate).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
                 const div = document.createElement('div');
                 div.className = 'note-item slide-in';
                 div.onclick = (e) => {
@@ -869,21 +1070,22 @@
                     editNote(note.id);
                 };
                 div.innerHTML = `
-                                                                                                                                                                                                                    <div class="note-header">
-                                                                                                                                                                                                                        <div class="note-title">${escapeHtml(note.title)}</div>
-                                                                                                                                                                                                                        <div class="note-date">${date}</div>
-                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                    <div class="note-desc">${escapeHtml(note.description)}</div>
-                                                                                                                                                                                                                    <div class="note-actions">
-                                                                                                                                                                                                                        <button class="btn-note-action" onclick="editNote(${note.id})"><i class="fas fa-edit"></i></button>
-                                                                                                                                                                                                                        <button class="btn-note-action delete" onclick="deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
-                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                `;
+                                                                                                                                                                                                                                                                            <div class="note-header">
+                                                                                                                                                                                                                                                                                <div class="note-title">${escapeHtml(note.title)}</div>
+                                                                                                                                                                                                                                                                                <div class="note-date">${date}</div>
+                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                            <div class="note-desc">${escapeHtml(note.description)}</div>
+                                                                                                                                                                                                                                                                            <div class="note-actions">
+                                                                                                                                                                                                                                                                                <button class="btn-note-action" onclick="event.stopPropagation(); editNote(${note.id})"><i class="fas fa-edit"></i></button>
+                                                                                                                                                                                                                                                                                <button class="btn-note-action delete" onclick="event.stopPropagation(); deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
+                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                        `;
                 container.appendChild(div);
             });
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const map = {
                 '&': '&amp;',
                 '<': '&lt;',
@@ -919,7 +1121,7 @@
 
             // Labels
             const l_coords = await window.translator.translateText('Coordinates');
-            const l_timezone = await window.translator.translateText('Time Zone');
+            const l_timezone = await window.translator.translateText('Chronos Sync');
             const l_curr = await window.translator.translateText('Currency');
             const l_pop = await window.translator.translateText('Population');
             const l_cap = await window.translator.translateText('Capital');
@@ -1028,7 +1230,7 @@
                     // Try to find by raw value
                     const opt = document.createElement('option');
                     opt.value = loc.timezone;
-                    opt.text = `${loc.name} (${loc.timezone.split('/')[0]})`;
+                    opt.text = `${loc.name}, ${loc.country_code}`; // Fallback format
                     opt.selected = true;
                     tzSelect.add(opt);
                 }
@@ -1173,11 +1375,515 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(id)
                 });
-                if (res.ok) fetchNotes();
-            } catch (e) { console.error(e); }
+                if (res.ok) {
+                    fetchNotes();
+                } else {
+                    alert(await window.translator.translateText('Error deleting note'));
+                }
+            } catch (e) {
+                console.error(e);
+                alert(await window.translator.translateText('Error deleting note'));
+            }
+        }
+
+
+        // --- EMERGENCY CONTACTS ---
+        // --- EMERGENCY CONTACTS ---
+        let emergencySearchTimer = null;
+        let lastEmergencyCode = null;
+
+        let currentSearchQuery = "";
+
+        // Global state for strict race condition handling
+        let latestEmergencyRequestId = 0;
+
+        function handleEmergencySearch() {
+            const input = document.getElementById('emergencyInput');
+            const val = input.value.trim().toLowerCase();
+            const dropdown = document.getElementById('emergencyDropdown');
+
+            if (val.length < 1) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            // 1. Filter Matches
+            // emergencyCountryList is populated in initFiscal()
+            const matches = emergencyCountryList.filter(c =>
+                c.name.toLowerCase().startsWith(val) ||
+                c.name.toLowerCase().includes(val)
+            );
+
+            // 2. Sort Matches
+            matches.sort((a, b) => {
+                const aName = a.name.toLowerCase();
+                const bName = b.name.toLowerCase();
+                if (aName === val) return -1;
+                if (bName === val) return 1;
+                if (aName.startsWith(val) && !bName.startsWith(val)) return -1;
+                if (!aName.startsWith(val) && bName.startsWith(val)) return 1;
+                return aName.localeCompare(bName);
+            });
+
+            // 3. Render Dropdown
+            if (matches.length > 0) {
+                dropdown.innerHTML = '';
+                // Limit to 8 suggestions for clean UI
+                matches.slice(0, 8).forEach(match => { 
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    
+                    // Highlight match
+                    const safeVal = val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    const regex = new RegExp(`(${safeVal})`, 'gi');
+                    const highlighted = match.name.replace(regex, '<span style="color:var(--accent-sky); font-weight:700;">$1</span>');
+                    
+                    // Format: CODE – Name (Official)
+                    // e.g. IN – India (Republic of India)
+                    // For cities: IN – Mumbai (India) or simplified?
+                    // User Req: "IN – India (Republic of India)"
+                    
+                    let displayMeta = "";
+                    if (match.type === 'country') {
+                        displayMeta = `<span style="opacity:0.6; font-size:0.8em; margin-left:6px;">(${match.official})</span>`;
+                    } else {
+                        displayMeta = `<span style="opacity:0.6; font-size:0.8em; margin-left:6px;">(${match.parent || match.official})</span>`;
+                    }
+
+                    div.innerHTML = `
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="font-family:monospace; font-weight:700; color:var(--accent-emerald); background:rgba(52,211,153,0.1); padding:2px 6px; border-radius:4px; font-size:0.8em;">${match.code}</span>
+                            <div style="display:flex; flex-direction:column; justify-content:center;">
+                                <div style="line-height:1.2;">${highlighted} ${displayMeta}</div>
+                                ${match.type === 'city' ? `<span style="font-size:0.7em; opacity:0.5; margin-top:2px;">City</span>` : ''}
+                            </div>
+                        </div>`;
+                        
+                    div.onclick = () => selectEmergencyCountry(match);
+                    dropdown.appendChild(div);
+                });
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function selectEmergencyCountry(country) {
+            const input = document.getElementById('emergencyInput');
+            const dropdown = document.getElementById('emergencyDropdown');
+            const container = document.getElementById('emergencyResult');
+
+            input.value = country.name;
+            dropdown.style.display = 'none';
+
+            // CLEAR PREVIOUS DATA IMMEDIATELY
+            container.innerHTML = '';
+            lastEmergencyCode = null; // Reset state
+
+            // Normalized Code
+            const normalizedCode = (country.code || '').trim().toUpperCase();
+
+            // Trigger Load
+            if (normalizedCode) {
+                fetchEmergencyNumbers(normalizedCode, country.name);
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('emergencyDropdown');
+            const input = document.getElementById('emergencyInput');
+            if (dropdown && input) {
+                if (!dropdown.contains(e.target) && e.target !== input) {
+                    dropdown.style.display = 'none';
+                }
+            }
+        });
+
+        async function fetchEmergencyNumbers(code, countryName) {
+            const container = document.getElementById('emergencyResult');
+            const requestId = ++latestEmergencyRequestId;
+
+            // Show loading
+            container.innerHTML = `<div class="loading-state" style="text-align:center; padding:40px;">
+                                    <i class="fas fa-circle-notch fa-spin" style="font-size:2rem; color:var(--accent-sky); margin-bottom:10px;"></i>
+                                    <div style="opacity:0.7">Accessing Global Grid...</div>
+                                   </div>`;
+
+            try {
+                // Ensure code is normalized
+                const safeCode = code.trim().toUpperCase();
+
+                const res = await fetch(`/Emergency/GetNumbers?code=${safeCode}`);
+                if (!res.ok) throw new Error("API Failure");
+
+                // Race Condition Check: If a newer request started, ignore this result
+                if (requestId !== latestEmergencyRequestId) return;
+
+                const data = await res.json();
+
+                if (!data || !data.data) {
+                    throw new Error("No data");
+                }
+
+                renderEmergency(data.data, countryName);
+
+            } catch (e) {
+                 if (requestId !== latestEmergencyRequestId) return;
+                 console.error(e);
+                 container.innerHTML = `<div class="empty-state">
+                                            <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
+                                            <p>Emergency Protocols Not Found for <b>${countryName}</b></p>
+                                       </div>`;
+            }
+        }
+
+        function renderEmergency(data, countryName) {
+            const container = document.getElementById('emergencyResult');
+            let html = '<div class="emergency-cards slide-in">';
+
+            // Helper to get best number
+            const getNum = (specificList) => {
+                if (specificList && specificList.length > 0) {
+                     const valid = specificList.filter(n => n && n.trim().length > 0);
+                     if (valid.length > 0) return valid;
+                }
+                return null;
+            };
+
+            // 1. Unified Logic (Dispatch/112/911/999)
+            let unifiedNums = null;
+            if (data.dispatch && data.dispatch.all && data.dispatch.all.length > 0) {
+                unifiedNums = getNum(data.dispatch.all);
+            } else if (data.member_112) {
+                unifiedNums = ['112']; // EU Standard
+            } 
+            // Fallback for known unifiers if data missing? 
+            // If we have nothing at all, we shouldn't guess, but US/UK is 911/999 usually handled by API.
+
+            // 2. Specifics
+            const policeNums = getNum(data.police ? data.police.all : null);
+            const ambNums = getNum(data.ambulance ? data.ambulance.all : null);
+            const fireNums = getNum(data.fire ? data.fire.all : null);
+
+            // Data Validity Check
+            const isTotalFailure = !unifiedNums && !policeNums && !ambNums && !fireNums;
+
+            if (isTotalFailure) {
+                 container.innerHTML = `<div class="empty-state">
+                                            <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
+                                            <p>Emergency numbers not available for this location.</p>
+                                       </div>`;
+                 return;
+            }
+
+            const createCard = (type, label, icon, numbers, isHighlight = false) => {
+                const isAvail = numbers !== null && numbers.length > 0;
+                
+                // If unified unavailable, don't show card. But if specific unavailable, show "Unavailable"
+                if (!isAvail && isHighlight) return ''; 
+
+                const numStr = isAvail ? numbers.join(' / ') : 'Not Available';
+                const availClass = isAvail ? '' : 'unavailable';
+                const highlightClass = isHighlight ? 'unified-card' : '';
+                
+                return `<div class="emergency-number-card ${type} ${availClass} ${highlightClass}">
+                        <div class="card-icon-wrapper">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="em-info">
+                            <span class="em-label">${label}</span>
+                            <span class="em-number">${numStr}</span>
+                        </div>
+                        ${isAvail ? `<button class="copy-btn" onclick="navigator.clipboard.writeText('${numbers[0]}')" title="Copy"><i class="fas fa-copy"></i></button>` : ''}
+                    </div>`;
+            };
+
+            // RENDER CARDS
+            // 1. Unified (Red Alert Highlight)
+            html += createCard('dispatch', 'Unified Emergency', 'fa-tower-broadcast', unifiedNums, true);
+            
+            // 2. Police
+            html += createCard('police', 'Police', 'fa-shield-halved', policeNums);
+
+            // 3. Ambulance
+            html += createCard('ambulance', 'Ambulance', 'fa-truck-medical', ambNums);
+
+            // 4. Fire
+            html += createCard('fire', 'Fire Dept', 'fa-fire-extinguisher', fireNums);
+
+            html += '</div>';
+
+            // Disclaimer
+            html += `<div style="margin-top:16px; text-align:center; font-size:0.7rem; color:var(--text-muted); opacity:0.6;">
+                        <i class="fas fa-circle-info"></i> Emergency numbers may vary by region. Verify locally if possible.
+                     </div>`;
+
+            container.innerHTML = html;
+        }
+
+        // --- TRANSLATOR WIDGET LOGIC ---
+        async function translateWidget() {
+            const input = document.getElementById('transInput').value.trim();
+            const lang = document.getElementById('transLangSelect').value;
+            const output = document.getElementById('transOutput');
+            const btn = document.getElementById('btnTranslateAction');
+            const btnCopy = document.getElementById('btnCopyTrans');
+
+            if (!input) return;
+
+            // UI Loading
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+            output.innerHTML = `<div class="loading-state" style="width:100%; text-align:center; margin-top:30px;">Processing Neural Link...</div>`;
+            btnCopy.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/Translation/translate-batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        Texts: [input],
+                        TargetLanguage: lang
+                    })
+                });
+
+                if (!res.ok) throw new Error("Translation Failed");
+
+                const result = await res.json();
+                
+                // Result is Dictionary<string, string>
+                const translatedText = result[input] || "Error: Could not translate.";
+
+                output.innerHTML = `<div class="slide-in">${escapeHtml(translatedText)}</div>`;
+                btnCopy.style.display = 'block';
+
+            } catch (e) {
+                console.error(e);
+                output.innerHTML = `<div class="text-danger" style="text-align:center; width:100%; margin-top:30px;">Translation System Offline</div>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-arrow-right-arrow-left"></i>';
+            }
+        }
+
+        function copyTranslation() {
+            const output = document.getElementById('transOutput').innerText;
+            if (output) {
+                navigator.clipboard.writeText(output);
+                // Visual feedback
+                const btn = document.getElementById('btnCopyTrans');
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check" style="color:var(--accent-emerald)"></i>';
+                setTimeout(() => btn.innerHTML = original, 2000);
+            }
+        }
+
+
+
+        // --- HABIT TRACKER LOGIC ---
+        let habits = [];
+        let editingHabitId = null; 
+
+        function initHabits() {
+            const stored = localStorage.getItem('userHabits');
+            if (stored) {
+                habits = JSON.parse(stored);
+                // Schema Migration: If old schema (completed/completedDate), convert to history
+                habits.forEach(h => {
+                    if (!h.history) {
+                        h.history = [];
+                        if (h.completed && h.completedDate) {
+                            h.history.push(new Date(h.completedDate).toDateString());
+                        }
+                        // Clean old props
+                        delete h.completed;
+                        delete h.completedDate;
+                    }
+                });
+            }
+            renderHabits();
+        }
+
+        // Helper to get formatted date string for consistency
+        function getTodayStr() {
+            return new Date().toDateString();
+        }
+
+        function saveHabits() {
+            localStorage.setItem('userHabits', JSON.stringify(habits));
+            renderHabits();
+        }
+
+        function renderHabits() {
+            const list = document.getElementById('habitList');
+            if (!habits || habits.length === 0) {
+                list.innerHTML = `<div class="empty-state">
+                                    <i class="fas fa-seedling" style="color:var(--accent-green)"></i>
+                                    <p>Start building good habits!</p>
+                                  </div>`;
+                return;
+            }
+
+            const todayStr = getTodayStr();
+            const now = new Date();
+            // Get Monday of current week for calculation
+            const day = now.getDay();
+            const diff = now.getDate() - day + (day == 0 ? -6 : 1);
+            const monday = new Date(new Date(now).setDate(diff)).setHours(0,0,0,0);
+
+            list.innerHTML = '';
+            habits.forEach(h => {
+                // Calculate Status & Progress
+                let isDoneToday = h.history.includes(todayStr);
+                let progress = 0;
+
+                if (h.type === 'daily') {
+                    progress = isDoneToday ? 100 : 0;
+                } else if (h.type === 'weekly') {
+                    // Count unique days in history that are >= this week's Monday
+                    const distinctDaysThisWeek = h.history.filter(dateStr => {
+                        return new Date(dateStr).getTime() >= monday;
+                    });
+                     // Let's say weekly goal is 7 days for max progress, or just reflect 'days done'
+                     // User req: "completed days in current week"
+                     // We display percentage relative to 7 days
+                     const count = new Set(distinctDaysThisWeek).size;
+                     progress = Math.min(100, Math.round((count / 7) * 100));
+                }
+                
+                const div = document.createElement('div');
+                div.className = `habit-item ${isDoneToday ? 'completed' : ''}`;
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                            <div class="custom-checkbox ${isDoneToday ? 'checked' : ''}" onclick="toggleHabit('${h.id}')">
+                                ${isDoneToday ? '<i class="fas fa-check"></i>' : ''}
+                            </div>
+                            <div style="flex:1;">
+                                <div class="habit-name">${escapeHtml(h.name)}</div>
+                                <div class="habit-meta">
+                                    <span class="badge badge-${h.type}">${h.type}</span>
+                                    <span style="margin-left:8px; opacity:0.7;">${progress}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:4px;">
+                             <button class="icon-btn edit-habit-btn" onclick="editHabit('${h.id}')" title="Edit"><i class="fas fa-pen"></i></button>
+                             <button class="icon-btn delete-habit-btn" onclick="deleteHabit('${h.id}')" title="Delete"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width:${progress}%; background-color:${progress > 0 ? 'var(--accent-green)' : 'transparent'};"></div>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function toggleAddHabitForm(reset = true) {
+            const form = document.getElementById('addHabitForm');
+            const btn = document.getElementById('showAddHabitBtn');
+            const submitBtn = form.querySelector('.btn-primary'); // The add button
+            
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+                btn.style.display = 'none';
+                document.getElementById('newHabitName').focus();
+                
+                // Reset mode to Add just in case
+                if (reset) {
+                    editingHabitId = null;
+                    document.getElementById('newHabitName').value = '';
+                    submitBtn.innerHTML = '<i class="fas fa-plus"></i>';
+                }
+            } else {
+                form.style.display = 'none';
+                btn.style.display = 'block';
+                if(reset) {
+                    document.getElementById('newHabitName').value = '';
+                    editingHabitId = null;
+                }
+            }
+        }
+
+        function saveNewHabit() {
+            const nameInput = document.getElementById('newHabitName');
+            const typeInput = document.getElementById('newHabitType');
+            const name = nameInput.value.trim();
+            const type = typeInput.value;
+            
+            if (!name) return;
+
+            if (editingHabitId) {
+                // UPDATE Existing
+                const h = habits.find(x => x.id === editingHabitId);
+                if (h) {
+                    h.name = name;
+                    h.type = type;
+                    saveHabits();
+                }
+                editingHabitId = null;
+            } else {
+                // CREATE New
+                habits.push({
+                    id: Date.now().toString(),
+                    name: name,
+                    type: type,
+                    history: []
+                });
+                saveHabits();
+            }
+            
+            toggleAddHabitForm(true);
+        }
+
+        function editHabit(id) {
+            const h = habits.find(x => x.id === id);
+            if (!h) return;
+
+            // Populate form
+            document.getElementById('newHabitName').value = h.name;
+            document.getElementById('newHabitType').value = h.type;
+            
+            // Set state
+            editingHabitId = id;
+
+            // Show form
+            const form = document.getElementById('addHabitForm');
+            const btn = document.getElementById('showAddHabitBtn');
+            const submitBtn = form.querySelector('.btn-primary');
+
+            form.style.display = 'block';
+            btn.style.display = 'none';
+            submitBtn.innerHTML = '<i class="fas fa-check"></i>'; // Change icon to tick
+            document.getElementById('newHabitName').focus();
+        }
+
+        function toggleHabit(id) {
+            const h = habits.find(x => x.id === id);
+            if (h) {
+                const todayStr = getTodayStr();
+                if (h.history.includes(todayStr)) {
+                    // Remove (Undo)
+                    h.history = h.history.filter(d => d !== todayStr);
+                } else {
+                    // Add (Complete)
+                    h.history.push(todayStr);
+                }
+                saveHabits();
+            }
+        }
+
+        function deleteHabit(id) {
+            if (confirm('Delete this habit?')) {
+                habits = habits.filter(x => x.id !== id);
+                saveHabits();
+            }
         }
 
         $(document).ready(function () {
+
             // 1. Critical Base Systems (Clock, basic UI)
             if (typeof runChronos === 'function') {
                 runChronos();
@@ -1190,6 +1896,7 @@
             try { initNodeDirectory(); } catch (e) { console.error('NodeDir failed:', e); }
             try { initFiscal(); } catch (e) { console.error('Fiscal failed:', e); }
             try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
+            try { initHabits(); } catch (e) { console.error('Habits failed:', e); }
 
             // Re-bind events to ensure interactivity persists
             const fC = document.getElementById('fromCurrency');

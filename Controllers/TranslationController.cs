@@ -26,18 +26,34 @@ namespace JsonCrudApp.Controllers
             var results = new Dictionary<string, string>();
 
             // Limit concurrency
+            // Process sequentially to avoid 429 Rate Limiting from external API
+            // Parallel Processing with Semaphore to speed up but respect API limits
+            using var semaphore = new System.Threading.SemaphoreSlim(3); // Allow 3 concurrent requests
             var tasks = request.Texts.Distinct().Select(async text =>
             {
-                var translated = await _translationService.TranslateAsync(text, request.TargetLanguage);
-                return new { Original = text, Translated = translated };
+                await semaphore.WaitAsync();
+                try
+                {
+                    var translated = await _translationService.TranslateAsync(text, request.TargetLanguage);
+                    lock (results)
+                    {
+                        results[text] = translated;
+                    }
+                }
+                catch
+                {
+                    lock (results)
+                    {
+                        results[text] = text;
+                    }
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
             });
 
-            var pairs = await Task.WhenAll(tasks);
-
-            foreach (var pair in pairs)
-            {
-                results[pair.Original] = pair.Translated;
-            }
+            await Task.WhenAll(tasks);
 
             return Ok(results);
         }

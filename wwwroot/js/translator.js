@@ -28,23 +28,50 @@ const Translator = {
         const supported = ['en', 'es', 'fr', 'de', 'hi', 'gu', 'zh', 'ja', 'ru', 'ar'];
         this.currentLang = saved || (supported.includes(browser) ? browser : 'en');
 
+        // 2. Load Persisted Cache
+        this.loadCache();
+
         console.log('Translator Initialized. Language:', this.currentLang);
 
-        // 2. UI Hookup
+        // 3. UI Hookup
         const selector = document.getElementById('languageSelector');
         if (selector) {
             selector.value = this.currentLang;
         }
 
-        // 3. Create Loader
+        // 4. Create Loader
         this.createLoader();
 
-        // 4. Start Engine
+        // 5. Start Engine
         if (this.currentLang !== 'en') {
             this.translatePage(true); // true = initial load
         }
 
         this.observe();
+    },
+
+    loadCache: function () {
+        try {
+            const raw = localStorage.getItem('translatorCache');
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                this.cache = new Map(parsed);
+                console.log(`Loaded ${this.cache.size} translations from local cache.`);
+            }
+        } catch (e) {
+            console.warn('Failed to load local translation cache', e);
+        }
+    },
+
+    saveCache: function () {
+        try {
+            // Convert Map to Array for JSON serialization
+            const data = JSON.stringify(Array.from(this.cache.entries()));
+            localStorage.setItem('translatorCache', data);
+        } catch (e) {
+            // Storage quota full?
+            console.warn('Failed to save to local cache', e);
+        }
     },
 
     createLoader: function () {
@@ -99,6 +126,11 @@ const Translator = {
 
             // Now translate
             await this.translatePage();
+        }
+
+        // Notify dynamic components
+        if (window.jQuery) {
+            window.jQuery(document).trigger('languageChanged', [lang]);
         }
 
         this.setLoader(false);
@@ -318,40 +350,49 @@ const Translator = {
 
         const texts = Array.from(toFetch);
 
-        try {
-            const response = await fetch('/api/Translation/translate-batch', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ texts: texts, targetLanguage: lang })
-            });
+        const chunkSize = 5;
 
-            if (!response.ok) throw new Error('API ' + response.status);
+        for (let i = 0; i < texts.length; i += chunkSize) {
+            const chunk = texts.slice(i, i + chunkSize);
 
-            const results = await response.json();
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s per chunk
 
-            // Process results
-            for (const [original, translated] of Object.entries(results)) {
-                // Cache it
-                this.cache.set(`${lang}_${original}`, translated);
+                const response = await fetch('/api/Translation/translate-batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ texts: chunk, targetLanguage: lang }),
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
 
-                // Apply it
-                if (nodeMap.has(original)) {
-                    nodeMap.get(original).forEach(item => {
-                        this.applyTranslation(item, original, translated);
-                    });
+                if (!response.ok) {
+                    console.warn('Chunk failed:', response.status);
+                    continue;
                 }
-            }
 
-        } catch (e) {
-            console.error(`Translation Batch Failed (Attempt ${retryCount + 1})`, e);
-            if (retryCount < this.retryDelays.length) {
-                setTimeout(() => {
-                    this.translateBatch(nodes, retryCount + 1);
-                }, this.retryDelays[retryCount]);
-            } else {
-                // Final failure: Do we revert? Or just leave as is?
-                // User said "Retry instead of falling back". We retried. Use fallback?
-                // Actually if we fail, we just leave it.
+                const results = await response.json();
+
+                // Process results immediately
+                for (const [original, translated] of Object.entries(results)) {
+                    // Cache it
+                    this.cache.set(`${lang}_${original}`, translated);
+
+                    // Apply it
+                    if (nodeMap.has(original)) {
+                        nodeMap.get(original).forEach(item => {
+                            this.applyTranslation(item, original, translated);
+                        });
+                    }
+                }
+
+                // Persist new translations
+                this.saveCache();
+
+            } catch (e) {
+                console.error(`Translation Chunk Failed (Start Index: ${i})`, e);
+                // Continue to next chunk instead of dying completely
             }
         }
     },
@@ -381,6 +422,52 @@ const Translator = {
                 item.nodeValue = leftSpace + translated + rightSpace;
             }
         }
+    },
+    translateText: async function (text) {
+        if (!text) return '';
+        if (this.currentLang === 'en') return text;
+
+        const lang = this.currentLang;
+        const cacheKey = `${lang}_${text}`;
+
+        if (this.cache.has(cacheKey)) {
+            return this.cache.get(cacheKey);
+        }
+
+        try {
+            // Re-use batch endpoint for single text
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout for single text
+
+            const response = await fetch('/api/Translation/translate-batch', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ texts: [text], targetLanguage: lang }),
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) return text;
+
+            const results = await response.json();
+            const translated = results[text] || text;
+
+            this.cache.set(cacheKey, translated);
+            this.saveCache();
+            return translated;
+        } catch (e) {
+            console.error('Translation Text Error', e);
+            return text;
+        }
+    },
+
+    get locale() {
+        return this.currentLang;
+    },
+
+    // Alias for short usage if needed
+    t: function (key) {
+        return key;
     }
 };
 
@@ -389,3 +476,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.Translator = Translator;
+window.translator = Translator;
+window.i18n = Translator;
