@@ -21,5 +21,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (linkPath && currentPath.includes(linkPath) && linkPath !== '/') link.classList.add('active');
         else if (linkPath === '/' && currentPath === '/') link.classList.add('active');
     });
+    // 3. Initialize Bootstrap Tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 });
 

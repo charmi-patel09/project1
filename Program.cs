@@ -24,6 +24,7 @@ builder.Services.AddTransient<JsonCrudApp.Services.EmailService>();
 builder.Services.AddTransient<JsonCrudApp.Services.OtpService>();
 builder.Services.AddTransient<JsonCrudApp.Services.NotesService>();
 builder.Services.AddTransient<JsonCrudApp.Services.GlobalTranslationService>();
+builder.Services.AddTransient<JsonCrudApp.Services.TimeTrackerService>();
 builder.Services.AddHttpClient();
 builder.Services.AddMemoryCache();
 
