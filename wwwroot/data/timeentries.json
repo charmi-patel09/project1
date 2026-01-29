@@ -2,25 +2,9 @@
   {
     "Id": 1,
     "UserEmail": "charmimarakana@gmail.com",
-    "TaskName": "coding",
-    "StartTime": "2026-01-28T12:30:00",
-    "EndTime": "2026-01-28T12:45:00",
-    "DurationSeconds": 900
-  },
-  {
-    "Id": 2,
-    "UserEmail": "charmimarakana@gmail.com",
-    "TaskName": "reading",
-    "StartTime": "2026-01-28T13:11:00",
-    "EndTime": "2026-01-28T13:41:00",
+    "TaskName": "using phone",
+    "StartTime": "2026-01-29T11:08:00",
+    "EndTime": "2026-01-29T11:38:00",
     "DurationSeconds": 1800
-  },
-  {
-    "Id": 3,
-    "UserEmail": "charmimarakana@gmail.com",
-    "TaskName": "running",
-    "StartTime": "2026-01-28T13:18:00",
-    "EndTime": "2026-01-28T13:40:00",
-    "DurationSeconds": 1320
   }
 ]

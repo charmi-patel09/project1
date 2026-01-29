@@ -6,10 +6,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.querySelector('.sidebar');
     if (sidebarToggle && sidebar) {
-        sidebarToggle.addEventListener('click', () => sidebar.classList.toggle('active'));
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            document.body.classList.toggle('sidebar-open');
+        });
+
+        // Close on overlay click (simulated by clicking "outside" but specifically if body has class)
         document.addEventListener('click', (event) => {
-            if (window.innerWidth <= 768 && !sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(event.target) &&
+                !sidebarToggle.contains(event.target) &&
+                document.body.classList.contains('sidebar-open')) {
+
                 sidebar.classList.remove('active');
+                document.body.classList.remove('sidebar-open');
             }
         });
     }
@@ -28,3 +38,22 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 });
 
+
+/* Topbar Utility Mobile Toggle */
+document.addEventListener('DOMContentLoaded', function () {
+    const utilToggle = document.getElementById('mobileUtilToggle');
+    const utilContainer = document.getElementById('utilityContainer');
+
+    if (utilToggle && utilContainer) {
+        utilToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            utilContainer.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!utilContainer.contains(e.target) && !utilToggle.contains(e.target)) {
+                utilContainer.classList.remove('show');
+            }
+        });
+    }
+});

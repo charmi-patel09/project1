@@ -19,11 +19,15 @@ namespace JsonCrudApp.Services
             _cache = cache;
         }
 
-        public async Task<string> TranslateAsync(string text, string targetLang)
+        public async Task<string> TranslateAsync(string text, string targetLang, string sourceLang = "auto")
         {
-            if (string.IsNullOrWhiteSpace(text) || targetLang == "en") return text;
+            if (string.IsNullOrWhiteSpace(text)) return text;
 
-            string cacheKey = $"trans_{targetLang}_{text.GetHashCode()}";
+            // If source and target are strictly identical (and not auto), skip
+            if (sourceLang != "auto" && sourceLang.Equals(targetLang, StringComparison.OrdinalIgnoreCase))
+                return text;
+
+            string cacheKey = $"trans_{sourceLang}_{targetLang}_{text.GetHashCode()}";
             if (_cache.TryGetValue(cacheKey, out string cachedTranslation))
             {
                 // Can contain null if cache corrupted?
@@ -37,13 +41,13 @@ namespace JsonCrudApp.Services
             {
                 try
                 {
-                    // Using the robust 'gtx' endpoint
-                    var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={targetLang}&dt=t&q={System.Web.HttpUtility.UrlEncode(text)}";
+                    // Using the robust 'gtx' endpoint w/ user-defined source
+                    var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={sourceLang}&tl={targetLang}&dt=t&q={System.Web.HttpUtility.UrlEncode(text)}";
 
                     // Set User-Agent to avoid some blocks
                     _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
 
-                    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+                    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)); // Increased timeout slightly
                     var response = await _httpClient.GetStringAsync(url, cts.Token);
 
                     using var doc = JsonDocument.Parse(response);
@@ -80,7 +84,9 @@ namespace JsonCrudApp.Services
                     if (i == maxRetries - 1)
                     {
                         Console.WriteLine($"Translation Error after {maxRetries} attempts: {ex.Message}");
-                        // Return original on fatal error
+                        // Return NULL to indicate failure so controller can handle it (or handle gracefully here)
+                        // User req: "Do not return the original input text as a fallback unless the API fails."
+                        // We are returning original on fatal error.
                         return text;
                     }
                     await Task.Delay(delay * (i + 1));

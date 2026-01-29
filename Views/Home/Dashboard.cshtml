@@ -31,7 +31,6 @@
                     </div>
                     <div class="title-text">
                         <h3>Global Search</h3>
-                        <p>Search Global Intelligence Database...</p>
                     </div>
                 </div>
 
@@ -59,7 +58,6 @@
                     </div>
                     <div class="title-text">
                         <h3>Weather</h3>
-                        <p>Deep Space Meteorological Telemetry</p>
                     </div>
                 </div>
 
@@ -94,7 +92,6 @@
                     </div>
                     <div class="title-text">
                         <h3>Currency Exchange</h3>
-                        <p>Global Valuation Protocols</p>
                     </div>
                 </div>
 
@@ -157,7 +154,6 @@
                     </div>
                     <div class="title-text">
                         <h3>Timezone</h3>
-                        <p>Universal Time Coordination</p>
                     </div>
                 </div>
 
@@ -198,7 +194,6 @@
                     </div>
                     <div class="title-text">
                         <h3>Global News Feed</h3>
-                        <p>Live Intel Stream</p>
                     </div>
                 </div>
 
@@ -230,7 +225,6 @@
                     </div>
                     <div class="title-text">
                         <h3>Notes</h3>
-                        <p>Personal Log</p>
                     </div>
                 </div>
 
@@ -277,14 +271,14 @@
                     </div>
                     <div class="title-text">
                         <h3>Translator</h3>
-                        <p>Universal Language Relay</p>
                     </div>
                 </div>
 
                 <div class="tool-body">
                     <div class="form-row">
                         <label>Input Text</label>
-                        <textarea id="transInput" class="modern-input" rows="3" placeholder="Enter text to translate..." style="resize:none; padding:12px;"></textarea>
+                        <textarea id="transInput" class="modern-input" rows="3" placeholder="Enter text to translate..."
+                            style="resize:none; padding:12px;"></textarea>
                     </div>
 
                     <div class="form-grid" style="margin-top:12px; align-items:flex-end;">
@@ -306,7 +300,8 @@
                                 <option value="ko">Korean (KO)</option>
                             </select>
                         </div>
-                        <button onclick="translateWidget()" class="btn-primary" id="btnTranslateAction" style="height:48px; border-radius:12px;">
+                        <button onclick="translateWidget()" class="btn-primary" id="btnTranslateAction"
+                            style="height:48px; border-radius:12px;">
                             <i class="fas fa-arrow-right-arrow-left"></i>
                         </button>
                     </div>
@@ -314,12 +309,15 @@
                     <div class="result-section" style="margin-top:20px;">
                         <div class="result-status" style="justify-content: space-between; display: flex;">
                             <label class="result-header">Translation Output</label>
-                            <button class="copy-text-btn" onclick="copyTranslation()" title="Copy to Clipboard" style="display:none;" id="btnCopyTrans">
+                            <button class="copy-text-btn" onclick="copyTranslation()" title="Copy to Clipboard"
+                                style="display:none;" id="btnCopyTrans">
                                 <i class="fas fa-copy"></i>
                             </button>
                         </div>
-                        <div id="transOutput" class="valuation-output" style="align-items: flex-start; text-align: left; min-height: 100px; padding: 16px; font-size: 0.95rem; line-height: 1.5; color: var(--text-bright);">
-                            <div style="width:100%; text-align:center; color:var(--text-muted); opacity:0.6; margin-top:24px;">
+                        <div id="transOutput" class="valuation-output"
+                            style="align-items: flex-start; text-align: left; min-height: 100px; padding: 16px; font-size: 0.95rem; line-height: 1.5; color: var(--text-bright);">
+                            <div
+                                style="width:100%; text-align:center; color:var(--text-muted); opacity:0.6; margin-top:24px;">
                                 <i class="fas fa-language" style="font-size:1.5rem; margin-bottom:8px;"></i>
                                 <p>Ready to Translate</p>
                             </div>
@@ -336,17 +334,23 @@
                     </div>
                     <div class="title-text">
                         <h3>Emergency Contacts</h3>
-                        <p>Global Distress Signal</p>
                     </div>
                 </div>
 
                 <div class="tool-body">
                     <div style="display:flex; flex-direction:column; gap:8px;">
-                        <div class="search-field" style="position:relative;">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="emergencyInput" class="modern-input"
-                                placeholder="Type Country Name..." autocomplete="off" oninput="handleEmergencySearch()">
-                            <div id="emergencyDropdown" class="dropdown-suggestions"></div>
+                        <div class="d-flex gap-2">
+                            <div class="search-field flex-grow-1" style="position:relative;">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="emergencyInput" class="modern-input"
+                                    placeholder="Type Country Name..." autocomplete="off"
+                                    oninput="handleEmergencySearch()">
+                                <div id="emergencyDropdown" class="dropdown-suggestions"></div>
+                            </div>
+                            <button class="btn-primary" onclick="handleEmergencySearch()"
+                                style="padding: 0 32px; border-radius: 12px; font-weight: 700;">
+                                Search
+                            </button>
                         </div>
                     </div>
 
@@ -367,40 +371,44 @@
                     </div>
                     <div class="title-text">
                         <h3>Habit Tracker</h3>
-                        <p>Consistent Growth</p>
-                    </div>
-                </div>
-
-                <div class="tool-body">
-                    <div id="habitList" class="habit-list">
-                        <!-- Habits rendered here -->
-                        <div class="empty-state">
-                            <i class="fas fa-seedling"></i>
-                            <p>Start a new habit today!</p>
-                        </div>
+                         </div>
                     </div>
 
-                    <div class="add-habit-section" style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
-                        <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
-                            <div class="form-row" style="margin-bottom:8px;">
-                                <input type="text" id="newHabitName" class="modern-input" placeholder="Habit Name (e.g. Read 10 pages)" style="padding:10px;">
+                    <div class="tool-body">
+                        <div id="habitList" class="habit-list">
+                            <!-- Habits rendered here -->
+                            <div class="empty-state">
+                                <i class="fas fa-seedling"></i>
+                                <p>Start a new habit today!</p>
                             </div>
-                            <div class="form-grid" style="grid-template-columns: 1fr auto; gap:8px;">
-                                <select id="newHabitType" class="modern-select" style="padding:10px;">
-                                    <option value="daily">Daily Goal</option>
-                                    <option value="weekly">Weekly Goal</option>
-                                </select>
-                                <button onclick="saveNewHabit()" class="btn-primary" style="padding:0 20px; border-radius:8px;">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            <button onclick="toggleAddHabitForm()" class="text-btn" style="width:100%; margin-top:8px; font-size:0.8rem; opacity:0.7;">Cancel</button>
                         </div>
-                        <button id="showAddHabitBtn" onclick="toggleAddHabitForm()" class="btn-secondary" style="width:100%; border-radius:12px; padding:12px;">
-                            <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Habit
-                        </button>
+
+                        <div class="add-habit-section"
+                            style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
+                            <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
+                                <div class="form-row" style="margin-bottom:8px;">
+                                    <input type="text" id="newHabitName" class="modern-input"
+                                        placeholder="Habit Name (e.g. Read 10 pages)" style="padding:10px;">
+                                </div>
+                                <div class="form-grid" style="grid-template-columns: 1fr auto; gap:8px;">
+                                    <select id="newHabitType" class="modern-select" style="padding:10px;">
+                                        <option value="daily">Daily Goal</option>
+                                        <option value="weekly">Weekly Goal</option>
+                                    </select>
+                                    <button onclick="saveNewHabit()" class="btn-primary"
+                                        style="padding:0 20px; border-radius:8px;">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <button onclick="toggleAddHabitForm()" class="text-btn"
+                                    style="width:100%; margin-top:8px; font-size:0.8rem; opacity:0.7;">Cancel</button>
+                            </div>
+                            <button id="showAddHabitBtn" onclick="toggleAddHabitForm()" class="btn-secondary"
+                                style="width:100%; border-radius:12px; padding:12px;">
+                                <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Habit
+                            </button>
+                        </div>
                     </div>
-                </div>
             </section>
 
 
@@ -489,8 +497,8 @@
                 const iconClass = getIcon(item.weather.weather_code);
                 const temp = Math.round(item.weather.temperature_2m);
                 el.innerHTML = `<div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
-                                                                                                                                            <div class="node-data"><i class="fas ${iconClass}"></i>
-                                                                                                                                            <b>${temp}°C</b></div>`;
+                                                                                                                                                <div class="node-data"><i class="fas ${iconClass}"></i>
+                                                                                                                                                <b>${temp}°C</b></div>`;
                 container.appendChild(el);
             }
         }
@@ -545,14 +553,14 @@
                 } catch (e) { console.error("Time calc error", e); }
 
                 display.innerHTML = `
-                                                                                                                                                                                <div class="loc-label slide-in">${label}</div>
-                                                                                                                                                                                <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
-                                                                                                                                                                                <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
-                                                                                                                                                                                <div class="weather-desc slide-in">${weatherDesc}</div>
-                                                                                                                                                                                <div class="stats-deep slide-in">
-                                                                                                                                                                                    <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
-                                                                                                                                                                                    <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
-                                                                                                                                                                                </div>`;
+                                                                                                                                                                                    <div class="loc-label slide-in">${label}</div>
+                                                                                                                                                                                    <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
+                                                                                                                                                                                    <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
+                                                                                                                                                                                    <div class="weather-desc slide-in">${weatherDesc}</div>
+                                                                                                                                                                                    <div class="stats-deep slide-in">
+                                                                                                                                                                                        <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
+                                                                                                                                                                                        <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
+                                                                                                                                                                                    </div>`;
             } catch (e) {
                 display.innerHTML = `<div class="text-danger">Satellite Link Failure</div>`;
             }
@@ -720,12 +728,12 @@
                         // Find parent official name
                         let parentMeta = countryMap.get(loc.country);
                         let parentOfficial = parentMeta ? parentMeta.official : loc.country;
-                        eList.push({ 
-                            name: loc.city, 
+                        eList.push({
+                            name: loc.city,
                             official: parentOfficial, // City inherits country official name for display context
-                            code: loc.code, 
-                            type: 'city', 
-                            parent: loc.country 
+                            code: loc.code,
+                            type: 'city',
+                            parent: loc.country
                         });
                     }
                 });
@@ -830,8 +838,8 @@
                             const time = now.toLocaleTimeString('en-US', { timeZone: currencyContext.timezone, hour: '2-digit', minute: '2-digit' });
                             const date = now.toLocaleDateString('en-US', { timeZone: currencyContext.timezone, day: 'numeric', month: 'short' });
                             timeStr = `<div style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">
-                                                                                                                                                                                                                                                             <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
-                                                                                                                                                                                                                                                           </div>`;
+                                                                                                                                                                                                                                                                 <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
+                                                                                                                                                                                                                                                               </div>`;
                         } catch (e) { }
                     }
 
@@ -844,30 +852,30 @@
                     const borderVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(52, 211, 153, 0.2)';
 
                     locationDisplay = `<div style="text-align:center; margin-bottom: 12px; color: ${colorVar}; background: ${bgVar}; padding: 8px; border-radius: 8px; border: 1px solid ${borderVar};">
-                                                                                                                                                                                                                                                             <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${label}</div>
-                                                                                                                                                                                                                                                             <div style="font-weight: 700; font-size: 0.95rem;">
-                                                                                                                                                                                                                                                                <i class="fas fa-location-dot"></i> ${city}, ${country}
-                                                                                                                                                                                                                                                             </div>
-                                                                                                                                                                                                                                                             ${timeStr}
-                                                                                                                                                                                                                                                           </div>`;
+                                                                                                                                                                                                                                                                 <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${label}</div>
+                                                                                                                                                                                                                                                                 <div style="font-weight: 700; font-size: 0.95rem;">
+                                                                                                                                                                                                                                                                    <i class="fas fa-location-dot"></i> ${city}, ${country}
+                                                                                                                                                                                                                                                                 </div>
+                                                                                                                                                                                                                                                                 ${timeStr}
+                                                                                                                                                                                                                                                               </div>`;
                 }
             }
 
 
             display.innerHTML = `
-                                                                                                                                                                                                                                    ${locationDisplay}
-                                                                                                                                                                                                                                        <div class="val-grid">
-                                                                                                                                                                                                                                            <div class="val-box slide-in highlight-border">
-                                                                                                                                                                                                                                                <div class="val-label">${f}</div>
-                                                                                                                                                                                                                                                <div class="val-number">${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-                                                                                                                                                                                                                                                <div class="val-loc-meta">Base Amount</div>
-                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                            <div class="val-box slide-in">
-                                                                                                                                                                                                                                                <div class="val-label">${t}</div>
-                                                                                                                                                                                                                                                <div class="val-number highlight">${calc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                                                                                                                                                                                                                                 <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
-                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                        </div>`;
+                                                                                                                                                                                                                                        ${locationDisplay}
+                                                                                                                                                                                                                                            <div class="val-grid">
+                                                                                                                                                                                                                                                <div class="val-box slide-in highlight-border">
+                                                                                                                                                                                                                                                    <div class="val-label">${f}</div>
+                                                                                                                                                                                                                                                    <div class="val-number">${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+                                                                                                                                                                                                                                                    <div class="val-loc-meta">Base Amount</div>
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                <div class="val-box slide-in">
+                                                                                                                                                                                                                                                    <div class="val-label">${t}</div>
+                                                                                                                                                                                                                                                    <div class="val-number highlight">${calc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                                                                                                                                                                                                                                     <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
+                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                            </div>`;
         }
 
         /* --- TIMEZONE LOGIC --- */
@@ -1072,16 +1080,16 @@
                     editNote(note.id);
                 };
                 div.innerHTML = `
-                                                                                                                                                                                                                                                                            <div class="note-header">
-                                                                                                                                                                                                                                                                                <div class="note-title">${escapeHtml(note.title)}</div>
-                                                                                                                                                                                                                                                                                <div class="note-date">${date}</div>
-                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                            <div class="note-desc">${escapeHtml(note.description)}</div>
-                                                                                                                                                                                                                                                                            <div class="note-actions">
-                                                                                                                                                                                                                                                                                <button class="btn-note-action" onclick="event.stopPropagation(); editNote(${note.id})"><i class="fas fa-edit"></i></button>
-                                                                                                                                                                                                                                                                                <button class="btn-note-action delete" onclick="event.stopPropagation(); deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
-                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                        `;
+                                                                                                                                                                                                                                                                                <div class="note-header">
+                                                                                                                                                                                                                                                                                    <div class="note-title">${escapeHtml(note.title)}</div>
+                                                                                                                                                                                                                                                                                    <div class="note-date">${date}</div>
+                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                <div class="note-desc">${escapeHtml(note.description)}</div>
+                                                                                                                                                                                                                                                                                <div class="note-actions">
+                                                                                                                                                                                                                                                                                    <button class="btn-note-action" onclick="event.stopPropagation(); editNote(${note.id})"><i class="fas fa-edit"></i></button>
+                                                                                                                                                                                                                                                                                    <button class="btn-note-action delete" onclick="event.stopPropagation(); deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
+                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                            `;
                 container.appendChild(div);
             });
         }
@@ -1431,20 +1439,20 @@
             if (matches.length > 0) {
                 dropdown.innerHTML = '';
                 // Limit to 8 suggestions for clean UI
-                matches.slice(0, 8).forEach(match => { 
+                matches.slice(0, 8).forEach(match => {
                     const div = document.createElement('div');
                     div.className = 'suggestion-item';
-                    
+
                     // Highlight match
                     const safeVal = val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                     const regex = new RegExp(`(${safeVal})`, 'gi');
                     const highlighted = match.name.replace(regex, '<span style="color:var(--accent-sky); font-weight:700;">$1</span>');
-                    
+
                     // Format: CODE – Name (Official)
                     // e.g. IN – India (Republic of India)
                     // For cities: IN – Mumbai (India) or simplified?
                     // User Req: "IN – India (Republic of India)"
-                    
+
                     let displayMeta = "";
                     if (match.type === 'country') {
                         displayMeta = `<span style="opacity:0.6; font-size:0.8em; margin-left:6px;">(${match.official})</span>`;
@@ -1453,14 +1461,14 @@
                     }
 
                     div.innerHTML = `
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span style="font-family:monospace; font-weight:700; color:var(--accent-emerald); background:rgba(52,211,153,0.1); padding:2px 6px; border-radius:4px; font-size:0.8em;">${match.code}</span>
-                            <div style="display:flex; flex-direction:column; justify-content:center;">
-                                <div style="line-height:1.2;">${highlighted} ${displayMeta}</div>
-                                ${match.type === 'city' ? `<span style="font-size:0.7em; opacity:0.5; margin-top:2px;">City</span>` : ''}
-                            </div>
-                        </div>`;
-                        
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <span style="font-family:monospace; font-weight:700; color:var(--accent-emerald); background:rgba(52,211,153,0.1); padding:2px 6px; border-radius:4px; font-size:0.8em;">${match.code}</span>
+                                <div style="display:flex; flex-direction:column; justify-content:center;">
+                                    <div style="line-height:1.2;">${highlighted} ${displayMeta}</div>
+                                    ${match.type === 'city' ? `<span style="font-size:0.7em; opacity:0.5; margin-top:2px;">City</span>` : ''}
+                                </div>
+                            </div>`;
+
                     div.onclick = () => selectEmergencyCountry(match);
                     dropdown.appendChild(div);
                 });
@@ -1508,9 +1516,9 @@
 
             // Show loading
             container.innerHTML = `<div class="loading-state" style="text-align:center; padding:40px;">
-                                    <i class="fas fa-circle-notch fa-spin" style="font-size:2rem; color:var(--accent-sky); margin-bottom:10px;"></i>
-                                    <div style="opacity:0.7">Accessing Global Grid...</div>
-                                   </div>`;
+                                        <i class="fas fa-circle-notch fa-spin" style="font-size:2rem; color:var(--accent-sky); margin-bottom:10px;"></i>
+                                        <div style="opacity:0.7">Accessing Global Grid...</div>
+                                       </div>`;
 
             try {
                 // Ensure code is normalized
@@ -1531,12 +1539,12 @@
                 renderEmergency(data.data, countryName);
 
             } catch (e) {
-                 if (requestId !== latestEmergencyRequestId) return;
-                 console.error(e);
-                 container.innerHTML = `<div class="empty-state">
-                                            <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
-                                            <p>Emergency Protocols Not Found for <b>${countryName}</b></p>
-                                       </div>`;
+                if (requestId !== latestEmergencyRequestId) return;
+                console.error(e);
+                container.innerHTML = `<div class="empty-state">
+                                                <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
+                                                <p>Emergency Protocols Not Found for <b>${countryName}</b></p>
+                                           </div>`;
             }
         }
 
@@ -1547,8 +1555,8 @@
             // Helper to get best number
             const getNum = (specificList) => {
                 if (specificList && specificList.length > 0) {
-                     const valid = specificList.filter(n => n && n.trim().length > 0);
-                     if (valid.length > 0) return valid;
+                    const valid = specificList.filter(n => n && n.trim().length > 0);
+                    if (valid.length > 0) return valid;
                 }
                 return null;
             };
@@ -1559,7 +1567,7 @@
                 unifiedNums = getNum(data.dispatch.all);
             } else if (data.member_112) {
                 unifiedNums = ['112']; // EU Standard
-            } 
+            }
             // Fallback for known unifiers if data missing? 
             // If we have nothing at all, we shouldn't guess, but US/UK is 911/999 usually handled by API.
 
@@ -1572,39 +1580,39 @@
             const isTotalFailure = !unifiedNums && !policeNums && !ambNums && !fireNums;
 
             if (isTotalFailure) {
-                 container.innerHTML = `<div class="empty-state">
-                                            <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
-                                            <p>Emergency numbers not available for this location.</p>
-                                       </div>`;
-                 return;
+                container.innerHTML = `<div class="empty-state">
+                                                <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
+                                                <p>Emergency numbers not available for this location.</p>
+                                           </div>`;
+                return;
             }
 
             const createCard = (type, label, icon, numbers, isHighlight = false) => {
                 const isAvail = numbers !== null && numbers.length > 0;
-                
+
                 // If unified unavailable, don't show card. But if specific unavailable, show "Unavailable"
-                if (!isAvail && isHighlight) return ''; 
+                if (!isAvail && isHighlight) return '';
 
                 const numStr = isAvail ? numbers.join(' / ') : 'Not Available';
                 const availClass = isAvail ? '' : 'unavailable';
                 const highlightClass = isHighlight ? 'unified-card' : '';
-                
+
                 return `<div class="emergency-number-card ${type} ${availClass} ${highlightClass}">
-                        <div class="card-icon-wrapper">
-                            <i class="fas ${icon}"></i>
-                        </div>
-                        <div class="em-info">
-                            <span class="em-label">${label}</span>
-                            <span class="em-number">${numStr}</span>
-                        </div>
-                        ${isAvail ? `<button class="copy-btn" onclick="navigator.clipboard.writeText('${numbers[0]}')" title="Copy"><i class="fas fa-copy"></i></button>` : ''}
-                    </div>`;
+                            <div class="card-icon-wrapper">
+                                <i class="fas ${icon}"></i>
+                            </div>
+                            <div class="em-info">
+                                <span class="em-label">${label}</span>
+                                <span class="em-number">${numStr}</span>
+                            </div>
+                            ${isAvail ? `<button class="copy-btn" onclick="navigator.clipboard.writeText('${numbers[0]}')" title="Copy"><i class="fas fa-copy"></i></button>` : ''}
+                        </div>`;
             };
 
             // RENDER CARDS
             // 1. Unified (Red Alert Highlight)
             html += createCard('dispatch', 'Unified Emergency', 'fa-tower-broadcast', unifiedNums, true);
-            
+
             // 2. Police
             html += createCard('police', 'Police', 'fa-shield-halved', policeNums);
 
@@ -1618,8 +1626,8 @@
 
             // Disclaimer
             html += `<div style="margin-top:16px; text-align:center; font-size:0.7rem; color:var(--text-muted); opacity:0.6;">
-                        <i class="fas fa-circle-info"></i> Emergency numbers may vary by region. Verify locally if possible.
-                     </div>`;
+                            <i class="fas fa-circle-info"></i> Emergency numbers may vary by region. Verify locally if possible.
+                         </div>`;
 
             container.innerHTML = html;
         }
@@ -1646,14 +1654,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         Texts: [input],
-                        TargetLanguage: lang
+                        TargetLanguage: lang,
+                        SourceLanguage: 'auto'
                     })
                 });
 
                 if (!res.ok) throw new Error("Translation Failed");
 
                 const result = await res.json();
-                
+
                 // Result is Dictionary<string, string>
                 const translatedText = result[input] || "Error: Could not translate.";
 
@@ -1685,7 +1694,7 @@
 
         // --- HABIT TRACKER LOGIC ---
         let habits = [];
-        let editingHabitId = null; 
+        let editingHabitId = null;
 
         function initHabits() {
             const stored = localStorage.getItem('userHabits');
@@ -1721,9 +1730,9 @@
             const list = document.getElementById('habitList');
             if (!habits || habits.length === 0) {
                 list.innerHTML = `<div class="empty-state">
-                                    <i class="fas fa-seedling" style="color:var(--accent-green)"></i>
-                                    <p>Start building good habits!</p>
-                                  </div>`;
+                                        <i class="fas fa-seedling" style="color:var(--accent-green)"></i>
+                                        <p>Start building good habits!</p>
+                                      </div>`;
                 return;
             }
 
@@ -1732,7 +1741,7 @@
             // Get Monday of current week for calculation
             const day = now.getDay();
             const diff = now.getDate() - day + (day == 0 ? -6 : 1);
-            const monday = new Date(new Date(now).setDate(diff)).setHours(0,0,0,0);
+            const monday = new Date(new Date(now).setDate(diff)).setHours(0, 0, 0, 0);
 
             list.innerHTML = '';
             habits.forEach(h => {
@@ -1747,38 +1756,38 @@
                     const distinctDaysThisWeek = h.history.filter(dateStr => {
                         return new Date(dateStr).getTime() >= monday;
                     });
-                     // Let's say weekly goal is 7 days for max progress, or just reflect 'days done'
-                     // User req: "completed days in current week"
-                     // We display percentage relative to 7 days
-                     const count = new Set(distinctDaysThisWeek).size;
-                     progress = Math.min(100, Math.round((count / 7) * 100));
+                    // Let's say weekly goal is 7 days for max progress, or just reflect 'days done'
+                    // User req: "completed days in current week"
+                    // We display percentage relative to 7 days
+                    const count = new Set(distinctDaysThisWeek).size;
+                    progress = Math.min(100, Math.round((count / 7) * 100));
                 }
-                
+
                 const div = document.createElement('div');
                 div.className = `habit-item ${isDoneToday ? 'completed' : ''}`;
                 div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div style="display:flex; align-items:center; gap:12px; flex:1;">
-                            <div class="custom-checkbox ${isDoneToday ? 'checked' : ''}" onclick="toggleHabit('${h.id}')">
-                                ${isDoneToday ? '<i class="fas fa-check"></i>' : ''}
-                            </div>
-                            <div style="flex:1;">
-                                <div class="habit-name">${escapeHtml(h.name)}</div>
-                                <div class="habit-meta">
-                                    <span class="badge badge-${h.type}">${h.type}</span>
-                                    <span style="margin-left:8px; opacity:0.7;">${progress}%</span>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                                <div class="custom-checkbox ${isDoneToday ? 'checked' : ''}" onclick="toggleHabit('${h.id}')">
+                                    ${isDoneToday ? '<i class="fas fa-check"></i>' : ''}
+                                </div>
+                                <div style="flex:1;">
+                                    <div class="habit-name">${escapeHtml(h.name)}</div>
+                                    <div class="habit-meta">
+                                        <span class="badge badge-${h.type}">${h.type}</span>
+                                        <span style="margin-left:8px; opacity:0.7;">${progress}%</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div style="display:flex; gap:4px;">
+                                 <button class="icon-btn edit-habit-btn" onclick="editHabit('${h.id}')" title="Edit"><i class="fas fa-pen"></i></button>
+                                 <button class="icon-btn delete-habit-btn" onclick="deleteHabit('${h.id}')" title="Delete"><i class="fas fa-times"></i></button>
+                            </div>
                         </div>
-                        <div style="display:flex; gap:4px;">
-                             <button class="icon-btn edit-habit-btn" onclick="editHabit('${h.id}')" title="Edit"><i class="fas fa-pen"></i></button>
-                             <button class="icon-btn delete-habit-btn" onclick="deleteHabit('${h.id}')" title="Delete"><i class="fas fa-times"></i></button>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width:${progress}%; background-color:${progress > 0 ? 'var(--accent-green)' : 'transparent'};"></div>
                         </div>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="width:${progress}%; background-color:${progress > 0 ? 'var(--accent-green)' : 'transparent'};"></div>
-                    </div>
-                `;
+                    `;
                 list.appendChild(div);
             });
         }
@@ -1787,12 +1796,12 @@
             const form = document.getElementById('addHabitForm');
             const btn = document.getElementById('showAddHabitBtn');
             const submitBtn = form.querySelector('.btn-primary'); // The add button
-            
+
             if (form.style.display === 'none') {
                 form.style.display = 'block';
                 btn.style.display = 'none';
                 document.getElementById('newHabitName').focus();
-                
+
                 // Reset mode to Add just in case
                 if (reset) {
                     editingHabitId = null;
@@ -1802,7 +1811,7 @@
             } else {
                 form.style.display = 'none';
                 btn.style.display = 'block';
-                if(reset) {
+                if (reset) {
                     document.getElementById('newHabitName').value = '';
                     editingHabitId = null;
                 }
@@ -1814,7 +1823,7 @@
             const typeInput = document.getElementById('newHabitType');
             const name = nameInput.value.trim();
             const type = typeInput.value;
-            
+
             if (!name) return;
 
             if (editingHabitId) {
@@ -1836,7 +1845,7 @@
                 });
                 saveHabits();
             }
-            
+
             toggleAddHabitForm(true);
         }
 
@@ -1847,7 +1856,7 @@
             // Populate form
             document.getElementById('newHabitName').value = h.name;
             document.getElementById('newHabitType').value = h.type;
-            
+
             // Set state
             editingHabitId = id;
 

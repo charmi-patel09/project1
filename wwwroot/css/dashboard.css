@@ -180,7 +180,86 @@ body {
 
 @media (max-width: 1200px) {
     .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-shell {
+        padding: 16px;
+        margin: -16px;
+    }
+
+    .dashboard-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .hub-controls {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .search-field input,
+    .btn-primary,
+    .btn-emerald,
+    .btn-icon,
+    .modern-input,
+    .modern-select {
+        min-height: 48px;
+        /* Touch target size */
+        width: 100%;
+    }
+
+    .action-group {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto;
+    }
+
+    .form-grid {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .swap-indicator {
+        align-self: center;
+        transform: rotate(90deg);
+        padding: 0;
+        margin: 8px 0;
+    }
+
+    .card-title p {
+        display: none;
+        /* Hide secondary text */
+    }
+
+    .card-title h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Weather Specifics */
+    .temp-hero {
+        font-size: 3rem;
+    }
+
+    .stats-deep {
+        grid-template-columns: 1fr;
+    }
+
+    .header-brief h1 {
+        font-size: 2rem;
+    }
+
+    .header-chrono {
+        display: none;
+        /* Hide generic time on small mobile to save space */
+    }
+
+    .main-header {
+        align-items: center;
+        margin-bottom: 20px;
     }
 }
 
@@ -1738,4 +1817,113 @@ section:hover .title-icon::after {
 
 .icon-btn:hover {
     background: rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   UTILITY CONTROLS (Topbar Right)
+   ============================================ */
+.utility-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-utility {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-dim);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.btn-utility:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+}
+
+/* Specific styling for Clock to match previous gold/warning accent */
+.btn-utility.clock-btn {
+    color: #ffc107;
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.2);
+}
+
+.btn-utility.clock-btn:hover {
+    background: rgba(255, 193, 7, 0.2);
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.2);
+}
+
+.lang-wrapper select {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-dim);
+    color: var(--text-secondary);
+    border-radius: 10px;
+    height: 40px;
+    padding: 0 32px 0 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+.lang-wrapper select:hover {
+    border-color: var(--border-accent);
+    color: var(--text-primary);
+}
+
+/* Mobile Responsive Utility Menu */
+@media (max-width: 768px) {
+    .utility-container {
+        display: none;
+        position: absolute;
+        top: 65px;
+        /* Just below topbar */
+        right: 16px;
+        background: var(--bg-surface);
+        padding: 12px;
+        border-radius: 16px;
+        border: 1px solid var(--border-dim);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        flex-direction: column;
+        min-width: 180px;
+        align-items: stretch;
+        z-index: 1000;
+        gap: 8px;
+    }
+
+    .utility-container.show {
+        display: flex;
+        animation: slideIn 0.2s ease;
+    }
+
+    .btn-utility {
+        width: 100%;
+        border-radius: 8px;
+        justify-content: flex-start;
+        padding-left: 12px;
+        gap: 12px;
+    }
+
+    .btn-utility::after {
+        content: attr(title);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-left: 8px;
+    }
+
+    .lang-wrapper {
+        width: 100%;
+    }
+
+    .lang-wrapper select {
+        width: 100%;
+    }
 }

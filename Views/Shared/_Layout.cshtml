@@ -66,75 +66,41 @@
                             <span class="breadcrumb-text"></span>
                         </div>
                     </div>
-                    <div class="topbar-right" style="display: flex; align-items: center; gap: 15px;">
+                    <div class="topbar-right">
+                        <!-- Mobile Toggle -->
+                        <button class="btn btn-sm d-md-none text-secondary" id="mobileUtilToggle" style="width: 40px; height: 40px; border: 1px solid var(--border-dim); border-radius: 10px; background: var(--bg-tertiary); display:flex; align-items:center; justify-content:center;">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
 
-                        <!-- Time Tracker Component -->
-                        <div class="time-tracker-container" style="position: relative; margin-right: 15px;">
-                            <!-- Timer Display (Always Visible) -->
-                            <div id="navbarTimer" class="navbar-timer"
-                                style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 12px; border-radius: 20px; transition: all 0.3s ease;">
-                                <i class="fas fa-play" id="timerIcon"
-                                    style="font-size: 0.8rem; color: var(--bs-primary);"></i>
-                                <span id="timerDisplay"
-                                    style="font-family: monospace; font-weight: 600; font-size: 0.95rem;">00:00:00</span>
-                            </div>
+                        <!-- Utility Container -->
+                        <div class="utility-container" id="utilityContainer">
+                            
+                            <!-- 1. Time Tracker (Clock) -->
+                            <a href="/TimeTracker" class="btn-utility clock-btn" title="Time Tracker">
+                                 <i class="fas fa-clock"></i>
+                            </a>
 
-                            <!-- Timer Dropdown (Hidden) -->
-                            <div id="timerDropdown" class="timer-dropdown shadow-lg"
-                                style="display: none; position: absolute; top: 120%; right: 0; width: 320px; background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: 12px; padding: 16px; z-index: 1000;">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h6 class="m-0 fw-bold">Time Tracker</h6>
-                                    <a href="/TimeTracker" class="text-decoration-none small">View All</a>
-                                </div>
+                            <!-- 2. Theme Toggle -->
+                            <button id="themeToggle" class="btn-utility" title="Current Theme">
+                                 <i class="fas fa-moon"></i>
+                            </button>
 
-                                <!-- Task Input -->
-                                <div class="mb-3 position-relative">
-                                    <input type="text" id="timerTaskInput" class="form-control form-control-sm"
-                                        placeholder="What are you working on?">
-                                    <div id="recentTasksList" class="list-group mt-1 shadow-sm"
-                                        style="display:none; position: absolute; width: 100%; z-index: 1001; max-height: 150px; overflow-y: auto;">
-                                    </div>
-                                    <div class="invalid-feedback">Please enter a task name.</div>
-                                </div>
-
-                                <!-- Timer Big Display -->
-                                <div class="text-center mb-4">
-                                    <div id="timerDisplayBig" class="display-6 fw-bold font-monospace">00:00:00</div>
-                                    <p id="timerStatus" class="text-muted small mb-0">Stopped</p>
-                                </div>
-
-                                <!-- Controls -->
-                                <div class="d-flex justify-content-center gap-2">
-                                    <button id="btnTimerStart" class="btn btn-primary btn-sm rounded-pill px-4"><i
-                                            class="fas fa-play me-1"></i> Start</button>
-                                    <button id="btnTimerPause" class="btn btn-warning btn-sm rounded-pill px-4"
-                                        style="display:none;"><i class="fas fa-pause me-1"></i> Pause</button>
-                                    <button id="btnTimerStop" class="btn btn-danger btn-sm rounded-pill px-4" disabled><i
-                                            class="fas fa-stop me-1"></i> Stop</button>
-                                </div>
+                            <!-- 3. Language Selector -->
+                            <div class="lang-wrapper">
+                                <select class="form-select" id="languageSelector" onchange="Translator.setLanguage(this.value)">
+                                    <option value="en">English</option>
+                                    <option value="es">Español (Spanish)</option>
+                                    <option value="fr">Français (French)</option>
+                                    <option value="de">Deutsch (German)</option>
+                                    <option value="hi">हिन्दी (Hindi)</option>
+                                    <option value="gu">ગુજરાતી (Gujarati)</option>
+                                    <option value="zh">中文 (Chinese)</option>
+                                    <option value="ja">日本語 (Japanese)</option>
+                                    <option value="ru">Русский (Russian)</option>
+                                    <option value="ar">العربية (Arabic)</option>
+                                </select>
                             </div>
                         </div>
-
-                        <select class="form-select form-select-sm" id="languageSelector"
-                            onchange="Translator.setLanguage(this.value)"
-                            style="width: auto; cursor: pointer; margin-right: 12px;">
-                            <option value="en">English</option>
-                            <option value="es">Español (Spanish)</option>
-                            <option value="fr">Français (French)</option>
-                            <option value="de">Deutsch (German)</option>
-                            <option value="hi">हिन्दी (Hindi)</option>
-                            <option value="gu">ગુજરાતી (Gujarati)</option>
-                            <option value="zh">中文 (Chinese)</option>
-                            <option value="ja">日本語 (Japanese)</option>
-                            <option value="ru">Русский (Russian)</option>
-                            <option value="ar">العربية (Arabic)</option>
-                        </select>
-
-                        <!-- Theme Toggle -->
-                        <button id="themeToggle" class="btn btn-sm btn-outline-secondary"
-                            style="border-radius: 50%; width: 32px; height: 32px; padding: 0; display:flex; align-items:center; justify-content:center;">
-                            <i class="fas fa-moon"></i>
-                        </button>
 
                         <script>
                             (function () {

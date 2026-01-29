@@ -24,6 +24,7 @@ namespace JsonCrudApp.Controllers
                 return BadRequest("No text provided");
 
             var results = new Dictionary<string, string>();
+            var sourceLang = string.IsNullOrEmpty(request.SourceLanguage) ? "auto" : request.SourceLanguage;
 
             // Limit concurrency
             // Process sequentially to avoid 429 Rate Limiting from external API
@@ -34,7 +35,8 @@ namespace JsonCrudApp.Controllers
                 await semaphore.WaitAsync();
                 try
                 {
-                    var translated = await _translationService.TranslateAsync(text, request.TargetLanguage);
+                    // Pass explicit source language
+                    var translated = await _translationService.TranslateAsync(text, request.TargetLanguage, sourceLang);
                     lock (results)
                     {
                         results[text] = translated;
@@ -63,5 +65,6 @@ namespace JsonCrudApp.Controllers
     {
         public List<string> Texts { get; set; }
         public string TargetLanguage { get; set; }
+        public string SourceLanguage { get; set; } = "auto";
     }
 }
