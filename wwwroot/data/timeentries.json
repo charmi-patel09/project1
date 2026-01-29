@@ -2,9 +2,25 @@
   {
     "Id": 1,
     "UserEmail": "charmimarakana@gmail.com",
-    "TaskName": "using phone",
-    "StartTime": "2026-01-29T11:08:00",
-    "EndTime": "2026-01-29T11:38:00",
-    "DurationSeconds": 1800
+    "TaskName": "gossip with friends",
+    "StartTime": "2026-01-29T10:30:00",
+    "EndTime": "2026-01-29T10:50:00",
+    "DurationSeconds": 1200
+  },
+  {
+    "Id": 2,
+    "UserEmail": "charmimarakana@gmail.com",
+    "TaskName": "work",
+    "StartTime": "2026-01-29T10:50:00",
+    "EndTime": "2026-01-29T13:00:00",
+    "DurationSeconds": 7800
+  },
+  {
+    "Id": 3,
+    "UserEmail": "charmimarakana@gmail.com",
+    "TaskName": "break",
+    "StartTime": "2026-01-29T13:00:00",
+    "EndTime": "2026-01-29T14:24:00",
+    "DurationSeconds": 5040
   }
 ]

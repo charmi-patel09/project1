@@ -168,14 +168,20 @@ body {
     flex-shrink: 0;
 }
 
+
+.user-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    /* Hide overflow, JS will scale text to fit */
+}
+
 .user-info h4 {
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0 0 2px 0;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .user-info span {
@@ -346,8 +352,12 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 32px;
-    position: sticky;
+    position: fixed;
+    /* Changed from sticky to fixed */
     top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    width: auto;
     z-index: 999;
     box-shadow: var(--shadow-md);
     backdrop-filter: blur(10px);
@@ -393,49 +403,153 @@ body {
     font-family: var(--font-heading);
 }
 
+/* ============================================
+   NAVBAR UTILITY SECTION (Right Side)
+   ============================================ */
 .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+}
+
+/* Container defining the layout order: 1. Clock, 2. Theme, 3. Language */
+.utility-container {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.topbar-btn {
+/* Common Button Style (Clock & Theme) */
+.btn-utility {
     width: 40px;
     height: 40px;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-secondary);
-    border-radius: 10px;
-    color: var(--text-secondary);
-    font-size: 1.05rem;
-    cursor: pointer;
-    transition: var(--transition-normal);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    border-radius: 10px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-secondary);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none !important;
+    /* Ensure link underline is removed */
 }
 
-.topbar-btn:hover {
+.btn-utility:hover {
     background: var(--bg-hover);
-    border-color: var(--border-accent);
     color: var(--accent-primary);
+    border-color: var(--border-accent);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-sm);
 }
 
+.btn-utility i {
+    transition: transform 0.3s ease;
+}
+
+.btn-utility:hover i {
+    transform: scale(1.1);
+}
+
+/* Language Dropdown Wrapper */
+.lang-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Native Select Styling */
+.lang-wrapper .form-select {
+    height: 40px;
+    /* Match button height strictly */
+    padding: 0 36px 0 12px;
+    border-radius: 10px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    width: auto;
+    min-width: 140px;
+    /* Ensure text doesn't look cramped */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%236e7681' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px 12px;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.lang-wrapper .form-select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+}
+
+/* Mobile Toggle Styling */
+#mobileUtilToggle {
+    display: none;
+}
+
+/* Notification Badge */
 .notification-badge {
     position: absolute;
     top: -4px;
     right: -4px;
-    background: linear-gradient(135deg, var(--accent-danger) 0%, #dc2626 100%);
-    color: var(--text-white);
+    background: var(--accent-danger);
+    color: white;
     font-size: 0.65rem;
     font-weight: 700;
     padding: 2px 6px;
     border-radius: 10px;
-    border: 2px solid var(--bg-topbar);
     min-width: 18px;
     text-align: center;
+    border: 2px solid var(--bg-topbar);
+}
+
+/* Mobile Responsive Overrides */
+@media (max-width: 768px) {
+    #mobileUtilToggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid var(--border-secondary);
+        background: var(--bg-tertiary);
+        color: var(--text-secondary);
+    }
+
+    .utility-container {
+        display: none;
+        /* Hidden by default */
+        position: absolute;
+        top: 75px;
+        right: 16px;
+        width: 200px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-primary);
+        border-radius: 16px;
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        animation: fadeIn 0.2s ease;
+    }
+
+    .utility-container.show {
+        display: flex;
+    }
+
+    .lang-wrapper .form-select {
+        width: 100%;
+        min-width: auto;
+    }
 }
 
 /* ============================================
@@ -443,7 +557,8 @@ body {
    ============================================ */
 .content-wrapper {
     flex: 1;
-    padding: 32px;
+    padding: calc(var(--topbar-height) + 32px) 32px 32px 32px;
+    /* Added top padding */
     background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
     background-image:
         radial-gradient(circle at 20% 20%, rgba(88, 166, 255, 0.04) 0%, transparent 50%),
@@ -504,6 +619,10 @@ body {
     .main-area {
         margin-left: var(--sidebar-collapsed-width);
     }
+
+    .topbar {
+        left: var(--sidebar-collapsed-width);
+    }
 }
 
 @media (max-width: 768px) {
@@ -551,10 +670,11 @@ body {
 
     .topbar {
         padding: 0 16px;
+        left: 0;
     }
 
     .content-wrapper {
-        padding: 20px;
+        padding: calc(var(--topbar-height) + 20px) 20px 20px 20px;
     }
 
     .breadcrumb-text {

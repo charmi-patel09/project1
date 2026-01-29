@@ -11,93 +11,93 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = JsonCrudApp
 build_property.RootNamespace = JsonCrudApp
-build_property.ProjectDir = d:\Antigravity\JsonCrudApp\
+build_property.ProjectDir = D:\Antigravity\JsonCrudApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = d:\Antigravity\JsonCrudApp
+build_property.MSBuildProjectDirectory = D:\Antigravity\JsonCrudApp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[d:/Antigravity/JsonCrudApp/Views/Account/ForgotPassword.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Account/Login.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Account/ResetPassword.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Account/SignUp.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Account/SignUp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTaWduVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Account/StudentLogin.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Account/StudentLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTdHVkZW50TG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Account/VerifyOtp.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Account/VerifyOtp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxWZXJpZnlPdHAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Home/CountryDetails.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Home/CountryDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb3VudHJ5RGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Home/Dashboard.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Home/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/News/Details.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/News/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Shared/Error.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Students/Create.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Students/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Students/Delete.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Students/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Students/Details.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Students/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Students/Edit.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Students/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Students/Index.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Students/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/TimeTracker/Index.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/TimeTracker/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGltZVRyYWNrZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/_ViewImports.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/_ViewStart.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/Antigravity/JsonCrudApp/Views/Shared/_Layout.cshtml]
+[D:/Antigravity/JsonCrudApp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-jpzmb03jl3
