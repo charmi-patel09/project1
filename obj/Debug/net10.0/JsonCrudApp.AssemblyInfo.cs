@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JsonCrudApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c5c91d7322cd62fa5812a6907e135db328a9a3b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b3f4e9a5fcc50f39caa9742e33fc99de1a51fad")]
 [assembly: System.Reflection.AssemblyProductAttribute("JsonCrudApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JsonCrudApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

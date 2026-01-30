@@ -1657,29 +1657,49 @@
             const container = document.getElementById('emergencyResult');
             let html = '<div class="emergency-cards slide-in">';
 
-            // Helper to get best number
+            // Helper to clean and deduplicate numbers
             const getNum = (specificList) => {
                 if (specificList && specificList.length > 0) {
+                    // Filter empty/whitespace
                     const valid = specificList.filter(n => n && n.trim().length > 0);
-                    if (valid.length > 0) return valid;
+                    
+                    // Deduplicate
+                    const unique = [...new Set(valid)];
+                    
+                    if (unique.length > 0) return unique;
                 }
                 return null;
             };
 
+            // Helper to collect from all sub-properties (all, fixed, gsm)
+            const collectNums = (obj) => {
+                if (!obj) return null;
+                let list = [];
+                if (obj.all && Array.isArray(obj.all)) list.push(...obj.all);
+                if (obj.fixed && Array.isArray(obj.fixed)) list.push(...obj.fixed);
+                if (obj.gsm && Array.isArray(obj.gsm)) list.push(...obj.gsm);
+                return getNum(list);
+            };
+
             // 1. Unified Logic (Dispatch/112/911/999)
-            let unifiedNums = null;
-            if (data.dispatch && data.dispatch.all && data.dispatch.all.length > 0) {
-                unifiedNums = getNum(data.dispatch.all);
-            } else if (data.member_112) {
-                unifiedNums = ['112']; // EU Standard
+            // Australia Example: dispatch: { all: null, fixed: ["000"], gsm: ["112"] }
+            let unifiedNums = collectNums(data.dispatch);
+            
+            if (!unifiedNums && data.member_112) {
+                unifiedNums = ['112']; // EU Standard Fallback
             }
-            // Fallback for known unifiers if data missing? 
-            // If we have nothing at all, we shouldn't guess, but US/UK is 911/999 usually handled by API.
 
             // 2. Specifics
-            const policeNums = getNum(data.police ? data.police.all : null);
-            const ambNums = getNum(data.ambulance ? data.ambulance.all : null);
-            const fireNums = getNum(data.fire ? data.fire.all : null);
+            let policeNums = collectNums(data.police);
+            let ambNums = collectNums(data.ambulance);
+            let fireNums = collectNums(data.fire);
+
+            // FALLBACK LOGIC: 
+            // If specific service is missing but we have a Unified/Dispatch number,
+            // that Unified number IS the number for these services.
+            if (!policeNums && unifiedNums) policeNums = unifiedNums;
+            if (!ambNums && unifiedNums) ambNums = unifiedNums;
+            if (!fireNums && unifiedNums) fireNums = unifiedNums;
 
             // Data Validity Check
             const isTotalFailure = !unifiedNums && !policeNums && !ambNums && !fireNums;
@@ -2038,6 +2058,30 @@
             if (isFormVisible) {
                 document.getElementById('formTitle').innerText = window.i18n.t(titleKey);
             }
+        });
+
+        // --- EXPANDABLE WIDGET LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.tool-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Check if clicking interactive element
+                    if (e.target.closest('input, select, button, a, textarea, .no-expand, .suggestion-item, .habit-item, .note-item, .news-item')) return;
+                    
+                    // Also ignore if selecting text
+                    if (window.getSelection().toString().length > 0) return;
+
+                    // Toggle Expand
+                    if (card.classList.contains('expanded')) {
+                        card.classList.remove('expanded');
+                    } else {
+                        // Collapse others first
+                        document.querySelectorAll('.tool-card.expanded').forEach(c => {
+                           if(c !== card) c.classList.remove('expanded');
+                        });
+                        card.classList.add('expanded');
+                    }
+                });
+            });
         });
     </script>
 }
