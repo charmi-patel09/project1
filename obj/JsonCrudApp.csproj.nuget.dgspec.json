@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Antigravity\\JsonCrudApp\\JsonCrudApp.csproj": {}
+    "D:\\Antigravity\\project1\\JsonCrudApp.csproj": {}
   },
   "projects": {
-    "D:\\Antigravity\\JsonCrudApp\\JsonCrudApp.csproj": {
+    "D:\\Antigravity\\project1\\JsonCrudApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Antigravity\\JsonCrudApp\\JsonCrudApp.csproj",
+        "projectUniqueName": "D:\\Antigravity\\project1\\JsonCrudApp.csproj",
         "projectName": "JsonCrudApp",
-        "projectPath": "D:\\Antigravity\\JsonCrudApp\\JsonCrudApp.csproj",
+        "projectPath": "D:\\Antigravity\\project1\\JsonCrudApp.csproj",
         "packagesPath": "C:\\Users\\CHARVI PATEL\\.nuget\\packages\\",
-        "outputPath": "D:\\Antigravity\\JsonCrudApp\\obj\\",
+        "outputPath": "D:\\Antigravity\\project1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CHARVI PATEL\\AppData\\Roaming\\NuGet\\NuGet.Config"
