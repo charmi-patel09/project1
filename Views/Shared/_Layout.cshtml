@@ -10,6 +10,34 @@
     <link rel="stylesheet" href="~/JsonCrudApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Auth Utility Box Dark Mode Override */
+        [data-theme='dark'] .auth-utility-box {
+            background-color: #1e1e2d !important;
+            /* Dark background matching card */
+            border-color: #2d2d3f !important;
+            /* Dark border */
+            color: #e2e8f0 !important;
+            /* Light text */
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .5) !important;
+        }
+
+        /* Ensure icons inside inherit color or are specifically styled */
+        [data-theme='dark'] .auth-utility-box .btn-utility {
+            color: #e2e8f0;
+        }
+
+        [data-theme='dark'] .auth-utility-box .btn-utility:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Ensure form-select inside is also dark */
+        [data-theme='dark'] .auth-utility-box .form-select {
+            background-color: #2d2d3f;
+            border-color: #3f3f50;
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
@@ -68,77 +96,15 @@
                     </div>
                     <div class="topbar-right">
                         <!-- Mobile Toggle -->
-                        <button class="btn btn-sm d-md-none text-secondary" id="mobileUtilToggle" style="width: 40px; height: 40px; border: 1px solid var(--border-dim); border-radius: 10px; background: var(--bg-tertiary); display:flex; align-items:center; justify-content:center;">
+                        <button class="btn btn-sm d-md-none text-secondary" id="mobileUtilToggle"
+                            style="width: 40px; height: 40px; border: 1px solid var(--border-dim); border-radius: 10px; background: var(--bg-tertiary); display:flex; align-items:center; justify-content:center;">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
 
                         <!-- Utility Container -->
                         <div class="utility-container" id="utilityContainer">
-                            
-                            <!-- 1. Time Tracker (Clock) -->
-                            <a href="/TimeTracker" class="btn-utility clock-btn" title="Time Tracker">
-                                 <i class="fas fa-clock"></i>
-                            </a>
-
-                            <!-- 2. Theme Toggle -->
-                            <button id="themeToggle" class="btn-utility" title="Current Theme">
-                                 <i class="fas fa-moon"></i>
-                            </button>
-
-                            <!-- 3. Language Selector -->
-                            <div class="lang-wrapper">
-                                <select class="form-select" id="languageSelector" onchange="Translator.setLanguage(this.value)">
-                                    <option value="en">English</option>
-                                    <option value="es">Español (Spanish)</option>
-                                    <option value="fr">Français (French)</option>
-                                    <option value="de">Deutsch (German)</option>
-                                    <option value="hi">हिन्दी (Hindi)</option>
-                                    <option value="gu">ગુજરાતી (Gujarati)</option>
-                                    <option value="zh">中文 (Chinese)</option>
-                                    <option value="ja">日本語 (Japanese)</option>
-                                    <option value="ru">Русский (Russian)</option>
-                                    <option value="ar">العربية (Arabic)</option>
-                                </select>
-                            </div>
+                            <partial name="_UtilityControls" />
                         </div>
-
-                        <script>
-                            (function () {
-                                const toggle = document.getElementById('themeToggle');
-                                const icon = toggle.querySelector('i');
-                                const html = document.documentElement;
-
-                                // 1. Load Saved Theme
-                                const saved = localStorage.getItem('appTheme') || 'dark';
-                                html.setAttribute('data-theme', saved);
-                                updateIcon(saved);
-
-                                // 2. Toggle Handler
-                                toggle.addEventListener('click', () => {
-                                    const current = html.getAttribute('data-theme');
-                                    const next = current === 'dark' ? 'light' : 'dark';
-
-                                    html.setAttribute('data-theme', next);
-                                    localStorage.setItem('appTheme', next);
-                                    updateIcon(next);
-                                });
-
-                                function updateIcon(theme) {
-                                    if (theme === 'dark') {
-                                        icon.className = 'fas fa-moon';
-                                        toggle.classList.remove('btn-warning');
-                                        toggle.classList.add('btn-outline-secondary');
-                                        toggle.style.color = '';
-                                    } else {
-                                        icon.className = 'fas fa-sun';
-                                        toggle.classList.remove('btn-outline-secondary');
-                                        toggle.classList.add('btn-warning');
-                                        toggle.style.color = 'orange'; // ensure visible
-                                    }
-                                }
-                            })();
-                        </script>
-                    </div>
                 </header>
 
                 <!-- Content -->
@@ -151,6 +117,12 @@
     else
     {
         <div class="auth-wrapper">
+            <!-- Auth Utility Wrapper (Floating Top Right) -->
+            <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+                <div class="auth-utility-box d-flex align-items-center gap-2 p-2 rounded shadow-sm bg-body-tertiary border">
+                    <partial name="_UtilityControls" />
+                </div>
+            </div>
             <main role="main">
                 @RenderBody()
             </main>

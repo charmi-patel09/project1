@@ -1653,108 +1653,115 @@
             }
         }
 
-        function renderEmergency(data, countryName) {
+
+        // --- EMERGENCY SYSTEM (HYBRID LOGIC) ---
+        async function handleEmergencySearch() {
+            const query = document.getElementById('emergencyInput').value.trim();
             const container = document.getElementById('emergencyResult');
-            let html = '<div class="emergency-cards slide-in">';
-
-            // Helper to clean and deduplicate numbers
-            const getNum = (specificList) => {
-                if (specificList && specificList.length > 0) {
-                    // Filter empty/whitespace
-                    const valid = specificList.filter(n => n && n.trim().length > 0);
-                    
-                    // Deduplicate
-                    const unique = [...new Set(valid)];
-                    
-                    if (unique.length > 0) return unique;
-                }
-                return null;
-            };
-
-            // Helper to collect from all sub-properties (all, fixed, gsm)
-            const collectNums = (obj) => {
-                if (!obj) return null;
-                let list = [];
-                if (obj.all && Array.isArray(obj.all)) list.push(...obj.all);
-                if (obj.fixed && Array.isArray(obj.fixed)) list.push(...obj.fixed);
-                if (obj.gsm && Array.isArray(obj.gsm)) list.push(...obj.gsm);
-                return getNum(list);
-            };
-
-            // 1. Unified Logic (Dispatch/112/911/999)
-            // Australia Example: dispatch: { all: null, fixed: ["000"], gsm: ["112"] }
-            let unifiedNums = collectNums(data.dispatch);
             
-            if (!unifiedNums && data.member_112) {
-                unifiedNums = ['112']; // EU Standard Fallback
+            if (query.length < 3) {
+                 // Optional: clear if empty?
+                 // container.innerHTML = ''; 
+                 return;
             }
 
-            // 2. Specifics
-            let policeNums = collectNums(data.police);
-            let ambNums = collectNums(data.ambulance);
-            let fireNums = collectNums(data.fire);
+            container.innerHTML = `<div class="loading-state">Accessing Global Channels...</div>`;
 
-            // FALLBACK LOGIC: 
-            // If specific service is missing but we have a Unified/Dispatch number,
-            // that Unified number IS the number for these services.
-            if (!policeNums && unifiedNums) policeNums = unifiedNums;
-            if (!ambNums && unifiedNums) ambNums = unifiedNums;
-            if (!fireNums && unifiedNums) fireNums = unifiedNums;
+            try {
+                // 1. Fetch Country Metadata
+                const res = await fetch(`https://restcountries.com/v3.1/name/${query}?fields=name,cca2,region,subregion`);
+                if (!res.ok) throw new Error("Country not found");
+                const data = await res.json();
+                const country = data[0]; // Take best match
 
-            // Data Validity Check
-            const isTotalFailure = !unifiedNums && !policeNums && !ambNums && !fireNums;
+                const cca2 = country.cca2;
+                const region = country.region; // Europe, Americas, Asia, Africa, Oceania
+                const subregion = country.subregion; 
 
-            if (isTotalFailure) {
-                container.innerHTML = `<div class="empty-state">
-                                                <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
-                                                <p>Emergency numbers not available for this location.</p>
-                                           </div>`;
-                return;
-            }
+                // 2. Hybrid Logic System
+                let nums = {
+                    dispatch: null, // Unified
+                    police: null,
+                    ambulance: null,
+                    fire: null
+                };
 
-            const createCard = (type, label, icon, numbers, isHighlight = false) => {
-                const isAvail = numbers !== null && numbers.length > 0;
+                // A. Specific Validated Overrides (The "Safe List")
+                const specificMap = {
+                    'US': { dispatch: ['911'] }, // USA
+                    'CA': { dispatch: ['911'] }, // Canada
+                    'MX': { dispatch: ['911'] }, // Mexico
+                    'GB': { dispatch: ['999', '112'] }, // UK
+                    'AU': { dispatch: ['000'] }, // Australia
+                    'NZ': { dispatch: ['111'] }, // New Zealand
+                    'IN': { police: ['112', '100'], ambulance: ['108', '102'], fire: ['101'] }, // India
+                    'JP': { police: ['110'], ambulance: ['119'], fire: ['119'] }, // Japan
+                    'CN': { police: ['110'], ambulance: ['120'], fire: ['119'] }, // China
+                    'BR': { police: ['190'], ambulance: ['192'], fire: ['193'] }, // Brazil
+                    'RU': { dispatch: ['112'], police: ['102'], ambulance: ['103'], fire: ['101'] }, // Russia
+                    'ZA': { police: ['10111'], ambulance: ['10177'], dispatch: ['112'] } // South Africa
+                };
 
-                // If unified unavailable, don't show card. But if specific unavailable, show "Unavailable"
-                if (!isAvail && isHighlight) return '';
+                // Apply Override
+                if (specificMap[cca2]) {
+                     nums = { ...nums, ...specificMap[cca2] };
+                } 
+                // B. Regional Standards (The "Fallback Net")
+                else if (region === "Europe") {
+                    nums.dispatch = ['112']; 
+                } else if (region === "Oceania") {
+                     nums.dispatch = ['112']; 
+                } else {
+                     // C. Global Default
+                     nums.dispatch = ['112'];
+                }
 
-                const numStr = isAvail ? numbers.join(' / ') : 'Not Available';
-                const availClass = isAvail ? '' : 'unavailable';
-                const highlightClass = isHighlight ? 'unified-card' : '';
+                // Global Fallback: If specific services missing, use Dispatch/Unified
+                if (nums.dispatch) {
+                    if (!nums.police) nums.police = nums.dispatch;
+                    if (!nums.ambulance) nums.ambulance = nums.dispatch;
+                    if (!nums.fire) nums.fire = nums.dispatch;
+                }
 
-                return `<div class="emergency-number-card ${type} ${availClass} ${highlightClass}">
-                            <div class="card-icon-wrapper">
-                                <i class="fas ${icon}"></i>
+                // 3. Render
+                let html = `<div style="margin-bottom:12px; font-weight:700; color:var(--text-bright); font-size:1.1rem;">
+                                <i class="fas fa-flag" style="margin-right:8px; color:var(--text-muted);"></i> ${country.name.common}
                             </div>
-                            <div class="em-info">
-                                <span class="em-label">${label}</span>
-                                <span class="em-number">${numStr}</span>
-                            </div>
-                            ${isAvail ? `<button class="copy-btn" onclick="navigator.clipboard.writeText('${numbers[0]}')" title="Copy"><i class="fas fa-copy"></i></button>` : ''}
-                        </div>`;
-            };
+                            <div class="emergency-cards">`;
 
-            // RENDER CARDS
-            // 1. Unified (Red Alert Highlight)
-            html += createCard('dispatch', 'Unified Emergency', 'fa-tower-broadcast', unifiedNums, true);
+                const createCard = (label, icon, arr, colorClass) => {
+                    if (!arr || arr.length === 0) return '';
+                    return `<div class="emergency-number-card ${colorClass}">
+                                <div class="card-icon-wrapper"><i class="fas ${icon}"></i></div>
+                                <div class="em-info">
+                                    <span class="em-label">${label}</span>
+                                    <span class="em-number">${arr.join(' / ')}</span>
+                                </div>
+                                <button class="copy-btn" onclick="navigator.clipboard.writeText('${arr[0]}')" title="Copy"><i class="fas fa-copy"></i></button>
+                            </div>`;
+                };
 
-            // 2. Police
-            html += createCard('police', 'Police', 'fa-shield-halved', policeNums);
-
-            // 3. Ambulance
-            html += createCard('ambulance', 'Ambulance', 'fa-truck-medical', ambNums);
-
-            // 4. Fire
-            html += createCard('fire', 'Fire Dept', 'fa-fire-extinguisher', fireNums);
-
-            html += '</div>';
-
-            // Disclaimer
-            html += `<div style="margin-top:16px; text-align:center; font-size:0.7rem; color:var(--text-muted); opacity:0.6;">
-                            <i class="fas fa-circle-info"></i> Emergency numbers may vary by region. Verify locally if possible.
+                if (nums.dispatch) html += createCard('Unified / GSM', 'fa-tower-broadcast', nums.dispatch, 'unified-card');
+                if (nums.police) html += createCard('Police', 'fa-shield-halved', nums.police, '');
+                if (nums.ambulance) html += createCard('Ambulance', 'fa-truck-medical', nums.ambulance, '');
+                if (nums.fire) html += createCard('Fire Dept', 'fa-fire-extinguisher', nums.fire, '');
+                
+                html += `</div>`;
+                
+                // 4. Disclaimer
+                html += `<div style="margin-top:16px; text-align:center; font-size:0.75rem; color:var(--text-muted); opacity:0.8; background:rgba(0,0,0,0.05); padding:8px; border-radius:8px;">
+                            <i class="fas fa-circle-info"></i> Numbers for ${region} region. Verify locally.
                          </div>`;
 
-            container.innerHTML = html;
+                container.innerHTML = html;
+
+            } catch (e) {
+                // Silent catch or simple error
+                container.innerHTML = `<div class="empty-state">
+                                            <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
+                                            <p>Secure Link Failed. Try full country name.</p>
+                                       </div>`;
+            }
         }
 
         // --- TRANSLATOR WIDGET LOGIC ---

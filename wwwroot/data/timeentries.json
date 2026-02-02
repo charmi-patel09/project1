@@ -28,7 +28,31 @@
     "UserEmail": "charmimarakana@gmail.com",
     "TaskName": "work",
     "StartTime": "2026-01-30T11:00:00",
-    "EndTime": "2026-01-30T12:29:00",
-    "DurationSeconds": 5340
+    "EndTime": "2026-01-01T13:00:00",
+    "DurationSeconds": 0
+  },
+  {
+    "Id": 6,
+    "UserEmail": "charmimarakana@gmail.com",
+    "TaskName": "break",
+    "StartTime": "2026-01-30T13:00:00",
+    "EndTime": "2026-01-30T14:30:00",
+    "DurationSeconds": 5400
+  },
+  {
+    "Id": 7,
+    "UserEmail": "charmimarakana@gmail.com",
+    "TaskName": "work",
+    "StartTime": "2026-01-30T19:37:00",
+    "EndTime": "2026-01-30T19:00:00",
+    "DurationSeconds": 0
+  },
+  {
+    "Id": 8,
+    "UserEmail": "charmimarakana@gmail.com",
+    "TaskName": "devlopment",
+    "StartTime": "2026-01-30T19:36:00",
+    "EndTime": "2026-01-30T20:00:00",
+    "DurationSeconds": 1440
   }
 ]

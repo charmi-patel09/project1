@@ -28,9 +28,8 @@ namespace JsonCrudApp.Services
                 return text;
 
             string cacheKey = $"trans_{sourceLang}_{targetLang}_{text.GetHashCode()}";
-            if (_cache.TryGetValue(cacheKey, out string cachedTranslation))
+            if (_cache.TryGetValue(cacheKey, out string? cachedTranslation))
             {
-                // Can contain null if cache corrupted?
                 return cachedTranslation ?? text;
             }
 
@@ -42,7 +41,7 @@ namespace JsonCrudApp.Services
                 try
                 {
                     // Using the robust 'gtx' endpoint w/ user-defined source
-                    var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={sourceLang}&tl={targetLang}&dt=t&q={System.Web.HttpUtility.UrlEncode(text)}";
+                    var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={sourceLang}&tl={targetLang}&dt=t&q={Uri.EscapeDataString(text)}";
 
                     // Set User-Agent to avoid some blocks
                     _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");

@@ -1,0 +1,100 @@
+<!-- Utility Controls (Theme + Translate + Clock) -->
+<div class="utility-container d-flex align-items-center gap-2" id="utilityContainer">
+
+    <!-- 1. Time Tracker (Clock) - Only show if authenticated -->
+    @using Microsoft.AspNetCore.Http
+    @if (!string.IsNullOrEmpty(Context.Session.GetString("AdminUser")) ||
+    !string.IsNullOrEmpty(Context.Session.GetString("StudentUser")))
+    {
+        <a href="/TimeTracker" class="btn-utility clock-btn" title="Time Tracker"
+            style="text-decoration: none; color: inherit;">
+            <i class="fas fa-clock"></i>
+        </a>
+    }
+
+    <!-- 2. Theme Toggle -->
+    <button id="themeToggle" class="btn-utility" title="Current Theme"
+        style="background: none; border: none; cursor: pointer;">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- 3. Language Selector -->
+    <div class="lang-wrapper">
+        <select class="form-select form-select-sm" id="languageSelector" onchange="Translator.setLanguage(this.value)"
+            style="width: auto; cursor: pointer;">
+            <option value="en">English</option>
+            <option value="es">Español (Spanish)</option>
+            <option value="fr">Français (French)</option>
+            <option value="de">Deutsch (German)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+            <option value="zh">中文 (Chinese)</option>
+            <option value="ja">日本語 (Japanese)</option>
+            <option value="ru">Русский (Russian)</option>
+            <option value="ar">العربية (Arabic)</option>
+        </select>
+    </div>
+</div>
+
+<script>
+    (function () {
+        // Theme Toggle Logic
+        // Use a unique ID or class to avoid conflicts if included multiple times (though unexpected)
+        const toggle = document.getElementById('themeToggle');
+        if (!toggle) return;
+
+        const icon = toggle.querySelector('i');
+        const html = document.documentElement;
+
+        // 1. Load Saved Theme
+        const saved = localStorage.getItem('appTheme') || 'dark';
+        html.setAttribute('data-theme', saved);
+        updateIcon(saved);
+
+        // 2. Toggle Handler (Ensure single binding)
+        toggle.onclick = () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('appTheme', next);
+            updateIcon(next);
+        };
+
+        function updateIcon(theme) {
+            if (theme === 'dark') {
+                icon.className = 'fas fa-moon';
+                toggle.style.color = '';
+            } else {
+                icon.className = 'fas fa-sun';
+                toggle.style.color = 'orange';
+            }
+        }
+
+        // Initialize Translator if needed (handled by translator.js usually)
+        // Ensure dropdown matches current language
+        const savedLang = localStorage.getItem('appLanguage') || 'en';
+        const langSelect = document.getElementById('languageSelector');
+        if (langSelect) {
+            langSelect.value = savedLang;
+        }
+    })();
+</script>
+
+<style>
+    /* Ensure utility buttons look good in both contexts */
+    .btn-utility {
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: background-color 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn-utility:hover {
+        background-color: rgba(var(--text-primary-rgb), 0.1);
+    }
+</style>
