@@ -151,29 +151,29 @@ namespace JsonCrudApp.Controllers
         }
 
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public IActionResult Create()
+        public IActionResult Create(string role = "User")
         {
             if (HttpContext.Session.GetString("Role") != "Admin") return RedirectToAction("AccessDenied", "Account");
-            // Restrictions removed
+
+            ViewBag.TargetRole = role;
+            ViewData["Title"] = role == "Admin" ? "Create Admin User" : "Create New User";
+
             ModelState.Clear();
-            return View(new Student());
+            return View(new Student { Role = role });
         }
 
         [HttpPost]
         public IActionResult Create(Student student)
         {
             if (HttpContext.Session.GetString("Role") != "Admin") return RedirectToAction("AccessDenied", "Account");
-            // Restrictions removed
+
+            if (string.IsNullOrEmpty(student.Role)) student.Role = "User";
+
             if (ModelState.IsValid)
             {
-                // ... (Existing implementation but ensure Role is User)
                 if (!_authService.UserExists(student.Email!))
                 {
-                    // Existing logic kept but ensuring it calls Register with default "User" eventually
-                    // ...
-                    // Actually, the previous implementation redirected to Account/VerifyOtp which calls RegisterStudent (default User)
-
-                    // Initiate OTP Flow for Student Creation
+                    // Initiate OTP Flow
                     string otp = _otpService.GenerateOtp();
                     DateTime expiry = DateTime.Now.AddMinutes(2);
 
@@ -183,9 +183,12 @@ namespace JsonCrudApp.Controllers
                     HttpContext.Session.SetString("PendingUserEmail", student.Email ?? "");
                     HttpContext.Session.SetString("PendingUserPassword", student.Password ?? "");
                     HttpContext.Session.SetString("PendingUserName", student.Name ?? "");
-                    HttpContext.Session.SetString("PendingUserAge", student.Age.ToString());
-                    HttpContext.Session.SetString("PendingUserCourse", student.Course ?? "");
-                    HttpContext.Session.SetString("PendingUserType", "Student"); // Or explicit "User"
+                    HttpContext.Session.SetString("PendingUserAge", student.Age.ToString() ?? "");
+                    HttpContext.Session.SetString("PendingUserCourse", student.Course ?? string.Empty);
+
+                    // Set Role for Verification
+                    HttpContext.Session.SetString("PendingUserRole", student.Role);
+
                     HttpContext.Session.SetString("OtpPurpose", "StudentCreation");
                     HttpContext.Session.SetString("OtpCode", otp);
                     HttpContext.Session.SetString("OtpExpiry", expiry.ToString("O"));
@@ -195,6 +198,7 @@ namespace JsonCrudApp.Controllers
                 ModelState.AddModelError("Email", "User with this email already exists");
             }
 
+            ViewBag.TargetRole = student.Role;
             return View(student);
         }
 

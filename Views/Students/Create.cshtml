@@ -1,17 +1,20 @@
 @model JsonCrudApp.Models.Student
 
 @{
-    ViewData["Title"] = "Create User";
-    ViewData["TitleKey"] = "CreateUser";
+    var role = ViewBag.TargetRole as string ?? "User";
+    var title = role == "Admin" ? "Create Admin User" : "Create New User";
+    ViewData["Title"] = title;
+    ViewData["TitleKey"] = role == "Admin" ? "CreateAdmin" : "CreateUser";
 }
 
-<h1>Create User</h1>
+<h1>@title</h1>
 
-<h4>User</h4>
+<h4>@role Information</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" autocomplete="off">
+            <input type="hidden" asp-for="Role" value="@role" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-3">
                 <label asp-for="Name" class="control-label">Name</label>

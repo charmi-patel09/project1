@@ -508,11 +508,11 @@ section:hover .title-icon::after {
 
 .search-field input {
     width: 100%;
-    background: rgba(26, 31, 46, 0.6);
+    background: var(--bg-obsidian);
     border: 1px solid var(--border-dim);
     border-radius: 14px;
     padding: 15px 16px 15px 50px;
-    color: white;
+    color: var(--text-bright);
     font-family: inherit;
     font-size: 0.95rem;
     transition: all 0.3s ease;
@@ -522,7 +522,7 @@ section:hover .title-icon::after {
 .search-field input:focus {
     outline: none;
     border-color: var(--accent-sky);
-    background: rgba(26, 31, 46, 0.8);
+    background: var(--bg-surface);
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1), 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -790,11 +790,11 @@ section:hover .title-icon::after {
 
 .modern-input,
 .modern-select {
-    background: rgba(26, 31, 46, 0.6);
+    background: var(--bg-obsidian);
     border: 1px solid var(--border-dim);
     border-radius: 12px;
     padding: 14px 16px;
-    color: white;
+    color: var(--text-bright);
     font-family: inherit;
     font-size: 0.95rem;
     transition: all 0.3s ease;
@@ -1472,13 +1472,9 @@ section:hover .title-icon::after {
 
 
 /* UI Updates for Currency and News */
-.modern-select {
-    color: #f7f1f1 !important;
-}
-
 .modern-select option {
-    color: #000;
-    background: #fff;
+    background: var(--bg-card);
+    color: var(--text-bright);
 }
 
 .btn-glass {

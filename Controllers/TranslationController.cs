@@ -63,8 +63,8 @@ namespace JsonCrudApp.Controllers
 
     public class BatchTranslationRequest
     {
-        public List<string> Texts { get; set; }
-        public string TargetLanguage { get; set; }
+        public List<string> Texts { get; set; } = new List<string>();
+        public string TargetLanguage { get; set; } = string.Empty;
         public string SourceLanguage { get; set; } = "auto";
     }
 }

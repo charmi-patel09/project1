@@ -47,5 +47,29 @@
     ],
     "CreatedDate": "2026-02-03T12:13:24.3320383+05:30",
     "Goal": ""
+  },
+  {
+    "Id": "f4ca12c0-f870-4a21-979a-b8a76000e681",
+    "UserEmail": "pcharmi230@gmail.com",
+    "Name": "work",
+    "Description": "",
+    "FrequencyType": "Daily",
+    "CustomDays": [],
+    "StartDate": "2026-02-04T00:00:00",
+    "CompletedDates": [],
+    "CreatedDate": "2026-02-04T17:30:55.816246+05:30",
+    "Goal": ""
+  },
+  {
+    "Id": "42631b59-e7a9-4810-95d0-dec31d39a664",
+    "UserEmail": "pcharmi230@gmail.com",
+    "Name": "other",
+    "Description": "",
+    "FrequencyType": "Daily",
+    "CustomDays": [],
+    "StartDate": "2026-02-04T00:00:00",
+    "CompletedDates": [],
+    "CreatedDate": "2026-02-04T17:31:14.9281404+05:30",
+    "Goal": ""
   }
 ]
