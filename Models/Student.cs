@@ -19,7 +19,6 @@ namespace JsonCrudApp.Models
         [Required(ErrorMessage = "Required")]
         public int? Age { get; set; }
 
-        [Required(ErrorMessage = "Required")]
         public string? Course { get; set; }
 
         public string Role { get; set; } = "User";

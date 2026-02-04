@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace JsonCrudApp.Models
+namespace JsonCrudApp.ViewModels
 {
-    public class AdminUser
+    public class LoginViewModel
     {
         [Required(ErrorMessage = "Required")]
         [EmailAddress(ErrorMessage = "InvalidEmail")]
@@ -10,11 +10,5 @@ namespace JsonCrudApp.Models
 
         [Required(ErrorMessage = "Required")]
         public string? Password { get; set; }
-
-        public int AccessFailedCount { get; set; } = 0;
-
-        public string? ResetToken { get; set; }
-        public DateTime? ResetTokenExpiry { get; set; }
-        public string Role { get; set; } = "user";
     }
 }

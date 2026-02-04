@@ -19915,11 +19915,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "d:\\Antigravity\\project1\\Views\\Account\\StudentLogin.cshtml",
-      "TargetPath": "Views\\Account\\StudentLogin.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "d:\\Antigravity\\project1\\Views\\Students\\Edit.cshtml",
       "TargetPath": "Views\\Students\\Edit.cshtml",
       "FileKind": "mvc"
@@ -19927,6 +19922,11 @@
     {
       "FilePath": "d:\\Antigravity\\project1\\Views\\Students\\Delete.cshtml",
       "TargetPath": "Views\\Students\\Delete.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Antigravity\\project1\\Views\\Students\\CreateAdmin.cshtml",
+      "TargetPath": "Views\\Students\\CreateAdmin.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -19957,6 +19957,11 @@
     {
       "FilePath": "d:\\Antigravity\\project1\\Views\\TimeTracker\\Index.cshtml",
       "TargetPath": "Views\\TimeTracker\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Antigravity\\project1\\Views\\Students\\VerifyAdminOtp.cshtml",
+      "TargetPath": "Views\\Students\\VerifyAdminOtp.cshtml",
       "FileKind": "mvc"
     }
   ],

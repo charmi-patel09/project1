@@ -41,9 +41,9 @@
 </head>
 
 <body>
+    @inject JsonCrudApp.Services.AuthService AuthService
     @using Microsoft.AspNetCore.Http
-    @if (!string.IsNullOrEmpty(Context.Session.GetString("AdminUser")) ||
-    !string.IsNullOrEmpty(Context.Session.GetString("StudentUser")))
+    @if (!string.IsNullOrEmpty(Context.Session.GetString("StudentUser")))
     {
         <div class="admin-wrapper">
             <!-- Sidebar -->
@@ -60,9 +60,8 @@
                 <div class="sidebar-user">
                     <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
                     <div class="user-info">
-                        <h4>@(Context.Session.GetString("AdminUser") ?? Context.Session.GetString("StudentUser") ?? "User")
-                        </h4>
-                        <span>@(Context.Session.GetString("AdminUser") != null ? "Administrator" : "User")</span>
+                        <h4>@(Context.Session.GetString("StudentUser") ?? "User")</h4>
+                        <span>User</span>
                     </div>
                 </div>
 
@@ -77,9 +76,7 @@
                     </div>
                     <div class="nav-section">
                         <ul>
-                            @if (Context.Session.GetString("Role") == "Admin" ||
-                           (!string.IsNullOrEmpty(Context.Session.GetString("AdminUser")) &&
-                           Context.Session.GetString("Role") != "User"))
+                            @if (Context.Session.GetString("Role") == "Admin")
                             {
                                 <li><a asp-area="" asp-controller="Students" asp-action="Index" class="nav-link">
                                         <i class="fas fa-users-cog"></i>

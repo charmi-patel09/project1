@@ -7,10 +7,9 @@ namespace JsonCrudApp.Controllers
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var adminUser = context.HttpContext.Session.GetString("AdminUser");
             var studentUser = context.HttpContext.Session.GetString("StudentUser");
 
-            if (string.IsNullOrEmpty(adminUser) && string.IsNullOrEmpty(studentUser))
+            if (string.IsNullOrEmpty(studentUser))
             {
                 // Redirect to Login if neither session is present
                 context.Result = new RedirectToActionResult("Login", "Account", null);

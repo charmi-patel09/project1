@@ -223,8 +223,8 @@ D:\Antigravity\project1\obj\Debug\net10.0\ref\JsonCrudApp.dll
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\1ubmc9o2xj-{0}-ekljij7qb3-ekljij7qb3.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\whzplu283a-{0}-zrz5rt7svp-zrz5rt7svp.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\6nse8oec2q-{0}-wg9jrn0k04-wg9jrn0k04.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\1iiq8p0ylg-{0}-fqxn81rk37-fqxn81rk37.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\vu3u1rxtgi-{0}-an6xwc7mx2-an6xwc7mx2.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\yarw8sh6ve-{0}-71xyt1cd0x-71xyt1cd0x.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\wynoxkcakm-{0}-xm9sw980b8-xm9sw980b8.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\ol3r0fnlur-{0}-nw3g4ks88x-nw3g4ks88x.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\1iiq8p0ylg-{0}-50bjq3nvaa-50bjq3nvaa.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\yarw8sh6ve-{0}-2qzl1eu943-2qzl1eu943.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\ol3r0fnlur-{0}-m1iqltzj8k-m1iqltzj8k.gz

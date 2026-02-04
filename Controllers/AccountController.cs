@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using JsonCrudApp.Services;
 using JsonCrudApp.Models;
+using JsonCrudApp.ViewModels;
 
 namespace JsonCrudApp.Controllers
 {
@@ -21,10 +22,6 @@ namespace JsonCrudApp.Controllers
             _otpService = otpService;
             _userActivityService = userActivityService;
         }
-
-        // ... (SignUp code remains same) ...
-
-
 
         [HttpGet]
         public IActionResult SignUp()
@@ -84,7 +81,6 @@ namespace JsonCrudApp.Controllers
             string email = HttpContext.Session.GetString("PendingUserEmail") ?? "";
             string password = HttpContext.Session.GetString("PendingUserPassword") ?? "";
             string purpose = HttpContext.Session.GetString("OtpPurpose") ?? "";
-            string userType = HttpContext.Session.GetString("PendingUserType") ?? "Admin";
 
             if (DateTime.TryParse(expiryStr, out DateTime expiry))
             {
@@ -105,11 +101,10 @@ namespace JsonCrudApp.Controllers
 
                         // Auto-login & Log Activity
                         HttpContext.Session.SetString("StudentUser", email);
-                        string role = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
-                        HttpContext.Session.SetString("Role", role);
+                        HttpContext.Session.SetString("Role", "User");
                         _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Registration Visit
 
-                        TempData["SuccessMessage"] = "Student account created successfully";
+                        TempData["SuccessMessage"] = "Account created successfully";
                         return RedirectToAction("Dashboard", "Home");
                     }
 
@@ -130,28 +125,18 @@ namespace JsonCrudApp.Controllers
 
                         // Auto-login & Log Activity
                         HttpContext.Session.SetString("StudentUser", email);
-                        string role = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
-                        HttpContext.Session.SetString("Role", role);
+                        HttpContext.Session.SetString("Role", "User");
                         _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Creation Visit
 
-                        TempData["SuccessMessage"] = "Student account created successfully";
+                        TempData["SuccessMessage"] = "Account created successfully";
                         return RedirectToAction("Dashboard", "Home");
                     }
 
-                    // For Login flow
-                    string computedRole = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
-                    if (userType == "Student")
-                    {
-                        HttpContext.Session.SetString("StudentUser", email);
-                        HttpContext.Session.SetString("Role", computedRole);
-                        _userActivityService.LogVisit(email, "/Account/Login (OTP)");
-                    }
-                    else
-                    {
-                        HttpContext.Session.SetString("AdminUser", email);
-                        HttpContext.Session.SetString("Role", computedRole);
-                        _userActivityService.LogVisit(email, "/Account/Login (OTP)");
-                    }
+                    // For Login flow (if OTP is used for login)
+                    HttpContext.Session.SetString("StudentUser", email);
+                    HttpContext.Session.SetString("Role", "User");
+                    _userActivityService.LogVisit(email, "/Account/Login (OTP)");
+
                     return RedirectToAction("Dashboard", "Home");
                 }
                 else if (DateTime.Now > expiry)
@@ -176,84 +161,29 @@ namespace JsonCrudApp.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Login()
         {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("AdminUser")) ||
-                !string.IsNullOrEmpty(HttpContext.Session.GetString("StudentUser")))
-            {
-                return RedirectToAction("Dashboard", "Home");
-            }
-            ModelState.Clear();
-            return View(new AdminUser());
-        }
-
-        [HttpPost]
-        public IActionResult Login(AdminUser model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (_authService.ValidateAdmin(model.Email!, model.Password!, out string? adminError))
-                {
-                    HttpContext.Session.SetString("AdminUser", model.Email!);
-                    string role = (model.Email == "charmimarakana@gmail.com") ? "Admin" : "User";
-                    HttpContext.Session.SetString("Role", role);
-                    _userActivityService.LogVisit(model.Email!, "/Account/Login");
-                    return RedirectToAction("Dashboard", "Home");
-                }
-
-                // 2. Try Student Login if Admin fails (or if email not found in Admin)
-                if (_authService.ValidateStudent(model.Email!, model.Password!, out string? studentError))
-                {
-                    // Direct Login without OTP for Students as per user request
-                    HttpContext.Session.SetString("StudentUser", model.Email!);
-                    string role = (model.Email == "charmimarakana@gmail.com") ? "Admin" : "User";
-                    HttpContext.Session.SetString("Role", role);
-                    _userActivityService.LogVisit(model.Email!, "/Account/Login");
-                    return RedirectToAction("Dashboard", "Home");
-                }
-
-                // If both fail, determine which error to show
-                // If the email belongs to neither, show "unregistered email" message
-                if (!_authService.UserExists(model.Email!))
-                {
-                    ViewBag.ErrorMessage = "Email not registered";
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "Incorrect password";
-                }
-            }
-
-            ModelState.Clear();
-            return View(new AdminUser());
-        }
-
-        [HttpGet]
-        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public IActionResult StudentLogin()
-        {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("StudentUser")))
             {
                 return RedirectToAction("Dashboard", "Home");
             }
             ModelState.Clear();
-            return View(new AdminUser());
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public IActionResult StudentLogin(AdminUser model)
+        public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (_authService.ValidateStudent(model.Email!, model.Password!, out string? error))
+                if (_authService.ValidateUser(model.Email!, model.Password!, out string? error, out Student? student))
                 {
-                    // Direct Login without OTP for Students as per user request
+                    // Login successful
                     HttpContext.Session.SetString("StudentUser", model.Email!);
-                    string role = (model.Email == "charmimarakana@gmail.com") ? "Admin" : "User";
-                    HttpContext.Session.SetString("Role", role);
-                    _userActivityService.LogVisit(model.Email!, "/Account/StudentLogin");
+                    HttpContext.Session.SetString("Role", student?.Role ?? "User");
+                    _userActivityService.LogVisit(model.Email!, "/Account/Login");
                     return RedirectToAction("Dashboard", "Home");
                 }
 
-                // Unified error handling
+                // If check fails
                 if (!_authService.UserExists(model.Email!))
                 {
                     ViewBag.ErrorMessage = "Email not registered";
@@ -265,7 +195,7 @@ namespace JsonCrudApp.Controllers
             }
 
             ModelState.Clear();
-            return View(new AdminUser());
+            return View(model); // Expecting LoginViewModel
         }
 
         public IActionResult Logout()
@@ -277,9 +207,8 @@ namespace JsonCrudApp.Controllers
         [HttpGet]
         public IActionResult AccessDenied()
         {
-            return View(); // Make sure to ensure View exists or content is returned
+            return View();
         }
-
 
         [HttpGet]
         public IActionResult ForgotPassword()
@@ -292,19 +221,7 @@ namespace JsonCrudApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_authService.UserExists(model.Email))
-                {
-                    string token = _authService.GenerateResetToken(model.Email);
-
-                    var baseUrl = $"{Request.Scheme}://{Request.Host}";
-                    var resetLink = $"{baseUrl}/Account/ResetPassword?email={Uri.EscapeDataString(model.Email)}&token={token}";
-
-                    _emailService.SendResetLinkEmail(model.Email, resetLink);
-
-                    ViewBag.SuccessMessage = "Password reset link sent to your email";
-                    return View();
-                }
-                ViewBag.ErrorMessage = "Email not found";
+                ViewBag.ErrorMessage = "Password reset is currently unavailable. Please contact support.";
             }
             return View(model);
         }
@@ -312,33 +229,13 @@ namespace JsonCrudApp.Controllers
         [HttpGet]
         public IActionResult ResetPassword(string email, string token)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
-            {
-                return RedirectToAction("Login");
-            }
-
-            if (!_authService.ValidateResetToken(email, token))
-            {
-                TempData["ErrorMessage"] = "Invalid or expired reset token";
-                return RedirectToAction("Login");
-            }
-
-            return View(new ResetPasswordViewModel { Email = email, Token = token });
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
         public IActionResult ResetPassword(ResetPasswordViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                if (_authService.ResetPassword(model.Email, model.NewPassword, model.Token))
-                {
-                    TempData["SuccessMessage"] = "Password reset successful. You can now login.";
-                    return RedirectToAction("Login");
-                }
-                ViewBag.ErrorMessage = "Invalid or expired reset token";
-            }
-            return View(model);
+            return RedirectToAction("Login");
         }
     }
 }

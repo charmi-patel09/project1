@@ -64,9 +64,9 @@
             <table class="table table-hover modern-table mb-0">
                 <thead>
                     <tr>
-                        <th scope="col" style="width: 50%;">User Email</th>
+                        <th scope="col" style="width: 40%;">User</th>
+                        <th scope="col" style="width: 30%;">Role</th>
                         <th scope="col" class="text-center">Visits</th>
-                        <th scope="col" class="text-end">Last Active</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,14 +78,20 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar-circle me-3">@user.UserEmail.Substring(0, 1).ToUpper()</div>
-                                        <span class="fw-bold text-primary-custom">@user.UserEmail</span>
+                                        <div>
+                                            <div class="fw-bold text-primary-custom">@user.UserEmail</div>
+                                        </div>
                                     </div>
                                 </td>
-                                <td class="text-center">
-                                    <span class="badge rounded-pill bg-light text-dark border">@user.VisitCount</span>
+                                <td>
+                                    <span class="badge @(user.UserType == "Administrator" ? "bg-primary" : "bg-secondary")">@user.UserType</span>
                                 </td>
-                                <td class="text-end font-monospace text-muted-custom">
-                                    @user.LastSeen.ToString("hh:mm tt")
+                                <td class="text-center">
+                                    <span class="badge rounded-pill bg-light text-dark border visit-badge" 
+                                          onclick="showDetails('@user.UserEmail')" 
+                                          title="View Details">
+                                        @user.VisitCount
+                                    </span>
                                 </td>
                             </tr>
                         }
@@ -109,6 +115,38 @@
             <i class="fas fa-arrow-left me-1"></i> Back to User List
         </a>
     </div>
+
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content"
+                style="border-radius: 12px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                <div class="modal-header border-0 pb-0">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="modalUserEmail">User Activity</h5>
+                        <p class="text-muted small mb-0">Login History</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                        <table class="table table-sm table-borderless">
+                            <thead class="text-muted small border-bottom">
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="text-end">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modalTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -116,12 +154,51 @@
         const wrapper = document.getElementById('customDateWrapper');
         if (select.value === 'Custom') {
             wrapper.style.display = 'block';
-            // Optionally submit to clear current custom filter if needed, 
-            // but usually we wait for date input.
         } else {
             wrapper.style.display = 'none';
             document.getElementById('filterForm').submit();
         }
+    }
+
+    function showDetails(email) {
+        // Get current filter params
+        const urlParams = new URLSearchParams(window.location.search);
+        const filter = urlParams.get('filter') || 'Today';
+        const customDate = urlParams.get('customDate') || '';
+
+        // Show Modal with loading or clear
+        const tbody = document.getElementById('modalTableBody');
+        tbody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">Loading...</td></tr>';
+        document.getElementById('modalUserEmail').textContent = email;
+
+        const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+        modal.show();
+
+        // Fetch
+        fetch(`/Students/GetUserActivityDetails?email=${encodeURIComponent(email)}&filter=${filter}&customDate=${customDate}`)
+            .then(response => response.json())
+            .then(data => {
+                tbody.innerHTML = '';
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">No records found.</td></tr>';
+                    return;
+                }
+                data.forEach(visit => {
+                    const dateObj = new Date(visit.timestamp); // Ensure timestamp is ISO from JSON (default in .NET Core usually)
+                    const dateStr = dateObj.toLocaleDateString();
+                    const timeStr = dateObj.toLocaleTimeString();
+
+                    const row = `<tr>
+                        <td>${dateStr}</td>
+                        <td class="text-end font-monospace">${timeStr}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                tbody.innerHTML = '<tr><td colspan="2" class="text-center text-danger">Error loading details.</td></tr>';
+            });
     }
 </script>
 
@@ -289,5 +366,29 @@
         font-size: 0.9rem;
         font-weight: 600;
         opacity: 0.9;
+    }
+
+    /* Modal Theme Fixes */
+    .modal-content {
+        background-color: var(--card-bg);
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+    }
+
+    .modal-header .modal-title {
+        color: var(--text-primary);
+    }
+
+    [data-theme="dark"] .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    .modal-body table th {
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-body table td {
+        color: var(--text-primary);
     }
 </style>

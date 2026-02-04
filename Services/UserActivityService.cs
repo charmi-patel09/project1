@@ -1,15 +1,18 @@
 using System.Text.Json;
 using JsonCrudApp.Models;
+using JsonCrudApp.Services; // Assuming JsonFileStudentService is in this namespace
 
 namespace JsonCrudApp.Services
 {
     public class UserActivityService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly JsonFileStudentService _studentService;
 
-        public UserActivityService(IWebHostEnvironment webHostEnvironment)
+        public UserActivityService(IWebHostEnvironment webHostEnvironment, JsonFileStudentService studentService)
         {
             _webHostEnvironment = webHostEnvironment;
+            _studentService = studentService;
         }
 
         private string JsonFileName
@@ -19,7 +22,7 @@ namespace JsonCrudApp.Services
 
         public void LogVisit(string email, string url)
         {
-            var visit = new UserVisit { UserEmail = email, Timestamp = DateTime.Now, PageUrl = url };
+            var visit = new UserVisit { UserEmail = email, Timestamp = DateTime.UtcNow, PageUrl = url };
             var visits = GetAllVisits().ToList();
             visits.Add(visit);
             SaveVisits(visits);
@@ -44,28 +47,39 @@ namespace JsonCrudApp.Services
 
         public DailyActivityReport GetReport(string rangeType, DateTime? date = null)
         {
-            var today = DateTime.Today;
+            var today = DateTime.UtcNow.Date;
             var allVisits = GetAllVisits(); // In real app, optimize this with DB logging!
+            var students = _studentService.GetStudents().ToDictionary(s => s.Email ?? "", s => s, StringComparer.OrdinalIgnoreCase);
 
             IEnumerable<UserVisit> filteredVisits;
             string displayDate;
+            DateTime reportDate;
 
             if (rangeType == "Yesterday")
             {
-                var target = today.AddDays(-1);
-                filteredVisits = allVisits.Where(v => v.Timestamp.Date == target);
-                displayDate = target.ToShortDateString();
+                var start = today.AddDays(-1);
+                var end = today;
+                reportDate = start;
+                filteredVisits = allVisits.Where(v => v.Timestamp >= start && v.Timestamp < end);
+                displayDate = start.ToShortDateString();
             }
             else if (rangeType == "Last7Days")
             {
                 var start = today.AddDays(-6);
-                filteredVisits = allVisits.Where(v => v.Timestamp.Date >= start && v.Timestamp.Date <= today);
+                var end = today.AddDays(1);
+                reportDate = today;
+                filteredVisits = allVisits.Where(v => v.Timestamp >= start && v.Timestamp < end);
                 displayDate = "Last 7 Days";
             }
             else // Today or Specific Date
             {
-                var target = date?.Date ?? today;
-                filteredVisits = allVisits.Where(v => v.Timestamp.Date == target);
+                var rawTarget = date?.Date ?? today;
+                // Normalize to UTC to ensure consistent comparison if v.Timestamp is UTC
+                var target = rawTarget.Kind == DateTimeKind.Utc ? rawTarget : DateTime.SpecifyKind(rawTarget, DateTimeKind.Utc);
+
+                reportDate = target;
+                var end = target.AddDays(1);
+                filteredVisits = allVisits.Where(v => v.Timestamp >= target && v.Timestamp < end);
                 displayDate = target.ToShortDateString();
             }
 
@@ -77,18 +91,52 @@ namespace JsonCrudApp.Services
                 {
                     UserEmail = g.Key,
                     VisitCount = g.Count(),
-                    LastSeen = g.Max(v => v.Timestamp)
+                    LastSeen = g.Max(v => v.Timestamp),
+                    UserType = (students.TryGetValue(g.Key, out var s) && s.Role == "Admin") ? "Administrator" : "Normal User"
                 })
                 .OrderByDescending(s => s.LastSeen)
                 .ToList();
 
             return new DailyActivityReport
             {
+                Date = reportDate,
                 DisplayDate = displayDate,
                 TotalUniqueUsers = stats.Count,
                 TotalVisits = list.Count,
                 UserStats = stats
             };
+        }
+
+        public IEnumerable<UserVisit> GetUserVisits(string email, string rangeType, DateTime? date = null)
+        {
+            var today = DateTime.UtcNow.Date;
+            var allVisits = GetAllVisits();
+
+            IEnumerable<UserVisit> filteredVisits;
+
+            if (rangeType == "Yesterday")
+            {
+                var start = today.AddDays(-1);
+                var end = today;
+                filteredVisits = allVisits.Where(v => v.Timestamp >= start && v.Timestamp < end);
+            }
+            else if (rangeType == "Last7Days")
+            {
+                var start = today.AddDays(-6);
+                var end = today.AddDays(1);
+                filteredVisits = allVisits.Where(v => v.Timestamp >= start && v.Timestamp < end);
+            }
+            else // Today or Specific Date
+            {
+                var rawTarget = date?.Date ?? today;
+                var target = rawTarget.Kind == DateTimeKind.Utc ? rawTarget : DateTime.SpecifyKind(rawTarget, DateTimeKind.Utc);
+                var end = target.AddDays(1);
+                filteredVisits = allVisits.Where(v => v.Timestamp >= target && v.Timestamp < end);
+            }
+
+            return filteredVisits
+                .Where(v => v.UserEmail.Equals(email, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(v => v.Timestamp);
         }
 
         private void SaveVisits(List<UserVisit> visits)
@@ -124,5 +172,6 @@ namespace JsonCrudApp.Services
         public string UserEmail { get; set; } = string.Empty;
         public int VisitCount { get; set; }
         public DateTime LastSeen { get; set; }
+        public string UserType { get; set; } = "Normal User";
     }
 }

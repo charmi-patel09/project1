@@ -60,7 +60,39 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=SignUp}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}"); // Default to Login
+
+// Bootstrap Initial Admin
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var studentService = services.GetRequiredService<JsonCrudApp.Services.JsonFileStudentService>();
+        var authService = services.GetRequiredService<JsonCrudApp.Services.AuthService>();
+
+        var students = studentService.GetStudents();
+        // Check if any admin exists
+        if (!students.Any(s => s.Role == "Admin"))
+        {
+            // Create default Super Admin
+            // Email: admin@local.com, Password: AdminPassword123!
+            authService.RegisterStudent(
+                "admin@local.com",
+                "AdminPassword123!",
+                "Super Admin",
+                99,
+                "System",
+                "Admin"
+            );
+            Console.WriteLine("Bootstrap: Default Super Admin created (admin@local.com).");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Bootstrap Error: {ex.Message}");
+    }
+}
 
 app.Run();
 

@@ -3,8 +3,7 @@
 
     <!-- 1. Time Tracker (Clock) - Only show if authenticated -->
     @using Microsoft.AspNetCore.Http
-    @if (!string.IsNullOrEmpty(Context.Session.GetString("AdminUser")) ||
-    !string.IsNullOrEmpty(Context.Session.GetString("StudentUser")))
+    @if (!string.IsNullOrEmpty(Context.Session.GetString("StudentUser")))
     {
         <a href="/TimeTracker" class="btn-utility clock-btn" title="Time Tracker"
             style="text-decoration: none; color: inherit;">

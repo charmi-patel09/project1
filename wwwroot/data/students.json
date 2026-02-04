@@ -1,29 +1,29 @@
 [
   {
-    "Id": 21,
+    "Id": 26,
     "Email": "charmimarakana@gmail.com",
-    "Password": "charmi@123",
-    "Name": "New Student",
-    "Age": 18,
-    "Course": "General",
-    "Role": "User"
+    "Password": "0SJk6swTKk7WFlo6nBRJwH6cp9LGZGzkoCPd9Vb4Qo0=",
+    "Name": "charmi",
+    "Age": 25,
+    "Course": "Administration",
+    "Role": "Admin"
   },
   {
-    "Id": 23,
+    "Id": 28,
     "Email": "pcharmi230@gmail.com",
-    "Password": "xQemjzCT6IV2UlftPxdsdXqvYrtMvC75Sy59o0BtlnY=",
-    "Name": "New Student",
-    "Age": 18,
-    "Course": "General",
+    "Password": "/V9WtAp5o4VwhCjnsyq5lqaBCAoWaiIG51DrSBkYYUU=",
+    "Name": "charmi",
+    "Age": 21,
+    "Course": "BCA",
     "Role": "User"
   },
   {
-    "Id": 24,
+    "Id": 29,
     "Email": "dhvanibutani09@gmail.com",
-    "Password": "IW5oP/DS0lFluLt7pgjJpijvKZkkykmrmB7H0v7Nba0=",
-    "Name": "New Student",
-    "Age": 18,
-    "Course": "General",
-    "Role": "User"
+    "Password": "/V9WtAp5o4VwhCjnsyq5lqaBCAoWaiIG51DrSBkYYUU=",
+    "Name": "dhvani",
+    "Age": 25,
+    "Course": "Administration",
+    "Role": "Admin"
   }
 ]

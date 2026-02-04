@@ -1,0 +1,70 @@
+@{
+    ViewData["Title"] = "Verify Admin OTP";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden mt-5">
+            <div class="card-header bg-warning py-4 text-center border-0 border-bottom text-white">
+                <h3 class="fw-bold mb-0">Verify Admin Access</h3>
+                <p class="small mb-0 mt-1" style="opacity: 0.9;">Enter the code sent to the new admin email</p>
+            </div>
+            <div class="card-body p-4 p-md-5 bg-white">
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger border-0 rounded-3 mb-4 py-2 px-3 small" role="alert">
+                        <i class="bi bi-x-circle-fill me-2"></i>
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+
+                <form asp-action="VerifyAdminOtp" method="post" autocomplete="off">
+                    <div class="mb-4">
+                        <label for="otp" class="form-label text-muted small fw-bold">Verification Code</label>
+                        <input name="otp" id="otp" class="form-control shadow-none py-2 text-center ls-2"
+                            placeholder="000000" required maxlength="6" autocomplete="one-time-code" autofocus />
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit"
+                            class="btn btn-warning btn-lg rounded-3 py-2 fw-bold transition-all shadow-sm border-0 text-white">
+                            <span>Verify & Create Admin</span>
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a asp-action="Index" class="text-muted small text-decoration-none">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ls-2 {
+        letter-spacing: 0.5rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    /* Simple override for card body in dark mode context if inherited, logic same as login */
+    [data-theme='dark'] .bg-white {
+        background-color: #1e1e2d !important;
+    }
+
+    [data-theme='dark'] .card-header {
+        color: #1e1e2d !important;
+        /* Warning bg is bright, keep text dark or white? Warning is usually yellow/orange */
+    }
+
+    [data-theme='dark'] .text-muted {
+        color: #94a3b8 !important;
+    }
+
+    [data-theme='dark'] .form-control {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        border-color: #334155 !important;
+    }
+</style>
