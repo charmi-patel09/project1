@@ -87,8 +87,11 @@ namespace JsonCrudApp.Services
                 return false;
             }
 
+            // Strict Role Assignment
+            string role = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
+
             // Store hashed password
-            users.Add(new AdminUser { Email = email, Password = HashPassword(password) });
+            users.Add(new AdminUser { Email = email, Password = HashPassword(password), Role = role });
 
             var json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
 
@@ -106,13 +109,17 @@ namespace JsonCrudApp.Services
         {
             if (UserExists(email)) return false;
 
+            // Strict Role Assignment
+            string role = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
+
             var student = new Student
             {
                 Email = email,
                 Password = HashPassword(password),
                 Name = name,
                 Age = age,
-                Course = course
+                Course = course,
+                Role = role
             };
             _studentService.AddStudent(student);
             return true;
@@ -224,9 +231,23 @@ namespace JsonCrudApp.Services
 
             if (VerifyPassword(password, user.Password!))
             {
+                bool needSave = false;
                 if (user.AccessFailedCount > 0)
                 {
                     user.AccessFailedCount = 0;
+                    needSave = true;
+                }
+
+                // Strict Role Enforcement on Login
+                string correctRole = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
+                if (user.Role != correctRole)
+                {
+                    user.Role = correctRole;
+                    needSave = true;
+                }
+
+                if (needSave)
+                {
                     var json = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
                     File.WriteAllText(JsonFileName, json);
                 }
@@ -249,7 +270,7 @@ namespace JsonCrudApp.Services
         public bool ValidateStudent(string email, string password, out string? errorMessage)
         {
             errorMessage = null;
-            var students = _studentService.GetStudents();
+            var students = _studentService.GetStudents().ToList();
             var student = students.FirstOrDefault(s => s.Email == email);
 
             if (student == null)
@@ -260,6 +281,13 @@ namespace JsonCrudApp.Services
 
             if (VerifyPassword(password, student.Password!))
             {
+                // Strict Role Enforcement on Login
+                string correctRole = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
+                if (student.Role != correctRole)
+                {
+                    student.Role = correctRole;
+                    _studentService.UpdateStudent(student);
+                }
                 return true;
             }
 

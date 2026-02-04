@@ -91,3 +91,12 @@
 [2026-01-12 11:27:47] To: charmimarakana@gmail.com | OTP: 223671
 [2026-01-13 11:53:20] To: charmimarakana@gmail.com | OTP: 129509
 [2026-01-16 11:27:13] To: pcharmi230@gmail.com | OTP: 745139
+[2026-02-03 11:36:41] To: dhvanibutani09@gmail.com | OTP: 706031
+[ERROR] Failed to send email to dhvanibutani09@gmail.com: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+[2026-02-03 11:37:54] To: pcharmi230@gmail.com | OTP: 925647
+[ERROR] Failed to send email to pcharmi230@gmail.com: The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. For more information, go to
+[2026-02-03 12:00:17] To: dhvanibutani09@gmail.com | OTP: 881020
+[2026-02-03 12:32:24] To: dhvanibutani09@gmail.com | OTP: 198239
+[2026-02-03 12:57:17] To: dhvanibutani09@gmail.com | OTP: 500576
+[2026-02-03 12:58:16] To: pcharmi230@gmail.com | OTP: 213840
+[2026-02-03 15:58:22] To: dhvanibutani09@gmail.com | OTP: 340036

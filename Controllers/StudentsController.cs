@@ -1,22 +1,36 @@
 using JsonCrudApp.Models;
 using JsonCrudApp.Services;
 using Microsoft.AspNetCore.Mvc;
+using JsonCrudApp.Attributes;
 
 namespace JsonCrudApp.Controllers
 {
+    [AuthorizeRole("Admin")]
     public class StudentsController : BaseController
     {
         private readonly JsonFileStudentService _studentService;
         private readonly AuthService _authService;
         private readonly OtpService _otpService;
         private readonly EmailService _emailService;
+        private readonly UserActivityService _userActivityService;
 
-        public StudentsController(JsonFileStudentService studentService, AuthService authService, OtpService otpService, EmailService emailService)
+        public StudentsController(JsonFileStudentService studentService, AuthService authService, OtpService otpService, EmailService emailService, UserActivityService userActivityService)
         {
             _studentService = studentService;
             _authService = authService;
             _otpService = otpService;
             _emailService = emailService;
+            _userActivityService = userActivityService;
+        }
+
+        public IActionResult DailyActivity(string filter = "Today", DateTime? customDate = null)
+        {
+            // Fallback to today if customDate is not provided but filter is 'Custom'
+            if (filter == "Custom" && customDate == null) customDate = DateTime.Today;
+
+            var report = _userActivityService.GetReport(filter, customDate);
+            ViewBag.CurrentFilter = filter;
+            return View(report);
         }
 
         public IActionResult Index()

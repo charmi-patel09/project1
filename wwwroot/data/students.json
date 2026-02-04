@@ -1,42 +1,29 @@
 [
   {
-    "Id": 11,
-    "Email": "fisoce5167@akixpres.com",
-    "Password": "123",
-    "Name": "charmi",
-    "Age": 20,
-    "Course": "general"
-  },
-  {
-    "Id": 18,
-    "Email": "dhvanibutani09@gmail.com",
-    "Password": "11111",
-    "Name": "dhvani",
-    "Age": 21,
-    "Course": "bca"
-  },
-  {
-    "Id": 20,
-    "Email": "projtest28@gmail.com",
-    "Password": "6xdqLPDhOeLsBalGqLWjK4hYk8aRyuwz\u002BPCnroDX4eY=",
-    "Name": "avsar",
-    "Age": 21,
-    "Course": "bca"
-  },
-  {
     "Id": 21,
     "Email": "charmimarakana@gmail.com",
-    "Password": "I0afF6WuTNrHDVy0P23bg1UPSH/o3UQ5a\u002BOOxgobvFk=",
+    "Password": "charmi@123",
     "Name": "New Student",
     "Age": 18,
-    "Course": "General"
+    "Course": "General",
+    "Role": "User"
   },
   {
-    "Id": 22,
+    "Id": 23,
     "Email": "pcharmi230@gmail.com",
-    "Password": "charmi098",
+    "Password": "xQemjzCT6IV2UlftPxdsdXqvYrtMvC75Sy59o0BtlnY=",
     "Name": "New Student",
     "Age": 18,
-    "Course": "General"
+    "Course": "General",
+    "Role": "User"
+  },
+  {
+    "Id": 24,
+    "Email": "dhvanibutani09@gmail.com",
+    "Password": "IW5oP/DS0lFluLt7pgjJpijvKZkkykmrmB7H0v7Nba0=",
+    "Name": "New Student",
+    "Age": 18,
+    "Course": "General",
+    "Role": "User"
   }
 ]

@@ -33,7 +33,7 @@
                         <div class="mb-3">
                             <label asp-for="Email" class="form-label text-muted small fw-bold"
                                 data-i18n="UserEmail">@Localizer["UserEmail"]</label>
-                            <input asp-for="Email" class="form-control bg-light border-0 shadow-none py-2"
+                            <input asp-for="Email" class="form-control shadow-none py-2"
                                 data-i18n-placeholder="EnterEmail" placeholder="@Localizer["EnterEmail"]" required
                                 autocomplete="off" />
                             <span asp-validation-for="Email" class="text-danger small"></span>
@@ -42,8 +42,7 @@
                         <div class="mb-3">
                             <label asp-for="Password" class="form-label text-muted small fw-bold"
                                 data-i18n="Password">@Localizer["Password"]</label>
-                            <input asp-for="Password" type="password"
-                                class="form-control bg-light border-0 shadow-none py-2"
+                            <input asp-for="Password" type="password" class="form-control shadow-none py-2"
                                 data-i18n-placeholder="EnterPassword" placeholder="@Localizer["EnterPassword"]" required
                                 autocomplete="new-password" />
                             <span asp-validation-for="Password" class="text-danger small"></span>
@@ -95,13 +94,106 @@
         transform: scale(1.01);
     }
 
-    .form-control:focus {
-        background-color: #fff !important;
-        border: 1px solid #11998e !important;
+    .form-control {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+        border: 1px solid #e2e8f0 !important;
+        transition: all 0.2s ease-in-out !important;
+        caret-color: #0f172a !important;
+    }
+
+    /* Standard Autofill for light mode */
+    .form-control:-webkit-autofill,
+    .form-control:-webkit-autofill:hover,
+    .form-control:-webkit-autofill:focus,
+    .form-control:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #f8fafc inset !important;
+        -webkit-text-fill-color: #0f172a !important;
+    }
+
+    .form-control::placeholder {
+        color: #94a3b8 !important;
+        opacity: 1 !important;
+    }
+
+    .form-control:hover {
+        background-color: #ffffff !important;
+        border-color: #cbd5e1 !important;
+    }
+
+    .form-control:focus,
+    .form-control:active {
+        background-color: #ffffff !important;
+        border-color: #11998e !important;
+        color: #0f172a !important;
+        box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.2) !important;
+        outline: none !important;
     }
 
     .btn-success:hover {
         opacity: 0.9;
+    }
+</style>
+<style>
+    /* Dark Mode Support */
+    [data-theme='dark'] .login-page {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    [data-theme='dark'] .card {
+        background-color: #1e1e2d !important;
+        color: #e2e8f0;
+    }
+
+    [data-theme='dark'] .card-header {
+        background-color: #1a1a27 !important;
+        border-bottom-color: #2d2d3f !important;
+    }
+
+    [data-theme='dark'] .card-header h3 {
+        color: #fff !important;
+    }
+
+    [data-theme='dark'] .card-body {
+        background-color: #1e1e2d !important;
+    }
+
+    [data-theme='dark'] .card-footer {
+        background-color: #1a1a27 !important;
+    }
+
+    [data-theme='dark'] .text-muted {
+        color: #94a3b8 !important;
+    }
+
+    [data-theme='dark'] .form-control {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        border-color: #334155 !important;
+        caret-color: #ffffff !important;
+    }
+
+    [data-theme='dark'] .form-control:-webkit-autofill,
+    [data-theme='dark'] .form-control:-webkit-autofill:hover,
+    [data-theme='dark'] .form-control:-webkit-autofill:focus,
+    [data-theme='dark'] .form-control:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #1e293b inset !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+    [data-theme='dark'] .form-control::placeholder {
+        color: #cbd5e1 !important;
+    }
+
+    [data-theme='dark'] .form-control:hover {
+        background-color: #243049 !important;
+        border-color: #475569 !important;
+    }
+
+    [data-theme='dark'] .form-control:focus {
+        background-color: #1e293b !important;
+        border-color: #11998e !important;
+        color: #ffffff !important;
     }
 </style>
 

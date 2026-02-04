@@ -172,15 +172,19 @@ body {
 /* Layout Grids */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    /* Strict 3-column layout */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Content-aware Row Heights: Tallest widget defines row height */
+    grid-auto-rows: auto;
+    gap: 24px;
+    width: 100%;
+    /* Forces equal height for all widgets in the same row */
     align-items: stretch;
-    /* Explicitly ensure equal height */
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
     .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -193,6 +197,9 @@ body {
     .dashboard-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+        /* On mobile, we can allow height to be auto or keep it fixed. 
+           Keeping fixed for uniformity request, but slightly smaller maybe? 
+           User requested 1 column on mobile. */
     }
 
     .hub-controls {
@@ -264,26 +271,100 @@ body {
 }
 
 /* Common Card Styles */
-section {
+section,
+.tool-card {
     background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-card) 100%);
     border: 1px solid var(--border-dim);
-    border-radius: 24px;
-    padding: 28px;
+    border-radius: 20px;
+    padding: 24px;
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
-    height: 100%;
-    min-height: 520px;
-    /* Ensure consistent minimum height across all cards */
+
+    /* FLEXIBLE DIMENSIONS */
+    height: auto !important;
+    /* Allow growth */
+    width: 100% !important;
+    min-height: 300px !important;
+    /* Consistent baseline */
+    max-height: none !important;
+
+    /* VISIBILITY: Show everything */
+    overflow: visible !important;
+
     position: relative;
-    /* Removed overflow: hidden to prevent dropdown clipping */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 0 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+
+    /* Ensure background fills the stretched height even if content is short */
+    display: flex;
+    flex-direction: column;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     backdrop-filter: blur(10px);
+}
+
+/* INTERNAL LAYOUT ENGINE */
+.tool-body,
+.hub-display,
+.news-list,
+.notes-list,
+.habit-list,
+.widget-content {
+    flex: 1;
+    height: auto !important;
+    /* Allow expansion */
+    overflow: visible !important;
+    /* No scrollbars */
+    padding-right: 0;
+
+    /* Smart Distribution */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Stack naturally */
+    gap: 16px;
+}
+
+/* Ensure text doesn't overflow awkwardly */
+p,
+span,
+li,
+.list-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Optional: multiline clamp support could go here if widely supported */
+}
+
+/* Modern Scrollbar */
+.tool-body::-webkit-scrollbar,
+.hub-display::-webkit-scrollbar,
+.news-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.tool-body::-webkit-scrollbar-thumb,
+.hub-display::-webkit-scrollbar-thumb,
+.news-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
 }
 
 .currency-hub {
     overflow: visible !important;
     z-index: 5;
+}
+
+/* Translator Widget Dropdown Fixes */
+#transSourceLang,
+#transTargetLang {
+    flex: 1 1 0% !important;
+    /* Force strict equal sharing */
+    width: 0 !important;
+    /* Ignore content intrinsic width */
+    min-width: 0 !important;
+    /* Allow shrinking to prevent overflow */
 }
 
 section::before {
@@ -298,16 +379,16 @@ section::before {
 }
 
 section:hover {
-    transform: translateY(-4px);
+    /* transform: translateY(-4px); */
     box-shadow: var(--shadow-glow), var(--shadow-card);
     border-color: var(--border-accent);
 }
 
-/* Ensure all tool cards (Weather, Currency, Time) have consistent base padding/sizing */
-.tool-card {
-    backdrop-filter: blur(10px);
-    padding: 28px;
-    /* Consistent padding across all cards */
+/* First Column Tightening */
+.global-search-hub,
+.chrono-hub,
+.translator-hub {
+    padding: 24px !important;
 }
 
 /* Specific card adjustments for content distribution */
@@ -315,16 +396,18 @@ section:hover {
     justify-content: space-between;
 }
 
-.chrono-hub {
-    justify-content: center;
-    /* Center content vertically */
-}
+/* Chrono Hub inherited from section */
 
+/* Standardize card titles */
+/* Balanced Title Spacing */
 .card-title {
     display: flex;
-    gap: 18px;
+    gap: 16px;
     align-items: center;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
+    /* Standard professional spacing */
+    flex-shrink: 0;
+    /* Never shrink header */
 }
 
 .title-icon {
@@ -404,7 +487,8 @@ section:hover .title-icon::after {
 .hub-controls {
     display: flex;
     gap: 14px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    /* Reduced from 24px */
 }
 
 .search-field {
@@ -677,14 +761,16 @@ section:hover .title-icon::after {
 .tool-body {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
+    /* Restored breathable spacing */
     flex: 1;
     justify-content: space-between;
 }
 
 .chrono-hub .tool-body {
-    justify-content: flex-start;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 14px;
+    /* Reduced from 18px */
 }
 
 .form-row {
@@ -826,7 +912,7 @@ section:hover .title-icon::after {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 110px;
+    min-height: 120px;
     backdrop-filter: blur(10px);
 }
 
@@ -1014,7 +1100,7 @@ section:hover .title-icon::after {
 
 .digits-hero {
     font-family: var(--font-head);
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 800;
     background: linear-gradient(135deg, var(--accent-sky) 0%, var(--accent-indigo) 100%);
     -webkit-background-clip: text;
@@ -1027,10 +1113,10 @@ section:hover .title-icon::after {
 
 .digits-accent {
     font-family: var(--font-head);
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--accent-indigo);
-    margin-top: 12px;
+    margin-top: 10px;
     letter-spacing: -1.5px;
     text-align: center;
 }
@@ -1131,9 +1217,7 @@ section:hover .title-icon::after {
 }
 
 /* News Hub */
-.news-hub {
-    /* Inherits general section styles */
-}
+/* News Hub inherited from section */
 
 .title-icon.rose-glow {
     background: linear-gradient(135deg, rgba(244, 63, 94, 0.15) 0%, rgba(244, 63, 94, 0.05) 100%);
@@ -1214,6 +1298,7 @@ section:hover .title-icon::after {
     margin: 0 0 8px 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.4;
@@ -1233,9 +1318,7 @@ section:hover .title-icon::after {
 }
 
 /* Notes Hub */
-.notes-hub {
-    /* inherit from tool-card */
-}
+/* Notes Hub inherited from tool-card */
 
 .notes-list {
     display: flex;
@@ -1285,6 +1368,7 @@ section:hover .title-icon::after {
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -2066,4 +2150,122 @@ section:hover .title-icon::after {
 .tool-card.expanded .tool-body::-webkit-scrollbar-thumb {
     background: var(--border-dim);
     border-radius: 3px;
+}
+
+/* --- EMERGENCY WIDGET --- */
+.emergency-hub .tool-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.emergency-display {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.emergency-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.emergency-number-card {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-dim);
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.emergency-number-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+    border-color: var(--border-accent);
+}
+
+.emergency-number-card.unified-card {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.card-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--text-bright);
+    margin-right: 12px;
+}
+
+.unified-card .card-icon-wrapper {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.em-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.em-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+    margin-bottom: 2px;
+}
+
+.em-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-pure);
+    letter-spacing: 1px;
+}
+
+/* Suggestion Dropdown */
+.dropdown-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-dim);
+    border-radius: 12px;
+    margin-top: 6px;
+    max-height: 240px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-dim);
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-bright);
+    transition: background 0.15s ease;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: rgba(255, 255, 255, 0.05);
 }

@@ -19,9 +19,11 @@
     </button>
 
     <!-- 3. Language Selector -->
-    <div class="lang-wrapper">
-        <select class="form-select form-select-sm" id="languageSelector" onchange="Translator.setLanguage(this.value)"
-            style="width: auto; cursor: pointer;">
+    <div class="lang-wrapper" style="position: relative;">
+        <!-- Visual Icon (No Click Functionality) -->
+        <i class="fas fa-globe text-secondary" style="margin-right: 8px; font-size: 1.1rem;"></i>
+
+        <select class="form-select form-select-sm" id="languageSelector" style="width: auto; cursor: pointer;">
             <option value="en">English</option>
             <option value="es">Español (Spanish)</option>
             <option value="fr">Français (French)</option>

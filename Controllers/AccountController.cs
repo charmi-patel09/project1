@@ -12,13 +12,19 @@ namespace JsonCrudApp.Controllers
         private readonly AuthService _authService;
         private readonly EmailService _emailService;
         private readonly OtpService _otpService;
+        private readonly UserActivityService _userActivityService;
 
-        public AccountController(AuthService authService, EmailService emailService, OtpService otpService)
+        public AccountController(AuthService authService, EmailService emailService, OtpService otpService, UserActivityService userActivityService)
         {
             _authService = authService;
             _emailService = emailService;
             _otpService = otpService;
+            _userActivityService = userActivityService;
         }
+
+        // ... (SignUp code remains same) ...
+
+
 
         [HttpGet]
         public IActionResult SignUp()
@@ -97,8 +103,12 @@ namespace JsonCrudApp.Controllers
                         // Finalize Registration
                         _authService.RegisterStudent(email, password);
 
-                        // Auto-login after verification
+                        // Auto-login & Log Activity
                         HttpContext.Session.SetString("StudentUser", email);
+                        string role = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
+                        HttpContext.Session.SetString("Role", role);
+                        _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Registration Visit
+
                         TempData["SuccessMessage"] = "Student account created successfully";
                         return RedirectToAction("Dashboard", "Home");
                     }
@@ -118,20 +128,29 @@ namespace JsonCrudApp.Controllers
                         HttpContext.Session.Remove("PendingUserAge");
                         HttpContext.Session.Remove("PendingUserCourse");
 
-                        // Auto-login after verification
+                        // Auto-login & Log Activity
                         HttpContext.Session.SetString("StudentUser", email);
+                        string role = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
+                        HttpContext.Session.SetString("Role", role);
+                        _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Creation Visit
+
                         TempData["SuccessMessage"] = "Student account created successfully";
                         return RedirectToAction("Dashboard", "Home");
                     }
 
                     // For Login flow
+                    string computedRole = (email == "charmimarakana@gmail.com") ? "Admin" : "User";
                     if (userType == "Student")
                     {
                         HttpContext.Session.SetString("StudentUser", email);
+                        HttpContext.Session.SetString("Role", computedRole);
+                        _userActivityService.LogVisit(email, "/Account/Login (OTP)");
                     }
                     else
                     {
                         HttpContext.Session.SetString("AdminUser", email);
+                        HttpContext.Session.SetString("Role", computedRole);
+                        _userActivityService.LogVisit(email, "/Account/Login (OTP)");
                     }
                     return RedirectToAction("Dashboard", "Home");
                 }
@@ -171,10 +190,12 @@ namespace JsonCrudApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                // 1. Try Admin Login first
                 if (_authService.ValidateAdmin(model.Email!, model.Password!, out string? adminError))
                 {
                     HttpContext.Session.SetString("AdminUser", model.Email!);
+                    string role = (model.Email == "charmimarakana@gmail.com") ? "Admin" : "User";
+                    HttpContext.Session.SetString("Role", role);
+                    _userActivityService.LogVisit(model.Email!, "/Account/Login");
                     return RedirectToAction("Dashboard", "Home");
                 }
 
@@ -183,6 +204,9 @@ namespace JsonCrudApp.Controllers
                 {
                     // Direct Login without OTP for Students as per user request
                     HttpContext.Session.SetString("StudentUser", model.Email!);
+                    string role = (model.Email == "charmimarakana@gmail.com") ? "Admin" : "User";
+                    HttpContext.Session.SetString("Role", role);
+                    _userActivityService.LogVisit(model.Email!, "/Account/Login");
                     return RedirectToAction("Dashboard", "Home");
                 }
 
@@ -223,6 +247,9 @@ namespace JsonCrudApp.Controllers
                 {
                     // Direct Login without OTP for Students as per user request
                     HttpContext.Session.SetString("StudentUser", model.Email!);
+                    string role = (model.Email == "charmimarakana@gmail.com") ? "Admin" : "User";
+                    HttpContext.Session.SetString("Role", role);
+                    _userActivityService.LogVisit(model.Email!, "/Account/StudentLogin");
                     return RedirectToAction("Dashboard", "Home");
                 }
 
@@ -246,6 +273,13 @@ namespace JsonCrudApp.Controllers
             HttpContext.Session.Clear(); // Clear all session data
             return RedirectToAction("Login");
         }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View(); // Make sure to ensure View exists or content is returned
+        }
+
 
         [HttpGet]
         public IActionResult ForgotPassword()

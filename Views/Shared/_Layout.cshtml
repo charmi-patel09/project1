@@ -48,6 +48,15 @@
         <div class="admin-wrapper">
             <!-- Sidebar -->
             <aside class="sidebar">
+                <a asp-controller="Home" asp-action="Dashboard" class="sidebar-brand" style="text-decoration: none;">
+                    <div class="brand-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h3>Progressly</h3>
+                        <span>Workspace</span>
+                    </div>
+                </a>
                 <div class="sidebar-user">
                     <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
                     <div class="user-info">
@@ -68,10 +77,15 @@
                     </div>
                     <div class="nav-section">
                         <ul>
-                            <li><a asp-area="" asp-controller="Students" asp-action="Index" class="nav-link">
-                                    <i class="fas fa-users-cog"></i>
-                                    <span>Users</span>
-                                </a></li>
+                            @if (Context.Session.GetString("Role") == "Admin" ||
+                           (!string.IsNullOrEmpty(Context.Session.GetString("AdminUser")) &&
+                           Context.Session.GetString("Role") != "User"))
+                            {
+                                <li><a asp-area="" asp-controller="Students" asp-action="Index" class="nav-link">
+                                        <i class="fas fa-users-cog"></i>
+                                        <span>Users</span>
+                                    </a></li>
+                            }
                         </ul>
                     </div>
                     <div class="nav-section nav-section-bottom">

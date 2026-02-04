@@ -1,0 +1,2572 @@
+[
+    {
+        "CountryName": "Afghanistan",
+        "CountryCode": "AF",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "119"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "119"
+        ]
+    },
+    {
+        "CountryName": "Albania",
+        "CountryCode": "AL",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "129"
+        ],
+        "Ambulance": [
+            "127"
+        ],
+        "Fire": [
+            "128"
+        ]
+    },
+    {
+        "CountryName": "Algeria",
+        "CountryCode": "DZ",
+        "Dispatch": [],
+        "Police": [
+            "17",
+            "1548"
+        ],
+        "Ambulance": [
+            "14"
+        ],
+        "Fire": [
+            "14"
+        ]
+    },
+    {
+        "CountryName": "Andorra",
+        "CountryCode": "AD",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "116"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Angola",
+        "CountryCode": "AO",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "113"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "115"
+        ]
+    },
+    {
+        "CountryName": "Argentina",
+        "CountryCode": "AR",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "101"
+        ],
+        "Ambulance": [
+            "107"
+        ],
+        "Fire": [
+            "100"
+        ]
+    },
+    {
+        "CountryName": "Armenia",
+        "CountryCode": "AM",
+        "Dispatch": [
+            "112",
+            "911"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Australia",
+        "CountryCode": "AU",
+        "Dispatch": [
+            "000"
+        ],
+        "Police": [
+            "000"
+        ],
+        "Ambulance": [
+            "000"
+        ],
+        "Fire": [
+            "000"
+        ]
+    },
+    {
+        "CountryName": "Austria",
+        "CountryCode": "AT",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "133"
+        ],
+        "Ambulance": [
+            "144"
+        ],
+        "Fire": [
+            "122"
+        ]
+    },
+    {
+        "CountryName": "Azerbaijan",
+        "CountryCode": "AZ",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Bahamas",
+        "CountryCode": "BS",
+        "Dispatch": [
+            "911",
+            "919"
+        ],
+        "Police": [
+            "919"
+        ],
+        "Ambulance": [
+            "919"
+        ],
+        "Fire": [
+            "919"
+        ]
+    },
+    {
+        "CountryName": "Bahrain",
+        "CountryCode": "BH",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Bangladesh",
+        "CountryCode": "BD",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Barbados",
+        "CountryCode": "BB",
+        "Dispatch": [],
+        "Police": [
+            "211"
+        ],
+        "Ambulance": [
+            "511"
+        ],
+        "Fire": [
+            "311"
+        ]
+    },
+    {
+        "CountryName": "Belarus",
+        "CountryCode": "BY",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Belgium",
+        "CountryCode": "BE",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "101"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Belize",
+        "CountryCode": "BZ",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Benin",
+        "CountryCode": "BJ",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Bhutan",
+        "CountryCode": "BT",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "113"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "110"
+        ]
+    },
+    {
+        "CountryName": "Bolivia",
+        "CountryCode": "BO",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "165"
+        ],
+        "Fire": [
+            "119"
+        ]
+    },
+    {
+        "CountryName": "Bosnia and Herzegovina",
+        "CountryCode": "BA",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "122"
+        ],
+        "Ambulance": [
+            "124"
+        ],
+        "Fire": [
+            "123"
+        ]
+    },
+    {
+        "CountryName": "Botswana",
+        "CountryCode": "BW",
+        "Dispatch": [],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "997"
+        ],
+        "Fire": [
+            "998"
+        ]
+    },
+    {
+        "CountryName": "Brazil",
+        "CountryCode": "BR",
+        "Dispatch": [],
+        "Police": [
+            "190"
+        ],
+        "Ambulance": [
+            "192"
+        ],
+        "Fire": [
+            "193"
+        ]
+    },
+    {
+        "CountryName": "Brunei",
+        "CountryCode": "BN",
+        "Dispatch": [
+            "993"
+        ],
+        "Police": [
+            "993"
+        ],
+        "Ambulance": [
+            "991"
+        ],
+        "Fire": [
+            "995"
+        ]
+    },
+    {
+        "CountryName": "Bulgaria",
+        "CountryCode": "BG",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "166"
+        ],
+        "Ambulance": [
+            "150"
+        ],
+        "Fire": [
+            "160"
+        ]
+    },
+    {
+        "CountryName": "Burkina Faso",
+        "CountryCode": "BF",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Burundi",
+        "CountryCode": "BI",
+        "Dispatch": [],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Cambodia",
+        "CountryCode": "KH",
+        "Dispatch": [],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "119"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Cameroon",
+        "CountryCode": "CM",
+        "Dispatch": [],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Canada",
+        "CountryCode": "CA",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Cape Verde",
+        "CountryCode": "CV",
+        "Dispatch": [],
+        "Police": [
+            "132"
+        ],
+        "Ambulance": [
+            "130"
+        ],
+        "Fire": [
+            "131"
+        ]
+    },
+    {
+        "CountryName": "Central African Republic",
+        "CountryCode": "CF",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "1220"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Chad",
+        "CountryCode": "TD",
+        "Dispatch": [],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "2251-4242"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Chile",
+        "CountryCode": "CL",
+        "Dispatch": [],
+        "Police": [
+            "133"
+        ],
+        "Ambulance": [
+            "131"
+        ],
+        "Fire": [
+            "132"
+        ]
+    },
+    {
+        "CountryName": "China",
+        "CountryCode": "CN",
+        "Dispatch": [],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "120"
+        ],
+        "Fire": [
+            "119"
+        ]
+    },
+    {
+        "CountryName": "Colombia",
+        "CountryCode": "CO",
+        "Dispatch": [
+            "123"
+        ],
+        "Police": [
+            "123"
+        ],
+        "Ambulance": [
+            "125"
+        ],
+        "Fire": [
+            "119"
+        ]
+    },
+    {
+        "CountryName": "Comoros",
+        "CountryCode": "KM",
+        "Dispatch": [],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "772-03-73"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Congo",
+        "CountryCode": "CG",
+        "Dispatch": [],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Costa Rica",
+        "CountryCode": "CR",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Croatia",
+        "CountryCode": "HR",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "192"
+        ],
+        "Ambulance": [
+            "194"
+        ],
+        "Fire": [
+            "193"
+        ]
+    },
+    {
+        "CountryName": "Cuba",
+        "CountryCode": "CU",
+        "Dispatch": [],
+        "Police": [
+            "106"
+        ],
+        "Ambulance": [
+            "104"
+        ],
+        "Fire": [
+            "105"
+        ]
+    },
+    {
+        "CountryName": "Cyprus",
+        "CountryCode": "CY",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Czechia",
+        "CountryCode": "CZ",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "158"
+        ],
+        "Ambulance": [
+            "155"
+        ],
+        "Fire": [
+            "150"
+        ]
+    },
+    {
+        "CountryName": "Denmark",
+        "CountryCode": "DK",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "114"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Djibouti",
+        "CountryCode": "DJ",
+        "Dispatch": [],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "35-13-51"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Dominica",
+        "CountryCode": "DM",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Dominican Republic",
+        "CountryCode": "DO",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Ecuador",
+        "CountryCode": "EC",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Egypt",
+        "CountryCode": "EG",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "122"
+        ],
+        "Ambulance": [
+            "123"
+        ],
+        "Fire": [
+            "180"
+        ]
+    },
+    {
+        "CountryName": "El Salvador",
+        "CountryCode": "SV",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "132"
+        ],
+        "Fire": [
+            "913"
+        ]
+    },
+    {
+        "CountryName": "Estonia",
+        "CountryCode": "EE",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Eswatini",
+        "CountryCode": "SZ",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "977"
+        ],
+        "Fire": [
+            "933"
+        ]
+    },
+    {
+        "CountryName": "Ethiopia",
+        "CountryCode": "ET",
+        "Dispatch": [],
+        "Police": [
+            "991"
+        ],
+        "Ambulance": [
+            "907"
+        ],
+        "Fire": [
+            "939"
+        ]
+    },
+    {
+        "CountryName": "Fiji",
+        "CountryCode": "FJ",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Finland",
+        "CountryCode": "FI",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "France",
+        "CountryCode": "FR",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "15"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Gabon",
+        "CountryCode": "GA",
+        "Dispatch": [],
+        "Police": [
+            "1730"
+        ],
+        "Ambulance": [
+            "1300"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Gambia",
+        "CountryCode": "GM",
+        "Dispatch": [],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "116"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Georgia",
+        "CountryCode": "GE",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Germany",
+        "CountryCode": "DE",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Ghana",
+        "CountryCode": "GH",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "191"
+        ],
+        "Ambulance": [
+            "193"
+        ],
+        "Fire": [
+            "192"
+        ]
+    },
+    {
+        "CountryName": "Greece",
+        "CountryCode": "GR",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "100"
+        ],
+        "Ambulance": [
+            "166"
+        ],
+        "Fire": [
+            "199"
+        ]
+    },
+    {
+        "CountryName": "Grenada",
+        "CountryCode": "GD",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Guatemala",
+        "CountryCode": "GT",
+        "Dispatch": [],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "128"
+        ],
+        "Fire": [
+            "122"
+        ]
+    },
+    {
+        "CountryName": "Guinea",
+        "CountryCode": "GN",
+        "Dispatch": [],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "18"
+        ],
+        "Fire": [
+            "442-020"
+        ]
+    },
+    {
+        "CountryName": "Guyana",
+        "CountryCode": "GY",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "913"
+        ],
+        "Fire": [
+            "912"
+        ]
+    },
+    {
+        "CountryName": "Haiti",
+        "CountryCode": "HT",
+        "Dispatch": [],
+        "Police": [
+            "114"
+        ],
+        "Ambulance": [
+            "116"
+        ],
+        "Fire": [
+            "115"
+        ]
+    },
+    {
+        "CountryName": "Honduras",
+        "CountryCode": "HN",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "195"
+        ],
+        "Fire": [
+            "198"
+        ]
+    },
+    {
+        "CountryName": "Hungary",
+        "CountryCode": "HU",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "107"
+        ],
+        "Ambulance": [
+            "104"
+        ],
+        "Fire": [
+            "105"
+        ]
+    },
+    {
+        "CountryName": "Iceland",
+        "CountryCode": "IS",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "India",
+        "CountryCode": "IN",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "100"
+        ],
+        "Ambulance": [
+            "108",
+            "102"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Indonesia",
+        "CountryCode": "ID",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "118"
+        ],
+        "Fire": [
+            "113"
+        ]
+    },
+    {
+        "CountryName": "Iran",
+        "CountryCode": "IR",
+        "Dispatch": [],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "115"
+        ],
+        "Fire": [
+            "125"
+        ]
+    },
+    {
+        "CountryName": "Iraq",
+        "CountryCode": "IQ",
+        "Dispatch": [],
+        "Police": [
+            "104"
+        ],
+        "Ambulance": [
+            "122"
+        ],
+        "Fire": [
+            "115"
+        ]
+    },
+    {
+        "CountryName": "Ireland",
+        "CountryCode": "IE",
+        "Dispatch": [
+            "112",
+            "999"
+        ],
+        "Police": [
+            "112",
+            "999"
+        ],
+        "Ambulance": [
+            "112",
+            "999"
+        ],
+        "Fire": [
+            "112",
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Israel",
+        "CountryCode": "IL",
+        "Dispatch": [],
+        "Police": [
+            "100"
+        ],
+        "Ambulance": [
+            "101"
+        ],
+        "Fire": [
+            "102"
+        ]
+    },
+    {
+        "CountryName": "Italy",
+        "CountryCode": "IT",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "113"
+        ],
+        "Ambulance": [
+            "118"
+        ],
+        "Fire": [
+            "115"
+        ]
+    },
+    {
+        "CountryName": "Jamaica",
+        "CountryCode": "JM",
+        "Dispatch": [
+            "119"
+        ],
+        "Police": [
+            "119"
+        ],
+        "Ambulance": [
+            "110"
+        ],
+        "Fire": [
+            "110"
+        ]
+    },
+    {
+        "CountryName": "Japan",
+        "CountryCode": "JP",
+        "Dispatch": [],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "119"
+        ],
+        "Fire": [
+            "119"
+        ]
+    },
+    {
+        "CountryName": "Jordan",
+        "CountryCode": "JO",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Kazakhstan",
+        "CountryCode": "KZ",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Kenya",
+        "CountryCode": "KE",
+        "Dispatch": [
+            "112",
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Kuwait",
+        "CountryCode": "KW",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Kyrgyzstan",
+        "CountryCode": "KG",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Laos",
+        "CountryCode": "LA",
+        "Dispatch": [],
+        "Police": [
+            "191"
+        ],
+        "Ambulance": [
+            "195"
+        ],
+        "Fire": [
+            "190"
+        ]
+    },
+    {
+        "CountryName": "Latvia",
+        "CountryCode": "LV",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "113"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Lebanon",
+        "CountryCode": "LB",
+        "Dispatch": [],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "140"
+        ],
+        "Fire": [
+            "175"
+        ]
+    },
+    {
+        "CountryName": "Lesotho",
+        "CountryCode": "LS",
+        "Dispatch": [],
+        "Police": [
+            "123"
+        ],
+        "Ambulance": [
+            "121"
+        ],
+        "Fire": [
+            "122"
+        ]
+    },
+    {
+        "CountryName": "Liberia",
+        "CountryCode": "LR",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Libya",
+        "CountryCode": "LY",
+        "Dispatch": [
+            "1515"
+        ],
+        "Police": [
+            "1515"
+        ],
+        "Ambulance": [
+            "1515"
+        ],
+        "Fire": [
+            "1515"
+        ]
+    },
+    {
+        "CountryName": "Liechtenstein",
+        "CountryCode": "LI",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "144"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Lithuania",
+        "CountryCode": "LT",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Luxembourg",
+        "CountryCode": "LU",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "113"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Madagascar",
+        "CountryCode": "MG",
+        "Dispatch": [],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "124"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Malawi",
+        "CountryCode": "MW",
+        "Dispatch": [
+            "997"
+        ],
+        "Police": [
+            "997"
+        ],
+        "Ambulance": [
+            "998"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Malaysia",
+        "CountryCode": "MY",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Maldives",
+        "CountryCode": "MV",
+        "Dispatch": [],
+        "Police": [
+            "119"
+        ],
+        "Ambulance": [
+            "102"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Mali",
+        "CountryCode": "ML",
+        "Dispatch": [],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "15"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Malta",
+        "CountryCode": "MT",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Mexico",
+        "CountryCode": "MX",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Moldova",
+        "CountryCode": "MD",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Monaco",
+        "CountryCode": "MC",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "18"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Mongolia",
+        "CountryCode": "MN",
+        "Dispatch": [
+            "105"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Montenegro",
+        "CountryCode": "ME",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "122"
+        ],
+        "Ambulance": [
+            "124"
+        ],
+        "Fire": [
+            "123"
+        ]
+    },
+    {
+        "CountryName": "Morocco",
+        "CountryCode": "MA",
+        "Dispatch": [],
+        "Police": [
+            "19"
+        ],
+        "Ambulance": [
+            "15"
+        ],
+        "Fire": [
+            "15"
+        ]
+    },
+    {
+        "CountryName": "Mozambique",
+        "CountryCode": "MZ",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "119"
+        ],
+        "Ambulance": [
+            "117"
+        ],
+        "Fire": [
+            "198"
+        ]
+    },
+    {
+        "CountryName": "Myanmar",
+        "CountryCode": "MM",
+        "Dispatch": [],
+        "Police": [
+            "199"
+        ],
+        "Ambulance": [
+            "192"
+        ],
+        "Fire": [
+            "191"
+        ]
+    },
+    {
+        "CountryName": "Namibia",
+        "CountryCode": "NA",
+        "Dispatch": [
+            "10111"
+        ],
+        "Police": [
+            "10111"
+        ],
+        "Ambulance": [
+            "211111"
+        ],
+        "Fire": [
+            "211111"
+        ]
+    },
+    {
+        "CountryName": "Nepal",
+        "CountryCode": "NP",
+        "Dispatch": [],
+        "Police": [
+            "100"
+        ],
+        "Ambulance": [
+            "102"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Netherlands",
+        "CountryCode": "NL",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "New Zealand",
+        "CountryCode": "NZ",
+        "Dispatch": [
+            "111"
+        ],
+        "Police": [
+            "111"
+        ],
+        "Ambulance": [
+            "111"
+        ],
+        "Fire": [
+            "111"
+        ]
+    },
+    {
+        "CountryName": "Nicaragua",
+        "CountryCode": "NI",
+        "Dispatch": [
+            "118"
+        ],
+        "Police": [
+            "118"
+        ],
+        "Ambulance": [
+            "128"
+        ],
+        "Fire": [
+            "115"
+        ]
+    },
+    {
+        "CountryName": "Niger",
+        "CountryCode": "NE",
+        "Dispatch": [],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "15"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Nigeria",
+        "CountryCode": "NG",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "North Korea",
+        "CountryCode": "KP",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [],
+        "Fire": []
+    },
+    {
+        "CountryName": "North Macedonia",
+        "CountryCode": "MK",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "192"
+        ],
+        "Ambulance": [
+            "194"
+        ],
+        "Fire": [
+            "193"
+        ]
+    },
+    {
+        "CountryName": "Norway",
+        "CountryCode": "NO",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "113"
+        ],
+        "Fire": [
+            "110"
+        ]
+    },
+    {
+        "CountryName": "Oman",
+        "CountryCode": "OM",
+        "Dispatch": [
+            "9999"
+        ],
+        "Police": [
+            "9999"
+        ],
+        "Ambulance": [
+            "9999"
+        ],
+        "Fire": [
+            "9999"
+        ]
+    },
+    {
+        "CountryName": "Pakistan",
+        "CountryCode": "PK",
+        "Dispatch": [],
+        "Police": [
+            "15"
+        ],
+        "Ambulance": [
+            "1122"
+        ],
+        "Fire": [
+            "16"
+        ]
+    },
+    {
+        "CountryName": "Panama",
+        "CountryCode": "PA",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "104"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "103"
+        ]
+    },
+    {
+        "CountryName": "Papua New Guinea",
+        "CountryCode": "PG",
+        "Dispatch": [],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "111"
+        ],
+        "Fire": [
+            "110"
+        ]
+    },
+    {
+        "CountryName": "Paraguay",
+        "CountryCode": "PY",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "141"
+        ],
+        "Fire": [
+            "132"
+        ]
+    },
+    {
+        "CountryName": "Peru",
+        "CountryCode": "PE",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "105"
+        ],
+        "Ambulance": [
+            "106"
+        ],
+        "Fire": [
+            "116"
+        ]
+    },
+    {
+        "CountryName": "Philippines",
+        "CountryCode": "PH",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Poland",
+        "CountryCode": "PL",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "997"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "998"
+        ]
+    },
+    {
+        "CountryName": "Portugal",
+        "CountryCode": "PT",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Qatar",
+        "CountryCode": "QA",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Romania",
+        "CountryCode": "RO",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Russia",
+        "CountryCode": "RU",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Rwanda",
+        "CountryCode": "RW",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "912"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Saudi Arabia",
+        "CountryCode": "SA",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "997"
+        ],
+        "Fire": [
+            "998"
+        ]
+    },
+    {
+        "CountryName": "Senegal",
+        "CountryCode": "SN",
+        "Dispatch": [],
+        "Police": [
+            "17"
+        ],
+        "Ambulance": [
+            "15"
+        ],
+        "Fire": [
+            "18"
+        ]
+    },
+    {
+        "CountryName": "Serbia",
+        "CountryCode": "RS",
+        "Dispatch": [
+            "192"
+        ],
+        "Police": [
+            "192"
+        ],
+        "Ambulance": [
+            "194"
+        ],
+        "Fire": [
+            "193"
+        ]
+    },
+    {
+        "CountryName": "Seychelles",
+        "CountryCode": "SC",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "151"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "Sierra Leone",
+        "CountryCode": "SL",
+        "Dispatch": [
+            "019"
+        ],
+        "Police": [
+            "019"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "019"
+        ]
+    },
+    {
+        "CountryName": "Singapore",
+        "CountryCode": "SG",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "995"
+        ],
+        "Fire": [
+            "995"
+        ]
+    },
+    {
+        "CountryName": "Slovakia",
+        "CountryCode": "SK",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "158"
+        ],
+        "Ambulance": [
+            "155"
+        ],
+        "Fire": [
+            "150"
+        ]
+    },
+    {
+        "CountryName": "Slovenia",
+        "CountryCode": "SI",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "113"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Somalia",
+        "CountryCode": "SO",
+        "Dispatch": [
+            "888"
+        ],
+        "Police": [
+            "888"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "555"
+        ]
+    },
+    {
+        "CountryName": "South Africa",
+        "CountryCode": "ZA",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "10111"
+        ],
+        "Ambulance": [
+            "10177"
+        ],
+        "Fire": [
+            "10177"
+        ]
+    },
+    {
+        "CountryName": "South Korea",
+        "CountryCode": "KR",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "119"
+        ],
+        "Fire": [
+            "119"
+        ]
+    },
+    {
+        "CountryName": "Spain",
+        "CountryCode": "ES",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "091"
+        ],
+        "Ambulance": [
+            "061"
+        ],
+        "Fire": [
+            "080"
+        ]
+    },
+    {
+        "CountryName": "Sri Lanka",
+        "CountryCode": "LK",
+        "Dispatch": [
+            "119"
+        ],
+        "Police": [
+            "119"
+        ],
+        "Ambulance": [
+            "110"
+        ],
+        "Fire": [
+            "110"
+        ]
+    },
+    {
+        "CountryName": "Sudan",
+        "CountryCode": "SD",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "998"
+        ]
+    },
+    {
+        "CountryName": "Sweden",
+        "CountryCode": "SE",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Switzerland",
+        "CountryCode": "CH",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "117"
+        ],
+        "Ambulance": [
+            "144"
+        ],
+        "Fire": [
+            "118"
+        ]
+    },
+    {
+        "CountryName": "Syria",
+        "CountryCode": "SY",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "110"
+        ],
+        "Fire": [
+            "113"
+        ]
+    },
+    {
+        "CountryName": "Taiwan",
+        "CountryCode": "TW",
+        "Dispatch": [
+            "110"
+        ],
+        "Police": [
+            "110"
+        ],
+        "Ambulance": [
+            "119"
+        ],
+        "Fire": [
+            "119"
+        ]
+    },
+    {
+        "CountryName": "Tajikistan",
+        "CountryCode": "TJ",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Tanzania",
+        "CountryCode": "TZ",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "114"
+        ],
+        "Fire": [
+            "115"
+        ]
+    },
+    {
+        "CountryName": "Thailand",
+        "CountryCode": "TH",
+        "Dispatch": [
+            "191"
+        ],
+        "Police": [
+            "191"
+        ],
+        "Ambulance": [
+            "1669"
+        ],
+        "Fire": [
+            "199"
+        ]
+    },
+    {
+        "CountryName": "Tunisia",
+        "CountryCode": "TN",
+        "Dispatch": [
+            "197"
+        ],
+        "Police": [
+            "197"
+        ],
+        "Ambulance": [
+            "190"
+        ],
+        "Fire": [
+            "198"
+        ]
+    },
+    {
+        "CountryName": "Turkey",
+        "CountryCode": "TR",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "112"
+        ],
+        "Ambulance": [
+            "112"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Uganda",
+        "CountryCode": "UG",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "112"
+        ]
+    },
+    {
+        "CountryName": "Ukraine",
+        "CountryCode": "UA",
+        "Dispatch": [
+            "112"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "United Arab Emirates",
+        "CountryCode": "AE",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "998"
+        ],
+        "Fire": [
+            "997"
+        ]
+    },
+    {
+        "CountryName": "United Kingdom",
+        "CountryCode": "GB",
+        "Dispatch": [
+            "112",
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "999"
+        ],
+        "Fire": [
+            "999"
+        ]
+    },
+    {
+        "CountryName": "United States",
+        "CountryCode": "US",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "911"
+        ],
+        "Fire": [
+            "911"
+        ]
+    },
+    {
+        "CountryName": "Uruguay",
+        "CountryCode": "UY",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "105"
+        ],
+        "Fire": [
+            "104"
+        ]
+    },
+    {
+        "CountryName": "Uzbekistan",
+        "CountryCode": "UZ",
+        "Dispatch": [
+            "1012"
+        ],
+        "Police": [
+            "102"
+        ],
+        "Ambulance": [
+            "103"
+        ],
+        "Fire": [
+            "101"
+        ]
+    },
+    {
+        "CountryName": "Venezuela",
+        "CountryCode": "VE",
+        "Dispatch": [
+            "911"
+        ],
+        "Police": [
+            "911"
+        ],
+        "Ambulance": [
+            "171"
+        ],
+        "Fire": [
+            "171"
+        ]
+    },
+    {
+        "CountryName": "Vietnam",
+        "CountryCode": "VN",
+        "Dispatch": [
+            "113"
+        ],
+        "Police": [
+            "113"
+        ],
+        "Ambulance": [
+            "115"
+        ],
+        "Fire": [
+            "114"
+        ]
+    },
+    {
+        "CountryName": "Yemen",
+        "CountryCode": "YE",
+        "Dispatch": [
+            "199"
+        ],
+        "Police": [
+            "199"
+        ],
+        "Ambulance": [
+            "191"
+        ],
+        "Fire": [
+            "191"
+        ]
+    },
+    {
+        "CountryName": "Zambia",
+        "CountryCode": "ZM",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "999"
+        ],
+        "Ambulance": [
+            "991"
+        ],
+        "Fire": [
+            "993"
+        ]
+    },
+    {
+        "CountryName": "Zimbabwe",
+        "CountryCode": "ZW",
+        "Dispatch": [
+            "999"
+        ],
+        "Police": [
+            "995"
+        ],
+        "Ambulance": [
+            "994"
+        ],
+        "Fire": [
+            "993"
+        ]
+    }
+]

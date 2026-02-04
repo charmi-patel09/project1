@@ -25,6 +25,10 @@ builder.Services.AddTransient<JsonCrudApp.Services.OtpService>();
 builder.Services.AddTransient<JsonCrudApp.Services.NotesService>();
 builder.Services.AddHttpClient<JsonCrudApp.Services.GlobalTranslationService>();
 builder.Services.AddTransient<JsonCrudApp.Services.TimeTrackerService>();
+builder.Services.AddTransient<JsonCrudApp.Services.HabitService>();
+builder.Services.AddTransient<JsonCrudApp.Services.EmergencyService>();
+
+builder.Services.AddTransient<JsonCrudApp.Services.UserActivityService>();
 
 builder.Services.AddMemoryCache();
 

@@ -1,0 +1,293 @@
+@model JsonCrudApp.Services.DailyActivityReport
+
+@{
+    ViewData["Title"] = "Daily User Activity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-4 fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4 dashboard-header">
+        <div>
+            <h2 class="mb-1" style="font-weight: 800; color: var(--text-primary);">Daily Activity</h2>
+            <p class="text-muted mb-0">Monitor user login sessions and engagement</p>
+        </div>
+
+        <form id="filterForm" asp-action="DailyActivity" method="get" class="d-flex flex-column align-items-end gap-2">
+            <div class="d-flex gap-2">
+                <select name="filter" class="form-select modern-select" onchange="toggleCustomDate(this)">
+                    <!option value="Today" @(ViewBag.CurrentFilter == "Today" ? "selected" : "")>Today</!option>
+                    <!option value="Yesterday" @(ViewBag.CurrentFilter == "Yesterday" ? "selected" : "")>Yesterday
+                    </!option>
+                    <!option value="Last7Days" @(ViewBag.CurrentFilter == "Last7Days" ? "selected" : "")>Last 7 Days
+                    </!option>
+                    <!option value="Custom" @(ViewBag.CurrentFilter == "Custom" ? "selected" : "")>Custom Date</!option>
+                </select>
+
+                <div id="customDateWrapper" style="display: @(ViewBag.CurrentFilter == "Custom" ? "block" : "none");">
+                    <input type="date" name="customDate" class="form-control modern-input"
+                        value="@Model.Date.ToString("yyyy-MM-dd")"
+                        onchange="document.getElementById('filterForm').submit()" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4 g-4">
+        <div class="col-md-6 col-lg-6">
+            <div class="stat-card unique-users">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Users</span>
+                    <span class="stat-value">@Model.TotalUniqueUsers</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="stat-card total-visits">
+                <div class="stat-icon"><i class="fas fa-door-open"></i></div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Visits</span>
+                    <span class="stat-value">@Model.TotalVisits</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Table -->
+    <div class="modern-card">
+        <div class="card-header-custom">
+            <h5 class="mb-0"><i class="fas fa-list-ul me-2"></i>Activity Log <span
+                    class="badge-date">@Model.DisplayDate</span></h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover modern-table mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 50%;">User Email</th>
+                        <th scope="col" class="text-center">Visits</th>
+                        <th scope="col" class="text-end">Last Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.UserStats.Any())
+                    {
+                        @foreach (var user in Model.UserStats)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle me-3">@user.UserEmail.Substring(0, 1).ToUpper()</div>
+                                        <span class="fw-bold text-primary-custom">@user.UserEmail</span>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill bg-light text-dark border">@user.VisitCount</span>
+                                </td>
+                                <td class="text-end font-monospace text-muted-custom">
+                                    @user.LastSeen.ToString("hh:mm tt")
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center py-5 empty-state-text">
+                                <i class="fas fa-wind fa-2x mb-3 d-block text-muted-custom"></i>
+                                No login activity recorded for this period.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-link text-decoration-none text-muted-custom">
+            <i class="fas fa-arrow-left me-1"></i> Back to User List
+        </a>
+    </div>
+</div>
+
+<script>
+    function toggleCustomDate(select) {
+        const wrapper = document.getElementById('customDateWrapper');
+        if (select.value === 'Custom') {
+            wrapper.style.display = 'block';
+            // Optionally submit to clear current custom filter if needed, 
+            // but usually we wait for date input.
+        } else {
+            wrapper.style.display = 'none';
+            document.getElementById('filterForm').submit();
+        }
+    }
+</script>
+
+<style>
+    :root {
+        --card-bg: #fff;
+        --text-primary: #1f2937;
+        --text-muted: #6b7280;
+        --border-color: #e5e7eb;
+        --table-hover: #f9fafb;
+    }
+
+    [data-theme="dark"] {
+        --card-bg: #1f2937;
+        --text-primary: #f3f4f6;
+        --text-muted: #9ca3af;
+        --border-color: #374151;
+        --table-hover: #111827;
+        --page-bg: #111827;
+    }
+
+    .modern-select,
+    .modern-input {
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        padding: 8px 12px;
+        background-color: var(--card-bg);
+        color: var(--text-primary);
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        border: 1px solid var(--border-color);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .stat-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .unique-users .stat-icon {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+    }
+
+    .total-visits .stat-icon {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+    }
+
+    .stat-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-label {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-top: 4px;
+    }
+
+    .modern-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .card-header-custom {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--card-bg);
+    }
+
+    .card-header-custom h5 {
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+
+    .badge-date {
+        font-size: 0.8em;
+        opacity: 0.7;
+        font-weight: 400;
+        margin-left: 8px;
+    }
+
+    .modern-table th {
+        background-color: rgba(0, 0, 0, 0.02);
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border-color);
+        border-top: none;
+    }
+
+    .modern-table td {
+        padding: 16px 24px;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-primary);
+        background-color: var(--card-bg);
+    }
+
+    .modern-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .modern-table tbody tr:hover {
+        background-color: var(--table-hover) !important;
+    }
+
+    .avatar-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    .text-primary-custom {
+        color: var(--text-primary);
+    }
+
+    .text-muted-custom {
+        color: var(--text-muted);
+    }
+
+    /* Fix invisible font */
+    .font-monospace {
+        font-family: 'SF Mono', 'Roboto Mono', monospace;
+        font-size: 0.9rem;
+        font-weight: 600;
+        opacity: 0.9;
+    }
+</style>

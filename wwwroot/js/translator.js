@@ -37,6 +37,10 @@ const Translator = {
         const selector = document.getElementById('languageSelector');
         if (selector) {
             selector.value = this.currentLang;
+            // Remove previous listeners if any (though init runs once)
+            selector.removeEventListener('change', this.handleSelection);
+            this.handleSelection = (e) => this.setLanguage(e.target.value);
+            selector.addEventListener('change', this.handleSelection);
         }
 
         // 4. Create Loader

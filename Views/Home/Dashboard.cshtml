@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <div id="globalSearchResult" class="hub-display" style="gap: 12px;">
+                <div id="globalSearchResult" class="hub-display" style="gap: 14px;">
                     <!-- Results -->
                 </div>
             </section>
@@ -274,145 +274,42 @@
                     </div>
                 </div>
 
-                <div class="tool-body">
-                    <div class="form-row">
-                        <label>Input Text</label>
-                        <textarea id="transInput" class="modern-input" rows="3" placeholder="Enter text to translate..."
-                            style="resize:none; padding:12px;"></textarea>
-                    </div>
-
-                    <div class="form-grid" style="margin-top:12px; align-items:flex-end;">
-                        <div class="form-row" style="flex:1;">
-                            <label>Target Language</label>
-                            <select id="transLangSelect" class="modern-select">
-                                <option value="af">Afrikaans</option>
-                                <option value="sq">Albanian</option>
-                                <option value="am">Amharic</option>
-                                <option value="ar">Arabic</option>
-                                <option value="hy">Armenian</option>
-                                <option value="az">Azerbaijani</option>
-                                <option value="eu">Basque</option>
-                                <option value="be">Belarusian</option>
-                                <option value="bn">Bengali</option>
-                                <option value="bs">Bosnian</option>
-                                <option value="bg">Bulgarian</option>
-                                <option value="ca">Catalan</option>
-                                <option value="ceb">Cebuano</option>
-                                <option value="ny">Chichewa</option>
-                                <option value="zh">Chinese (Simplified)</option>
-                                <option value="zh-TW">Chinese (Traditional)</option>
-                                <option value="co">Corsican</option>
-                                <option value="hr">Croatian</option>
-                                <option value="cs">Czech</option>
-                                <option value="da">Danish</option>
-                                <option value="nl">Dutch</option>
-                                <option value="en" selected>English</option>
-                                <option value="eo">Esperanto</option>
-                                <option value="et">Estonian</option>
-                                <option value="tl">Filipino</option>
-                                <option value="fi">Finnish</option>
-                                <option value="fr">French</option>
-                                <option value="fy">Frisian</option>
-                                <option value="gl">Galician</option>
-                                <option value="ka">Georgian</option>
-                                <option value="de">German</option>
-                                <option value="el">Greek</option>
-                                <option value="gu">Gujarati</option>
-                                <option value="ht">Haitian Creole</option>
-                                <option value="ha">Hausa</option>
-                                <option value="haw">Hawaiian</option>
-                                <option value="iw">Hebrew</option>
-                                <option value="hi">Hindi</option>
-                                <option value="hmn">Hmong</option>
-                                <option value="hu">Hungarian</option>
-                                <option value="is">Icelandic</option>
-                                <option value="ig">Igbo</option>
-                                <option value="id">Indonesian</option>
-                                <option value="ga">Irish</option>
-                                <option value="it">Italian</option>
-                                <option value="ja">Japanese</option>
-                                <option value="jw">Javanese</option>
-                                <option value="kn">Kannada</option>
-                                <option value="kk">Kazakh</option>
-                                <option value="km">Khmer</option>
-                                <option value="ko">Korean</option>
-                                <option value="ku">Kurdish (Kurmanji)</option>
-                                <option value="ky">Kyrgyz</option>
-                                <option value="lo">Lao</option>
-                                <option value="la">Latin</option>
-                                <option value="lv">Latvian</option>
-                                <option value="lt">Lithuanian</option>
-                                <option value="lb">Luxembourgish</option>
-                                <option value="mk">Macedonian</option>
-                                <option value="mg">Malagasy</option>
-                                <option value="ms">Malay</option>
-                                <option value="ml">Malayalam</option>
-                                <option value="mt">Maltese</option>
-                                <option value="mi">Maori</option>
-                                <option value="mr">Marathi</option>
-                                <option value="mn">Mongolian</option>
-                                <option value="my">Myanmar (Burmese)</option>
-                                <option value="ne">Nepali</option>
-                                <option value="no">Norwegian</option>
-                                <option value="ps">Pashto</option>
-                                <option value="fa">Persian</option>
-                                <option value="pl">Polish</option>
-                                <option value="pt">Portuguese</option>
-                                <option value="pa">Punjabi</option>
-                                <option value="ro">Romanian</option>
-                                <option value="ru">Russian</option>
-                                <option value="sm">Samoan</option>
-                                <option value="gd">Scots Gaelic</option>
-                                <option value="sr">Serbian</option>
-                                <option value="st">Sesotho</option>
-                                <option value="sn">Shona</option>
-                                <option value="sd">Sindhi</option>
-                                <option value="si">Sinhala</option>
-                                <option value="sk">Slovak</option>
-                                <option value="sl">Slovenian</option>
-                                <option value="so">Somali</option>
-                                <option value="es">Spanish</option>
-                                <option value="su">Sundanese</option>
-                                <option value="sw">Swahili</option>
-                                <option value="sv">Swedish</option>
-                                <option value="tg">Tajik</option>
-                                <option value="ta">Tamil</option>
-                                <option value="te">Telugu</option>
-                                <option value="th">Thai</option>
-                                <option value="tr">Turkish</option>
-                                <option value="uk">Ukrainian</option>
-                                <option value="ur">Urdu</option>
-                                <option value="uz">Uzbek</option>
-                                <option value="vi">Vietnamese</option>
-                                <option value="cy">Welsh</option>
-                                <option value="xh">Xhosa</option>
-                                <option value="yi">Yiddish</option>
-                                <option value="yo">Yoruba</option>
-                                <option value="zu">Zulu</option>
-                            </select>
-                        </div>
-                        <button onclick="translateWidget()" class="btn-primary" id="btnTranslateAction"
-                            style="height:48px; border-radius:12px;">
-                            <i class="fas fa-arrow-right-arrow-left"></i>
+                <div class="tool-body" style="gap: 14px;">
+                    <!-- Language Controls -->
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="transSourceLang" class="modern-select" style="flex: 1;" onchange="translateWidget()">
+                            <option value="auto">Auto Detect</option>
+                        </select>
+                        
+                        <button id="btnSwapLang" onclick="swapLanguages()" class="btn-icon" title="Swap Languages" 
+                            style="width: 42px; height: 42px; min-width: 42px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-dim);">
+                            <i class="fas fa-right-left" style="font-size: 0.9rem; color: var(--accent-orange);"></i>
                         </button>
+                        
+                        <select id="transTargetLang" class="modern-select" style="flex: 1;" onchange="translateWidget()">
+                            <!-- Populated by JS -->
+                        </select>
                     </div>
 
-                    <div class="result-section" style="margin-top:20px;">
-                        <div class="result-status" style="justify-content: space-between; display: flex;">
-                            <label class="result-header">Translation Output</label>
-                            <button class="copy-text-btn" onclick="copyTranslation()" title="Copy to Clipboard"
-                                style="display:none;" id="btnCopyTrans">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                        </div>
-                        <div id="transOutput" class="valuation-output"
-                            style="align-items: flex-start; text-align: left; min-height: 100px; padding: 16px; font-size: 0.95rem; line-height: 1.5; color: var(--text-bright);">
-                            <div
-                                style="width:100%; text-align:center; color:var(--text-muted); opacity:0.6; margin-top:24px;">
-                                <i class="fas fa-language" style="font-size:1.5rem; margin-bottom:8px;"></i>
-                                <p>Ready to Translate</p>
-                            </div>
-                        </div>
+                    <!-- Input Area -->
+                    <div class="form-row" style="flex: 1;">
+                        <textarea id="transInput" class="modern-input" 
+                            placeholder="Type to translate..." 
+                            style="resize:none; padding:14px; font-size:0.95rem; height: 100%; min-height: 90px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-dim);"
+                            oninput="debounceTranslate()"></textarea>
+                    </div>
+
+                    <!-- Output Area -->
+                    <div class="form-row" style="flex: 1; position: relative;">
+                        <textarea id="transOutput" class="modern-input" 
+                            placeholder="Translation..." 
+                            readonly
+                            style="resize:none; padding:14px; font-size:0.95rem; height: 100%; min-height: 90px; background: rgba(255,255,255,0.05); color: var(--text-bright); border: 1px solid var(--border-dim);"></textarea>
+                        
+                        <button class="copy-btn" onclick="copyTranslation()" title="Copy" id="btnCopyTrans"
+                            style="position: absolute; bottom: 12px; right: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; width: 32px; height: 32px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                            <i class="fas fa-copy"></i>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -454,6 +351,8 @@
                 </div>
             </section>
 
+
+
             <!-- Habit Tracker Card -->
             <section class="tool-card habit-hub">
                 <div class="card-title">
@@ -462,44 +361,77 @@
                     </div>
                     <div class="title-text">
                         <h3>Habit Tracker</h3>
-                         </div>
+                    </div>
+                    <div class="title-action">
+                         <div id="dailyProgress" style="font-size:0.8rem; opacity:0.8;">0/0</div>
+                    </div>
+                </div>
+
+                <div class="tool-body">
+                    <div id="habitList" class="habit-list" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                        <div class="loading-state">Syncing Habits...</div>
                     </div>
 
-                    <div class="tool-body">
-                        <div id="habitList" class="habit-list">
-                            <!-- Habits rendered here -->
-                            <div class="empty-state">
-                                <i class="fas fa-seedling"></i>
-                                <p>Start a new habit today!</p>
+                    <div class="add-habit-section" style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
+                        <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
+                            <div class="form-row" style="margin-bottom:8px;">
+                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Habit Name</label>
+                                <input type="text" id="newHabitName" class="modern-input" placeholder="e.g. Morning Jog" style="padding:10px;">
+                            </div>
+                            
+                            <div class="form-row" style="margin-bottom:8px;">
+                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Description / Goal</label>
+                                <input type="text" id="newHabitGoal" class="modern-input" placeholder="e.g. Run 3 miles" style="padding:10px;">
+                            </div>
+
+                            <div class="form-row" style="margin-bottom:8px;">
+                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Start Date</label>
+                                <input type="date" id="newHabitStartDate" class="modern-input" style="padding:10px;">
+                            </div>
+
+                            <div class="form-row" style="margin-bottom:8px;">
+                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Frequency</label>
+                                <select id="newHabitType" class="modern-select" onchange="toggleCustomDaysInput()" style="padding:10px;">
+                                    <option value="Daily">Daily</option>
+                                    <option value="Custom">Custom Days</option>
+                                </select>
+                            </div>
+
+                            <div id="customDaysInput" style="display:none; margin-bottom:12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                                <label style="font-size:0.8rem; margin-bottom:8px; display:block; opacity:0.7;">Select Active Days</label>
+                                <div class="days-grid" style="display:flex; gap:8px; flex-wrap:wrap; justify-content: space-between;">
+                                    <label class="day-checkbox"><input type="checkbox" value="Monday"> <span>M</span></label>
+                                    <label class="day-checkbox"><input type="checkbox" value="Tuesday"> <span>T</span></label>
+                                    <label class="day-checkbox"><input type="checkbox" value="Wednesday"> <span>W</span></label>
+                                    <label class="day-checkbox"><input type="checkbox" value="Thursday"> <span>T</span></label>
+                                    <label class="day-checkbox"><input type="checkbox" value="Friday"> <span>F</span></label>
+                                    <label class="day-checkbox"><input type="checkbox" value="Saturday"> <span>S</span></label>
+                                    <label class="day-checkbox"><input type="checkbox" value="Sunday"> <span>S</span></label>
+                                </div>
+                            </div>
+
+                            <div class="action-group" style="margin-top:12px; display: flex; gap: 8px;">
+                                <button onclick="saveNewHabit()" class="btn-primary" style="flex:1; border-radius:8px;">
+                                    Create
+                                </button>
+                                <button onclick="toggleAddHabitForm()" class="btn-secondary" style="flex:1; border-radius:8px; background: rgba(255,255,255,0.1);">
+                                    Cancel
+                                </button>
                             </div>
                         </div>
 
-                        <div class="add-habit-section"
-                            style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
-                            <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
-                                <div class="form-row" style="margin-bottom:8px;">
-                                    <input type="text" id="newHabitName" class="modern-input"
-                                        placeholder="Habit Name (e.g. Read 10 pages)" style="padding:10px;">
-                                </div>
-                                <div class="form-grid" style="grid-template-columns: 1fr auto; gap:8px;">
-                                    <select id="newHabitType" class="modern-select" style="padding:10px;">
-                                        <option value="daily">Daily Goal</option>
-                                        <option value="weekly">Weekly Goal</option>
-                                    </select>
-                                    <button onclick="saveNewHabit()" class="btn-primary"
-                                        style="padding:0 20px; border-radius:8px;">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                                <button onclick="toggleAddHabitForm()" class="text-btn"
-                                    style="width:100%; margin-top:8px; font-size:0.8rem; opacity:0.7;">Cancel</button>
-                            </div>
+                        <div style="display:flex; gap:10px;">
                             <button id="showAddHabitBtn" onclick="toggleAddHabitForm()" class="btn-secondary"
-                                style="width:100%; border-radius:12px; padding:12px;">
+                                style="flex:1; border-radius:12px; padding:12px;">
                                 <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Habit
+                            </button>
+                            <button onclick="openHabitVault()" class="btn-secondary" title="View All Saved Habits"
+                                style="width:auto; padding:0 20px; border-radius:12px;">
+                                <i class="fas fa-list"></i>
                             </button>
                         </div>
                     </div>
+                </div>
             </section>
 
 
@@ -510,1585 +442,1695 @@
 
 
 <link rel="stylesheet" href="~/css/dashboard.css" />
+<link rel="stylesheet" href="~/css/dashboard_modal.css" />
+
+<!-- Habit Vault Modal -->
+<div id="habitVaultModal" class="modal-overlay" style="display:none;" onclick="if(event.target === this) closeHabitVault()">
+    <div class="modal-content glass-panel" style="max-width: 600px; width: 90%; max-height: 80vh; display:flex; flex-direction:column;">
+        <div class="modal-header" style="padding: 20px; border-bottom: 1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="title-icon green-glow" style="width:40px; height:40px; font-size:1.2rem;">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <h3 style="margin:0; font-size:1.2rem;">Habit Vault</h3>
+            </div>
+            <button class="icon-btn" onclick="closeHabitVault()"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="habitVaultList" class="modal-body" style="padding: 0; overflow-y: auto; flex:1;">
+             <!-- Items -->
+        </div>
+        <div class="modal-footer" style="padding:16px; border-top:1px solid var(--border-dim); text-align:right; color:var(--text-muted); font-size:0.8rem;">
+            Total Stored Habits: <span id="vaultCount">0</span>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
-    <script>
-        function getWeatherDesc(code) {
-            const map = {
-                0: 'Clear skies', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
-                45: 'Fog', 48: 'Depositing rime fog', 51: 'Light drizzle', 53: 'Moderate drizzle',
-                55: 'Dense drizzle', 61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
-                71: 'Slight snow', 73: 'Moderate snow', 75: 'Heavy snow', 77: 'Snow grains',
-                80: 'Slight rain showers', 81: 'Moderate rain showers', 82: 'Violent rain showers',
-                95: 'Thunderstorm', 96: 'Thunderstorm with slight hail', 99: 'Thunderstorm with heavy hail'
-            };
-            return map[code] || 'Clear skies';
-        }
-
-        const weatherIcons = {
-            0: 'fa-sun', 1: 'fa-cloud-sun', 2: 'fa-cloud-sun', 3: 'fa-cloud',
-            45: 'fa-smog', 48: 'fa-smog', 51: 'fa-cloud-rain', 53: 'fa-cloud-rain',
-            55: 'fa-cloud-showers-heavy', 61: 'fa-cloud-rain', 63: 'fa-cloud-rain',
-            65: 'fa-cloud-showers-heavy', 71: 'fa-snowflake', 73: 'fa-snowflake',
-            75: 'fa-snowflake', 80: 'fa-cloud-bolt', 81: 'fa-cloud-bolt',
-            82: 'fa-cloud-bolt', 95: 'fa-bolt-lightning'
-        };
-
-        function getIcon(code) { return weatherIcons[code] || 'fa-cloud'; }
-
-        // --- GLOBAL NETWORK NODES ---
-        let allNodes = [];
-        const initialNodes = [
-            { name: "Ahmedabad", lat: 23.0225, lon: 72.5714, cc: "GJ, IN" },
-            { name: "Surat", lat: 21.1702, lon: 72.8311, cc: "GJ, IN" },
-            { name: "Vadodara", lat: 22.3072, lon: 73.1812, cc: "GJ, IN" },
-            { name: "Rajkot", lat: 22.3039, lon: 70.8022, cc: "GJ, IN" },
-            { name: "London", lat: 51.5074, lon: -0.1278, cc: "GB" },
-            { name: "New York", lat: 40.7128, lon: -74.0060, cc: "US" },
-            { name: "Tokyo", lat: 35.6895, lon: 139.6917, cc: "JP" },
-            { name: "Mumbai", lat: 19.0760, lon: 72.8777, cc: "IN" },
-            { name: "Delhi", lat: 28.6139, lon: 77.2090, cc: "IN" }
-        ];
-
-        async function initNodeDirectory() {
-            const container = document.getElementById('worldWeatherList');
-            if (container) {
-                container.innerHTML = `<div class="loading-state">Syncing Global Nodes...</div>`;
-            }
-
-            allNodes = [];
-            for (const n of initialNodes) {
-                try {
-                    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${n.lat}&longitude=${n.lon}&current=temperature_2m,weather_code`);
-                    const data = await res.json();
-                    allNodes.push({ ...n, weather: data.current });
-                } catch (e) { }
-            }
-            renderNodes(allNodes);
-        }
-
-        function renderNodes(nodes) {
-            const container = document.getElementById('worldWeatherList');
-            const nodeCount = document.getElementById('nodeCount');
-            if (!container) return;
-            container.innerHTML = '';
-
-            if (nodeCount) {
-                nodeCount.innerText = `${nodes.length} Nodes Active`;
-            }
-
-            for (const item of nodes) {
-                const el = document.createElement('div');
-                el.className = 'node-item slide-in';
-
-                el.onclick = () => {
-                    fetchWeatherDeep(item.lat, item.lon, `${item.name}, ${item.cc}`);
+        <script>
+            function getWeatherDesc(code) {
+                const map = {
+                    0: 'Clear skies', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+                    45: 'Fog', 48: 'Depositing rime fog', 51: 'Light drizzle', 53: 'Moderate drizzle',
+                    55: 'Dense drizzle', 61: 'Slight rain', 63: 'Moderate rain', 65: 'Heavy rain',
+                    71: 'Slight snow', 73: 'Moderate snow', 75: 'Heavy snow', 77: 'Snow grains',
+                    80: 'Slight rain showers', 81: 'Moderate rain showers', 82: 'Violent rain showers',
+                    95: 'Thunderstorm', 96: 'Thunderstorm with slight hail', 99: 'Thunderstorm with heavy hail'
                 };
-
-                const iconClass = getIcon(item.weather.weather_code);
-                const temp = Math.round(item.weather.temperature_2m);
-                el.innerHTML = `<div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
-                                                                                                                                                <div class="node-data"><i class="fas ${iconClass}"></i>
-                                                                                                                                                <b>${temp}°C</b></div>`;
-                container.appendChild(el);
-            }
-        }
-
-        function getCurrentLocation() {
-            const display = document.getElementById('weatherResult');
-            display.innerHTML = `<div class="loading-state">Triangulating Satellite Uplink...</div>`;
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (p) => fetchWeatherDeep(p.coords.latitude, p.coords.longitude, "Local Terminal"),
-                    () => {
-                        display.innerHTML = `<div class="text-danger">Uplink Interrupted</div>`;
-                    }
-                );
-            }
-        }
-
-        async function getWeather(cityOverride) {
-            const query = cityOverride || document.getElementById('cityInput').value || 'London';
-            try {
-                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`);
-                const data = await res.json();
-                if (!data.results) {
-                    document.getElementById('weatherResult').innerHTML = `<div class="text-danger">City not found</div>`;
-                    return;
-                }
-                const { latitude, longitude, name, country } = data.results[0];
-                fetchWeatherDeep(latitude, longitude, `${name}, ${country}`);
-            } catch (e) {
-                document.getElementById('weatherResult').innerHTML = `<div class="text-danger">City not found</div>`;
-            }
-        }
-
-        async function fetchWeatherDeep(lat, lon, label) {
-            const display = document.getElementById('weatherResult');
-            try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`);
-                const data = await res.json();
-                const cur = data.current;
-                const timezone = data.timezone;
-
-                const weatherDesc = getWeatherDesc(cur.weather_code);
-
-                // Calculate Local Time
-                let localTimeStr = "--:--";
-                try {
-                    const date = new Date();
-                    localTimeStr = new Intl.DateTimeFormat('en-US', {
-                        timeZone: timezone, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
-                    }).format(date);
-                } catch (e) { console.error("Time calc error", e); }
-
-                display.innerHTML = `
-                                                                                                                                                                                    <div class="loc-label slide-in">${label}</div>
-                                                                                                                                                                                    <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
-                                                                                                                                                                                    <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
-                                                                                                                                                                                    <div class="weather-desc slide-in">${weatherDesc}</div>
-                                                                                                                                                                                    <div class="stats-deep slide-in">
-                                                                                                                                                                                        <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
-                                                                                                                                                                                        <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
-                                                                                                                                                                                    </div>`;
-            } catch (e) {
-                display.innerHTML = `<div class="text-danger">Satellite Link Failure</div>`;
-            }
-        }
-
-
-        // --- FISCAL & TIMEZONE DATA ---
-        let currencyContext = null; // Stores { city: string, country: string, currency: string }
-
-        /* --- SHARED DATASET --- */
-        /* --- SHARED DATASET --- */
-        let globalLocationData = []; // The master list for both Currency and Timezone
-        let emergencyCountryList = []; // Master list for Emergency Search
-
-        async function initFiscal(preserveState = false) {
-            const f = document.getElementById('fromCurrency');
-            const t = document.getElementById('toCurrency');
-
-            // Capture current selection if preserving state
-            let currentVals = {};
-            if (preserveState) {
-                currentVals = { f: f.value, t: t.value };
+                return map[code] || 'Clear skies';
             }
 
-            // Major Non-Capital Cities (IANA Timezones) to ensure comprehensive global coverage
-            const extraCities = [
-                { country: "United States", city: "New York", currency: "USD", timezone: "America/New_York", code: "US" },
-                { country: "United States", city: "Los Angeles", currency: "USD", timezone: "America/Los_Angeles", code: "US" },
-                { country: "United States", city: "Chicago", currency: "USD", timezone: "America/Chicago", code: "US" },
-                { country: "India", city: "Mumbai", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
-                { country: "India", city: "Bengaluru", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
-                { country: "India", city: "Delhi", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
-                { country: "United Kingdom", city: "London", currency: "GBP", timezone: "Europe/London", code: "GB" },
-                { country: "Japan", city: "Tokyo", currency: "JPY", timezone: "Asia/Tokyo", code: "JP" },
-                { country: "China", city: "Shanghai", currency: "CNY", timezone: "Asia/Shanghai", code: "CN" },
-                { country: "Germany", city: "Berlin", currency: "EUR", timezone: "Europe/Berlin", code: "DE" },
-                { country: "France", city: "Paris", currency: "EUR", timezone: "Europe/Paris", code: "FR" },
-                { country: "Australia", city: "Sydney", currency: "AUD", timezone: "Australia/Sydney", code: "AU" },
-                { country: "Canada", city: "Toronto", currency: "CAD", timezone: "America/Toronto", code: "CA" },
-                { country: "United Arab Emirates", city: "Dubai", currency: "AED", timezone: "Asia/Dubai", code: "AE" },
-                { country: "Singapore", city: "Singapore", currency: "SGD", timezone: "Asia/Singapore", code: "SG" }
+            const weatherIcons = {
+                0: 'fa-sun', 1: 'fa-cloud-sun', 2: 'fa-cloud-sun', 3: 'fa-cloud',
+                45: 'fa-smog', 48: 'fa-smog', 51: 'fa-cloud-rain', 53: 'fa-cloud-rain',
+                55: 'fa-cloud-showers-heavy', 61: 'fa-cloud-rain', 63: 'fa-cloud-rain',
+                65: 'fa-cloud-showers-heavy', 71: 'fa-snowflake', 73: 'fa-snowflake',
+                75: 'fa-snowflake', 80: 'fa-cloud-bolt', 81: 'fa-cloud-bolt',
+                82: 'fa-cloud-bolt', 95: 'fa-bolt-lightning'
+            };
+
+            function getIcon(code) { return weatherIcons[code] || 'fa-cloud'; }
+
+            // --- GLOBAL NETWORK NODES ---
+            let allNodes = [];
+            const initialNodes = [
+                { name: "Ahmedabad", lat: 23.0225, lon: 72.5714, cc: "GJ, IN" },
+                { name: "Surat", lat: 21.1702, lon: 72.8311, cc: "GJ, IN" },
+                { name: "Vadodara", lat: 22.3072, lon: 73.1812, cc: "GJ, IN" },
+                { name: "Rajkot", lat: 22.3039, lon: 70.8022, cc: "GJ, IN" },
+                { name: "London", lat: 51.5074, lon: -0.1278, cc: "GB" },
+                { name: "New York", lat: 40.7128, lon: -74.0060, cc: "US" },
+                { name: "Tokyo", lat: 35.6895, lon: 139.6917, cc: "JP" },
+                { name: "Mumbai", lat: 19.0760, lon: 72.8777, cc: "IN" },
+                { name: "Delhi", lat: 28.6139, lon: 77.2090, cc: "IN" }
             ];
 
-            // IMMEDIATE RENDER of reliable static data (Popular)
-            globalLocationData = [...extraCities];
+            async function initNodeDirectory() {
+                const container = document.getElementById('worldWeatherList');
+                if (container) {
+                    container.innerHTML = `<div class="loading-state">Syncing Global Nodes...</div>`;
+                }
 
-            // Define Helper Functions LOCALLY to ensure they exist
-            const createOpt = (c) => {
-                const val = `${c.currency}|${c.country}`;
-                const opt = new Option(`${c.city}, ${c.country}`, val);
-                opt.setAttribute('data-city', c.city);
-                opt.setAttribute('data-country', c.country);
-                opt.setAttribute('data-currency', c.currency);
-                opt.setAttribute('data-timezone', c.timezone);
-                return opt;
-            };
+                allNodes = [];
+                for (const n of initialNodes) {
+                    try {
+                        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${n.lat}&longitude=${n.lon}&current=temperature_2m,weather_code`);
+                        const data = await res.json();
+                        allNodes.push({ ...n, weather: data.current });
+                    } catch (e) { }
+                }
+                renderNodes(allNodes);
+            }
 
-            const appendGroup = (parent, label, items) => {
-                if (items.length === 0) return;
-                const group = document.createElement('optgroup');
-                group.label = label;
-                items.forEach(c => group.appendChild(createOpt(c)));
-                parent.appendChild(group);
-            };
+            function renderNodes(nodes) {
+                const container = document.getElementById('worldWeatherList');
+                const nodeCount = document.getElementById('nodeCount');
+                if (!container) return;
+                container.innerHTML = '';
 
-            // Helper to populate
-            const populateDropdowns = async (data) => {
-                f.innerHTML = ''; t.innerHTML = '';
-                const uniqueLocs = [];
-                const seen = new Set();
-                data.forEach(loc => {
-                    const key = `${loc.city}|${loc.country}`;
-                    if (!seen.has(key)) { seen.add(key); uniqueLocs.push(loc); }
-                });
-                const sorted = uniqueLocs.sort((a, b) => a.city.localeCompare(b.city));
+                if (nodeCount) {
+                    nodeCount.innerText = `${nodes.length} Nodes Active`;
+                }
 
-                const popNames = ['United States', 'India', 'United Kingdom', 'Japan', 'China', 'Germany', 'France', 'Australia', 'Canada', 'Switzerland', 'United Arab Emirates', 'Singapore'];
-                const topLocs = sorted.filter(c => popNames.includes(c.country));
-                const otherLocs = sorted.filter(c => !popNames.includes(c.country));
+                for (const item of nodes) {
+                    const el = document.createElement('div');
+                    el.className = 'node-item slide-in';
 
-                appendGroup(f, 'Popular', topLocs);
-                appendGroup(f, 'Global Locations', otherLocs);
-
-                appendGroup(t, 'Popular', topLocs);
-                appendGroup(t, 'Global Locations', otherLocs);
-
-                // Restore or Default
-                if (preserveState && currentVals.f && currentVals.t) {
-                    f.value = currentVals.f; t.value = currentVals.t;
-                } else {
-                    const setDefault = (el, country) => {
-                        for (let i = 0; i < el.options.length; i++) {
-                            if (el.options[i].getAttribute('data-country') === country) {
-                                el.selectedIndex = i; break;
-                            }
-                        }
+                    el.onclick = () => {
+                        fetchWeatherDeep(item.lat, item.lon, `${item.name}, ${item.cc}`);
                     };
-                    setDefault(f, 'United States');
-                    setDefault(t, 'India');
+
+                    const iconClass = getIcon(item.weather.weather_code);
+                    const temp = Math.round(item.weather.temperature_2m);
+                    el.innerHTML = `<div><h4>${item.name}</h4><span>Region: ${item.cc}</span></div>
+                                                                                                                                                    <div class="node-data"><i class="fas ${iconClass}"></i>
+                                                                                                                                                    <b>${temp}°C</b></div>`;
+                    container.appendChild(el);
                 }
-            };
+            }
 
-            // 1. Render Defaults Immediately
-            // 1. Render Defaults Immediately
-            await populateDropdowns(globalLocationData);
-            // Pre-fill emergency list with static data
-            emergencyCountryList = extraCities.map(c => ({ name: c.country, code: c.code }));
+            function getCurrentLocation() {
+                const display = document.getElementById('weatherResult');
+                display.innerHTML = `<div class="loading-state">Triangulating Satellite Uplink...</div>`;
 
-            initTimezones(); // Needed for clock
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (p) => fetchWeatherDeep(p.coords.latitude, p.coords.longitude, "Local Terminal"),
+                        () => {
+                            display.innerHTML = `<div class="text-danger">Uplink Interrupted</div>`;
+                        }
+                    );
+                }
+            }
 
-            try {
-                // 2. Fetch Country/Currency Data (Background Enhancement)
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 4000);
-
-                const res = await fetch('https://restcountries.com/v3.1/all?fields=name,currencies,flags,cca2,capital,timezones', { signal: controller.signal });
-                clearTimeout(timeoutId);
-
-                const data = await res.json();
-
-
-
-                // 2. Build Base List from Countries (Capitals)
-                let apiLocations = data
-                    .filter(c => c.currencies && Object.keys(c.currencies).length > 0)
-                    .map(c => {
-                        const code = Object.keys(c.currencies)[0];
-                        const city = (c.capital && c.capital.length > 0) ? c.capital[0] : c.name.common;
-                        return {
-                            country: c.name.common,
-                            code: c.cca2,
-                            city: city,
-                            flag: c.flags.svg || '',
-                            currency: code,
-                            symbol: c.currencies[code].symbol,
-                            timezone: (c.timezones && c.timezones.length > 0 && (c.timezones[0] === 'UTC' || c.timezones[0].includes('/')))
-                                ? c.timezones[0]
-                                : null
-                        };
-                    });
-
-                // 3. Merge and Sort
-                const finalApiList = [...extraCities, ...apiLocations];
-                // Update Global List
-                globalLocationData = finalApiList;
-
-                // Update Emergency Search List (Countries + Cities)
-                const eList = [];
-                const addedCodes = new Set();
-
-                finalApiList.forEach(loc => {
-                    if (!loc.code) return;
-
-                    // Add City (if distinct from country name)
-                    if (loc.city && loc.city !== loc.country) {
-                        eList.push({
-                            name: loc.city,
-                            code: loc.code,
-                            official: loc.country,
-                            type: 'city',
-                            parent: loc.country
-                        });
+            async function getWeather(cityOverride) {
+                const query = cityOverride || document.getElementById('cityInput').value || 'London';
+                try {
+                    const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&count=1&language=en&format=json`);
+                    const data = await res.json();
+                    if (!data.results) {
+                        document.getElementById('weatherResult').innerHTML = `<div class="text-danger">City not found</div>`;
+                        return;
                     }
+                    const { latitude, longitude, name, country } = data.results[0];
+                    fetchWeatherDeep(latitude, longitude, `${name}, ${country}`);
+                } catch (e) {
+                    document.getElementById('weatherResult').innerHTML = `<div class="text-danger">City not found</div>`;
+                }
+            }
 
-                    // Add Country (Unique)
-                    if (!addedCodes.has(loc.code)) {
-                        addedCodes.add(loc.code);
-                        eList.push({
-                            name: loc.country,
-                            code: loc.code,
-                            official: loc.country,
-                            type: 'country'
-                        });
-                    }
-                });
-                emergencyCountryList = eList;
+            async function fetchWeatherDeep(lat, lon, label) {
+                const display = document.getElementById('weatherResult');
+                try {
+                    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`);
+                    const data = await res.json();
+                    const cur = data.current;
+                    const timezone = data.timezone;
 
+                    const weatherDesc = getWeatherDesc(cur.weather_code);
 
+                    // Calculate Local Time
+                    let localTimeStr = "--:--";
+                    try {
+                        const date = new Date();
+                        localTimeStr = new Intl.DateTimeFormat('en-US', {
+                            timeZone: timezone, weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                        }).format(date);
+                    } catch (e) { console.error("Time calc error", e); }
 
-                await populateDropdowns(globalLocationData);
-                initTimezones(); // Refresh Timezone List with full data
-
-            } catch (e) {
-                console.warn('Fiscal API failed or timed out, keeping default list.', e);
+                    display.innerHTML = `
+                                                                                                                                                                                        <div class="loc-label slide-in">${label}</div>
+                                                                                                                                                                                        <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;" class="slide-in">${localTimeStr}</div>
+                                                                                                                                                                                        <div class="temp-hero slide-in">${Math.round(cur.temperature_2m)}°</div>
+                                                                                                                                                                                        <div class="weather-desc slide-in">${weatherDesc}</div>
+                                                                                                                                                                                        <div class="stats-deep slide-in">
+                                                                                                                                                                                            <div class="stat-box"><i class="fas fa-droplet"></i> <label>Humidity</label> <b>${cur.relative_humidity_2m}%</b></div>
+                                                                                                                                                                                            <div class="stat-box"><i class="fas fa-wind"></i> <label>Wind Velocity</label> <b>${Math.round(cur.wind_speed_10m)} km/h</b></div>
+                                                                                                                                                                                        </div>`;
+                } catch (e) {
+                    display.innerHTML = `<div class="text-danger">Satellite Link Failure</div>`;
+                }
             }
 
 
-            // End Init
-        }
+            // --- FISCAL & TIMEZONE DATA ---
+            let currencyContext = null; // Stores { city: string, country: string, currency: string }
+
+            /* --- SHARED DATASET --- */
+            /* --- SHARED DATASET --- */
+            let globalLocationData = []; // The master list for both Currency and Timezone
+            let emergencyCountryList = []; // Master list for Emergency Search
 
 
+            async function initFiscal(preserveState = false) {
+                const f = document.getElementById('fromCurrency');
+                const t = document.getElementById('toCurrency');
 
-
-
-        async function fetchLatestRates(shouldConvert = true) {
-            const rawVal = document.getElementById('fromCurrency').value;
-            // Ensure we have a value. If list empty (load error), return.
-            if (!rawVal) return;
-
-            const f = rawVal.split('|')[0];
-            try {
-                // Using a fallback or free API
-                const res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
-                const data = await res.json();
-                window.baseCurrencyRates = data.rates;
-
-                const updateEl = document.getElementById('lastExchangeUpdate');
-
-                if (updateEl) {
-                    updateEl.innerText = `Last Synced: ${new Date().toLocaleTimeString()} (${f})`;
+                // Capture current selection if preserving state
+                let currentVals = {};
+                if (preserveState) {
+                    currentVals = { f: f.value, t: t.value };
                 }
 
-                // Only convert if requested (user action)
-                if (shouldConvert) convertCurrency();
+                // Major Non-Capital Cities (IANA Timezones) to ensure comprehensive global coverage
+                const extraCities = [
+                    { country: "United States", city: "New York", currency: "USD", timezone: "America/New_York", code: "US" },
+                    { country: "United States", city: "Los Angeles", currency: "USD", timezone: "America/Los_Angeles", code: "US" },
+                    { country: "United States", city: "Chicago", currency: "USD", timezone: "America/Chicago", code: "US" },
+                    { country: "India", city: "Mumbai", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
+                    { country: "India", city: "Bengaluru", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
+                    { country: "India", city: "Delhi", currency: "INR", timezone: "Asia/Kolkata", code: "IN" },
+                    { country: "United Kingdom", city: "London", currency: "GBP", timezone: "Europe/London", code: "GB" },
+                    { country: "Japan", city: "Tokyo", currency: "JPY", timezone: "Asia/Tokyo", code: "JP" },
+                    { country: "China", city: "Shanghai", currency: "CNY", timezone: "Asia/Shanghai", code: "CN" },
+                    { country: "Germany", city: "Berlin", currency: "EUR", timezone: "Europe/Berlin", code: "DE" },
+                    { country: "France", city: "Paris", currency: "EUR", timezone: "Europe/Paris", code: "FR" },
+                    { country: "Australia", city: "Sydney", currency: "AUD", timezone: "Australia/Sydney", code: "AU" },
+                    { country: "Canada", city: "Toronto", currency: "CAD", timezone: "America/Toronto", code: "CA" },
+                    { country: "United Arab Emirates", city: "Dubai", currency: "AED", timezone: "Asia/Dubai", code: "AE" },
+                    { country: "Singapore", city: "Singapore", currency: "SGD", timezone: "Asia/Singapore", code: "SG" }
+                ];
 
-            } catch (e) { console.error('Rate Fetch Error:', e); }
-        }
+                // IMMEDIATE RENDER of reliable static data (Popular)
+                globalLocationData = [...extraCities];
 
-        async function convertCurrency() {
-            const amount = parseFloat(document.getElementById('amountInput').value) || 0;
-            const fEl = document.getElementById('fromCurrency');
-            const tEl = document.getElementById('toCurrency');
-
-            const rawF = fEl.value;
-            const rawT = tEl.value;
-            if (!rawF || !rawT) return;
-
-            const f = rawF.split('|')[0];
-            const t = rawT.split('|')[0];
-
-            // Logic to update stored context based on user interaction
-            const getMeta = (el) => {
-                const opt = el.options[el.selectedIndex];
-                if (!opt) return null;
-                return {
-                    city: opt.getAttribute('data-city'),
-                    country: opt.getAttribute('data-country'),
-                    currency: opt.getAttribute('data-currency'),
-                    timezone: opt.getAttribute('data-timezone')
+                // Define Helper Functions LOCALLY to ensure they exist
+                const createOpt = (c) => {
+                    const val = `${c.currency}|${c.country}`;
+                    const opt = new Option(`${c.city}, ${c.country}`, val);
+                    opt.setAttribute('data-city', c.city);
+                    opt.setAttribute('data-country', c.country);
+                    opt.setAttribute('data-currency', c.currency);
+                    opt.setAttribute('data-timezone', c.timezone);
+                    return opt;
                 };
-            };
 
-            let targetMeta = getMeta(tEl);
-            let baseMeta = getMeta(fEl);
+                const appendGroup = (parent, label, items) => {
+                    if (items.length === 0) return;
+                    const group = document.createElement('optgroup');
+                    group.label = label;
+                    items.forEach(c => group.appendChild(createOpt(c)));
+                    parent.appendChild(group);
+                };
 
-            if (!currencyContext || (currencyContext.country !== baseMeta.country && currencyContext.country !== targetMeta.country)) {
-                currencyContext = targetMeta;
+                // Helper to populate
+                const populateDropdowns = async (data) => {
+                    f.innerHTML = ''; t.innerHTML = '';
+                    const uniqueLocs = [];
+                    const seen = new Set();
+                    data.forEach(loc => {
+                        const key = `${loc.city}|${loc.country}`;
+                        if (!seen.has(key)) { seen.add(key); uniqueLocs.push(loc); }
+                    });
+                    const sorted = uniqueLocs.sort((a, b) => a.city.localeCompare(b.city));
+
+                    const popNames = ['United States', 'India', 'United Kingdom', 'Japan', 'China', 'Germany', 'France', 'Australia', 'Canada', 'Switzerland', 'United Arab Emirates', 'Singapore'];
+                    const topLocs = sorted.filter(c => popNames.includes(c.country));
+                    const otherLocs = sorted.filter(c => !popNames.includes(c.country));
+
+                    appendGroup(f, 'Popular', topLocs);
+                    appendGroup(f, 'Global Locations', otherLocs);
+
+                    appendGroup(t, 'Popular', topLocs);
+                    appendGroup(t, 'Global Locations', otherLocs);
+
+                    // Restore or Default
+                    if (preserveState && currentVals.f && currentVals.t) {
+                        f.value = currentVals.f; t.value = currentVals.t;
+                    } else {
+                        const setDefault = (el, country) => {
+                            for (let i = 0; i < el.options.length; i++) {
+                                if (el.options[i].getAttribute('data-country') === country) {
+                                    el.selectedIndex = i; break;
+                                }
+                            }
+                        };
+                        setDefault(f, 'United States');
+                        setDefault(t, 'India');
+                    }
+                };
+
+                // 1. Render Defaults Immediately
+                // 1. Render Defaults Immediately
+                await populateDropdowns(globalLocationData);
+                // Pre-fill emergency list with static data
+                emergencyCountryList = extraCities.map(c => ({ name: c.country, code: c.code }));
+
+
+                initTimezones(); // Needed for clock
+
+                try {
+                    // 2. Fetch Country/Currency Data (Background Enhancement)
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+                    const res = await fetch('https://restcountries.com/v3.1/all?fields=name,currencies,flags,cca2,capital,timezones', { signal: controller.signal });
+                    clearTimeout(timeoutId);
+
+                    const data = await res.json();
+
+
+
+                    // 2. Build Base List from Countries (Capitals)
+                    let apiLocations = data
+                        .filter(c => c.currencies && Object.keys(c.currencies).length > 0)
+                        .map(c => {
+                            const code = Object.keys(c.currencies)[0];
+                            const city = (c.capital && c.capital.length > 0) ? c.capital[0] : c.name.common;
+                            return {
+                                country: c.name.common,
+                                code: c.cca2,
+                                city: city,
+                                flag: c.flags.svg || '',
+                                currency: code,
+                                symbol: c.currencies[code].symbol,
+                                timezone: (c.timezones && c.timezones.length > 0 && (c.timezones[0] === 'UTC' || c.timezones[0].includes('/')))
+                                    ? c.timezones[0]
+                                    : null
+                            };
+                        });
+
+                    // 3. Merge and Sort
+                    const finalApiList = [...extraCities, ...apiLocations];
+                    // Update Global List
+                    globalLocationData = finalApiList;
+
+
+
+
+
+                    // Update Emergency Search List (Countries + Cities)
+                    const eList = [];
+                    const addedCodes = new Set();
+
+                    finalApiList.forEach(loc => {
+                        if (!loc.code) return;
+
+                        // Add City (if distinct from country name)
+                        if (loc.city && loc.city !== loc.country) {
+                            eList.push({
+                                name: loc.city,
+                                code: loc.code,
+                                official: loc.country,
+                                type: 'city',
+                                parent: loc.country
+                            });
+                        }
+
+                        // Add Country (Unique)
+                        if (!addedCodes.has(loc.code)) {
+                            addedCodes.add(loc.code);
+                            eList.push({
+                                name: loc.country,
+                                code: loc.code,
+                                official: loc.country,
+                                type: 'country'
+                            });
+                        }
+                    });
+                    emergencyCountryList = eList;
+
+
+                    await populateDropdowns(globalLocationData);
+                    initTimezones(); // Refresh Timezone List with full data
+
+                } catch (e) {
+                    console.warn('Fiscal API failed or timed out, keeping default list.', e);
+                }
+
+
+                // End Init
             }
 
-            const display = document.getElementById('currencyResult');
 
-            if (!window.baseCurrencyRates || !window.baseCurrencyRates[t]) {
-                display.innerHTML = `<div class="loading-state">Syncing New Base Rates...</div>`;
-                await fetchLatestRates();
-                // Check again
-                if (!window.baseCurrencyRates || !window.baseCurrencyRates[t]) return;
-            }
 
-            const rate = window.baseCurrencyRates[t];
-            const calc = amount * rate;
 
-            // Check Context for Location Display
-            let locationDisplay = '';
 
-            if (currencyContext) {
-                let contextMatch = null;
-                if (currencyContext.country === baseMeta.country) contextMatch = 'Base';
-                else if (currencyContext.country === targetMeta.country) contextMatch = 'Target';
+            async function fetchLatestRates(shouldConvert = true) {
+                const rawVal = document.getElementById('fromCurrency').value;
+                // Ensure we have a value. If list empty (load error), return.
+                if (!rawVal) return;
 
-                if (contextMatch) {
-                    // Calculate Time
-                    let timeStr = '';
-                    if (currencyContext.timezone) {
-                        try {
-                            const now = new Date();
-                            const time = now.toLocaleTimeString('en-US', { timeZone: currencyContext.timezone, hour: '2-digit', minute: '2-digit' });
-                            const date = now.toLocaleDateString('en-US', { timeZone: currencyContext.timezone, day: 'numeric', month: 'short' });
-                            timeStr = `<div style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">
-                                                                                                                                                                                                                                                                 <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
-                                                                                                                                                                                                                                                               </div>`;
-                        } catch (e) { }
+                const f = rawVal.split('|')[0];
+                try {
+                    // Using a fallback or free API
+                    const res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
+                    const data = await res.json();
+                    window.baseCurrencyRates = data.rates;
+
+                    const updateEl = document.getElementById('lastExchangeUpdate');
+
+                    if (updateEl) {
+                        updateEl.innerText = `Last Synced: ${new Date().toLocaleTimeString()} (${f})`;
                     }
 
-                    const label = contextMatch === 'Base' ? 'Base Location' : 'Target Location';
-                    const city = currencyContext.city;
-                    const country = currencyContext.country;
+                    // Only convert if requested (user action)
+                    if (shouldConvert) convertCurrency();
 
-                    const colorVar = contextMatch === 'Base' ? 'var(--accent-primary)' : 'var(--accent-emerald)';
-                    const bgVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.1)' : 'rgba(52, 211, 153, 0.1)';
-                    const borderVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(52, 211, 153, 0.2)';
+                } catch (e) { console.error('Rate Fetch Error:', e); }
+            }
 
-                    locationDisplay = `<div style="text-align:center; margin-bottom: 12px; color: ${colorVar}; background: ${bgVar}; padding: 8px; border-radius: 8px; border: 1px solid ${borderVar};">
-                                                                                                                                                                                                                                                                 <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${label}</div>
-                                                                                                                                                                                                                                                                 <div style="font-weight: 700; font-size: 0.95rem;">
-                                                                                                                                                                                                                                                                    <i class="fas fa-location-dot"></i> ${city}, ${country}
-                                                                                                                                                                                                                                                                 </div>
-                                                                                                                                                                                                                                                                 ${timeStr}
-                                                                                                                                                                                                                                                               </div>`;
+            async function convertCurrency() {
+                const amount = parseFloat(document.getElementById('amountInput').value) || 0;
+                const fEl = document.getElementById('fromCurrency');
+                const tEl = document.getElementById('toCurrency');
+
+                const rawF = fEl.value;
+                const rawT = tEl.value;
+                if (!rawF || !rawT) return;
+
+                const f = rawF.split('|')[0];
+                const t = rawT.split('|')[0];
+
+                // Logic to update stored context based on user interaction
+                const getMeta = (el) => {
+                    const opt = el.options[el.selectedIndex];
+                    if (!opt) return null;
+                    return {
+                        city: opt.getAttribute('data-city'),
+                        country: opt.getAttribute('data-country'),
+                        currency: opt.getAttribute('data-currency'),
+                        timezone: opt.getAttribute('data-timezone')
+                    };
+                };
+
+                let targetMeta = getMeta(tEl);
+                let baseMeta = getMeta(fEl);
+
+                if (!currencyContext || (currencyContext.country !== baseMeta.country && currencyContext.country !== targetMeta.country)) {
+                    currencyContext = targetMeta;
+                }
+
+                const display = document.getElementById('currencyResult');
+
+                if (!window.baseCurrencyRates || !window.baseCurrencyRates[t]) {
+                    display.innerHTML = `<div class="loading-state">Syncing New Base Rates...</div>`;
+                    await fetchLatestRates();
+                    // Check again
+                    if (!window.baseCurrencyRates || !window.baseCurrencyRates[t]) return;
+                }
+
+                const rate = window.baseCurrencyRates[t];
+                const calc = amount * rate;
+
+                // Check Context for Location Display
+                let locationDisplay = '';
+
+                if (currencyContext) {
+                    let contextMatch = null;
+                    if (currencyContext.country === baseMeta.country) contextMatch = 'Base';
+                    else if (currencyContext.country === targetMeta.country) contextMatch = 'Target';
+
+                    if (contextMatch) {
+                        // Calculate Time
+                        let timeStr = '';
+                        if (currencyContext.timezone) {
+                            try {
+                                const now = new Date();
+                                const time = now.toLocaleTimeString('en-US', { timeZone: currencyContext.timezone, hour: '2-digit', minute: '2-digit' });
+                                const date = now.toLocaleDateString('en-US', { timeZone: currencyContext.timezone, day: 'numeric', month: 'short' });
+                                timeStr = `<div style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">
+                                                                                                                                                                                                                                                                     <i class="fas fa-clock" style="font-size:0.7em"></i> ${date} • ${time}
+                                                                                                                                                                                                                                                                   </div>`;
+                            } catch (e) { }
+                        }
+
+                        const label = contextMatch === 'Base' ? 'Base Location' : 'Target Location';
+                        const city = currencyContext.city;
+                        const country = currencyContext.country;
+
+                        const colorVar = contextMatch === 'Base' ? 'var(--accent-primary)' : 'var(--accent-emerald)';
+                        const bgVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.1)' : 'rgba(52, 211, 153, 0.1)';
+                        const borderVar = contextMatch === 'Base' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(52, 211, 153, 0.2)';
+
+                        locationDisplay = `<div style="text-align:center; margin-bottom: 12px; color: ${colorVar}; background: ${bgVar}; padding: 8px; border-radius: 8px; border: 1px solid ${borderVar};">
+                                                                                                                                                                                                                                                                     <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 4px;">${label}</div>
+                                                                                                                                                                                                                                                                     <div style="font-weight: 700; font-size: 0.95rem;">
+                                                                                                                                                                                                                                                                        <i class="fas fa-location-dot"></i> ${city}, ${country}
+                                                                                                                                                                                                                                                                     </div>
+                                                                                                                                                                                                                                                                     ${timeStr}
+                                                                                                                                                                                                                                                                   </div>`;
+                    }
+                }
+
+
+                display.innerHTML = `
+                                                                                                                                                                                                                                            ${locationDisplay}
+                                                                                                                                                                                                                                                <div class="val-grid">
+                                                                                                                                                                                                                                                    <div class="val-box slide-in highlight-border">
+                                                                                                                                                                                                                                                        <div class="val-label">${f}</div>
+                                                                                                                                                                                                                                                        <div class="val-number">${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+                                                                                                                                                                                                                                                        <div class="val-loc-meta">Base Amount</div>
+                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                    <div class="val-box slide-in">
+                                                                                                                                                                                                                                                        <div class="val-label">${t}</div>
+                                                                                                                                                                                                                                                        <div class="val-number highlight">${calc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                                                                                                                                                                                                                                         <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
+                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                </div>`;
+            }
+
+            /* --- TIMEZONE LOGIC --- */
+            function initTimezones() {
+                const select = document.getElementById('timezoneSelect');
+                if (!select) return;
+
+                // Preserve current selection if possible
+                const currentVal = select.value;
+                select.innerHTML = '';
+
+                // USE globalLocationData (Shared Dataset)
+                // Filter out entries that have garbage timezones (like "UTC+05:00") if we want strict IANA,
+                // BUT for the "System" to work, we accept what we have.
+                // Ideally we prioritized the `extraCities` for good IANA zones.
+
+                // Sort and Deduplicate
+                const sorted = [...globalLocationData].sort((a, b) => a.city.localeCompare(b.city));
+                const seen = new Set();
+
+                sorted.forEach(loc => {
+                    let tzValue = loc.timezone;
+                    // Only add if we have a valid timezone string
+                    if (!tzValue) return;
+
+                    const label = `${loc.city}, ${loc.country}`;
+                    if (seen.has(label)) return;
+                    seen.add(label);
+
+                    const opt = document.createElement('option');
+                    opt.value = tzValue;
+                    opt.text = `${loc.city}, ${loc.country}`;
+                    opt.setAttribute('data-full', tzValue);
+                    if (tzValue === currentVal) opt.selected = true;
+                    select.appendChild(opt);
+                });
+
+                // Default if nothing selected
+                if (select.selectedIndex === -1) {
+                    // Try to select Mumbai or New York
+                    for (let i = 0; i < select.options.length; i++) {
+                        if (select.options[i].value.includes('Kolkata') || select.options[i].value.includes('New_York')) {
+                            select.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                updateConvertedTime();
+            }
+
+            // Helper to get rigorous locale for formatting
+            function getCurrentLocale() {
+                const lang = (window.translator && window.translator.currentLang) ? window.translator.currentLang : 'en';
+                const map = {
+                    'en': 'en-US',
+                    'es': 'es-ES',
+                    'fr': 'fr-FR',
+                    'de': 'de-DE',
+                    'hi': 'hi-IN',
+                    'gu': 'gu-IN',
+                    'zh': 'zh-CN',
+                    'ja': 'ja-JP',
+                    'ru': 'ru-RU',
+                    'ar': 'ar-EG'
+                };
+                return map[lang] || 'en-US';
+            }
+
+            function runChronos() {
+                try {
+                    const now = new Date();
+                    const locale = getCurrentLocale();
+
+                    const dateEl = document.getElementById('headerDate');
+                    if (dateEl) {
+                        // Use format: Weekday, Month Day, Year (in locale)
+                        // e.g. Friday, January 23, 2026
+                        dateEl.innerText = now.toLocaleDateString(locale, {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                    }
+
+                    const timeEl = document.getElementById('headerTime');
+                    if (timeEl) {
+                        timeEl.innerText = now.toLocaleTimeString(locale, { hour12: false });
+                        // Should we use hour12 based on locale? Default is usually good.
+                        // But military time is often preferred in dashboards. 
+                        // Let's stick to locale default but maybe force 2-digit? 
+                        // User said "clean, readable format similar to English".
+                        // Most locales do HH:mm:ss nicely.
+                        // Actually, let's trust the locale default for TimeString.
+                        timeEl.innerText = now.toLocaleTimeString(locale);
+                    }
+
+                    const localLargeEl = document.getElementById('localTimeLarge');
+                    if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString(locale);
+
+                    // Also update the accent box if it exists
+                    if (typeof updateConvertedTime === 'function') updateConvertedTime();
+                } catch (e) {
+                    console.error("Chronos Error:", e);
+                    // Hard Fallback
+                    try {
+                        const fb = new Date().toLocaleTimeString();
+                        if (document.getElementById('headerTime')) document.getElementById('headerTime').innerText = fb;
+                    } catch (z) { }
                 }
             }
 
-
-            display.innerHTML = `
-                                                                                                                                                                                                                                        ${locationDisplay}
-                                                                                                                                                                                                                                            <div class="val-grid">
-                                                                                                                                                                                                                                                <div class="val-box slide-in highlight-border">
-                                                                                                                                                                                                                                                    <div class="val-label">${f}</div>
-                                                                                                                                                                                                                                                    <div class="val-number">${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-                                                                                                                                                                                                                                                    <div class="val-loc-meta">Base Amount</div>
-                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                <div class="val-box slide-in">
-                                                                                                                                                                                                                                                    <div class="val-label">${t}</div>
-                                                                                                                                                                                                                                                    <div class="val-number highlight">${calc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                                                                                                                                                                                                                                     <div class="val-loc-meta">Rate: ${rate.toFixed(4)}</div>
-                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                            </div>`;
-        }
-
-        /* --- TIMEZONE LOGIC --- */
-        function initTimezones() {
-            const select = document.getElementById('timezoneSelect');
-            if (!select) return;
-
-            // Preserve current selection if possible
-            const currentVal = select.value;
-            select.innerHTML = '';
-
-            // USE globalLocationData (Shared Dataset)
-            // Filter out entries that have garbage timezones (like "UTC+05:00") if we want strict IANA,
-            // BUT for the "System" to work, we accept what we have.
-            // Ideally we prioritized the `extraCities` for good IANA zones.
-
-            // Sort and Deduplicate
-            const sorted = [...globalLocationData].sort((a, b) => a.city.localeCompare(b.city));
-            const seen = new Set();
-
-            sorted.forEach(loc => {
-                let tzValue = loc.timezone;
-                // Only add if we have a valid timezone string
-                if (!tzValue) return;
-
-                const label = `${loc.city}, ${loc.country}`;
-                if (seen.has(label)) return;
-                seen.add(label);
-
-                const opt = document.createElement('option');
-                opt.value = tzValue;
-                opt.text = `${loc.city}, ${loc.country}`;
-                opt.setAttribute('data-full', tzValue);
-                if (tzValue === currentVal) opt.selected = true;
-                select.appendChild(opt);
-            });
-
-            // Default if nothing selected
-            if (select.selectedIndex === -1) {
-                // Try to select Mumbai or New York
-                for (let i = 0; i < select.options.length; i++) {
-                    if (select.options[i].value.includes('Kolkata') || select.options[i].value.includes('New_York')) {
-                        select.selectedIndex = i;
-                        break;
-                    }
-                }
-            }
-
-            updateConvertedTime();
-        }
-
-        // Helper to get rigorous locale for formatting
-        function getCurrentLocale() {
-            const lang = (window.translator && window.translator.currentLang) ? window.translator.currentLang : 'en';
-            const map = {
-                'en': 'en-US',
-                'es': 'es-ES',
-                'fr': 'fr-FR',
-                'de': 'de-DE',
-                'hi': 'hi-IN',
-                'gu': 'gu-IN',
-                'zh': 'zh-CN',
-                'ja': 'ja-JP',
-                'ru': 'ru-RU',
-                'ar': 'ar-EG'
-            };
-            return map[lang] || 'en-US';
-        }
-
-        function runChronos() {
-            try {
+            function updateConvertedTime() {
+                const zone = document.getElementById('timezoneSelect').value;
                 const now = new Date();
                 const locale = getCurrentLocale();
 
-                const dateEl = document.getElementById('headerDate');
-                if (dateEl) {
-                    // Use format: Weekday, Month Day, Year (in locale)
-                    // e.g. Friday, January 23, 2026
-                    dateEl.innerText = now.toLocaleDateString(locale, {
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-                }
-
-                const timeEl = document.getElementById('headerTime');
-                if (timeEl) {
-                    timeEl.innerText = now.toLocaleTimeString(locale, { hour12: false });
-                    // Should we use hour12 based on locale? Default is usually good.
-                    // But military time is often preferred in dashboards. 
-                    // Let's stick to locale default but maybe force 2-digit? 
-                    // User said "clean, readable format similar to English".
-                    // Most locales do HH:mm:ss nicely.
-                    // Actually, let's trust the locale default for TimeString.
-                    timeEl.innerText = now.toLocaleTimeString(locale);
-                }
-
-                const localLargeEl = document.getElementById('localTimeLarge');
-                if (localLargeEl) localLargeEl.innerText = now.toLocaleTimeString(locale);
-
-                // Also update the accent box if it exists
-                if (typeof updateConvertedTime === 'function') updateConvertedTime();
-            } catch (e) {
-                console.error("Chronos Error:", e);
-                // Hard Fallback
                 try {
-                    const fb = new Date().toLocaleTimeString();
-                    if (document.getElementById('headerTime')) document.getElementById('headerTime').innerText = fb;
-                } catch (z) { }
-            }
-        }
+                    const timeString = now.toLocaleTimeString(locale, { timeZone: zone });
+                    const dateString = now.toLocaleDateString(locale, { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
 
-        function updateConvertedTime() {
-            const zone = document.getElementById('timezoneSelect').value;
-            const now = new Date();
-            const locale = getCurrentLocale();
+                    // Get offset safely - keeping this part English-y or technical is often better for "GMT+5" etc.
+                    // But let's try locale.
+                    const typePart = Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName');
+                    const type = typePart ? typePart.value : zone;
 
-            try {
-                const timeString = now.toLocaleTimeString(locale, { timeZone: zone });
-                const dateString = now.toLocaleDateString(locale, { timeZone: zone, weekday: 'short', month: 'short', day: 'numeric' });
-
-                // Get offset safely - keeping this part English-y or technical is often better for "GMT+5" etc.
-                // But let's try locale.
-                const typePart = Intl.DateTimeFormat(locale, { timeZone: zone, timeZoneName: 'longOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName');
-                const type = typePart ? typePart.value : zone;
-
-                document.getElementById('convertedTime').innerHTML = `<div class="no-translate">${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span></div>`;
-            } catch (e) {
-                console.error("Time calc error", e);
-            }
-        }
-
-        // --- NEWS FEED ---
-        // Redirects to dedicated Details page
-
-        function triggerNewsSearch() {
-            const val = document.getElementById('newsInput').value;
-            if (!val) {
-                // Default to Global Technology if empty? Or do nothing?
-                // Requirement: "When the user searches..." implication is explicit action.
-                // But let's provide a default if they click empty search.
-                window.location.href = '/News/Details?query=Global%20Technology';
-                return;
+                    document.getElementById('convertedTime').innerHTML = `<div class="no-translate">${timeString} <span style="font-size:0.5em; opacity:0.7; display:block;">${dateString} • ${type}</span></div>`;
+                } catch (e) {
+                    console.error("Time calc error", e);
+                }
             }
 
-            // Treat comma as strict location signal
-            let query = val;
-            let fallback = '';
+            // --- NEWS FEED ---
+            // Redirects to dedicated Details page
 
-            if (val.includes(',')) {
-                // If "City, Country", pass both.
-                // details page logic uses fallbackQuery if query fails.
-                // But wait, the Details page expects "query" to be the main search.
-                // If I pass "Paris, France", logic there handles it.
-                // We can separate for fallback purposes.
-                fallback = val.split(',').pop().trim();
+            function triggerNewsSearch() {
+                const val = document.getElementById('newsInput').value;
+                if (!val) {
+                    // Default to Global Technology if empty? Or do nothing?
+                    // Requirement: "When the user searches..." implication is explicit action.
+                    // But let's provide a default if they click empty search.
+                    window.location.href = '/News/Details?query=Global%20Technology';
+                    return;
+                }
+
+                // Treat comma as strict location signal
+                let query = val;
+                let fallback = '';
+
+                if (val.includes(',')) {
+                    // If "City, Country", pass both.
+                    // details page logic uses fallbackQuery if query fails.
+                    // But wait, the Details page expects "query" to be the main search.
+                    // If I pass "Paris, France", logic there handles it.
+                    // We can separate for fallback purposes.
+                    fallback = val.split(',').pop().trim();
+                }
+
+                window.location.href = `/News/Details?query=${encodeURIComponent(query)}&fallbackQuery=${encodeURIComponent(fallback)}`;
             }
 
-            window.location.href = `/News/Details?query=${encodeURIComponent(query)}&fallbackQuery=${encodeURIComponent(fallback)}`;
-        }
-
-        // Removed fetchGlobalNews and related rendering logic as results are now shown on separate page.
+            // Removed fetchGlobalNews and related rendering logic as results are now shown on separate page.
 
 
-        // --- NOTES SYSTEM ---
-        let currentNotes = [];
+            // --- NOTES SYSTEM ---
+            let currentNotes = [];
 
-        async function initNotes() {
-            fetchNotes();
-        }
+            async function initNotes() {
+                fetchNotes();
+            }
 
-        async function fetchNotes() {
-            const container = document.getElementById('notesList');
-            try {
-                const res = await fetch('/Notes/GetAll');
-                if (res.ok) {
-                    const notes = await res.json();
-                    renderNotes(notes);
-                } else {
+            async function fetchNotes() {
+                const container = document.getElementById('notesList');
+                try {
+                    const res = await fetch('/Notes/GetAll');
+                    if (res.ok) {
+                        const notes = await res.json();
+                        renderNotes(notes);
+                    } else {
+                        if (container) {
+                            container.innerHTML = `<div class="text-danger">Error loading notes</div>`;
+                        }
+                    }
+                } catch (e) {
                     if (container) {
-                        container.innerHTML = `<div class="text-danger">Error loading notes</div>`;
+                        container.innerHTML = `<div class="text-danger">Connection Error</div>`;
                     }
                 }
-            } catch (e) {
-                if (container) {
-                    container.innerHTML = `<div class="text-danger">Connection Error</div>`;
+            }
+
+            function renderNotes(notes) {
+                currentNotes = notes;
+                const container = document.getElementById('notesList');
+                if (!container) return;
+                container.innerHTML = '';
+
+                if (notes.length === 0) {
+                    container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No Notes Found</div>`;
+                    return;
                 }
+
+                notes.forEach(note => {
+                    const locale = getCurrentLocale();
+                    const date = new Date(note.createdDate).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+                    const div = document.createElement('div');
+                    div.className = 'note-item slide-in';
+                    div.onclick = (e) => {
+                        if (e.target.closest('.btn-note-action')) return;
+                        editNote(note.id);
+                    };
+                    div.innerHTML = `
+                                                                                                                                                                                                                                                                                    <div class="note-header">
+                                                                                                                                                                                                                                                                                        <div class="note-title">${escapeHtml(note.title)}</div>
+                                                                                                                                                                                                                                                                                        <div class="note-date">${date}</div>
+                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                    <div class="note-desc">${escapeHtml(note.description)}</div>
+                                                                                                                                                                                                                                                                                    <div class="note-actions">
+                                                                                                                                                                                                                                                                                        <button class="btn-note-action" onclick="event.stopPropagation(); editNote(${note.id})"><i class="fas fa-edit"></i></button>
+                                                                                                                                                                                                                                                                                        <button class="btn-note-action delete" onclick="event.stopPropagation(); deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
+                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                `;
+                    container.appendChild(div);
+                });
             }
-        }
 
-        function renderNotes(notes) {
-            currentNotes = notes;
-            const container = document.getElementById('notesList');
-            if (!container) return;
-            container.innerHTML = '';
-
-            if (notes.length === 0) {
-                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No Notes Found</div>`;
-                return;
-            }
-
-            notes.forEach(note => {
-                const locale = getCurrentLocale();
-                const date = new Date(note.createdDate).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
-                const div = document.createElement('div');
-                div.className = 'note-item slide-in';
-                div.onclick = (e) => {
-                    if (e.target.closest('.btn-note-action')) return;
-                    editNote(note.id);
+            function escapeHtml(text) {
+                if (!text) return '';
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
                 };
-                div.innerHTML = `
-                                                                                                                                                                                                                                                                                <div class="note-header">
-                                                                                                                                                                                                                                                                                    <div class="note-title">${escapeHtml(note.title)}</div>
-                                                                                                                                                                                                                                                                                    <div class="note-date">${date}</div>
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <div class="note-desc">${escapeHtml(note.description)}</div>
-                                                                                                                                                                                                                                                                                <div class="note-actions">
-                                                                                                                                                                                                                                                                                    <button class="btn-note-action" onclick="event.stopPropagation(); editNote(${note.id})"><i class="fas fa-edit"></i></button>
-                                                                                                                                                                                                                                                                                    <button class="btn-note-action delete" onclick="event.stopPropagation(); deleteNote(${note.id})"><i class="fas fa-trash"></i></button>
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                            `;
-                container.appendChild(div);
-            });
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
-        }
-
-        async function searchGlobalIntel() {
-            const query = document.getElementById('globalSearchInput').value;
-            if (!query) return;
-            window.location.href = `/Home/CountryDetails?name=${encodeURIComponent(query)}`;
-        }
-
-        async function renderGlobalResult(loc, country) {
-            const display = document.getElementById('globalSearchResult');
-
-            // Safe currency access
-            let currency = { name: 'N/A', symbol: '' };
-            if (country && country.currencies) {
-                const keys = Object.keys(country.currencies);
-                if (keys.length > 0) currency = country.currencies[keys[0]];
+                return text.replace(/[&<>"']/g, function (m) { return map[m]; });
             }
 
-            // Await all translations independently
-            const cityName = await window.translator.translateText(loc.name);
-            const countryName = country ? await window.translator.translateText(country.name.common) : '';
-            const region = country ? await window.translator.translateText(country.region) : '';
-            const capital = (country && country.capital && country.capital.length > 0) ? await window.translator.translateText(country.capital[0]) : 'N/A';
-            const currName = currency.name !== 'N/A' ? await window.translator.translateText(currency.name) : 'N/A';
-
-            // Labels
-            const l_coords = await window.translator.translateText('Coordinates');
-            const l_timezone = await window.translator.translateText('Chronos Sync');
-            const l_curr = await window.translator.translateText('Currency');
-            const l_pop = await window.translator.translateText('Population');
-            const l_cap = await window.translator.translateText('Capital');
-            const l_reg = await window.translator.translateText('Region');
-
-            // --- BUILD HTML SAFELY ---
-
-            let html = '<div class="result-card slide-in" style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; border: 1px solid var(--border-dim);">';
-
-            // Header
-            html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 16px;">';
-            html += '<div>';
-            html += '<div style="font-size: 1.5rem; font-weight: 800; color: var(--text-bright);">' + cityName + '</div>';
-
-            let subText = (loc.admin1 || '') + (country ? ', ' + countryName : '');
-            html += '<div style="color: var(--text-muted); font-size: 0.9rem;">' + subText + '</div>';
-            html += '</div>';
-
-            if (country && country.flag) {
-                html += '<div style="font-size: 2.5rem; line-height: 1;">' + country.flag + '</div>';
-            }
-            html += '</div>'; // End Header
-
-            // Stats
-            html += '<div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 0;">';
-
-            // Coords
-            html += '<div class="stat-box" style="padding: 12px;">';
-            html += '<label>' + l_coords + '</label>';
-            html += '<b>' + loc.latitude.toFixed(2) + ', ' + loc.longitude.toFixed(2) + '</b>';
-            html += '</div>';
-
-            // Timezone
-            html += '<div class="stat-box" style="padding: 12px;">';
-            html += '<label>' + l_timezone + '</label>';
-            html += '<b style="font-size: 1rem;">' + loc.timezone + '</b>';
-            html += '</div>';
-
-            html += '</div>'; // End Top Stats
-
-            // Bottom Stats (Country only)
-            if (country) {
-                const popM = (country.population / 1000000).toFixed(1) + 'M';
-
-                html += '<div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">';
-
-                // Currency
-                html += '<div class="stat-box" style="padding: 12px;">';
-                html += '<label>' + l_curr + '</label>';
-                html += '<b>' + currency.symbol + ' ' + currName + '</b>';
-                html += '</div>';
-
-                // Pop
-                html += '<div class="stat-box" style="padding: 12px;">';
-                html += '<label>' + l_pop + '</label>';
-                html += '<b>' + popM + '</b>';
-                html += '</div>';
-
-                // Cap
-                html += '<div class="stat-box" style="padding: 12px;">';
-                html += '<label>' + l_cap + '</label>';
-                html += '<b>' + capital + '</b>';
-                html += '</div>';
-
-                // Reg
-                html += '<div class="stat-box" style="padding: 12px;">';
-                html += '<label>' + l_reg + '</label>';
-                html += '<b>' + region + '</b>';
-                html += '</div>';
-
-                html += '</div>';
+            async function searchGlobalIntel() {
+                const query = document.getElementById('globalSearchInput').value;
+                if (!query) return;
+                window.location.href = `/Home/CountryDetails?name=${encodeURIComponent(query)}`;
             }
 
-            // Sync Badge
-            html += '<div style="margin-top:16px; text-align:center;">';
-            html += '<span style="color:var(--accent-success); font-size:0.8rem; display:block; margin-bottom:8px;">';
-            html += '<i class="fas fa-check-circle"></i> Dashboard Synced';
-            html += '</span></div></div>';
+            async function renderGlobalResult(loc, country) {
+                const display = document.getElementById('globalSearchResult');
 
-            display.innerHTML = html;
+                // Safe currency access
+                let currency = { name: 'N/A', symbol: '' };
+                if (country && country.currencies) {
+                    const keys = Object.keys(country.currencies);
+                    if (keys.length > 0) currency = country.currencies[keys[0]];
+                }
 
-            // Auto-Sync Dashboard
-            syncDashboardToLocation(loc, country);
-        }
+                // Await all translations independently
+                const cityName = await window.translator.translateText(loc.name);
+                const countryName = country ? await window.translator.translateText(country.name.common) : '';
+                const region = country ? await window.translator.translateText(country.region) : '';
+                const capital = (country && country.capital && country.capital.length > 0) ? await window.translator.translateText(country.capital[0]) : 'N/A';
+                const currName = currency.name !== 'N/A' ? await window.translator.translateText(currency.name) : 'N/A';
 
-        async function syncDashboardToLocation(loc, country) {
-            // 1. Sync Weather
-            if (loc.latitude && loc.longitude) {
-                fetchWeatherDeep(loc.latitude, loc.longitude, `${loc.name}, ${loc.country_code}`);
+                // Labels
+                const l_coords = await window.translator.translateText('Coordinates');
+                const l_timezone = await window.translator.translateText('Chronos Sync');
+                const l_curr = await window.translator.translateText('Currency');
+                const l_pop = await window.translator.translateText('Population');
+                const l_cap = await window.translator.translateText('Capital');
+                const l_reg = await window.translator.translateText('Region');
+
+                // --- BUILD HTML SAFELY ---
+
+                let html = '<div class="result-card slide-in" style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; border: 1px solid var(--border-dim);">';
+
+                // Header
+                html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 16px;">';
+                html += '<div>';
+                html += '<div style="font-size: 1.5rem; font-weight: 800; color: var(--text-bright);">' + cityName + '</div>';
+
+                let subText = (loc.admin1 || '') + (country ? ', ' + countryName : '');
+                html += '<div style="color: var(--text-muted); font-size: 0.9rem;">' + subText + '</div>';
+                html += '</div>';
+
+                if (country && country.flag) {
+                    html += '<div style="font-size: 2.5rem; line-height: 1;">' + country.flag + '</div>';
+                }
+                html += '</div>'; // End Header
+
+                // Stats
+                html += '<div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 8px;">';
+
+                // Coords
+                html += '<div class="stat-box" style="padding: 12px;">';
+                html += '<label>' + l_coords + '</label>';
+                html += '<b>' + loc.latitude.toFixed(2) + ', ' + loc.longitude.toFixed(2) + '</b>';
+                html += '</div>';
+
+                // Timezone
+                html += '<div class="stat-box" style="padding: 12px;">';
+                html += '<label>' + l_timezone + '</label>';
+                html += '<b style="font-size: 1rem;">' + loc.timezone + '</b>';
+                html += '</div>';
+
+                html += '</div>'; // End Top Stats
+
+                // Bottom Stats (Country only)
+                if (country) {
+                    const popM = (country.population / 1000000).toFixed(1) + 'M';
+
+                    html += '<div class="stats-deep" style="grid-template-columns: 1fr 1fr; margin-top: 12px;">';
+
+                    // Currency
+                    html += '<div class="stat-box" style="padding: 12px;">';
+                    html += '<label>' + l_curr + '</label>';
+                    html += '<b>' + currency.symbol + ' ' + currName + '</b>';
+                    html += '</div>';
+
+                    // Pop
+                    html += '<div class="stat-box" style="padding: 12px;">';
+                    html += '<label>' + l_pop + '</label>';
+                    html += '<b>' + popM + '</b>';
+                    html += '</div>';
+
+                    // Cap
+                    html += '<div class="stat-box" style="padding: 12px;">';
+                    html += '<label>' + l_cap + '</label>';
+                    html += '<b>' + capital + '</b>';
+                    html += '</div>';
+
+                    // Reg
+                    html += '<div class="stat-box" style="padding: 12px;">';
+                    html += '<label>' + l_reg + '</label>';
+                    html += '<b>' + region + '</b>';
+                    html += '</div>';
+
+                    html += '</div>';
+                }
+
+                // Sync Badge
+                html += '<div style="margin-top:16px; text-align:center;">';
+                html += '<span style="color:var(--accent-success); font-size:0.8rem; display:block; margin-bottom:8px;">';
+                html += '<i class="fas fa-check-circle"></i> Dashboard Synced';
+                html += '</span></div></div>';
+
+                display.innerHTML = html;
+
+                // Auto-Sync Dashboard
+                syncDashboardToLocation(loc, country);
             }
 
-            // 2. Sync Timezone
-            if (loc.timezone) {
-                const tzSelect = document.getElementById('timezoneSelect');
-                let exists = false;
-                for (let i = 0; i < tzSelect.options.length; i++) {
-                    if (tzSelect.options[i].value === loc.timezone) {
-                        tzSelect.selectedIndex = i;
-                        exists = true;
-                        break;
+            async function syncDashboardToLocation(loc, country) {
+                // 1. Sync Weather
+                if (loc.latitude && loc.longitude) {
+                    fetchWeatherDeep(loc.latitude, loc.longitude, `${loc.name}, ${loc.country_code}`);
+                }
+
+                // 2. Sync Timezone
+                if (loc.timezone) {
+                    const tzSelect = document.getElementById('timezoneSelect');
+                    let exists = false;
+                    for (let i = 0; i < tzSelect.options.length; i++) {
+                        if (tzSelect.options[i].value === loc.timezone) {
+                            tzSelect.selectedIndex = i;
+                            exists = true;
+                            break;
+                        }
                     }
-                }
 
-                // If not in list (rare given we load all), attempt to add it or find formatted match
-                if (!exists) {
-                    // Try to find by raw value
-                    const opt = document.createElement('option');
-                    opt.value = loc.timezone;
-                    opt.text = `${loc.name}, ${loc.country_code}`; // Fallback format
-                    opt.selected = true;
-                    tzSelect.add(opt);
-                }
-                updateConvertedTime();
-
-                // Highlight effect
-                const chronoCard = document.querySelector('.chrono-hub');
-                if (chronoCard) {
-                    chronoCard.style.borderColor = 'var(--accent-indigo)';
-                    setTimeout(() => chronoCard.style.borderColor = '', 1500);
-                }
-            }
-
-            // 3. Sync Currency
-            if (country && country.currencies) {
-                const currencyCode = Object.keys(country.currencies)[0];
-                const tSelect = document.getElementById('toCurrency');
-
-                // Update Context
-                currencyContext = {
-                    city: loc.name,
-                    country: country.name.common,
-                    currency: currencyCode,
-                    timezone: loc.timezone
-                };
-
-                // Find matching option for country/currency
-                // We prioritize country match
-                let found = false;
-                for (let i = 0; i < tSelect.options.length; i++) {
-                    const opt = tSelect.options[i];
-                    if (opt.getAttribute('data-country') === country.name.common || opt.value.split('|')[0] === currencyCode) {
-                        tSelect.selectedIndex = i;
-                        found = true;
-                        break;
+                    // If not in list (rare given we load all), attempt to add it or find formatted match
+                    if (!exists) {
+                        // Try to find by raw value
+                        const opt = document.createElement('option');
+                        opt.value = loc.timezone;
+                        opt.text = `${loc.name}, ${loc.country_code}`; // Fallback format
+                        opt.selected = true;
+                        tzSelect.add(opt);
                     }
-                }
-
-                if (found) {
-                    convertCurrency();
+                    updateConvertedTime();
 
                     // Highlight effect
-                    const currencyCard = document.querySelector('.currency-hub');
-                    if (currencyCard) {
-                        currencyCard.style.borderColor = 'var(--accent-emerald)';
-                        setTimeout(() => currencyCard.style.borderColor = '', 1500);
+                    const chronoCard = document.querySelector('.chrono-hub');
+                    if (chronoCard) {
+                        chronoCard.style.borderColor = 'var(--accent-indigo)';
+                        setTimeout(() => chronoCard.style.borderColor = '', 1500);
                     }
                 }
-            }
 
-            // 4. News Sync - DISABLED AUTO FETCH
-            // User must manually trigger news search to save bandwidth/quota
-            // const cityQuery = `"${loc.name}" "${country.name.common}"`;
-            // const countryQuery = `"${country.name.common}"`;
-            // fetchGlobalNews(cityQuery, countryQuery);
-        }
+                // 3. Sync Currency
+                if (country && country.currencies) {
+                    const currencyCode = Object.keys(country.currencies)[0];
+                    const tSelect = document.getElementById('toCurrency');
 
-        let isFormVisible = false;
+                    // Update Context
+                    currencyContext = {
+                        city: loc.name,
+                        country: country.name.common,
+                        currency: currencyCode,
+                        timezone: loc.timezone
+                    };
 
-        async function toggleNoteForm(forceState) {
-            const form = document.getElementById('noteFormArea');
-            const btn = document.getElementById('btnNewNote');
+                    // Find matching option for country/currency
+                    // We prioritize country match
+                    let found = false;
+                    for (let i = 0; i < tSelect.options.length; i++) {
+                        const opt = tSelect.options[i];
+                        if (opt.getAttribute('data-country') === country.name.common || opt.value.split('|')[0] === currencyCode) {
+                            tSelect.selectedIndex = i;
+                            found = true;
+                            break;
+                        }
+                    }
 
-            if (typeof forceState !== 'undefined') {
-                isFormVisible = forceState;
-            } else {
-                isFormVisible = !isFormVisible;
-            }
+                    if (found) {
+                        convertCurrency();
 
-            if (isFormVisible) {
-                form.style.display = 'block';
-                btn.style.display = 'none';
-
-                if (!document.getElementById('noteId').value) {
-                    document.getElementById('noteTitle').value = '';
-                    document.getElementById('noteDesc').value = '';
-                    const newNoteTitle = await window.translator.translateText('New Note');
-                    document.getElementById('formTitle').innerText = newNoteTitle;
-                    document.getElementById('formTitle').setAttribute('data-i18n', 'NewNote');
+                        // Highlight effect
+                        const currencyCard = document.querySelector('.currency-hub');
+                        if (currencyCard) {
+                            currencyCard.style.borderColor = 'var(--accent-emerald)';
+                            setTimeout(() => currencyCard.style.borderColor = '', 1500);
+                        }
+                    }
                 }
-            } else {
-                form.style.display = 'none';
-                btn.style.display = 'block';
-                document.getElementById('noteId').value = '';
-            }
-        }
 
-        async function editNote(id) {
-            const note = currentNotes.find(n => n.id === id);
-            if (!note) return;
-
-            document.getElementById('noteId').value = id;
-            document.getElementById('noteTitle').value = note.title;
-            document.getElementById('noteDesc').value = note.description;
-            const editTitle = await window.translator.translateText('Edit Note');
-            document.getElementById('formTitle').innerText = editTitle;
-            document.getElementById('formTitle').setAttribute('data-i18n', 'EditNote');
-
-            toggleNoteForm(true);
-        }
-
-        async function saveNote() {
-            const title = document.getElementById('noteTitle').value;
-            const desc = document.getElementById('noteDesc').value;
-            const id = document.getElementById('noteId').value;
-
-            if (!title || !desc) {
-                alert(await window.translator.translateText('Please fill all fields'));
-                return;
+                // 4. News Sync - DISABLED AUTO FETCH
+                // User must manually trigger news search to save bandwidth/quota
+                // const cityQuery = `"${loc.name}" "${country.name.common}"`;
+                // const countryQuery = `"${country.name.common}"`;
+                // fetchGlobalNews(cityQuery, countryQuery);
             }
 
-            const url = id ? '/Notes/Update' : '/Notes/Create';
-            const body = { title: title, description: desc };
-            if (id) body.id = parseInt(id);
+            let isFormVisible = false;
 
-            try {
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
-                });
+            async function toggleNoteForm(forceState) {
+                const form = document.getElementById('noteFormArea');
+                const btn = document.getElementById('btnNewNote');
 
-                if (res.ok) {
-                    toggleNoteForm(false);
-                    fetchNotes();
+                if (typeof forceState !== 'undefined') {
+                    isFormVisible = forceState;
                 } else {
+                    isFormVisible = !isFormVisible;
+                }
+
+                if (isFormVisible) {
+                    form.style.display = 'block';
+                    btn.style.display = 'none';
+
+                    if (!document.getElementById('noteId').value) {
+                        document.getElementById('noteTitle').value = '';
+                        document.getElementById('noteDesc').value = '';
+                        const newNoteTitle = await window.translator.translateText('New Note');
+                        document.getElementById('formTitle').innerText = newNoteTitle;
+                        document.getElementById('formTitle').setAttribute('data-i18n', 'NewNote');
+                    }
+                } else {
+                    form.style.display = 'none';
+                    btn.style.display = 'block';
+                    document.getElementById('noteId').value = '';
+                }
+            }
+
+            async function editNote(id) {
+                const note = currentNotes.find(n => n.id === id);
+                if (!note) return;
+
+                document.getElementById('noteId').value = id;
+                document.getElementById('noteTitle').value = note.title;
+                document.getElementById('noteDesc').value = note.description;
+                const editTitle = await window.translator.translateText('Edit Note');
+                document.getElementById('formTitle').innerText = editTitle;
+                document.getElementById('formTitle').setAttribute('data-i18n', 'EditNote');
+
+                toggleNoteForm(true);
+            }
+
+            async function saveNote() {
+                const title = document.getElementById('noteTitle').value;
+                const desc = document.getElementById('noteDesc').value;
+                const id = document.getElementById('noteId').value;
+
+                if (!title || !desc) {
+                    alert(await window.translator.translateText('Please fill all fields'));
+                    return;
+                }
+
+                const url = id ? '/Notes/Update' : '/Notes/Create';
+                const body = { title: title, description: desc };
+                if (id) body.id = parseInt(id);
+
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
+                    });
+
+                    if (res.ok) {
+                        toggleNoteForm(false);
+                        fetchNotes();
+                    } else {
+                        const errSave = await window.translator.translateText('Error saving note');
+                        alert(errSave);
+                    }
+                } catch (e) {
                     const errSave = await window.translator.translateText('Error saving note');
                     alert(errSave);
                 }
-            } catch (e) {
-                const errSave = await window.translator.translateText('Error saving note');
-                alert(errSave);
             }
-        }
 
-        async function deleteNote(id) {
-            const confirmText = await window.translator.translateText('Are you sure you want to delete this note?');
-            if (!confirm(confirmText)) return;
-            try {
-                const res = await fetch('/Notes/Delete', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(id)
-                });
-                if (res.ok) {
-                    fetchNotes();
-                } else {
+            async function deleteNote(id) {
+                const confirmText = await window.translator.translateText('Are you sure you want to delete this note?');
+                if (!confirm(confirmText)) return;
+                try {
+                    const res = await fetch('/Notes/Delete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(id)
+                    });
+                    if (res.ok) {
+                        fetchNotes();
+                    } else {
+                        alert(await window.translator.translateText('Error deleting note'));
+                    }
+                } catch (e) {
+                    console.error(e);
                     alert(await window.translator.translateText('Error deleting note'));
                 }
-            } catch (e) {
-                console.error(e);
-                alert(await window.translator.translateText('Error deleting note'));
-            }
-        }
-
-
-        // --- EMERGENCY CONTACTS ---
-        // --- EMERGENCY CONTACTS ---
-        let emergencySearchTimer = null;
-        let lastEmergencyCode = null;
-
-        let currentSearchQuery = "";
-
-        // Global state for strict race condition handling
-        let latestEmergencyRequestId = 0;
-
-        function handleEmergencySearch() {
-            const input = document.getElementById('emergencyInput');
-            const val = input.value.trim().toLowerCase();
-            const dropdown = document.getElementById('emergencyDropdown');
-
-            if (val.length < 1) {
-                dropdown.style.display = 'none';
-                return;
             }
 
-            // 1. Filter Matches
-            // emergencyCountryList is populated in initFiscal()
-            const matches = emergencyCountryList.filter(c =>
-                c.name.toLowerCase().startsWith(val) ||
-                c.name.toLowerCase().includes(val)
-            );
 
-            // 2. Sort Matches
-            matches.sort((a, b) => {
-                const aName = a.name.toLowerCase();
-                const bName = b.name.toLowerCase();
-                if (aName === val) return -1;
-                if (bName === val) return 1;
-                if (aName.startsWith(val) && !bName.startsWith(val)) return -1;
-                if (!aName.startsWith(val) && bName.startsWith(val)) return 1;
-                return aName.localeCompare(bName);
-            });
 
-            // 3. Render Dropdown
-            if (matches.length > 0) {
-                dropdown.innerHTML = '';
-                // Limit to 8 suggestions for clean UI
-                matches.slice(0, 8).forEach(match => {
-                    const div = document.createElement('div');
-                    div.className = 'suggestion-item';
 
-                    // Highlight match
-                    const safeVal = val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    const regex = new RegExp(`(${safeVal})`, 'gi');
-                    const highlighted = match.name.replace(regex, '<span style="color:var(--accent-sky); font-weight:700;">$1</span>');
+            // --- EMERGENCY CONTACTS ---
+            let lastEmergencyCode = null;
 
-                    // Format: CODE – Name (Official)
-                    // e.g. IN – India (Republic of India)
-                    // For cities: IN – Mumbai (India) or simplified?
-                    // User Req: "IN – India (Republic of India)"
+            function handleEmergencySearch() {
+                const input = document.getElementById('emergencyInput');
+                const val = input.value.trim().toLowerCase();
+                const dropdown = document.getElementById('emergencyDropdown');
 
-                    let displayMeta = "";
-                    if (match.type === 'country') {
-                        displayMeta = `<span style="opacity:0.6; font-size:0.8em; margin-left:6px;">(${match.official})</span>`;
-                    } else {
-                        displayMeta = `<span style="opacity:0.6; font-size:0.8em; margin-left:6px;">(${match.parent || match.official})</span>`;
-                    }
+                if (val.length < 1) {
+                    dropdown.style.display = 'none';
+                    return;
+                }
 
-                    div.innerHTML = `
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <span style="font-family:monospace; font-weight:700; color:var(--accent-emerald); background:rgba(52,211,153,0.1); padding:2px 6px; border-radius:4px; font-size:0.8em;">${match.code}</span>
-                                <div style="display:flex; flex-direction:column; justify-content:center;">
-                                    <div style="line-height:1.2;">${highlighted} ${displayMeta}</div>
-                                    ${match.type === 'city' ? `<span style="font-size:0.7em; opacity:0.5; margin-top:2px;">City</span>` : ''}
-                                </div>
-                            </div>`;
+                // 1. Filter Matches
+                const matches = emergencyCountryList.filter(c =>
+                    c.name.toLowerCase().startsWith(val) ||
+                    c.name.toLowerCase().includes(val)
+                );
 
-                    div.onclick = () => selectEmergencyCountry(match);
-                    dropdown.appendChild(div);
+                // 2. Sort Matches
+                matches.sort((a, b) => {
+                    const aName = a.name.toLowerCase();
+                    const bName = b.name.toLowerCase();
+                    if (aName === val) return -1;
+                    if (bName === val) return 1;
+                    if (aName.startsWith(val) && !bName.startsWith(val)) return -1;
+                    if (!aName.startsWith(val) && bName.startsWith(val)) return 1;
+                    return aName.localeCompare(bName);
                 });
-                dropdown.style.display = 'block';
-            } else {
-                dropdown.style.display = 'none';
-            }
-        }
 
-        function selectEmergencyCountry(country) {
-            const input = document.getElementById('emergencyInput');
-            const dropdown = document.getElementById('emergencyDropdown');
-            const container = document.getElementById('emergencyResult');
+                // 3. Render Dropdown
+                if (matches.length > 0) {
+                    dropdown.innerHTML = '';
+                    matches.slice(0, 8).forEach(match => {
+                        const div = document.createElement('div');
+                        div.className = 'suggestion-item';
 
-            input.value = country.name;
-            dropdown.style.display = 'none';
+                        const safeVal = val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        const regex = new RegExp(`(${safeVal})`, 'gi');
+                        const highlighted = match.name.replace(regex, '<span style="color:var(--accent-sky); font-weight:700;">$1</span>');
 
-            // Clear previous data
-            container.innerHTML = '';
-            lastEmergencyCode = null;
+                        let displayMeta = "";
+                        if (match.type === 'country') {
+                            displayMeta = `<span style="opacity:0.6; font-size:0.8em; margin-left:6px;">(${match.official})</span>`;
+                        } else {
+                            displayMeta = `<span style="opacity:0.6; font-size:0.8em; margin-left:6px;">(${match.parent || match.official})</span>`;
+                        }
 
-            // Normalized Code
-            const normalizedCode = (country.code || '').trim().toUpperCase();
+                        div.innerHTML = `
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span style="font-family:monospace; font-weight:700; color:var(--accent-emerald); background:rgba(52,211,153,0.1); padding:2px 6px; border-radius:4px; font-size:0.8em;">${match.code}</span>
+                                    <div style="display:flex; flex-direction:column; justify-content:center;">
+                                        <div style="line-height:1.2;">${highlighted} ${displayMeta}</div>
+                                        ${match.type === 'city' ? `<span style="font-size:0.7em; opacity:0.5; margin-top:2px;">City</span>` : ''}
+                                    </div>
+                                </div>`;
 
-            // Trigger Load or Show Error
-            if (normalizedCode) {
-                fetchEmergencyNumbers(normalizedCode, country.name);
-            } else {
-                container.innerHTML = `<div class="empty-state">
-                                            <i class="fas fa-circle-exclamation" style="color:var(--accent-warning)"></i>
-                                            <p>Emergency data unavailable for <b>${country.name}</b></p>
-                                       </div>`;
-            }
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (e) {
-            const dropdown = document.getElementById('emergencyDropdown');
-            const input = document.getElementById('emergencyInput');
-            if (dropdown && input) {
-                if (!dropdown.contains(e.target) && e.target !== input) {
+                        div.onclick = () => selectEmergencyCountry(match);
+                        dropdown.appendChild(div);
+                    });
+                    dropdown.style.display = 'block';
+                } else {
                     dropdown.style.display = 'none';
                 }
             }
-        });
 
-        async function fetchEmergencyNumbers(code, countryName) {
-            const container = document.getElementById('emergencyResult');
-            const requestId = ++latestEmergencyRequestId;
+            function selectEmergencyCountry(country) {
+                const input = document.getElementById('emergencyInput');
+                const dropdown = document.getElementById('emergencyDropdown');
+                const container = document.getElementById('emergencyResult');
 
-            // Show loading
-            container.innerHTML = `<div class="loading-state" style="text-align:center; padding:40px;">
-                                        <i class="fas fa-circle-notch fa-spin" style="font-size:2rem; color:var(--accent-sky); margin-bottom:10px;"></i>
-                                        <div style="opacity:0.7">Accessing Global Grid...</div>
-                                       </div>`;
+                input.value = country.name;
+                dropdown.style.display = 'none';
+                container.innerHTML = '';
+                lastEmergencyCode = null;
 
-            try {
-                // Ensure code is normalized
-                const safeCode = code.trim().toUpperCase();
+                const normalizedCode = (country.code || '').trim().toUpperCase();
 
-                const res = await fetch(`/Emergency/GetNumbers?code=${safeCode}`);
-                if (!res.ok) throw new Error("API Failure");
-
-                // Race Condition Check: If a newer request started, ignore this result
-                if (requestId !== latestEmergencyRequestId) return;
-
-                const data = await res.json();
-
-                if (!data || !data.data) {
-                    throw new Error("No data");
-                }
-
-                renderEmergency(data.data, countryName);
-
-            } catch (e) {
-                if (requestId !== latestEmergencyRequestId) return;
-                console.error(e);
-                container.innerHTML = `<div class="empty-state">
-                                                <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
-                                                <p>Emergency Protocols Not Found for <b>${countryName}</b></p>
-                                           </div>`;
-            }
-        }
-
-
-        // --- EMERGENCY SYSTEM (HYBRID LOGIC) ---
-        async function handleEmergencySearch() {
-            const query = document.getElementById('emergencyInput').value.trim();
-            const container = document.getElementById('emergencyResult');
-            
-            if (query.length < 3) {
-                 // Optional: clear if empty?
-                 // container.innerHTML = ''; 
-                 return;
-            }
-
-            container.innerHTML = `<div class="loading-state">Accessing Global Channels...</div>`;
-
-            try {
-                // 1. Fetch Country Metadata
-                const res = await fetch(`https://restcountries.com/v3.1/name/${query}?fields=name,cca2,region,subregion`);
-                if (!res.ok) throw new Error("Country not found");
-                const data = await res.json();
-                const country = data[0]; // Take best match
-
-                const cca2 = country.cca2;
-                const region = country.region; // Europe, Americas, Asia, Africa, Oceania
-                const subregion = country.subregion; 
-
-                // 2. Hybrid Logic System
-                let nums = {
-                    dispatch: null, // Unified
-                    police: null,
-                    ambulance: null,
-                    fire: null
-                };
-
-                // A. Specific Validated Overrides (The "Safe List")
-                const specificMap = {
-                    'US': { dispatch: ['911'] }, // USA
-                    'CA': { dispatch: ['911'] }, // Canada
-                    'MX': { dispatch: ['911'] }, // Mexico
-                    'GB': { dispatch: ['999', '112'] }, // UK
-                    'AU': { dispatch: ['000'] }, // Australia
-                    'NZ': { dispatch: ['111'] }, // New Zealand
-                    'IN': { police: ['112', '100'], ambulance: ['108', '102'], fire: ['101'] }, // India
-                    'JP': { police: ['110'], ambulance: ['119'], fire: ['119'] }, // Japan
-                    'CN': { police: ['110'], ambulance: ['120'], fire: ['119'] }, // China
-                    'BR': { police: ['190'], ambulance: ['192'], fire: ['193'] }, // Brazil
-                    'RU': { dispatch: ['112'], police: ['102'], ambulance: ['103'], fire: ['101'] }, // Russia
-                    'ZA': { police: ['10111'], ambulance: ['10177'], dispatch: ['112'] } // South Africa
-                };
-
-                // Apply Override
-                if (specificMap[cca2]) {
-                     nums = { ...nums, ...specificMap[cca2] };
-                } 
-                // B. Regional Standards (The "Fallback Net")
-                else if (region === "Europe") {
-                    nums.dispatch = ['112']; 
-                } else if (region === "Oceania") {
-                     nums.dispatch = ['112']; 
+                if (normalizedCode) {
+                    fetchEmergencyNumbers(normalizedCode, country.name);
                 } else {
-                     // C. Global Default
-                     nums.dispatch = ['112'];
+                    container.innerHTML = `<div class="empty-state"><i class="fas fa-circle-exclamation" style="color:var(--accent-warning)"></i><p>Emergency data unavailable for <b>${country.name}</b></p></div>`;
+                }
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                const dropdown = document.getElementById('emergencyDropdown');
+                const input = document.getElementById('emergencyInput');
+                if (dropdown && input) {
+                    if (!dropdown.contains(e.target) && e.target !== input) {
+                        dropdown.style.display = 'none';
+                    }
+                }
+            });
+
+            async function fetchEmergencyNumbers(code, countryName) {
+                const container = document.getElementById('emergencyResult');
+                container.innerHTML = `<div class="loading-state" style="text-align:center; padding:40px;"><i class="fas fa-circle-notch fa-spin" style="font-size:2rem; color:var(--accent-sky); margin-bottom:10px;"></i><div style="opacity:0.7">Accessing Global Grid...</div></div>`;
+
+                try {
+                    const safeCode = code.trim().toUpperCase();
+                    const res = await fetch(`/Emergency/GetNumbers?code=${safeCode}`);
+                    if (!res.ok) throw new Error("API Failure");
+                    const data = await res.json();
+                    if (!data || !data.data) throw new Error("No data");
+                    renderEmergency(data.data, countryName);
+                } catch (e) {
+                    console.error(e);
+                    container.innerHTML = `<div class="empty-state"><i class="fas fa-triangle-exclamation" style="color:#ef4444"></i><p>Emergency Protocols Not Found for <b>${countryName}</b></p></div>`;
+                }
+            }
+
+            function renderEmergency(d, countryName) {
+                const container = document.getElementById('emergencyResult');
+                let nums = {
+                    dispatch: d.dispatch && d.dispatch.all ? d.dispatch.all : [],
+                    police: d.police && d.police.all ? d.police.all : [],
+                    ambulance: d.ambulance && d.ambulance.all ? d.ambulance.all : [],
+                    fire: d.fire && d.fire.all ? d.fire.all : []
+                };
+                
+                // Fallback to Dispatch
+                if (nums.dispatch.length > 0) {
+                    if (nums.police.length === 0) nums.police = nums.dispatch;
+                    if (nums.ambulance.length === 0) nums.ambulance = nums.dispatch;
+                    if (nums.fire.length === 0) nums.fire = nums.dispatch;
                 }
 
-                // Global Fallback: If specific services missing, use Dispatch/Unified
-                if (nums.dispatch) {
-                    if (!nums.police) nums.police = nums.dispatch;
-                    if (!nums.ambulance) nums.ambulance = nums.dispatch;
-                    if (!nums.fire) nums.fire = nums.dispatch;
-                }
-
-                // 3. Render
-                let html = `<div style="margin-bottom:12px; font-weight:700; color:var(--text-bright); font-size:1.1rem;">
-                                <i class="fas fa-flag" style="margin-right:8px; color:var(--text-muted);"></i> ${country.name.common}
-                            </div>
-                            <div class="emergency-cards">`;
-
+                let html = `<div style="margin-bottom:12px; font-weight:700; color:var(--text-bright); font-size:1.1rem;"><i class="fas fa-flag" style="margin-right:8px; color:var(--text-muted);"></i> ${countryName}</div><div class="emergency-cards">`;
+                
                 const createCard = (label, icon, arr, colorClass) => {
                     if (!arr || arr.length === 0) return '';
+                    const mainNum = arr[0];
                     return `<div class="emergency-number-card ${colorClass}">
                                 <div class="card-icon-wrapper"><i class="fas ${icon}"></i></div>
-                                <div class="em-info">
-                                    <span class="em-label">${label}</span>
-                                    <span class="em-number">${arr.join(' / ')}</span>
+                                <div class="em-info"><span class="em-label">${label}</span><span class="em-number">${arr.join(' / ')}</span></div>
+                                <div style="display:flex; gap:6px;">
+                                    <a href="tel:${mainNum}" class="copy-btn" title="Call Now" style="text-decoration:none; display:flex; align-items:center; justify-content:center; color:var(--accent-emerald); background:rgba(52, 211, 153, 0.1);"><i class="fas fa-phone"></i></a>
+                                    <button class="copy-btn" onclick="navigator.clipboard.writeText('${mainNum}')" title="Copy"><i class="fas fa-copy"></i></button>
                                 </div>
-                                <button class="copy-btn" onclick="navigator.clipboard.writeText('${arr[0]}')" title="Copy"><i class="fas fa-copy"></i></button>
                             </div>`;
                 };
 
-                if (nums.dispatch) html += createCard('Unified / GSM', 'fa-tower-broadcast', nums.dispatch, 'unified-card');
-                if (nums.police) html += createCard('Police', 'fa-shield-halved', nums.police, '');
-                if (nums.ambulance) html += createCard('Ambulance', 'fa-truck-medical', nums.ambulance, '');
-                if (nums.fire) html += createCard('Fire Dept', 'fa-fire-extinguisher', nums.fire, '');
-                
+                if (nums.dispatch && nums.dispatch.length > 0) html += createCard('Unified / GSM', 'fa-tower-broadcast', nums.dispatch, 'unified-card');
+                if (nums.police && nums.police.length > 0) html += createCard('Police', 'fa-shield-halved', nums.police, '');
+                if (nums.ambulance && nums.ambulance.length > 0) html += createCard('Ambulance', 'fa-truck-medical', nums.ambulance, '');
+                if (nums.fire && nums.fire.length > 0) html += createCard('Fire Dept', 'fa-fire-extinguisher', nums.fire, '');
                 html += `</div>`;
-                
-                // 4. Disclaimer
-                html += `<div style="margin-top:16px; text-align:center; font-size:0.75rem; color:var(--text-muted); opacity:0.8; background:rgba(0,0,0,0.05); padding:8px; border-radius:8px;">
-                            <i class="fas fa-circle-info"></i> Numbers for ${region} region. Verify locally.
-                         </div>`;
-
                 container.innerHTML = html;
-
-            } catch (e) {
-                // Silent catch or simple error
-                container.innerHTML = `<div class="empty-state">
-                                            <i class="fas fa-triangle-exclamation" style="color:#ef4444"></i>
-                                            <p>Secure Link Failed. Try full country name.</p>
-                                       </div>`;
             }
-        }
 
-        // --- TRANSLATOR WIDGET LOGIC ---
-        async function translateWidget() {
-            const input = document.getElementById('transInput').value.trim();
-            const lang = document.getElementById('transLangSelect').value;
-            const output = document.getElementById('transOutput');
-            const btn = document.getElementById('btnTranslateAction');
-            const btnCopy = document.getElementById('btnCopyTrans');
+            // --- TRANSLATOR WIDGET LOGIC ---
+            const translationLanguages = [
+                {code: "af", name: "Afrikaans"}, {code: "sq", name: "Albanian"}, {code: "am", name: "Amharic"}, {code: "ar", name: "Arabic"},
+                {code: "hy", name: "Armenian"}, {code: "az", name: "Azerbaijani"}, {code: "eu", name: "Basque"}, {code: "be", name: "Belarusian"},
+                {code: "bn", name: "Bengali"}, {code: "bs", name: "Bosnian"}, {code: "bg", name: "Bulgarian"}, {code: "ca", name: "Catalan"},
+                {code: "ceb", name: "Cebuano"}, {code: "ny", name: "Chichewa"}, {code: "zh-CN", name: "Chinese (Simplified)"}, {code: "zh-TW", name: "Chinese (Traditional)"},
+                {code: "co", name: "Corsican"}, {code: "hr", name: "Croatian"}, {code: "cs", name: "Czech"}, {code: "da", name: "Danish"},
+                {code: "nl", name: "Dutch"}, {code: "en", name: "English"}, {code: "eo", name: "Esperanto"}, {code: "et", name: "Estonian"},
+                {code: "tl", name: "Filipino"}, {code: "fi", name: "Finnish"}, {code: "fr", name: "French"}, {code: "fy", name: "Frisian"},
+                {code: "gl", name: "Galician"}, {code: "ka", name: "Georgian"}, {code: "de", name: "German"}, {code: "el", name: "Greek"},
+                {code: "gu", name: "Gujarati"}, {code: "ht", name: "Haitian Creole"}, {code: "ha", name: "Hausa"}, {code: "haw", name: "Hawaiian"},
+                {code: "iw", name: "Hebrew"}, {code: "hi", name: "Hindi"}, {code: "hmn", name: "Hmong"}, {code: "hu", name: "Hungarian"},
+                {code: "is", name: "Icelandic"}, {code: "ig", name: "Igbo"}, {code: "id", name: "Indonesian"}, {code: "ga", name: "Irish"},
+                {code: "it", name: "Italian"}, {code: "ja", name: "Japanese"}, {code: "jw", name: "Javanese"}, {code: "kn", name: "Kannada"},
+                {code: "kk", name: "Kazakh"}, {code: "km", name: "Khmer"}, {code: "ko", name: "Korean"}, {code: "ku", name: "Kurdish (Kurmanji)"},
+                {code: "ky", name: "Kyrgyz"}, {code: "lo", name: "Lao"}, {code: "la", name: "Latin"}, {code: "lv", name: "Latvian"},
+                {code: "lt", name: "Lithuanian"}, {code: "lb", name: "Luxembourgish"}, {code: "mk", name: "Macedonian"}, {code: "mg", name: "Malagasy"},
+                {code: "ms", name: "Malay"}, {code: "ml", name: "Malayalam"}, {code: "mt", name: "Maltese"}, {code: "mi", name: "Maori"},
+                {code: "mr", name: "Marathi"}, {code: "mn", name: "Mongolian"}, {code: "my", name: "Myanmar (Burmese)"}, {code: "ne", name: "Nepali"},
+                {code: "no", name: "Norwegian"}, {code: "ps", name: "Pashto"}, {code: "fa", name: "Persian"}, {code: "pl", name: "Polish"},
+                {code: "pt", name: "Portuguese"}, {code: "pa", name: "Punjabi"}, {code: "ro", name: "Romanian"}, {code: "ru", name: "Russian"},
+                {code: "sm", name: "Samoan"}, {code: "gd", name: "Scots Gaelic"}, {code: "sr", name: "Serbian"}, {code: "st", name: "Sesotho"},
+                {code: "sn", name: "Shona"}, {code: "sd", name: "Sindhi"}, {code: "si", name: "Sinhala"}, {code: "sk", name: "Slovak"},
+                {code: "sl", name: "Slovenian"}, {code: "so", name: "Somali"}, {code: "es", name: "Spanish"}, {code: "su", name: "Sundanese"},
+                {code: "sw", name: "Swahili"}, {code: "sv", name: "Swedish"}, {code: "tg", name: "Tajik"}, {code: "ta", name: "Tamil"},
+                {code: "te", name: "Telugu"}, {code: "th", name: "Thai"}, {code: "tr", name: "Turkish"}, {code: "uk", name: "Ukrainian"},
+                {code: "ur", name: "Urdu"}, {code: "uz", name: "Uzbek"}, {code: "vi", name: "Vietnamese"}, {code: "cy", name: "Welsh"},
+                {code: "xh", name: "Xhosa"}, {code: "yi", name: "Yiddish"}, {code: "yo", name: "Yoruba"}, {code: "zu", name: "Zulu"}
+            ];
 
-            if (!input) return;
+            let debounceTimer = null;
 
-            // UI Loading
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
-            output.innerHTML = `<div class="loading-state" style="width:100%; text-align:center; margin-top:30px;">Processing Neural Link...</div>`;
-            btnCopy.style.display = 'none';
+            function initTranslatorWidget() {
+                const src = document.getElementById('transSourceLang');
+                const tgt = document.getElementById('transTargetLang');
+                if(!src || !tgt) return;
 
-            try {
-                const res = await fetch('/api/Translation/translate-batch', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        Texts: [input],
-                        TargetLanguage: lang,
-                        SourceLanguage: 'auto'
-                    })
+                translationLanguages.forEach(l => {
+                    const op1 = document.createElement('option');
+                    op1.value = l.code;
+                    op1.text = l.name;
+                    if(l.code === 'en') op1.selected = true; 
+                    src.appendChild(op1);
+
+                    const op2 = document.createElement('option');
+                    op2.value = l.code;
+                    op2.text = l.name;
+                    if(l.code === 'es') op2.selected = true; 
+                    tgt.appendChild(op2);
                 });
-
-                if (!res.ok) throw new Error("Translation Failed");
-
-                const result = await res.json();
-
-                // Result is Dictionary<string, string>
-                const translatedText = result[input] || "Error: Could not translate.";
-
-                output.innerHTML = `<div class="slide-in">${escapeHtml(translatedText)}</div>`;
-                btnCopy.style.display = 'block';
-
-            } catch (e) {
-                console.error(e);
-                output.innerHTML = `<div class="text-danger" style="text-align:center; width:100%; margin-top:30px;">Translation System Offline</div>`;
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-arrow-right-arrow-left"></i>';
-            }
-        }
-
-        function copyTranslation() {
-            const output = document.getElementById('transOutput').innerText;
-            if (output) {
-                navigator.clipboard.writeText(output);
-                // Visual feedback
-                const btn = document.getElementById('btnCopyTrans');
-                const original = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check" style="color:var(--accent-emerald)"></i>';
-                setTimeout(() => btn.innerHTML = original, 2000);
-            }
-        }
-
-
-
-        // --- HABIT TRACKER LOGIC ---
-        let habits = [];
-        let editingHabitId = null;
-
-        function initHabits() {
-            const stored = localStorage.getItem('userHabits');
-            if (stored) {
-                habits = JSON.parse(stored);
-                // Schema Migration: If old schema (completed/completedDate), convert to history
-                habits.forEach(h => {
-                    if (!h.history) {
-                        h.history = [];
-                        if (h.completed && h.completedDate) {
-                            h.history.push(new Date(h.completedDate).toDateString());
-                        }
-                        // Clean old props
-                        delete h.completed;
-                        delete h.completedDate;
-                    }
-                });
-            }
-            renderHabits();
-        }
-
-        // Helper to get formatted date string for consistency
-        function getTodayStr() {
-            return new Date().toDateString();
-        }
-
-        function saveHabits() {
-            localStorage.setItem('userHabits', JSON.stringify(habits));
-            renderHabits();
-        }
-
-        function renderHabits() {
-            const list = document.getElementById('habitList');
-            if (!habits || habits.length === 0) {
-                list.innerHTML = `<div class="empty-state">
-                                        <i class="fas fa-seedling" style="color:var(--accent-green)"></i>
-                                        <p>Start building good habits!</p>
-                                      </div>`;
-                return;
+                
+                src.value = 'auto'; // Force Default
+                tgt.value = 'es';
             }
 
-            const todayStr = getTodayStr();
-            const now = new Date();
-            // Get Monday of current week for calculation
-            const day = now.getDay();
-            const diff = now.getDate() - day + (day == 0 ? -6 : 1);
-            const monday = new Date(new Date(now).setDate(diff)).setHours(0, 0, 0, 0);
+            function debounceTranslate() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(translateWidget, 800);
+            }
 
-            list.innerHTML = '';
-            habits.forEach(h => {
-                // Calculate Status & Progress
-                let isDoneToday = h.history.includes(todayStr);
-                let progress = 0;
+            async function translateWidget() {
+                const input = document.getElementById('transInput').value.trim();
+                const srcLang = document.getElementById('transSourceLang').value;
+                const tgtLang = document.getElementById('transTargetLang').value;
+                const output = document.getElementById('transOutput');
 
-                if (h.type === 'daily') {
-                    progress = isDoneToday ? 100 : 0;
-                } else if (h.type === 'weekly') {
-                    // Count unique days in history that are >= this week's Monday
-                    const distinctDaysThisWeek = h.history.filter(dateStr => {
-                        return new Date(dateStr).getTime() >= monday;
-                    });
-                    // Let's say weekly goal is 7 days for max progress, or just reflect 'days done'
-                    // User req: "completed days in current week"
-                    // We display percentage relative to 7 days
-                    const count = new Set(distinctDaysThisWeek).size;
-                    progress = Math.min(100, Math.round((count / 7) * 100));
+                if (!input) {
+                    output.value = '';
+                    return;
                 }
 
-                const div = document.createElement('div');
-                div.className = `habit-item ${isDoneToday ? 'completed' : ''}`;
-                div.innerHTML = `
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <div style="display:flex; align-items:center; gap:12px; flex:1;">
-                                <div class="custom-checkbox ${isDoneToday ? 'checked' : ''}" onclick="toggleHabit('${h.id}')">
-                                    ${isDoneToday ? '<i class="fas fa-check"></i>' : ''}
-                                </div>
-                                <div style="flex:1;">
-                                    <div class="habit-name">${escapeHtml(h.name)}</div>
-                                    <div class="habit-meta">
-                                        <span class="badge badge-${h.type}">${h.type}</span>
-                                        <span style="margin-left:8px; opacity:0.7;">${progress}%</span>
+                if(srcLang === tgtLang) {
+                    output.value = input;
+                    return;
+                }
+
+                output.setAttribute('placeholder', 'Translating...');
+                
+                try {
+                    const res = await fetch('/api/Translation/translate-batch', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            Texts: [input],
+                            TargetLanguage: tgtLang,
+                            SourceLanguage: srcLang === 'auto' ? null : srcLang
+                        })
+                    });
+
+                    if (!res.ok) throw new Error("Translation Failed");
+                    const result = await res.json();
+                    const translatedText = result[input] || result[Object.keys(result)[0]]; 
+
+                    output.value = translatedText;
+                    // Auto-resize for very long text?
+                    
+                } catch (e) {
+                    console.error(e);
+                    output.value = "Error: Could not translate.";
+                } finally {
+                     output.setAttribute('placeholder', 'Translation...');
+                }
+            }
+
+            function swapLanguages() {
+                const src = document.getElementById('transSourceLang');
+                const tgt = document.getElementById('transTargetLang');
+                const input = document.getElementById('transInput');
+                const output = document.getElementById('transOutput');
+                
+                // Swap Values
+                const tempLang = src.value;
+                src.value = tgt.value;
+                tgt.value = (tempLang === 'auto') ? 'en' : tempLang; 
+                
+                // Swap Text (if output has content)
+                if (output.value && output.value !== "Error: Could not translate.") {
+                    input.value = output.value;
+                    translateWidget(); // Trigger translation of the new input
+                }
+            }
+
+            function copyTranslation() {
+                const output = document.getElementById('transOutput');
+                if (output && output.value) {
+                    output.select();
+                    navigator.clipboard.writeText(output.value);
+                    
+                    const btn = document.getElementById('btnCopyTrans');
+                    const icon = btn.querySelector('i');
+                    if(icon) {
+                        icon.className = 'fas fa-check';
+                        icon.style.color = 'var(--accent-emerald)';
+                        setTimeout(() => {
+                            icon.className = 'fas fa-copy';
+                            icon.style.color = '';
+                        }, 2000);
+                    }
+                }
+            }
+            
+            // Add init to ready
+            document.addEventListener('DOMContentLoaded', initTranslatorWidget);
+
+
+
+            // --- HABIT TRACKER LOGIC ---
+            let habits = [];
+            let editingHabitId = null;
+
+            async function initHabits() {
+                try {
+                    const res = await fetch('/Habit/GetHabits');
+                    if (res.status === 401) return; // Not logged in
+                    if (res.ok) {
+                        habits = await res.json();
+                        renderHabits();
+                    }
+                } catch (e) {
+                    console.error("Failed to load habits", e);
+                }
+            }
+
+            function toggleCustomDaysInput() {
+                const type = document.getElementById('newHabitType').value;
+                const section = document.getElementById('customDaysInput');
+                section.style.display = type === 'Custom' ? 'block' : 'none';
+            }
+
+            function renderHabits() {
+                const list = document.getElementById('habitList');
+                if (!habits || habits.length === 0) {
+                    list.innerHTML = `<div class="empty-state">
+                                            <i class="fas fa-seedling" style="color:var(--accent-green)"></i>
+                                            <p>Start building good habits!</p>
+                                          </div>`;
+                    updateDailyProgress(0, 0);
+                    return;
+                }
+
+                // Normalizing Date Logic
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const todayStr = today.getFullYear() + '-' +
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(today.getDate()).padStart(2, '0');
+
+                const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const todayName = dayNames[today.getDay()];
+
+                list.innerHTML = '';
+
+                let totalActiveToday = 0;
+                let completedToday = 0;
+
+                habits.forEach(h => {
+                    // Start Date Check
+                    const startRaw = new Date(h.startDate);
+                    startRaw.setHours(0, 0, 0, 0);
+                    
+                    // Logic: If today < startDate, hide completely or show as locked
+                    if (today < startRaw) return;
+
+                    // Custom Day Check
+                    let isActiveDay = true;
+                    if (h.frequencyType === 'Custom' && h.customDays && h.customDays.length > 0) {
+                        if (!h.customDays.includes(todayName)) {
+                            isActiveDay = false;
+                        }
+                    }
+
+                    // Completion Check
+                    // Server returns completedDates as full ISO strings usually. We match Prefix YYYY-MM-DD
+                    const isDoneToday = h.completedDates.some(d => d.startsWith(todayStr));
+
+                    if (isActiveDay) {
+                        totalActiveToday++;
+                        if (isDoneToday) completedToday++;
+                    }
+
+                    const div = document.createElement('div');
+                    div.className = `habit-item ${isDoneToday ? 'completed' : ''}`;
+                    if (!isActiveDay) {
+                        div.style.opacity = '0.4';
+                        div.style.filter = 'grayscale(100%)';
+                    }
+
+                    div.innerHTML = `
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div style="display:flex; align-items:center; gap:12px; flex:1;">
+                                    <div class="custom-checkbox ${isDoneToday ? 'checked' : ''}" 
+                                         onclick="${isActiveDay ? `toggleHabit('${h.id}')` : ''}" 
+                                         style="${!isActiveDay ? 'cursor:not-allowed; border-color:rgba(255,255,255,0.1);' : 'cursor:pointer;'}">
+                                        ${isDoneToday ? '<i class="fas fa-check"></i>' : (isActiveDay ? '' : '<i class="fas fa-minus" style="font-size:0.6rem; opacity:0.3;"></i>')}
+                                    </div>
+                                    <div style="flex:1;">
+                                        <div class="habit-name">${escapeHtml(h.name)}</div>
+                                        <div class="habit-meta">
+                                            <span class="badge badge-daily">${h.frequencyType}</span> 
+                                            ${h.goal ? `<span style="margin-left:8px; display:inline-flex; align-items:center; opacity:0.7; font-size:0.75rem;"><i class="fas fa-bullseye" style="margin-right:4px;"></i> ${escapeHtml(h.goal)}</span>` : ''}
+                                            ${!isActiveDay ? '<span style="margin-left:8px; font-size:0.7rem; color:var(--text-muted);">Rest Day</span>' : ''}
+                                        </div>
                                     </div>
                                 </div>
+                                <div style="display:flex; gap:4px;">
+                                     <button class="icon-btn edit-habit-btn" onclick="editHabit('${h.id}')" title="Edit"><i class="fas fa-pen"></i></button>
+                                     <button class="icon-btn delete-habit-btn" onclick="deleteHabit('${h.id}')" title="Delete"><i class="fas fa-times"></i></button>
+                                </div>
                             </div>
-                            <div style="display:flex; gap:4px;">
-                                 <button class="icon-btn edit-habit-btn" onclick="editHabit('${h.id}')" title="Edit"><i class="fas fa-pen"></i></button>
-                                 <button class="icon-btn delete-habit-btn" onclick="deleteHabit('${h.id}')" title="Delete"><i class="fas fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill" style="width:${progress}%; background-color:${progress > 0 ? 'var(--accent-green)' : 'transparent'};"></div>
-                        </div>
-                    `;
-                list.appendChild(div);
-            });
-        }
-
-        function toggleAddHabitForm(reset = true) {
-            const form = document.getElementById('addHabitForm');
-            const btn = document.getElementById('showAddHabitBtn');
-            const submitBtn = form.querySelector('.btn-primary'); // The add button
-
-            if (form.style.display === 'none') {
-                form.style.display = 'block';
-                btn.style.display = 'none';
-                document.getElementById('newHabitName').focus();
-
-                // Reset mode to Add just in case
-                if (reset) {
-                    editingHabitId = null;
-                    document.getElementById('newHabitName').value = '';
-                    submitBtn.innerHTML = '<i class="fas fa-plus"></i>';
-                }
-            } else {
-                form.style.display = 'none';
-                btn.style.display = 'block';
-                if (reset) {
-                    document.getElementById('newHabitName').value = '';
-                    editingHabitId = null;
-                }
-            }
-        }
-
-        function saveNewHabit() {
-            const nameInput = document.getElementById('newHabitName');
-            const typeInput = document.getElementById('newHabitType');
-            const name = nameInput.value.trim();
-            const type = typeInput.value;
-
-            if (!name) return;
-
-            if (editingHabitId) {
-                // UPDATE Existing
-                const h = habits.find(x => x.id === editingHabitId);
-                if (h) {
-                    h.name = name;
-                    h.type = type;
-                    saveHabits();
-                }
-                editingHabitId = null;
-            } else {
-                // CREATE New
-                habits.push({
-                    id: Date.now().toString(),
-                    name: name,
-                    type: type,
-                    history: []
+                        `;
+                    list.appendChild(div);
                 });
-                saveHabits();
+
+                updateDailyProgress(completedToday, totalActiveToday);
             }
 
-            toggleAddHabitForm(true);
-        }
-
-        function editHabit(id) {
-            const h = habits.find(x => x.id === id);
-            if (!h) return;
-
-            // Populate form
-            document.getElementById('newHabitName').value = h.name;
-            document.getElementById('newHabitType').value = h.type;
-
-            // Set state
-            editingHabitId = id;
-
-            // Show form
-            const form = document.getElementById('addHabitForm');
-            const btn = document.getElementById('showAddHabitBtn');
-            const submitBtn = form.querySelector('.btn-primary');
-
-            form.style.display = 'block';
-            btn.style.display = 'none';
-            submitBtn.innerHTML = '<i class="fas fa-check"></i>'; // Change icon to tick
-            document.getElementById('newHabitName').focus();
-        }
-
-        function toggleHabit(id) {
-            const h = habits.find(x => x.id === id);
-            if (h) {
-                const todayStr = getTodayStr();
-                if (h.history.includes(todayStr)) {
-                    // Remove (Undo)
-                    h.history = h.history.filter(d => d !== todayStr);
-                } else {
-                    // Add (Complete)
-                    h.history.push(todayStr);
+            function updateDailyProgress(done, total) {
+                const el = document.getElementById('dailyProgress');
+                if (el) {
+                    el.innerText = total > 0 ? `Today: ${done}/${total}` : '';
                 }
-                saveHabits();
-            }
-        }
-
-        function deleteHabit(id) {
-            if (confirm('Delete this habit?')) {
-                habits = habits.filter(x => x.id !== id);
-                saveHabits();
-            }
-        }
-
-        $(document).ready(function () {
-
-            // 1. Critical Base Systems (Clock, basic UI)
-            if (typeof runChronos === 'function') {
-                runChronos();
-                setInterval(runChronos, 1000);
-            } else {
-                console.error("runChronos not defined!");
             }
 
-            // 2. Data Initialization (Fail-safe wrapper)
-            try { initNodeDirectory(); } catch (e) { console.error('NodeDir failed:', e); }
-            try { initFiscal(); } catch (e) { console.error('Fiscal failed:', e); }
-            try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
-            try { initHabits(); } catch (e) { console.error('Habits failed:', e); }
+            function toggleAddHabitForm(reset = true) {
+                const form = document.getElementById('addHabitForm');
+                const btn = document.getElementById('showAddHabitBtn');
+                const submitBtn = form.querySelector('.btn-primary'); // The create/save button
 
-            // Re-bind events to ensure interactivity persists
-            const fC = document.getElementById('fromCurrency');
-            const tC = document.getElementById('toCurrency');
-            const aI = document.getElementById('amountInput');
-            if (fC) fC.onchange = fetchLatestRates;
-            if (tC) tC.onchange = convertCurrency;
-            if (aI) aI.oninput = convertCurrency;
-        });
-        $(document).on('languageChanged', function (e, lang) {
-            console.log('Dashboard detected language change:', lang);
-            runChronos();
-            renderNodes(allNodes);
-            initFiscal(true); // Re-render dropdowns with new language labels, PRESERVING SELECTION
-            // renderNews(); // Removed as it is not defined
-            fetchNotes(); // Re-fetch notes (if we had server-side loc, but actually notes are user content)
-        });
-
-        // Refresh dynamic form elements on language change
-        $(document).on('languageChanged', function (e, lang) {
-            const isEdit = document.getElementById('noteId').value !== '';
-            const titleKey = isEdit ? 'EditNote' : 'NewNote';
-            if (isFormVisible) {
-                document.getElementById('formTitle').innerText = window.i18n.t(titleKey);
-            }
-        });
-
-        // --- EXPANDABLE WIDGET LOGIC ---
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.tool-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    // Check if clicking interactive element
-                    if (e.target.closest('input, select, button, a, textarea, .no-expand, .suggestion-item, .habit-item, .note-item, .news-item')) return;
+                if (form.style.display === 'none') {
+                    form.style.display = 'block';
+                    btn.style.display = 'none';
+                    document.getElementById('newHabitName').focus();
                     
-                    // Also ignore if selecting text
-                    if (window.getSelection().toString().length > 0) return;
-
-                    // Toggle Expand
-                    if (card.classList.contains('expanded')) {
-                        card.classList.remove('expanded');
-                    } else {
-                        // Collapse others first
-                        document.querySelectorAll('.tool-card.expanded').forEach(c => {
-                           if(c !== card) c.classList.remove('expanded');
-                        });
-                        card.classList.add('expanded');
+                    if(reset) {
+                         editingHabitId = null;
+                         submitBtn.innerText = "Create"; 
+                         document.getElementById('newHabitName').value = '';
+                         document.getElementById('newHabitGoal').value = '';
+                         document.getElementById('newHabitType').value = 'Daily';
+                         toggleCustomDaysInput(); // hide custom days
+                         // Clear checkboxes
+                         document.querySelectorAll('#customDaysInput input').forEach(cb => cb.checked = false);
+                         
+                         // Default Date to Today
+                         const today = new Date().toISOString().split('T')[0];
+                         document.getElementById('newHabitStartDate').value = today;
                     }
+                } else {
+                    form.style.display = 'none';
+                    btn.style.display = 'block';
+                    if(reset) editingHabitId = null;
+                }
+            }
+            
+            function editHabit(id) {
+                const h = habits.find(x => x.id === id);
+                if (!h) return;
+                
+                // Open form without resetting
+                toggleAddHabitForm(false);
+                editingHabitId = id;
+                
+                // Populate fields
+                document.getElementById('newHabitName').value = h.name;
+                document.getElementById('newHabitGoal').value = h.goal || '';
+                document.getElementById('newHabitType').value = h.frequencyType;
+                
+                // Formulate Start Date (h.startDate is ISO)
+                if(h.startDate) {
+                    const d = new Date(h.startDate);
+                    const iso = d.toISOString().split('T')[0];
+                    document.getElementById('newHabitStartDate').value = iso;
+                }
+                
+                toggleCustomDaysInput();
+                
+                // Checkboxes
+                const cbs = document.querySelectorAll('#customDaysInput input');
+                cbs.forEach(cb => cb.checked = false); // clear all first
+                
+                if (h.frequencyType === 'Custom' && h.customDays) {
+                    h.customDays.forEach(day => {
+                        const cb = Array.from(cbs).find(input => input.value === day);
+                        if(cb) cb.checked = true;
+                    });
+                }
+                
+                // Set Button Text
+                const form = document.getElementById('addHabitForm');
+                const submitBtn = form.querySelector('.btn-primary');
+                submitBtn.innerText = "Update";
+                
+                // Scroll to form
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            async function saveNewHabit() {
+                const name = document.getElementById('newHabitName').value.trim();
+                const goal = document.getElementById('newHabitGoal').value.trim();
+                const type = document.getElementById('newHabitType').value;
+                const startDate = document.getElementById('newHabitStartDate').value;
+                
+                if (!name) return;
+                if (!startDate) { alert("Please select a start date"); return; }
+
+                // Gather Custom Days
+                let customDays = [];
+                if (type === 'Custom') {
+                    const checkboxes = document.querySelectorAll('#customDaysInput input:checked');
+                    checkboxes.forEach(cb => customDays.push(cb.value));
+                    if(customDays.length === 0) {
+                        alert("Please select at least one day for Custom Frequency.");
+                        return;
+                    }
+                }
+
+                const payload = {
+                    Id: editingHabitId, // Include ID if editing
+                    Name: name,
+                    Goal: goal,
+                    FrequencyType: type,
+                    StartDate: startDate,
+                    CustomDays: customDays
+                };
+
+                try {
+                    const url = editingHabitId ? '/Habit/Update' : '/Habit/Create';
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (res.ok) {
+                        toggleAddHabitForm(true);
+                        initHabits();
+                    } else {
+                        alert("Failed to save habit.");
+                    }
+                } catch(e) { console.error(e); }
+            }
+
+            async function toggleHabit(id) {
+                const now = new Date(); // Local time
+                // Send ISO string in UTC or just send local time components if backend needs to be strict?
+                // Backend treats Date as Date only (uses .Date).
+                // Ensure we send a valid JSON ISO string.
+                
+                try {
+                    const res = await fetch('/Habit/Toggle', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ HabitId: id, Date: now.toISOString() })
+                    });
+                    if (res.ok) {
+                        // Optimistic update or refresh
+                        initHabits();
+                    }
+                } catch(e) { console.error(e); }
+            }
+
+            async function deleteHabit(id) {
+                if (confirm('Delete this habit?')) {
+                     try {
+                        const res = await fetch('/Habit/Delete?id=' + id, { method: 'POST' });
+                        if(res.ok) initHabits();
+                    } catch(e) { console.error(e); }
+                }
+            }
+
+            // --- HABIT VAULT LOGIC ---
+            function openHabitVault() {
+                const modal = document.getElementById('habitVaultModal');
+                const list = document.getElementById('habitVaultList');
+                const count = document.getElementById('vaultCount');
+                
+                modal.style.display = 'flex';
+                count.innerText = habits.length;
+                list.innerHTML = '';
+
+                if (habits.length === 0) {
+                    list.innerHTML = '<div class="empty-state" style="padding:40px;"><i class="fas fa-box-open" style="font-size:2rem; opacity:0.5;"></i><p>No habits stored in the vault.</p></div>';
+                    return;
+                }
+
+                const today = new Date();
+                const todayStr = today.getFullYear() + '-' +
+                    String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(today.getDate()).padStart(2, '0');
+
+                habits.forEach(h => {
+                    const isDoneToday = h.completedDates.some(d => d.startsWith(todayStr));
+                    
+                    const item = document.createElement('div');
+                    item.className = 'vault-item';
+                    
+                    // Left Side
+                    const left = document.createElement('div');
+                    
+                    const title = document.createElement('div');
+                    title.style.fontWeight = '600';
+                    title.style.color = 'var(--text-bright)';
+                    title.style.fontSize = '1rem';
+                    title.textContent = h.name;
+                    
+                    const meta = document.createElement('div');
+                    meta.className = 'vault-meta';
+                    
+                    // Time Ago Logic
+                    const created = new Date(h.createdDate);
+                    const diffTime = Math.abs(today - created);
+                    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
+                    const timeLabel = diffDays < 1 ? "Added today" : `Added ${diffDays} days ago`;
+                    
+                    meta.textContent = `${h.frequencyType} • ${timeLabel}`;
+                    
+                    left.appendChild(title);
+                    left.appendChild(meta);
+                    
+                    // Right Side
+                    const right = document.createElement('div');
+                    right.style.textAlign = 'right';
+                    
+                    if(isDoneToday) {
+                        right.innerHTML = '<span style="color:var(--accent-emerald); font-weight:700; font-size:0.75rem;"><i class="fas fa-check"></i> Completed</span>';
+                    } else {
+                        right.innerHTML = '<span style="color:var(--text-muted); font-size:0.75rem;"><i class="fas fa-clock"></i> Pending</span>';
+                    }
+                    
+                    item.appendChild(left);
+                    item.appendChild(right);
+                    list.appendChild(item);
                 });
+            }
+
+            function closeHabitVault() {
+                document.getElementById('habitVaultModal').style.display = 'none';
+            }
+
+            $(document).ready(function () {
+
+                // 1. Critical Base Systems (Clock, basic UI)
+                if (typeof runChronos === 'function') {
+                    runChronos();
+                    setInterval(runChronos, 1000);
+                } else {
+                    console.error("runChronos not defined!");
+                }
+
+                // 2. Data Initialization (Fail-safe wrapper)
+                try { initNodeDirectory(); } catch (e) { console.error('NodeDir failed:', e); }
+                try { initFiscal(); } catch (e) { console.error('Fiscal failed:', e); }
+                try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
+                try { initHabits(); } catch (e) { console.error('Habits failed:', e); }
+
+                // Re-bind events to ensure interactivity persists
+                const fC = document.getElementById('fromCurrency');
+                const tC = document.getElementById('toCurrency');
+                const aI = document.getElementById('amountInput');
+                if (fC) fC.onchange = fetchLatestRates;
+                if (tC) tC.onchange = convertCurrency;
+                if (aI) aI.oninput = convertCurrency;
             });
-        });
-    </script>
+            $(document).on('languageChanged', function (e, lang) {
+                console.log('Dashboard detected language change:', lang);
+                runChronos();
+                renderNodes(allNodes);
+                initFiscal(true); // Re-render dropdowns with new language labels, PRESERVING SELECTION
+                // renderNews(); // Removed as it is not defined
+                fetchNotes(); // Re-fetch notes (if we had server-side loc, but actually notes are user content)
+            });
+
+            // Refresh dynamic form elements on language change
+            $(document).on('languageChanged', function (e, lang) {
+                const isEdit = document.getElementById('noteId').value !== '';
+                const titleKey = isEdit ? 'EditNote' : 'NewNote';
+                if (isFormVisible) {
+                    document.getElementById('formTitle').innerText = window.i18n.t(titleKey);
+                }
+            });
+
+
+        </script>
 }

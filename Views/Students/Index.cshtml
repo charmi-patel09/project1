@@ -9,15 +9,20 @@
     <!-- Page Header -->
     <div class="page-header">
         <div class="header-content">
-
             <div class="header-text">
                 <h1>User List</h1>
                 <p>Manage and view all registered users</p>
             </div>
         </div>
-        <a asp-action="Create" class="btn-create">
-            <i class="fas fa-plus"></i> <span>Create New User</span>
-        </a>
+        <div class="d-flex gap-2">
+            <a asp-action="DailyActivity" class="btn-create"
+                style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <i class="fas fa-chart-line"></i> <span>Daily Activity</span>
+            </a>
+            <a asp-action="Create" class="btn-create">
+                <i class="fas fa-plus"></i> <span>Create New User</span>
+            </a>
+        </div>
     </div>
 
     <!-- Students Table Card -->

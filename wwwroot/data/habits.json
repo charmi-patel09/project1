@@ -1,0 +1,47 @@
+[
+  {
+    "Id": "4e1ec88d-a6b7-4bd2-bd2a-5083c8607491",
+    "UserEmail": "charmimarakana@gmail.com",
+    "Name": "running",
+    "Description": "",
+    "FrequencyType": "Daily",
+    "CustomDays": [],
+    "StartDate": "2026-02-03T00:00:00",
+    "CompletedDates": [
+      "2026-02-03T00:00:00Z"
+    ],
+    "CreatedDate": "2026-02-03T12:07:26.457646+05:30",
+    "Goal": ""
+  },
+  {
+    "Id": "7398d5c6-540b-4eb3-806e-cfc40a3d9d3a",
+    "UserEmail": "charmimarakana@gmail.com",
+    "Name": "walk",
+    "Description": "",
+    "FrequencyType": "Custom",
+    "CustomDays": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday"
+    ],
+    "StartDate": "2026-02-03T00:00:00",
+    "CompletedDates": [],
+    "CreatedDate": "2026-02-03T12:07:47.0203665+05:30",
+    "Goal": ""
+  },
+  {
+    "Id": "33bdfa82-11ae-4011-a2ce-d6fcfb002745",
+    "UserEmail": "charmimarakana@gmail.com",
+    "Name": "code",
+    "Description": "",
+    "FrequencyType": "Daily",
+    "CustomDays": [],
+    "StartDate": "2026-02-03T00:00:00",
+    "CompletedDates": [
+      "2026-02-03T00:00:00Z"
+    ],
+    "CreatedDate": "2026-02-03T12:13:24.3320383+05:30",
+    "Goal": ""
+  }
+]
