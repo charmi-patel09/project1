@@ -56,6 +56,18 @@ namespace JsonCrudApp.Services
             return true;
         }
 
+        public bool RegisterStudent(Student student)
+        {
+            if (UserExists(student.Email!)) return false;
+
+            // Ensure password is hashed if it isn't already (simple check, or just re-hash)
+            // Assuming input student has raw password
+            student.Password = HashPassword(student.Password!);
+
+            _studentService.AddStudent(student);
+            return true;
+        }
+
         public bool UserExists(string email)
         {
             var students = _studentService.GetStudents();

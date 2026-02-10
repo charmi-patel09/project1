@@ -16,6 +16,21 @@
         </div>
     </div>
 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; color: #10b981; border-radius: 12px;">
+            <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert" style="background: rgba(248, 81, 73, 0.1); border: 1px solid #f85149; color: #f85149; border-radius: 12px;">
+            <i class="fas fa-exclamation-circle me-2"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <!-- Students Table Card -->
     <div class="table-card">
         <div class="table-card-header">
@@ -33,27 +48,9 @@
                     <i class="fas fa-chart-line"></i> <span>Daily Activity</span>
                 </a>
 
-                <div class="dropdown">
-                    <button class="btn-create dropdown-toggle" type="button" id="createUserDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false" style="border: none; cursor: pointer;">
-                        <i class="fas fa-plus"></i> <span>Create New User</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="createUserDropdown"
-                        style="border: none; border-radius: 12px; padding: 0.5rem;">
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded" asp-action="Create"
-                                asp-route-role="User">
-                                <i class="fas fa-user text-primary"></i> Create Normal User
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded" asp-action="Create"
-                                asp-route-role="Admin">
-                                <i class="fas fa-user-shield text-warning"></i> Create Admin User
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <a asp-action="Create" class="btn-create">
+                    <i class="fas fa-plus"></i> <span>Create New User</span>
+                </a>
             </div>
         </div>
         <div class="table-wrapper">
@@ -104,7 +101,9 @@
                                         <span>Years</span></span>
                                 </td>
                                 <td>
-                                    <span class="course-tag">@((item.Role == "Admin") ? "Administration" : "Normal User")</span>
+                                    <span class="course-tag">
+                                        @((item.Role == "Admin") ? "Administration" : (item.Role == "Private") ? "Private User" : "Normal User")
+                                    </span>
                                 </td>
                                 <td class="actions-cell">
                                     <div class="action-buttons">

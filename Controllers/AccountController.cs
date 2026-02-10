@@ -114,56 +114,47 @@ namespace JsonCrudApp.Controllers
                         string ageStr = HttpContext.Session.GetString("PendingUserAge") ?? "18";
                         string course = HttpContext.Session.GetString("PendingUserCourse") ?? "General";
                         string role = HttpContext.Session.GetString("PendingUserRole") ?? "User";
+                        string widgets = HttpContext.Session.GetString("PendingUserWidgets") ?? "";
                         int age = int.TryParse(ageStr, out int a) ? a : 18;
 
                         // Finalize Creation
                         // If Admin, ensure Course is Administration
                         if (role == "Admin") course = "Administration";
 
-                        _authService.RegisterStudent(email, password, name, age, course, role);
+                        var newStudent = new Student
+                        {
+                            Email = email,
+                            Password = password,
+                            Name = name,
+                            Age = age,
+                            Course = course,
+                            Role = role,
+                            WidgetPermissions = widgets
+                        };
+                        _authService.RegisterStudent(newStudent);
 
                         // Clear creation-specific data
                         HttpContext.Session.Remove("PendingUserName");
                         HttpContext.Session.Remove("PendingUserAge");
                         HttpContext.Session.Remove("PendingUserCourse");
                         HttpContext.Session.Remove("PendingUserRole");
+                        HttpContext.Session.Remove("PendingUserWidgets");
 
-                        // Auto-login & Log Activity
-                        HttpContext.Session.SetString("StudentUser", email);
-                        HttpContext.Session.SetString("Role", "User"); // Or keep them logged in as themselves? 
-                                                                       // Actually, if Admin created a user/admin, the Admin is logged in. 
-                                                                       // Wait. The logic in StudentsController.VerifyOtp seemed to imply the user was being created *by* an admin.
-                                                                       // But Account/VerifyOtp usually logs the *new user* in? 
-                                                                       // "Auto-login & Log Activity" block creates session "StudentUser" = email (the new email).
-                                                                       // If an Admin creates a user, we probably DON'T want to log the Admin out and log the New User in.
-                                                                       // We likely want to redirect back to User List with a success message, keeping Admin session.
-
-                        // Let's check current session. If it was Admin creating, we should preserve Admin session?
-                        // But VerifyOtp is in AccountController, usually for self-registration.
-                        // StudentsController.Create redirects to Account/VerifyOtp.
-                        // The existing code did: HttpContext.Session.SetString("StudentUser", email); which OVERWRITES current session.
-                        // This means creating a user logs the Admin out. That sounds like a bug or existing behavior.
-                        // The user asked to "Refactor ... Do not duplicate forms".
-                        // If I simple use this flow, it will log out the admin.
-                        // However, I must follow the prompt "Simple UI ... keep single clean flow".
-                        // I will fix the logout issue if I can, usually by checking if we are already logged in as Admin.
-
-                        var currentUser = HttpContext.Session.GetString("StudentUser");
-                        var currentRole = HttpContext.Session.GetString("Role");
-
-                        // If we are currently Admin, don't overwrite session with new user
-                        if (currentRole != "Admin")
+                        // Check if currently logged in as Admin
+                        string? currentRole = HttpContext.Session.GetString("Role");
+                        if (currentRole == "Admin")
                         {
-                            HttpContext.Session.SetString("StudentUser", email);
-                            HttpContext.Session.SetString("Role", role);
+                            TempData["SuccessMessage"] = "User created successfully";
+                            return RedirectToAction("Index", "Students");
                         }
+
+                        // Auto-login & Log Activity for new user (if not created by Admin)
+                        HttpContext.Session.SetString("StudentUser", email);
+                        HttpContext.Session.SetString("Role", role);
 
                         _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Creation Visit
 
                         TempData["SuccessMessage"] = "Account created successfully";
-                        // If Admin, redirect to Index
-                        if (currentRole == "Admin") return RedirectToAction("Index", "Students");
-
                         return RedirectToAction("Dashboard", "Home");
                     }
 

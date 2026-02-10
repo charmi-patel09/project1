@@ -6,24 +6,37 @@
     "Name": "charmi",
     "Age": 25,
     "Course": "Administration",
-    "Role": "Admin"
+    "Role": "Admin",
+    "WidgetPermissions": null
   },
   {
-    "Id": 28,
-    "Email": "pcharmi230@gmail.com",
-    "Password": "/V9WtAp5o4VwhCjnsyq5lqaBCAoWaiIG51DrSBkYYUU=",
-    "Name": "charmi",
-    "Age": 21,
-    "Course": "BCA",
-    "Role": "User"
-  },
-  {
-    "Id": 29,
+    "Id": 33,
     "Email": "dhvanibutani09@gmail.com",
     "Password": "5wQqx9Cce8QcjPpXSeQYWPaYBkO8DbGoPMeT0\u002BJNP3c=",
     "Name": "dhvani",
-    "Age": 21,
-    "Course": "Administration",
-    "Role": "Admin"
+    "Age": 18,
+    "Course": "General",
+    "Role": "User",
+    "WidgetPermissions": "currency-hub,chrono-hub,news-hub,notes-hub,translator-hub,habit-hub,pdf-hub"
+  },
+  {
+    "Id": 34,
+    "Email": "projtest28@gmail.com",
+    "Password": "/V9WtAp5o4VwhCjnsyq5lqaBCAoWaiIG51DrSBkYYUU=",
+    "Name": "New Student",
+    "Age": 18,
+    "Course": "General",
+    "Role": "User",
+    "WidgetPermissions": null
+  },
+  {
+    "Id": 35,
+    "Email": "pcharmi230@gmail.com",
+    "Password": "5wQqx9Cce8QcjPpXSeQYWPaYBkO8DbGoPMeT0\u002BJNP3c=",
+    "Name": "dhvani",
+    "Age": 18,
+    "Course": "General",
+    "Role": "Private",
+    "WidgetPermissions": "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,notes-hub,translator-hub,emergency-hub,habit-hub"
   }
 ]

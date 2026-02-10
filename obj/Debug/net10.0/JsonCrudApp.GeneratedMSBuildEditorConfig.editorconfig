@@ -102,6 +102,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcVmVyaWZ5QWRtaW5PdHAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Antigravity/project1/Views/Students/_UserForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudHNcX1VzZXJGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Antigravity/project1/Views/TimeTracker/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGltZVRyYWNrZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

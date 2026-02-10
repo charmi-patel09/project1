@@ -151,15 +151,13 @@ namespace JsonCrudApp.Controllers
         }
 
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public IActionResult Create(string role = "User")
+        public IActionResult Create()
         {
             if (HttpContext.Session.GetString("Role") != "Admin") return RedirectToAction("AccessDenied", "Account");
 
-            ViewBag.TargetRole = role;
-            ViewData["Title"] = role == "Admin" ? "Create Admin User" : "Create New User";
-
+            ViewData["Title"] = "Create New User";
             ModelState.Clear();
-            return View(new Student { Role = role });
+            return View(new Student());
         }
 
         [HttpPost]
@@ -167,7 +165,16 @@ namespace JsonCrudApp.Controllers
         {
             if (HttpContext.Session.GetString("Role") != "Admin") return RedirectToAction("AccessDenied", "Account");
 
-            if (string.IsNullOrEmpty(student.Role)) student.Role = "User";
+            // Default values for fields hidden in the form
+            if (student.Age == null)
+            {
+                student.Age = 18;
+                ModelState.Remove("Age"); // Remove validation error for Age
+            }
+
+            // Map Role for Course logic
+            if (student.Role == "Admin") student.Course = "Administration";
+            else if (string.IsNullOrEmpty(student.Course)) student.Course = "General";
 
             if (ModelState.IsValid)
             {
@@ -175,7 +182,7 @@ namespace JsonCrudApp.Controllers
                 {
                     // Initiate OTP Flow
                     string otp = _otpService.GenerateOtp();
-                    DateTime expiry = DateTime.Now.AddMinutes(2);
+                    DateTime expiry = DateTime.Now.AddMinutes(2); // 2 minutes expiry 
 
                     _emailService.SendOtpEmail(student.Email!, otp);
 
@@ -183,11 +190,16 @@ namespace JsonCrudApp.Controllers
                     HttpContext.Session.SetString("PendingUserEmail", student.Email ?? "");
                     HttpContext.Session.SetString("PendingUserPassword", student.Password ?? "");
                     HttpContext.Session.SetString("PendingUserName", student.Name ?? "");
-                    HttpContext.Session.SetString("PendingUserAge", student.Age.ToString() ?? "");
-                    HttpContext.Session.SetString("PendingUserCourse", student.Course ?? string.Empty);
+                    HttpContext.Session.SetString("PendingUserAge", student.Age.ToString() ?? "18");
+                    HttpContext.Session.SetString("PendingUserCourse", student.Course ?? "General");
 
                     // Set Role for Verification
-                    HttpContext.Session.SetString("PendingUserRole", student.Role);
+                    HttpContext.Session.SetString("PendingUserRole", student.Role ?? "User");
+
+                    // Capture Widget Permissions
+                    var selectedWidgets = Request.Form["selectedWidgets"];
+                    string widgetsCsv = string.Join(",", selectedWidgets.ToArray());
+                    HttpContext.Session.SetString("PendingUserWidgets", widgetsCsv);
 
                     HttpContext.Session.SetString("OtpPurpose", "StudentCreation");
                     HttpContext.Session.SetString("OtpCode", otp);
@@ -198,7 +210,6 @@ namespace JsonCrudApp.Controllers
                 ModelState.AddModelError("Email", "User with this email already exists");
             }
 
-            ViewBag.TargetRole = student.Role;
             return View(student);
         }
 
@@ -219,25 +230,44 @@ namespace JsonCrudApp.Controllers
         {
             if (HttpContext.Session.GetString("Role") != "Admin") return RedirectToAction("AccessDenied", "Account");
 
+            // Handle Widget Permissions from Form
+            var selectedWidgets = Request.Form["selectedWidgets"];
+            student.WidgetPermissions = string.Join(",", selectedWidgets.ToArray());
+
             if (ModelState.IsValid)
             {
                 var original = _studentService.GetStudentById(student.Id);
-                if (original == null) return NotFound();
+                if (original == null)
+                {
+                    TempData["ErrorMessage"] = "User not found";
+                    return RedirectToAction(nameof(Index));
+                }
 
                 // Update properties
                 original.Name = student.Name;
-                original.Email = student.Email;
+                original.Email = student.Email; // Allow update if needed, identity is stable via Id
                 original.Password = student.Password;
                 original.Age = student.Age;
+                original.Role = student.Role;
+                original.WidgetPermissions = student.WidgetPermissions;
 
-                // Preserve Role (Crucial to prevent demoting Admins)
-                // original.Role remains unchanged
+                // Map Role for Course logic
+                if (student.Role == "Admin") original.Course = "Administration";
+                else if (string.IsNullOrEmpty(original.Course)) original.Course = "General";
 
-                // Note: Course is preserved from original as it's removed from form
-
-                _studentService.UpdateStudent(original);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _studentService.UpdateStudent(original);
+                    TempData["SuccessMessage"] = "User updated successfully";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Error updating user: " + ex.Message);
+                }
             }
+
+            // If we got here, something failed. Re-display form.
             return View(student);
         }
 

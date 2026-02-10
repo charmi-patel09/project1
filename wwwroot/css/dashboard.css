@@ -2265,3 +2265,138 @@ section:hover .title-icon::after {
 .suggestion-item:hover {
     background: rgba(255, 255, 255, 0.05);
 }
+
+.teal-glow {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);
+    color: #14b8a6;
+    box-shadow: 0 4px 24px rgba(20, 184, 166, 0.2);
+}
+
+/* PDF Hub Dropdown Styling */
+.pdf-hub .modern-select {
+    width: 100%;
+    padding-right: 35px;
+    text-overflow: ellipsis;
+    /* Use Teal accent for the arrow '#14b8a6' */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2314b8a6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.pdf-hub .modern-input {
+    width: 100%;
+}
+
+.pdf-history-item {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-dim);
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: all 0.2s ease;
+}
+
+.pdf-history-item:hover {
+    background: rgba(20, 184, 166, 0.05);
+    /* Teal tint */
+    border-color: rgba(20, 184, 166, 0.3);
+}
+
+.pdf-history-item.active {
+    border-color: #14b8a6;
+    background: rgba(20, 184, 166, 0.1);
+}
+
+.pdf-history-icon {
+    font-size: 1.2rem;
+    color: #14b8a6;
+    margin-right: 12px;
+}
+
+.pdf-history-meta {
+    flex: 1;
+    overflow: hidden;
+}
+
+.pdf-history-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-bright);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: text;
+}
+
+.pdf-history-name:hover {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--text-dim);
+}
+
+.pdf-history-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-mini-action {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-mini-action:hover {
+    color: var(--text-bright);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-mini-action.preview:hover {
+    color: #38bdf8;
+}
+
+/* Light Blue */
+.btn-mini-action.download:hover {
+    color: #14b8a6;
+}
+
+/* Teal */
+.btn-icon-sm {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--text-dim);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-icon-sm:hover {
+    color: var(--text-bright);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-dim);
+}
+
+.btn-icon-sm.danger:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.pdf-filename:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}

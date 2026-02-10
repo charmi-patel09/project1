@@ -1,63 +1,13 @@
 @model JsonCrudApp.Models.Student
 
 @{
-    var role = ViewBag.TargetRole as string ?? "User";
-    var title = role == "Admin" ? "Create Admin User" : "Create New User";
-    ViewData["Title"] = title;
-    ViewData["TitleKey"] = role == "Admin" ? "CreateAdmin" : "CreateUser";
+    ViewData["Title"] = "Create New User";
+    ViewData["TitleKey"] = "CreateUser";
 }
 
-<h1>@title</h1>
-
-<h4>@role Information</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" autocomplete="off">
-            <input type="hidden" asp-for="Role" value="@role" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label asp-for="Name" class="control-label">Name</label>
-                <input asp-for="Name" class="form-control" autocomplete="off" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Email" class="control-label">Email</label>
-                <input asp-for="Email" class="form-control" autocomplete="off" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Password" class="control-label">Password</label>
-                <input asp-for="Password" type="password" class="form-control" autocomplete="new-password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="Age" class="control-label">Age</label>
-                <input asp-for="Age" class="form-control" autocomplete="off" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-            </div>
-        </form>
-    </div>
-</div>
+@* Use Partial View for Form Logic *@
+@await Html.PartialAsync("_UserForm", Model, new ViewDataDictionary(ViewData) { { "IsEdit", false } })
 
 @section Scripts {
-    <script>
-        function forceClear() {
-            var inputs = document.querySelectorAll('input:not([type="submit"]):not([type="hidden"])');
-            inputs.forEach(function (input) {
-                input.value = '';
-                input.dispatchEvent(new Event('input', { bubbles: true }));
-            });
-        }
-
-        window.onload = function () {
-            forceClear();
-            setTimeout(forceClear, 200);
-            setTimeout(forceClear, 500);
-        };
-    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

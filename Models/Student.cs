@@ -22,5 +22,7 @@ namespace JsonCrudApp.Models
         public string? Course { get; set; }
 
         public string Role { get; set; } = "User";
+
+        public string? WidgetPermissions { get; set; }
     }
 }

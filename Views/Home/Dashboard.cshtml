@@ -1,11 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Dashboard";
-    ViewData["TitleKey"] = "Dashboard";
+﻿@using Microsoft.AspNetCore.Http
+@{
+    // Logic:
+    // 1. Admin always sees all.
+    // 2. Legacy users (WidgetPermissions is null) see all.
+    // 3. New users (WidgetPermissions is not null) see only what is in the list.
+    var role = ViewBag.Role as string ?? "";
+    string? rawPermissions = ViewBag.WidgetPermissions as string;
+    
+    var allowedParams = (rawPermissions ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries);
+    
+    bool CanShow(string widgetId) 
+    {
+        if (role == "Admin") return true; 
+        if (rawPermissions == null) return true; // Legacy: No permissions set yet -> Allow All
+        return allowedParams.Contains(widgetId);
+    }
+    
+    bool IsAdmin = role == "Admin";
 }
 
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
 <div class="dashboard-shell">
     <div class="dashboard-content">
@@ -22,248 +36,135 @@
 
         <div class="dashboard-grid">
 
-
             <!-- Global Search Hub -->
+            @if (IsAdmin || CanShow("global-search-hub")) {
             <section class="tool-card global-search-hub">
                 <div class="card-title">
-                    <div class="title-icon cyan-glow">
-                        <i class="fas fa-globe-americas"></i>
-                    </div>
-                    <div class="title-text">
-                        <h3>Global Search</h3>
-                    </div>
+                    <div class="title-icon cyan-glow"><i class="fas fa-globe-americas"></i></div>
+                    <div class="title-text"><h3>Global Search</h3></div>
                 </div>
-
                 <div class="hub-controls">
                     <div class="search-field">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="globalSearchInput" placeholder="Search Global Intelligence Database..."
-                            onkeypress="if(event.key === 'Enter') searchGlobalIntel()">
+                        <input type="text" id="globalSearchInput" placeholder="Global Intelligence..." onkeypress="if(event.key === 'Enter') searchGlobalIntel()">
                     </div>
-                    <div class="action-group">
-                        <button onclick="searchGlobalIntel()" class="btn-primary">Search</button>
-                    </div>
+                    <div class="action-group"><button onclick="searchGlobalIntel()" class="btn-primary">Search</button></div>
                 </div>
-
-                <div id="globalSearchResult" class="hub-display" style="gap: 14px;">
-                    <!-- Results -->
-                </div>
+                <div id="globalSearchResult" class="hub-display" style="gap: 14px;"></div>
             </section>
+            }
 
             <!-- Weather Card -->
+            @if (IsAdmin || CanShow("weather-hub")) {
             <section class="tool-card weather-hub">
                 <div class="card-title">
-                    <div class="title-icon sky-glow">
-                        <i class="fas fa-satellite"></i>
-                    </div>
-                    <div class="title-text">
-                        <h3>Weather</h3>
-                    </div>
+                    <div class="title-icon sky-glow"><i class="fas fa-satellite"></i></div>
+                    <div class="title-text"><h3>Weather</h3></div>
                 </div>
-
                 <div class="hub-controls">
                     <div class="search-field">
                         <i class="fas fa-magnifying-glass"></i>
-                        <input type="text" id="cityInput" placeholder="Locate Any City or Country"
-                            onkeypress="if(event.key === 'Enter') getWeather()">
+                        <input type="text" id="cityInput" placeholder="Locate City..." onkeypress="if(event.key === 'Enter') getWeather()">
                     </div>
                     <div class="action-group">
                         <button onclick="getWeather()" class="btn-primary">Search</button>
-                        <button onclick="getCurrentLocation()" class="btn-icon" title="Local coordinates"><i
-                                class="fas fa-location-crosshairs"></i></button>
+                        <button onclick="getCurrentLocation()" class="btn-icon" title="Local"><i class="fas fa-location-crosshairs"></i></button>
                     </div>
                 </div>
-
-                <div class="hub-display">
-                    <div id="weatherResult" class="primary-result">
-                        <div style="padding: 20px; text-align: center; color: var(--text-muted); opacity: 0.8;">
-                            <i class="fas fa-satellite" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
-                            <p>Locate Any City or Country</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="hub-display"><div id="weatherResult" class="primary-result"><div style="padding: 20px; text-align: center; opacity: 0.8;"><i class="fas fa-satellite" style="font-size: 1.5rem; margin-bottom: 8px;"></i><p>Locate City</p></div></div></div>
             </section>
+            }
 
             <!-- Fiscal Exchange Card -->
+            @if (IsAdmin || CanShow("currency-hub")) {
             <section class="tool-card currency-hub">
                 <div class="card-title">
-                    <div class="title-icon emerald-glow">
-                        <i class="fas fa-vault"></i>
-                    </div>
-                    <div class="title-text">
-                        <h3>Currency Exchange</h3>
-                    </div>
+                    <div class="title-icon emerald-glow"><i class="fas fa-vault"></i></div>
+                    <div class="title-text"><h3>Currency Exchange</h3></div>
                 </div>
-
                 <div class="tool-body">
-                    <div class="form-row">
-                        <label>Transaction Volume</label>
-                        <input type="number" id="amountInput" value="1.00" step="0.01" class="modern-input"
-                            oninput="convertCurrency()">
-                    </div>
+                    <div class="form-row"><label>Volume</label><input type="number" id="amountInput" value="1.00" step="0.01" class="modern-input" oninput="convertCurrency()"></div>
                     <div class="form-grid">
-                        <div class="form-row">
-                            <label>Base Location</label>
-                            <select id="fromCurrency" class="modern-select" onchange="convertCurrency()"></select>
-                        </div>
+                        <div class="form-row"><label>Base</label><select id="fromCurrency" class="modern-select" onchange="convertCurrency()"></select></div>
                         <div class="swap-indicator"><i class="fas fa-right-left"></i></div>
-                        <div class="form-row">
-                            <label>Target Location</label>
-                            <select id="toCurrency" class="modern-select" onchange="convertCurrency()"></select>
-                        </div>
+                        <div class="form-row"><label>Target</label><select id="toCurrency" class="modern-select" onchange="convertCurrency()"></select></div>
                     </div>
-                    <div class="action-row" style="margin-top: 10px;">
-                        <button onclick="convertCurrency()" class="btn-emerald" style="width: 100%;">
-                            <i class="fas fa-bolt"></i> <span>Refresh</span>
-                        </button>
-                    </div>
+                    <div class="action-row" style="margin-top: 10px;"><button onclick="convertCurrency()" class="btn-emerald" style="width: 100%;"><i class="fas fa-bolt"></i> <span>Refresh</span></button></div>
                     <div class="result-section">
-                        <div class="result-status">
-                            <label class="result-header">Real Currency</label>
-                            <div class="live-tag">
-                                <span class="pulse-dot"></span>
-                                <span>LIVE</span>
-                            </div>
-                        </div>
-                        <div id="currencyResult" class="valuation-output">
-                            <!-- Hidden until action -->
-                            <div
-                                style="padding: 20px; text-align: center; color: var(--text-muted); opacity: 0.6; font-size: 0.9rem;">
-                                <i class="fas fa-coins"></i> <span>Convert Currency</span>
-                            </div>
-                        </div>
-                        <div class="update-info no-translate" id="lastExchangeUpdate">
-                            <span>Last Sync</span>: --:--:--
-                        </div>
-                    </div>
-
-                    <div class="fiscal-directory" style="display: none;">
-                        <label>Currency Origin Reference</label>
-                        <div id="currencyReferenceList" class="reference-scroll">
-                            <!-- JS Populated -->
-                        </div>
+                        <div class="result-status"><label class="result-header">Value</label><div class="live-tag"><span class="pulse-dot"></span><span>LIVE</span></div></div>
+                        <div id="currencyResult" class="valuation-output"><div style="padding: 20px; text-align: center; opacity: 0.6; font-size: 0.9rem;"><i class="fas fa-coins"></i> <span>Convert</span></div></div>
+                        <div class="update-info no-translate" id="lastExchangeUpdate"><span>Last Sync</span>: --:--:--</div>
                     </div>
                 </div>
             </section>
+            }
 
             <!-- Chronos Sync Card -->
+            @if (IsAdmin || CanShow("chrono-hub")) {
             <section class="tool-card chrono-hub">
                 <div class="card-title">
-                    <div class="title-icon indigo-glow">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="title-text">
-                        <h3>Timezone</h3>
-                    </div>
+                    <div class="title-icon indigo-glow"><i class="fas fa-clock"></i></div>
+                    <div class="title-text"><h3>Timezone</h3></div>
                 </div>
-
                 <div class="tool-body">
-                    <div class="clock-display">
-                        <label>System Base Time</label>
-                        <div id="localTimeLarge" class="digits-hero no-translate">00:00:00</div>
-                    </div>
-                    <div class="zone-sync">
-                        <label>Chronos Sync</label>
+                    <div class="clock-display"><label>System Base Time</label><div id="localTimeLarge" class="digits-hero no-translate">00:00:00</div></div>
+                    <div class="zone-sync"><label>Chronos Sync</label>
                         <select id="timezoneSelect" class="modern-select" onchange="updateConvertedTime()">
                             <option value="UTC">UTC, Universal</option>
-                            <option value="America/New_York">New York, United States</option>
-                            <option value="Europe/London">London, United Kingdom</option>
-                            <option value="Asia/Tokyo">Tokyo, Japan</option>
-                            <option value="Asia/Kolkata" selected>Mumbai, India</option>
-                            <option value="Asia/Dubai">Dubai, United Arab Emirates</option>
-                            <option value="Australia/Sydney">Sydney, Australia</option>
-                            <option value="Europe/Paris">Paris, France</option>
-                            <option value="Europe/Berlin">Berlin, Germany</option>
-                            <option value="Asia/Singapore">Singapore, Singapore</option>
-                            <option value="Asia/Shanghai">Shanghai, China</option>
-                            <option value="America/Los_Angeles">Los Angeles, United States</option>
-                            <option value="America/Chicago">Chicago, United States</option>
-                            <option value="America/Toronto">Toronto, Canada</option>
-                            <option value="Europe/Moscow">Moscow, Russia</option>
+                            <option value="America/New_York">New York, US</option>
+                            <option value="Europe/London">London, UK</option>
+                            <option value="Asia/Tokyo">Tokyo, JP</option>
+                            <option value="Asia/Kolkata" selected>Mumbai, IN</option>
+                            <option value="Asia/Dubai">Dubai, UAE</option>
+                            <option value="Australia/Sydney">Sydney, AU</option>
+                            <option value="Europe/Paris">Paris, FR</option>
+                            <option value="Asia/Singapore">Singapore, SG</option>
                         </select>
                         <div id="convertedTime" class="digits-accent no-translate">00:00:00</div>
                     </div>
                 </div>
             </section>
+            }
 
             <!-- News Hub Card -->
+            @if (IsAdmin || CanShow("news-hub")) {
             <section class="tool-card news-hub">
                 <div class="card-title">
-                    <div class="title-icon rose-glow">
-                        <i class="fas fa-newspaper"></i>
-                    </div>
-                    <div class="title-text">
-                        <h3>Global News Feed</h3>
-                    </div>
+                    <div class="title-icon rose-glow"><i class="fas fa-newspaper"></i></div>
+                    <div class="title-text"><h3>Global News</h3></div>
                 </div>
-
                 <div class="hub-controls">
-                    <div class="search-field">
-                        <i class="fas fa-magnifying-glass"></i>
-                        <input type="text" id="newsInput" placeholder="Search News"
-                            onkeypress="if(event.key === 'Enter') triggerNewsSearch()">
-                    </div>
-                    <div class="action-group">
-                        <button onclick="triggerNewsSearch()" class="btn-primary">Search</button>
-                    </div>
+                    <div class="search-field"><i class="fas fa-magnifying-glass"></i><input type="text" id="newsInput" placeholder="Search News" onkeypress="if(event.key === 'Enter') triggerNewsSearch()"></div>
+                    <div class="action-group"><button onclick="triggerNewsSearch()" class="btn-primary">Search</button></div>
                 </div>
-
-                <div class="news-list" id="newsFeed">
-                    <!-- News will load here only upon user search -->
-                    <div style="padding: 30px; text-align: center; color: var(--text-muted); opacity: 0.6;">
-                        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                        <p>Search News</p>
-                    </div>
-                </div>
+                <div class="news-list" id="newsFeed"><div style="padding: 30px; text-align: center; opacity: 0.6;"><i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i><p>Search News</p></div></div>
             </section>
+            }
 
             <!-- Notes Hub Card -->
+            @if (IsAdmin || CanShow("notes-hub")) {
             <section class="tool-card notes-hub">
                 <div class="card-title">
-                    <div class="title-icon purple-glow">
-                        <i class="fas fa-sticky-note"></i>
-                    </div>
-                    <div class="title-text">
-                        <h3>Notes</h3>
-                    </div>
+                    <div class="title-icon purple-glow"><i class="fas fa-sticky-note"></i></div>
+                    <div class="title-text"><h3>Notes</h3></div>
                 </div>
-
-                <div class="hub-controls">
-                    <button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%">
-                        <i class="fas fa-plus"></i> <span>New Note</span>
-                    </button>
-                </div>
-
-                <div id="noteFormArea"
-                    style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);"
-                    class="slide-in">
-                    <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">
-                        New Note</div>
+                <div class="hub-controls"><button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%"><i class="fas fa-plus"></i> <span>New Note</span></button></div>
+                <div id="noteFormArea" style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);" class="slide-in">
+                    <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">New Note</div>
                     <input type="hidden" id="noteId">
-                    <div class="form-row" style="margin-bottom:12px;">
-                        <input type="text" id="noteTitle" class="modern-input" placeholder="Note Title">
-                    </div>
-                    <div class="form-row" style="margin-bottom:12px;">
-                        <textarea id="noteDesc" class="modern-input" rows="3" placeholder="Note Details"></textarea>
-                    </div>
+                    <div class="form-row" style="margin-bottom:12px;"><input type="text" id="noteTitle" class="modern-input" placeholder="Title"></div>
+                    <div class="form-row" style="margin-bottom:12px;"><textarea id="noteDesc" class="modern-input" rows="3" placeholder="Details"></textarea></div>
                     <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
                         <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
-                        <button onclick="toggleNoteForm()" class="btn-icon"
-                            style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
+                        <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
                     </div>
                 </div>
-
-                <div class="notes-list" id="notesList">
-                    <div class="loading-state">Establishing Secure Link...</div>
-                </div>
+                <div class="notes-list" id="notesList"><div class="loading-state">Syncing...</div></div>
             </section>
-
-
-
-
-            </section>
+            }
 
             <!-- Translator Hub Card -->
+            @if (IsAdmin || CanShow("translator-hub")) {
             <section class="tool-card translator-hub">
                 <div class="card-title">
                     <div class="title-icon orange-glow">
@@ -313,8 +214,10 @@
                     </div>
                 </div>
             </section>
+            }
 
             <!-- Emergency Hub Card -->
+            @if (IsAdmin || CanShow("emergency-hub")) {
             <section class="tool-card emergency-hub">
                 <div class="card-title">
                     <div class="title-icon red-glow">
@@ -344,16 +247,18 @@
 
                     <div id="emergencyResult" class="emergency-display">
                         <div class="empty-state">
-                            <i class="fas fa-shield-heart"></i>
-                            <p>Select a country to view emergency lines</p>
+                             <div class="skeleton skeleton-list-item"></div>
+                             <div class="skeleton skeleton-list-item"></div>
                         </div>
                     </div>
                 </div>
             </section>
+            }
 
 
 
             <!-- Habit Tracker Card -->
+            @if (IsAdmin || CanShow("habit-hub")) {
             <section class="tool-card habit-hub">
                 <div class="card-title">
                     <div class="title-icon green-glow">
@@ -433,6 +338,94 @@
                     </div>
                 </div>
             </section>
+            }
+
+            <!-- PDF Converter Hub Card -->
+            @if (IsAdmin || CanShow("pdf-hub")) {
+            <section class="tool-card pdf-hub">
+                <div class="card-title">
+                    <div class="title-icon teal-glow">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="title-text">
+                        <h3>PDF Converter</h3>
+                    </div>
+                </div>
+
+                <div class="tool-body">
+                    <!-- File Input -->
+                    <div class="form-row" style="margin-bottom: 12px;">
+                        <label>Select Files</label>
+                        <input type="file" id="pdfInputFile" class="modern-input" accept=".jpg,.jpeg,.png,.doc,.docx,.txt" multiple style="padding: 10px;">
+                    </div>
+                    
+                    <!-- Format & Merge -->
+                    <div class="form-grid-2" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-bottom: 12px; align-items: center;">
+                        <div class="form-row" style="margin:0;">
+                            <label>Format</label>
+                            <select id="pdfTargetFormat" class="modern-select">
+                                <option value="pdf">PDF Document</option>
+                                <option value="jpg">JPG Image</option>
+                            </select>
+                        </div>
+                        <div class="form-row" style="margin:0; text-align: center;">
+                             <label style="display:block; margin-bottom:4px;">Merge</label>
+                             <div class="custom-checkbox" id="pdfMergeCheck" onclick="this.classList.toggle('checked')" style="width: 24px; height: 24px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-dim); border-radius: 6px; cursor: pointer;">
+                                 <i class="fas fa-check" style="font-size: 0.8rem;"></i>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- PDF Options (Size/Orientation) -->
+                    <div id="pdfOptionsRow" class="form-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                        <div class="form-row" style="margin:0;">
+                            <label>Page Size</label>
+                            <select id="pdfPageSize" class="modern-select">
+                                <option value="A4">A4 (210x297)</option>
+                                <option value="Letter">Letter (8.5x11)</option>
+                            </select>
+                        </div>
+                        <div class="form-row" style="margin:0;">
+                            <label>Orientation</label>
+                            <select id="pdfOrientation" class="modern-select">
+                                <option value="Portrait">Portrait</option>
+                                <option value="Landscape">Landscape</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Quality -->
+                     <div class="form-row" style="margin-bottom: 20px;">
+                        <label>Image Quality</label>
+                        <select id="pdfQuality" class="modern-select">
+                            <option value="Standard">Standard (Web)</option>
+                            <option value="High">High (Print)</option>
+                        </select>
+                    </div>
+
+                    <div class="action-row" style="margin-bottom: 16px;">
+                        <button onclick="convertFileToPdf()" class="btn-primary" style="width: 100%; border-radius: 12px; height: 48px; font-weight: 700;">
+                            <i class="fas fa-magic"></i> Convert File
+                        </button>
+                    </div>
+
+                    <!-- Result Messaging (Hidden by default, used only for critical errors) -->
+                    <div id="pdfResult" class="result-box" style="margin-bottom: 20px; display: none; align-items: center; justify-content: center;">
+                    </div>
+
+                    <!-- Converted Files List Section -->
+                    <div id="pdfListSection" style="display:none; margin-top: 24px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
+                            <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin:0;">Converted Files</h4>
+                            <button onclick="clearPdfList()" style="background:none; border:none; color:var(--text-muted); font-size:0.8rem; cursor:pointer; padding:4px;" title="Clear List">Clear All</button>
+                        </div>
+                        <div id="pdfFilesListContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            }
 
 
         </div>
@@ -461,6 +454,24 @@
         </div>
         <div class="modal-footer" style="padding:16px; border-top:1px solid var(--border-dim); text-align:right; color:var(--text-muted); font-size:0.8rem;">
             Total Stored Habits: <span id="vaultCount">0</span>
+        </div>
+    </div>
+</div>
+
+<!-- PDF Preview Modal -->
+<div id="pdfPreviewModal" class="modal-overlay" style="display:none; z-index: 1100; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div class="modal-content glass-panel" style="max-width: 900px; width: 95%; height: 85vh; display:flex; flex-direction:column; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-dim); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+        
+        <div class="modal-header" style="padding: 16px 24px; border-bottom: 1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center; background: rgba(255,255,255,0.02);">
+            <div style="display:flex; align-items:center; gap:12px; overflow: hidden;">
+                <div class="text-emerald" style="font-size:1.4rem; filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.3));"><i class="fas fa-file-pdf"></i></div>
+                <h3 id="pdfPreviewTitle" style="margin:0; font-size:1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-bright);">Document Preview</h3>
+            </div>
+            <button class="icon-btn" onclick="closePdfPreview()" style="font-size: 1.2rem; padding: 8px;"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="modal-body" style="padding: 0; flex:1; background: #1e1e1e; position: relative; overflow: hidden;">
+             <iframe id="pdfModalFrame" style="width:100%; height:100%; border:none;"></iframe>
         </div>
     </div>
 </div>
@@ -801,6 +812,243 @@
                 // End Init
             }
 
+            // --- PDF CONVERTER LOGIC ---
+            // --- PDF CONVERTER LOGIC ---
+            let pdfCollection = [];
+
+            function convertFileToPdf() {
+                const fileInput = document.getElementById('pdfInputFile');
+                const formatSelect = document.getElementById('pdfTargetFormat');
+                const resultArea = document.getElementById('pdfResult');
+                const listSection = document.getElementById('pdfListSection');
+
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    alert("Please select a file first.");
+                    return;
+                }
+                
+                // UI Loading State - Minimal (optional: disable button?)
+                resultArea.style.display = 'none';
+                resultArea.innerHTML = '';
+
+                const merge = document.getElementById('pdfMergeCheck').classList.contains('checked');
+                const pageSize = document.getElementById('pdfPageSize').value;
+                const orientation = document.getElementById('pdfOrientation').value;
+                const quality = document.getElementById('pdfQuality').value;
+
+                const formData = new FormData();
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    formData.append("files", fileInput.files[i]);
+                }
+                formData.append("targetFormat", formatSelect.value);
+                formData.append("mergeFiles", merge);
+                formData.append("pageSize", pageSize);
+                formData.append("orientation", orientation);
+                formData.append("quality", quality);
+
+                fetch('/Tools/ConvertToPdf', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Success - Add to List with returned ID
+                            const newDoc = {
+                                id: data.id || Date.now(),
+                                name: data.fileName,
+                                url: data.downloadUrl
+                            };
+                            pdfCollection.unshift(newDoc);
+                            renderPdfList();
+                            listSection.style.display = 'block';
+                        } else {
+                            resultArea.style.display = 'flex';
+                            resultArea.innerHTML = `
+                                <div class="error-state" style="text-align: center; color: var(--accent-danger);">
+                                    <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
+                                    <p>Error: ${data.message}</p>
+                                </div>`;
+                        }
+                    })
+                    .catch(error => {
+                        resultArea.style.display = 'flex';
+                        resultArea.innerHTML = `
+                            <div class="error-state" style="text-align: center; color: var(--accent-danger);">
+                                <i class="fas fa-exclamation-triangle" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
+                                <p>System Failure: ${error.message}</p>
+                            </div>`;
+                    });
+            }
+
+            async function initPdfHistory() {
+                try {
+                    const res = await fetch('/Tools/GetUserPdfs');
+                    if(res.ok) {
+                        const data = await res.json();
+                        // Map server model to local model
+                        // Server: { id, userId, fileName, filePath, createdAt }
+                        pdfCollection = data.map(d => ({
+                            id: d.id,
+                            name: d.fileName,
+                            url: d.filePath
+                        }));
+                        renderPdfList();
+                        if (pdfCollection.length > 0) {
+                            document.getElementById('pdfListSection').style.display = 'block';
+                        }
+                    }
+                } catch(e) { console.error("Failed to load PDF history", e); }
+            }
+
+            function clearPdfList() {
+                if(confirm('Clear all converted files history? This will delete files from server.')) {
+                    // Loop delete or just clear local? Requirement: "Persist... until explicitly deleted".
+                    // "Clear All" usually implies local cleanup or mass delete.
+                    // Given the constraint "Users can only see... their own PDFs", let's make Clear All massive.
+                    // But we don't have a Mass Delete endpoint.
+                    // Let's iterate for now or just hide.
+                    // Better: UI requirement said "Clear all/reset option", usually implies session reset.
+                    // But User Request says "Persist...".
+                    // Let's implement individual deletes properly.
+                    // For "Clear All", let's just do individual deletes for all locally known to ensure consistency.
+                    // Or add a DeleteAll endpoint. 
+                    // Let's just keep it UI only for now? No, that violates persistence.
+                    // Let's iterate delete.
+                    
+                    // Actually, for simplicity/safety, let's just make Clear All hide/reset LOCAL view if user wants to declutter, 
+                    // BUT prompt says "Delete" action is for each item. 
+                    // Let's make Clear All iterate delete.
+                    
+                    pdfCollection.forEach(p => deletePdfDoc(p.id, true)); // true = suppress render
+                    pdfCollection = [];
+                    renderPdfList();
+                }
+            }
+            
+            async function savePdfName(id) {
+                const input = document.getElementById(`input-${id}`);
+                let val = input.value.trim();
+                
+                if(val) {
+                    if(!val.toLowerCase().endsWith('.pdf') && !val.toLowerCase().endsWith('.zip') && !val.toLowerCase().endsWith('.jpg')) {
+                         // Keep extension
+                         const doc = pdfCollection.find(d => d.id === id);
+                         const ext = doc.name.split('.').pop();
+                         val += '.' + ext;
+                    }
+
+                    const doc = pdfCollection.find(d => d.id === id);
+                    if(doc) {
+                        doc.name = val;
+                        // Server Update
+                        try {
+                            await fetch('/Tools/RenameUserPdf', {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({ Id: id, FileName: val })
+                            });
+                        } catch(e) { console.error(e); }
+                    }
+                }
+                renderPdfList(); 
+            }
+
+            async function deletePdfDoc(id, suppressRender = false) {
+                if (!suppressRender && !confirm('Delete this file?')) return;
+                
+                try {
+                    await fetch('/Tools/DeleteUserPdf', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(id)
+                    });
+                    
+                    pdfCollection = pdfCollection.filter(d => d.id !== id);
+                    if(!suppressRender) renderPdfList();
+                } catch(e) { console.error(e); }
+            }
+
+            function renderPdfList() {
+                const list = document.getElementById('pdfFilesListContainer');
+                list.innerHTML = '';
+                
+                if(pdfCollection.length === 0) {
+                     document.getElementById('pdfListSection').style.display = 'none';
+                     return;
+                }
+
+                pdfCollection.forEach(doc => {
+                    const el = document.createElement('div');
+                    el.className = 'pdf-history-item'; // Reuse existing style
+                    el.style.background = 'rgba(0,0,0,0.2)';
+                    
+                    el.innerHTML = `
+                        <div class="pdf-history-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="pdf-history-meta">
+                            <div class="pdf-history-name" onclick="editPdfName(${doc.id})" title="Click to Rename" id="name-${doc.id}">${doc.name}</div>
+                            <input type="text" id="input-${doc.id}" value="${doc.name}" class="modern-input" 
+                                style="display:none; padding:4px 8px; width:100%; font-size:0.9rem; height:auto;" 
+                                onblur="savePdfName(${doc.id})" 
+                                onkeydown="if(event.key==='Enter') savePdfName(${doc.id})">
+                        </div>
+                        <div class="pdf-history-actions">
+                            <button class="btn-mini-action preview" onclick="openPdfPreview(${doc.id})" title="Preview Document"><i class="fas fa-eye"></i></button>
+                            <button class="btn-mini-action" onclick="editPdfName(${doc.id})" title="Rename"><i class="fas fa-pen"></i></button>
+                            <a href="${doc.url}" download="${doc.name}" class="btn-mini-action download" title="Download"><i class="fas fa-download"></i></a>
+                            <button class="btn-mini-action" onclick="deletePdfDoc(${doc.id})" title="Delete" style="color:var(--accent-danger);"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                    list.appendChild(el);
+                });
+            }
+
+            function editPdfName(id) {
+                document.getElementById(`name-${id}`).style.display = 'none';
+                const input = document.getElementById(`input-${id}`);
+                input.style.display = 'block';
+                input.focus();
+            }
+
+            function savePdfName(id) {
+                const input = document.getElementById(`input-${id}`);
+                let val = input.value.trim();
+                
+                if(val) {
+                    if(!val.toLowerCase().endsWith('.pdf')) val += '.pdf';
+                    const doc = pdfCollection.find(d => d.id === id);
+                    if(doc) doc.name = val;
+                }
+                renderPdfList();
+            }
+
+            function deletePdfDoc(id) {
+                if(confirm('Delete this file?')) {
+                    pdfCollection = pdfCollection.filter(d => d.id !== id);
+                    renderPdfList();
+                }
+            }
+
+            function openPdfPreview(id) {
+                const doc = pdfCollection.find(d => d.id === id);
+                if(!doc) return;
+                
+                const modal = document.getElementById('pdfPreviewModal');
+                const frame = document.getElementById('pdfModalFrame');
+                const title = document.getElementById('pdfPreviewTitle');
+                
+                modal.style.display = 'flex'; // Flex for centering
+                title.innerText = doc.name;
+                frame.src = doc.url;
+            }
+
+            function closePdfPreview() {
+                const modal = document.getElementById('pdfPreviewModal');
+                const frame = document.getElementById('pdfModalFrame');
+                
+                modal.style.display = 'none';
+                frame.src = '';
+            }
 
 
 
@@ -2089,6 +2337,8 @@
                 document.getElementById('habitVaultModal').style.display = 'none';
             }
 
+
+
             $(document).ready(function () {
 
                 // 1. Critical Base Systems (Clock, basic UI)
@@ -2104,6 +2354,8 @@
                 try { initFiscal(); } catch (e) { console.error('Fiscal failed:', e); }
                 try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
                 try { initHabits(); } catch (e) { console.error('Habits failed:', e); }
+                try { initPdfHistory(); } catch (e) { console.error('PDF History failed:', e); }
+                try { initPdfHistory(); } catch (e) { console.error('PDF History failed:', e); }
 
                 // Re-bind events to ensure interactivity persists
                 const fC = document.getElementById('fromCurrency');

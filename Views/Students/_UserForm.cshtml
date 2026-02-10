@@ -1,0 +1,299 @@
+@model JsonCrudApp.Models.Student
+
+@{
+    bool isEdit = ViewData["IsEdit"] as bool? ?? false;
+    
+    // Helper to check if a widget is permitted
+    bool HasPermission(string widgetId) {
+        if (string.IsNullOrEmpty(Model.WidgetPermissions)) return false;
+        return Model.WidgetPermissions.Split(',').Contains(widgetId);
+    }
+}
+
+<style>
+    /* Scoped styles using site.css variables */
+    .create-user-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-primary);
+        border-radius: 16px;
+        padding: 32px;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .form-title {
+        color: var(--text-primary);
+        font-family: var(--font-heading);
+        font-weight: 700;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--border-primary);
+        padding-bottom: 16px;
+    }
+
+    .section-title {
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        margin-top: 8px;
+    }
+
+    .form-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .form-control, .form-select {
+        background-color: var(--bg-tertiary);
+        border: 1px solid var(--border-secondary);
+        color: var(--text-primary);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+    }
+
+    .form-control::placeholder {
+        color: var(--text-muted);
+        opacity: 0.7;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background-color: var(--bg-secondary);
+        border-color: var(--accent-primary);
+        color: var(--text-primary);
+        box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.15); /* Blue glow match */
+    }
+
+    .widget-section-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border-secondary);
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 24px;
+        transition: opacity 0.3s ease;
+    }
+
+    .widget-section-card.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .form-check-input {
+        background-color: var(--bg-tertiary);
+        border-color: var(--border-secondary);
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-top: 0.15em;
+        cursor: pointer;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--accent-primary);
+        border-color: var(--accent-primary);
+    }
+
+    .form-check-label {
+        color: var(--text-primary);
+        font-weight: 500;
+        padding-left: 8px;
+        cursor: pointer;
+    }
+    
+    .btn-create {
+        background: var(--accent-primary);
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        width: 100%;
+        margin-top: 32px;
+        transition: all 0.2s ease;
+        box-shadow: var(--shadow-md);
+    }
+
+    .btn-create:hover {
+        background: var(--accent-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .row-gap {
+        row-gap: 20px;
+    }
+    
+    .widget-column {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    @@media (max-width: 768px) {
+        .form-card {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="create-user-container">
+    <div class="form-card">
+        <h2 class="form-title">@(isEdit ? "Edit User" : "Create New User")</h2>
+        
+        <form asp-action="@(isEdit ? "Edit" : "Create")" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            @if(isEdit) { <input type="hidden" asp-for="Id" /> }
+
+            <!-- Personal Info Section -->
+            <div class="row row-gap">
+                <div class="col-md-6">
+                    <label asp-for="Name" class="form-label">Full Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="e.g. John Doe" />
+                    <span asp-validation-for="Name" class="text-danger" style="font-size: 0.85rem;"></span>
+                </div>
+                
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    @if(isEdit) {
+                        <input asp-for="Email" class="form-control" readonly style="opacity: 0.7; cursor: not-allowed;" />
+                    } else {
+                        <input asp-for="Email" class="form-control" placeholder="e.g. user@example.com" />
+                    }
+                    <span asp-validation-for="Email" class="text-danger" style="font-size: 0.85rem;"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" type="text" class="form-control" value="@Model.Password" />
+                    <span asp-validation-for="Password" class="text-danger" style="font-size: 0.85rem;"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Role" class="form-label">Role</label>
+                    <select asp-for="Role" class="form-select" id="roleSelect">
+                        @if(Model.Role == "Admin") { <option value="Admin" selected>Administrator</option> } else { <option value="Admin">Administrator</option> }
+                        @if(Model.Role == "User") { <option value="User" selected>Standard User</option> } else { <option value="User">Standard User</option> }
+                        @if(Model.Role == "Guest") { <option value="Guest" selected>Guest</option> } else { <option value="Guest">Guest</option> }
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Age" class="form-label">Age</label>
+                    <input asp-for="Age" type="number" class="form-control" placeholder="e.g. 25" />
+                    <span asp-validation-for="Age" class="text-danger" style="font-size: 0.85rem;"></span>
+                </div>
+            </div>
+
+            <!-- Widget Permissions Section -->
+            <div id="widgetSection" class="widget-section-card">
+                <h4 class="section-title" style="margin-top: 0; margin-bottom: 20px;">Widget Access Permissions</h4>
+                
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="selectAll">
+                    <label class="form-check-label" for="selectAll">Select All</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 widget-column">
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="global-search-hub" id="w_search" @(HasPermission("global-search-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_search">Global Search</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="weather-hub" id="w_weather" @(HasPermission("weather-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_weather">Weather</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="currency-hub" id="w_currency" @(HasPermission("currency-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_currency">Currency Exchange</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="chrono-hub" id="w_ref" @(HasPermission("chrono-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_ref">Timezone</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="news-hub" id="w_news" @(HasPermission("news-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_news">News Feed</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 widget-column">
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="notes-hub" id="w_notes" @(HasPermission("notes-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_notes">Notes</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="translator-hub" id="w_trans" @(HasPermission("translator-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_trans">Translator</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="emergency-hub" id="w_emerg" @(HasPermission("emergency-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_emerg">Emergency Contacts</label>
+                        </div>
+                         <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="habit-hub" id="w_habit" @(HasPermission("habit-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_habit">Habit Tracker</label>
+                        </div>
+                         <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets" value="pdf-hub" id="w_pdf" @(HasPermission("pdf-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_pdf">PDF Converter</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-create">@(isEdit ? "Update User" : "Create User")</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const roleSelect = document.getElementById('roleSelect');
+        const widgetSection = document.getElementById('widgetSection');
+        const selectAll = document.getElementById('selectAll');
+        const widgetCheckboxes = document.querySelectorAll('.widget-chk');
+
+        // 1. Handle Role Change (Grey out widget section)
+        function updateWidgetSectionState() {
+            const role = roleSelect.value;
+            if (!role) {
+                widgetSection.classList.add('disabled');
+            } else {
+                widgetSection.classList.remove('disabled');
+            }
+        }
+
+        roleSelect.addEventListener('change', updateWidgetSectionState);
+        updateWidgetSectionState(); // Initial check
+
+        // 2. Handle Select All
+        selectAll.addEventListener('change', function() {
+            const isChecked = this.checked;
+            widgetCheckboxes.forEach(chk => {
+                chk.checked = isChecked;
+            });
+        });
+
+        // 3. Update "Select All" state if individual checkboxes are toggled
+        function updateSelectAllState() {
+            const allChecked = Array.from(widgetCheckboxes).every(c => c.checked);
+            const someChecked = Array.from(widgetCheckboxes).some(c => c.checked);
+            
+            selectAll.checked = allChecked;
+            selectAll.indeterminate = someChecked && !allChecked;
+        }
+
+        widgetCheckboxes.forEach(chk => {
+            chk.addEventListener('change', updateSelectAllState);
+        });
+        
+        // Initial Select All check
+        updateSelectAllState();
+    });
+</script>

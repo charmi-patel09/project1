@@ -29,6 +29,7 @@ builder.Services.AddTransient<JsonCrudApp.Services.HabitService>();
 builder.Services.AddTransient<JsonCrudApp.Services.EmergencyService>();
 
 builder.Services.AddTransient<JsonCrudApp.Services.UserActivityService>();
+builder.Services.AddTransient<JsonCrudApp.Services.UserPdfService>();
 
 builder.Services.AddMemoryCache();
 

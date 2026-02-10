@@ -18,6 +18,16 @@ public class HomeController : BaseController
 
     public IActionResult Dashboard()
     {
+        var email = HttpContext.Session.GetString("StudentUser");
+        if (!string.IsNullOrEmpty(email))
+        {
+            var user = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            if (user != null)
+            {
+                ViewBag.WidgetPermissions = user.WidgetPermissions;
+                ViewBag.Role = user.Role;
+            }
+        }
         return View();
     }
 

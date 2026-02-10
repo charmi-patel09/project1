@@ -57,6 +57,8 @@ namespace JsonCrudApp.Services
                 query.Password = student.Password;
                 query.Age = student.Age;
                 query.Course = student.Course;
+                query.Role = student.Role;
+                query.WidgetPermissions = student.WidgetPermissions;
                 SaveStudents(students);
             }
         }
