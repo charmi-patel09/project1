@@ -19960,6 +19960,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Antigravity\\project1\\Views\\Shared\\_SecurityModals.cshtml",
+      "TargetPath": "Views\\Shared\\_SecurityModals.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Antigravity\\project1\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"

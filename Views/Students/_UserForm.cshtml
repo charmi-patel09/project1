@@ -190,6 +190,22 @@
                 </div>
             </div>
 
+            <!-- Security Section -->
+            <div class="row row-gap" style="margin-top: 24px;">
+                <div class="col-12">
+                    <h4 class="section-title">Identity Security (PIN)</h4>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Security PIN (4-6 digits) @(!isEdit ? "*" : "")</label>
+                    <input type="password" name="SecurityPin" id="SecurityPin" class="form-control" placeholder="••••" maxlength="6" pattern="\d{4,6}" @(!isEdit ? "required" : "") />
+                    <small class="text-muted">Required for sensitive widget access.</small>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Confirm Security PIN @(!isEdit ? "*" : "")</label>
+                    <input type="password" name="ConfirmSecurityPin" id="ConfirmSecurityPin" class="form-control" placeholder="••••" maxlength="6" @(!isEdit ? "required" : "") />
+                </div>
+            </div>
+
             <!-- Widget Permissions Section -->
             <div id="widgetSection" class="widget-section-card">
                 <h4 class="section-title" style="margin-top: 0; margin-bottom: 20px;">Widget Access Permissions</h4>

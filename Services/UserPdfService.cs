@@ -78,7 +78,7 @@ namespace JsonCrudApp.Services
             }
 
             var pdf = allPdfs.FirstOrDefault(p => p.Id == id && p.UserId == userId);
-            if (pdf != null)
+            if (pdf != null && !string.IsNullOrEmpty(pdf.FilePath))
             {
                 // Delete actual file
                 var fullPath = Path.Combine(_env.WebRootPath, pdf.FilePath.TrimStart('/').Replace('/', '\\'));
@@ -92,7 +92,7 @@ namespace JsonCrudApp.Services
             }
         }
 
-        public void UpdatePdfName(int id, int userId, string newName)
+        public void UpdatePdfName(int id, int userId, string? newName)
         {
             List<UserPdf> allPdfs;
             if (!File.Exists(JsonFileName)) return;

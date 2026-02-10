@@ -24,5 +24,7 @@ namespace JsonCrudApp.Models
         public string Role { get; set; } = "User";
 
         public string? WidgetPermissions { get; set; }
+        public string? SecurityPinHash { get; set; }
+        public bool IsSecurityEnabled { get; set; }
     }
 }

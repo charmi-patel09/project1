@@ -5,7 +5,7 @@ using JsonCrudApp.Models;
 namespace JsonCrudApp.Controllers
 {
     [Route("[controller]/[action]")]
-    public class NotesController : Controller
+    public class NotesController : BaseController
     {
         private readonly NotesService _notesService;
 
@@ -22,6 +22,8 @@ namespace JsonCrudApp.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
+
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
 
@@ -32,6 +34,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Note note)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
 
@@ -48,6 +51,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Update([FromBody] Note note)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
 
@@ -59,6 +63,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Delete([FromBody] int id)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
 

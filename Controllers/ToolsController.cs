@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace JsonCrudApp.Controllers
 {
-    public class ToolsController : Controller
+    public class ToolsController : BaseController
     {
         private readonly IWebHostEnvironment _env;
         private readonly Services.UserPdfService _pdfService;
@@ -23,7 +23,7 @@ namespace JsonCrudApp.Controllers
             int? id = HttpContext.Session.GetInt32("Id");
             if (id.HasValue && id.Value > 0) return id.Value;
 
-            string email = HttpContext.Session.GetString("StudentUser");
+            string? email = HttpContext.Session.GetString("StudentUser");
             if (!string.IsNullOrEmpty(email))
             {
                 var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
@@ -39,6 +39,8 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ConvertToPdf(List<IFormFile> files, string targetFormat, bool mergeFiles, string pageSize, string orientation, string quality)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
+
             if (files == null || files.Count == 0 || files.Sum(f => f.Length) == 0)
                 return Json(new { success = false, message = "No files uploaded." });
 
@@ -141,6 +143,8 @@ namespace JsonCrudApp.Controllers
         [HttpGet]
         public IActionResult GetUserPdfs()
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
+
             int userId = GetCurrentUserId();
             if (userId == 0) return Unauthorized();
             var pdfs = _pdfService.GetUserPdfs(userId);
@@ -150,6 +154,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult RenameUserPdf([FromBody] Models.UserPdf model)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             int userId = GetCurrentUserId();
             if (userId == 0) return Unauthorized();
             _pdfService.UpdatePdfName(model.Id, userId, model.FileName);
@@ -159,6 +164,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult DeleteUserPdf([FromBody] int id)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             int userId = GetCurrentUserId();
             if (userId == 0) return Unauthorized();
             _pdfService.DeletePdf(id, userId);

@@ -201,6 +201,30 @@ namespace JsonCrudApp.Controllers
                     string widgetsCsv = string.Join(",", selectedWidgets.ToArray());
                     HttpContext.Session.SetString("PendingUserWidgets", widgetsCsv);
 
+                    // Capture PIN
+                    string? pin = Request.Form["SecurityPin"];
+                    string? confirmPin = Request.Form["ConfirmSecurityPin"];
+
+                    if (string.IsNullOrEmpty(pin))
+                    {
+                        ModelState.AddModelError("", "Security PIN is mandatory for new users");
+                        return View(student);
+                    }
+
+                    if (pin != confirmPin)
+                    {
+                        ModelState.AddModelError("", "Security PINs do not match");
+                        return View(student);
+                    }
+
+                    if (pin.Length < 4 || pin.Length > 6)
+                    {
+                        ModelState.AddModelError("", "Security PIN must be 4-6 digits");
+                        return View(student);
+                    }
+
+                    HttpContext.Session.SetString("PendingUserPin", pin);
+
                     HttpContext.Session.SetString("OtpPurpose", "StudentCreation");
                     HttpContext.Session.SetString("OtpCode", otp);
                     HttpContext.Session.SetString("OtpExpiry", expiry.ToString("O"));
@@ -234,6 +258,24 @@ namespace JsonCrudApp.Controllers
             var selectedWidgets = Request.Form["selectedWidgets"];
             student.WidgetPermissions = string.Join(",", selectedWidgets.ToArray());
 
+            // Handle PIN update
+            string? pin = Request.Form["SecurityPin"];
+            string? confirmPin = Request.Form["ConfirmSecurityPin"];
+
+            if (!string.IsNullOrEmpty(pin))
+            {
+                if (pin != confirmPin)
+                {
+                    ModelState.AddModelError("", "Security PINs do not match");
+                    return View(student);
+                }
+                if (pin.Length < 4 || pin.Length > 6)
+                {
+                    ModelState.AddModelError("", "Security PIN must be 4-6 digits");
+                    return View(student);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 var original = _studentService.GetStudentById(student.Id);
@@ -250,6 +292,12 @@ namespace JsonCrudApp.Controllers
                 original.Age = student.Age;
                 original.Role = student.Role;
                 original.WidgetPermissions = student.WidgetPermissions;
+
+                if (!string.IsNullOrEmpty(pin))
+                {
+                    original.SecurityPinHash = _authService.HashPassword(pin);
+                    original.IsSecurityEnabled = true;
+                }
 
                 // Map Role for Course logic
                 if (student.Role == "Admin") original.Course = "Administration";

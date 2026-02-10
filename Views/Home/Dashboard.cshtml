@@ -148,18 +148,20 @@
                     <div class="title-icon purple-glow"><i class="fas fa-sticky-note"></i></div>
                     <div class="title-text"><h3>Notes</h3></div>
                 </div>
-                <div class="hub-controls"><button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%"><i class="fas fa-plus"></i> <span>New Note</span></button></div>
-                <div id="noteFormArea" style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);" class="slide-in">
-                    <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">New Note</div>
-                    <input type="hidden" id="noteId">
-                    <div class="form-row" style="margin-bottom:12px;"><input type="text" id="noteTitle" class="modern-input" placeholder="Title"></div>
-                    <div class="form-row" style="margin-bottom:12px;"><textarea id="noteDesc" class="modern-input" rows="3" placeholder="Details"></textarea></div>
-                    <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
-                        <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
-                        <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
+                <div class="tool-body" id="notesBody" style="gap: 16px; display: flex; flex-direction: column;">
+                    <div class="hub-controls"><button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%"><i class="fas fa-plus"></i> <span>New Note</span></button></div>
+                    <div id="noteFormArea" style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);" class="slide-in">
+                        <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">New Note</div>
+                        <input type="hidden" id="noteId">
+                        <div class="form-row" style="margin-bottom:12px;"><input type="text" id="noteTitle" class="modern-input" placeholder="Title"></div>
+                        <div class="form-row" style="margin-bottom:12px;"><textarea id="noteDesc" class="modern-input" rows="3" placeholder="Details"></textarea></div>
+                        <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
+                            <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
+                            <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
+                        </div>
                     </div>
+                    <div class="notes-list" id="notesList"><div class="loading-state">Syncing...</div></div>
                 </div>
-                <div class="notes-list" id="notesList"><div class="loading-state">Syncing...</div></div>
             </section>
             }
 
@@ -175,7 +177,7 @@
                     </div>
                 </div>
 
-                <div class="tool-body" style="gap: 14px;">
+                <div class="tool-body" id="translatorBody" style="gap: 16px;">
                     <!-- Language Controls -->
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <select id="transSourceLang" class="modern-select" style="flex: 1;" onchange="translateWidget()">
@@ -272,7 +274,7 @@
                     </div>
                 </div>
 
-                <div class="tool-body">
+                <div class="tool-body" id="habitBody">
                     <div id="habitList" class="habit-list" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
                         <div class="loading-state">Syncing Habits...</div>
                     </div>
@@ -352,7 +354,7 @@
                     </div>
                 </div>
 
-                <div class="tool-body">
+                <div class="tool-body" id="pdfBody">
                     <!-- File Input -->
                     <div class="form-row" style="margin-bottom: 12px;">
                         <label>Select Files</label>
@@ -2339,6 +2341,21 @@
 
 
 
+            function renderLockedState(containerId, actionName) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                
+                container.innerHTML = `
+                    <div class="locked-state" style="padding:40px; text-align:center; background:rgba(0,0,0,0.2); border-radius:16px; border:1px dashed var(--border-dim); height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                        <i class="fas fa-lock" style="font-size:2.5rem; color:var(--accent-warning); margin-bottom:15px; display:block;"></i>
+                        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Security Verification Required</p>
+                        <button onclick="secureAccess('${actionName}')" class="btn-primary" style="padding:10px 24px; font-size:0.9rem; border-radius:10px; width:auto;">
+                            <i class="fas fa-key"></i> Unlock Module
+                        </button>
+                    </div>
+                `;
+            }
+
             $(document).ready(function () {
 
                 // 1. Critical Base Systems (Clock, basic UI)
@@ -2352,10 +2369,20 @@
                 // 2. Data Initialization (Fail-safe wrapper)
                 try { initNodeDirectory(); } catch (e) { console.error('NodeDir failed:', e); }
                 try { initFiscal(); } catch (e) { console.error('Fiscal failed:', e); }
-                try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
-                try { initHabits(); } catch (e) { console.error('Habits failed:', e); }
-                try { initPdfHistory(); } catch (e) { console.error('PDF History failed:', e); }
-                try { initPdfHistory(); } catch (e) { console.error('PDF History failed:', e); }
+
+                // Protected Initialization - ALWAYS Locked by default for Notes, Habits, PDF History
+                syncSecurityState().then(status => {
+                    if (status.isVerified) {
+                        try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
+                        try { initHabits(); } catch (e) { console.error('Habits failed:', e); }
+                        try { initPdfHistory(); } catch (e) { console.error('PDF History failed:', e); }
+                    } else {
+                        // ALWAYS Lock by default as per new requirement
+                        renderLockedState('notesBody', 'initNotes');
+                        renderLockedState('habitBody', 'initHabits');
+                        renderLockedState('pdfBody', 'initPdfHistory');
+                    }
+                });
 
                 // Re-bind events to ensure interactivity persists
                 const fC = document.getElementById('fromCurrency');
@@ -2375,6 +2402,7 @@
             });
 
             // Refresh dynamic form elements on language change
+
             $(document).on('languageChanged', function (e, lang) {
                 const isEdit = document.getElementById('noteId').value !== '';
                 const titleKey = isEdit ? 'EditNote' : 'NewNote';
@@ -2382,7 +2410,5 @@
                     document.getElementById('formTitle').innerText = window.i18n.t(titleKey);
                 }
             });
-
-
         </script>
 }

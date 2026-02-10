@@ -11,10 +11,14 @@ namespace JsonCrudApp.Controllers
 
             if (string.IsNullOrEmpty(studentUser))
             {
-                // Redirect to Login if neither session is present
                 context.Result = new RedirectToActionResult("Login", "Account", null);
             }
             base.OnActionExecuting(context);
+        }
+
+        protected bool IsPinVerified()
+        {
+            return HttpContext.Session.GetString("PinVerified") == "true";
         }
     }
 }

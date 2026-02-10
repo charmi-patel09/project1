@@ -1,4 +1,6 @@
-// ... (imports remain)
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.Linq;
 using JsonCrudApp.Models;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,24 +21,16 @@ namespace JsonCrudApp.Services
             _studentService = studentService;
         }
 
-        private string HashPassword(string password)
+        public string HashPassword(string password)
         {
-            using (var sha256 = SHA256.Create())
-            {
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedBytes);
-            }
+            var bytes = Encoding.UTF8.GetBytes(password);
+            var hash = SHA256.HashData(bytes);
+            return Convert.ToBase64String(hash);
         }
 
-        private bool VerifyPassword(string enteredPassword, string storedPassword)
+        public bool VerifyPassword(string password, string hash)
         {
-            if (string.IsNullOrEmpty(storedPassword)) return false;
-
-            string hashedEntered = HashPassword(enteredPassword);
-
-            if (hashedEntered == storedPassword) return true;
-
-            return enteredPassword == storedPassword;
+            return HashPassword(password) == hash;
         }
 
         public bool RegisterStudent(string email, string password, string name = "New Student", int age = 18, string course = "General", string role = "User")
@@ -120,5 +114,30 @@ namespace JsonCrudApp.Services
         public string GenerateResetToken(string email) => string.Empty;
         public bool ValidateResetToken(string email, string token) => false;
         public bool ResetPassword(string email, string newPassword, string token) => false;
+
+        public bool SetPin(string email, string pin)
+        {
+            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            if (student == null) return false;
+
+            student.SecurityPinHash = HashPassword(pin);
+            student.IsSecurityEnabled = true;
+            _studentService.UpdateStudent(student);
+            return true;
+        }
+
+        public bool VerifyPin(string email, string pin)
+        {
+            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            if (student == null || !student.IsSecurityEnabled || string.IsNullOrEmpty(student.SecurityPinHash)) return false;
+
+            return VerifyPassword(pin, student.SecurityPinHash);
+        }
+
+        public bool HasPin(string email)
+        {
+            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            return student != null && student.IsSecurityEnabled;
+        }
     }
 }

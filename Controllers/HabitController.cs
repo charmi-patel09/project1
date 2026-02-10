@@ -16,6 +16,8 @@ namespace JsonCrudApp.Controllers
         [HttpGet]
         public IActionResult GetHabits()
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
+
             var userEmail = HttpContext.Session.GetString("StudentUser");
             if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
 
@@ -26,6 +28,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Habit habit)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var userEmail = HttpContext.Session.GetString("StudentUser");
             if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
 
@@ -44,6 +47,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Update([FromBody] Habit habit)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var userEmail = HttpContext.Session.GetString("StudentUser");
             if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
 
@@ -57,6 +61,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Delete(string id)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var userEmail = HttpContext.Session.GetString("StudentUser");
             if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
 
@@ -67,6 +72,7 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Toggle([FromBody] ToggleRequest request)
         {
+            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var userEmail = HttpContext.Session.GetString("StudentUser");
             if (string.IsNullOrEmpty(userEmail)) return Unauthorized();
 

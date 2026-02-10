@@ -115,6 +115,7 @@ namespace JsonCrudApp.Controllers
                         string course = HttpContext.Session.GetString("PendingUserCourse") ?? "General";
                         string role = HttpContext.Session.GetString("PendingUserRole") ?? "User";
                         string widgets = HttpContext.Session.GetString("PendingUserWidgets") ?? "";
+                        string? pin = HttpContext.Session.GetString("PendingUserPin");
                         int age = int.TryParse(ageStr, out int a) ? a : 18;
 
                         // Finalize Creation
@@ -131,6 +132,13 @@ namespace JsonCrudApp.Controllers
                             Role = role,
                             WidgetPermissions = widgets
                         };
+
+                        if (!string.IsNullOrEmpty(pin))
+                        {
+                            newStudent.SecurityPinHash = _authService.HashPassword(pin);
+                            newStudent.IsSecurityEnabled = true;
+                        }
+
                         _authService.RegisterStudent(newStudent);
 
                         // Clear creation-specific data
@@ -139,6 +147,7 @@ namespace JsonCrudApp.Controllers
                         HttpContext.Session.Remove("PendingUserCourse");
                         HttpContext.Session.Remove("PendingUserRole");
                         HttpContext.Session.Remove("PendingUserWidgets");
+                        HttpContext.Session.Remove("PendingUserPin");
 
                         // Check if currently logged in as Admin
                         string? currentRole = HttpContext.Session.GetString("Role");

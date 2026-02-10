@@ -59,6 +59,8 @@ namespace JsonCrudApp.Services
                 query.Course = student.Course;
                 query.Role = student.Role;
                 query.WidgetPermissions = student.WidgetPermissions;
+                query.SecurityPinHash = student.SecurityPinHash;
+                query.IsSecurityEnabled = student.IsSecurityEnabled;
                 SaveStudents(students);
             }
         }
