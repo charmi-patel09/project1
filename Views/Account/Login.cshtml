@@ -216,6 +216,7 @@
 @section Scripts {
     <script>
         function forceClear() {
+            sessionStorage.removeItem('isPinVerified');
             var inputs = document.querySelectorAll('input:not([type="submit"]):not([type="hidden"])');
             inputs.forEach(function (input) {
                 input.value = '';

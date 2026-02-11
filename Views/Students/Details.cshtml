@@ -39,7 +39,8 @@
             Role
         </dt>
         <dd class="col-sm-10">
-            <span>@((Model.Role == "Admin") ? "Administration" : "Normal User")</span>
+            <span>@((Model.Role == "Admin") ? "Administration" : (Model.Role == "Private") ? "Private User" :
+                  (Model.Role == "Guest") ? "Guest" : "Normal User")</span>
         </dd>
     </dl>
 </div>

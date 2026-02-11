@@ -26,7 +26,10 @@ public class HomeController : BaseController
             {
                 ViewBag.WidgetPermissions = user.WidgetPermissions;
                 ViewBag.Role = user.Role;
+                ViewBag.HasPin = user.IsSecurityEnabled;
             }
+            // Require PIN on page refresh/initial load
+            HttpContext.Session.SetString("PinVerified", "false");
         }
         return View();
     }

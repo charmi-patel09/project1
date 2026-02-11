@@ -10,7 +10,7 @@
                 <h5><i class="fas fa-user-shield me-2"></i> Create New Admin</h5>
             </div>
             <div class="p-4" style="background: var(--bg-card);">
-                <form asp-action="CreateAdmin" method="post">
+                <form asp-action="CreateAdmin" method="post" autocomplete="off">
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                     <div class="mb-3">
@@ -22,7 +22,8 @@
                     <div class="mb-3">
                         <label asp-for="Email" class="form-label fw-bold">Email Address</label>
                         <input asp-for="Email" class="form-control"
-                            placeholder="Enter admin email (Gmail recommended for OTP)" required />
+                            placeholder="Enter admin email (Gmail recommended for OTP)" required autocomplete="off"
+                            value="" />
                         <span asp-validation-for="Email" class="text-danger small"></span>
                         <div class="form-text text-muted">A verification code will be sent to this email.</div>
                     </div>
@@ -30,8 +31,21 @@
                     <div class="mb-3">
                         <label asp-for="Password" class="form-label fw-bold">Password</label>
                         <input asp-for="Password" type="password" class="form-control"
-                            placeholder="Set initial password" required />
+                            placeholder="Set initial password" required autocomplete="new-password" value="" />
                         <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Security PIN</label>
+                            <input type="password" name="SecurityPin" class="form-control" placeholder="4-6 digits"
+                                required maxlength="6" autocomplete="new-password" value="" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Confirm PIN</label>
+                            <input type="password" name="ConfirmSecurityPin" class="form-control"
+                                placeholder="Repeat PIN" required maxlength="6" autocomplete="new-password" value="" />
+                        </div>
                     </div>
 
                     <!-- Hidden fields for defaults if strictly needed, mostly handled in controller -->

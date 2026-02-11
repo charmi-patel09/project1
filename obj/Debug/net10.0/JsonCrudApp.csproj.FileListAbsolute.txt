@@ -227,5 +227,5 @@ D:\Antigravity\project1\obj\Debug\net10.0\compressed\cy0l0iksrs-{0}-rs7yn5qdy1-r
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\1iiq8p0ylg-{0}-vxf566p7i4-vxf566p7i4.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\wynoxkcakm-{0}-oompv53s8h-oompv53s8h.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\9nhs9xwkoe-{0}-gln3j8soji-gln3j8soji.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\yarw8sh6ve-{0}-6jmz0wyvda-6jmz0wyvda.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\ol3r0fnlur-{0}-3h3jjjnrlz-3h3jjjnrlz.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\yarw8sh6ve-{0}-2xsnqf3j3b-2xsnqf3j3b.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\ol3r0fnlur-{0}-7695gt54vi-7695gt54vi.gz

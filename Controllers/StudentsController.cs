@@ -54,8 +54,12 @@ namespace JsonCrudApp.Controllers
         {
             if (HttpContext.Session.GetString("Role") != "Admin") return RedirectToAction("AccessDenied", "Account");
             // Restrictions removed as per requirement
+            // Ensure no residual session data leaks into the form
+            HttpContext.Session.Remove("PendingAdminEmail");
+            HttpContext.Session.Remove("PendingAdminPin");
+
             ModelState.Clear();
-            return View(new Student());
+            return View(new Student { Email = null, Password = null, Role = "Admin" });
         }
 
         [HttpPost]
@@ -76,9 +80,35 @@ namespace JsonCrudApp.Controllers
 
                     _emailService.SendOtpEmail(student.Email, otp);
 
+                    // Capture PIN (Optional)
+                    string? pin = Request.Form["SecurityPin"];
+                    string? confirmPin = Request.Form["ConfirmSecurityPin"];
+
+                    if (!string.IsNullOrEmpty(pin))
+                    {
+                        if (pin != confirmPin)
+                        {
+                            ModelState.AddModelError("", "Security PINs do not match");
+                            return View(student);
+                        }
+                        if (pin.Length < 4 || pin.Length > 6)
+                        {
+                            ModelState.AddModelError("", "Security PIN must be 4-6 digits");
+                            return View(student);
+                        }
+                        HttpContext.Session.SetString("PendingAdminPin", pin);
+                    }
+                    else
+                    {
+                        HttpContext.Session.Remove("PendingAdminPin"); // Ensure no residual PIN
+                    }
+
                     HttpContext.Session.SetString("PendingAdminEmail", student.Email);
                     HttpContext.Session.SetString("PendingAdminPassword", student.Password);
                     HttpContext.Session.SetString("PendingAdminName", student.Name ?? "Admin User");
+                    if (!string.IsNullOrEmpty(pin)) HttpContext.Session.SetString("PendingAdminPin", pin);
+                    else HttpContext.Session.Remove("PendingAdminPin");
+
                     HttpContext.Session.SetString("OtpPurpose", "AdminCreation");
                     HttpContext.Session.SetString("OtpCode", otp);
                     HttpContext.Session.SetString("OtpExpiry", expiry.ToString("O"));
@@ -120,8 +150,25 @@ namespace JsonCrudApp.Controllers
             {
                 if (_otpService.IsValid(otp, storedOtp, expiry))
                 {
+                    string? pin = HttpContext.Session.GetString("PendingAdminPin");
                     // Create Admin
-                    _authService.RegisterStudent(email, password, name, 25, "Administration", "Admin");
+                    var newAdmin = new Student
+                    {
+                        Email = email,
+                        Password = password,
+                        Name = name,
+                        Age = 25,
+                        Course = "Administration",
+                        Role = "Admin"
+                    };
+
+                    if (!string.IsNullOrEmpty(pin))
+                    {
+                        newAdmin.SecurityPinHash = _authService.HashPassword(pin);
+                        newAdmin.IsSecurityEnabled = true;
+                    }
+
+                    _authService.RegisterStudent(newAdmin);
 
                     // Cleanup
                     HttpContext.Session.Remove("OtpCode");
@@ -129,6 +176,7 @@ namespace JsonCrudApp.Controllers
                     HttpContext.Session.Remove("PendingAdminEmail");
                     HttpContext.Session.Remove("PendingAdminPassword");
                     HttpContext.Session.Remove("PendingAdminName");
+                    HttpContext.Session.Remove("PendingAdminPin");
                     HttpContext.Session.Remove("OtpPurpose");
 
                     TempData["SuccessMessage"] = "Admin created successfully";
@@ -155,9 +203,14 @@ namespace JsonCrudApp.Controllers
         {
             if (HttpContext.Session.GetString("Role") != "Admin") return RedirectToAction("AccessDenied", "Account");
 
+            // Ensure no residual session data leaks into the form
+            HttpContext.Session.Remove("PendingUserEmail");
+            HttpContext.Session.Remove("PendingUserName");
+            HttpContext.Session.Remove("PendingUserPin");
+
             ViewData["Title"] = "Create New User";
             ModelState.Clear();
-            return View(new Student());
+            return View(new Student { Email = null, Password = null, Role = "Private" });
         }
 
         [HttpPost]
@@ -194,36 +247,47 @@ namespace JsonCrudApp.Controllers
                     HttpContext.Session.SetString("PendingUserCourse", student.Course ?? "General");
 
                     // Set Role for Verification
-                    HttpContext.Session.SetString("PendingUserRole", student.Role ?? "User");
+                    HttpContext.Session.SetString("PendingUserRole", student.Role ?? "Private");
 
                     // Capture Widget Permissions
                     var selectedWidgets = Request.Form["selectedWidgets"];
                     string widgetsCsv = string.Join(",", selectedWidgets.ToArray());
                     HttpContext.Session.SetString("PendingUserWidgets", widgetsCsv);
 
-                    // Capture PIN
+                    // Capture PIN (Optional)
                     string? pin = Request.Form["SecurityPin"];
                     string? confirmPin = Request.Form["ConfirmSecurityPin"];
 
-                    if (string.IsNullOrEmpty(pin))
+                    if (!string.IsNullOrEmpty(pin))
                     {
-                        ModelState.AddModelError("", "Security PIN is mandatory for new users");
-                        return View(student);
+                        if (pin != confirmPin)
+                        {
+                            ModelState.AddModelError("", "Security PINs do not match");
+                            return View(student);
+                        }
+
+                        if (pin.Length < 4 || pin.Length > 6)
+                        {
+                            ModelState.AddModelError("", "Security PIN must be 4-6 digits");
+                            return View(student);
+                        }
+                        HttpContext.Session.SetString("PendingUserPin", pin);
+                    }
+                    else
+                    {
+                        HttpContext.Session.Remove("PendingUserPin");
                     }
 
-                    if (pin != confirmPin)
-                    {
-                        ModelState.AddModelError("", "Security PINs do not match");
-                        return View(student);
-                    }
+                    // Proceed with OTP Flow
+                    _emailService.SendOtpEmail(student.Email!, otp);
 
-                    if (pin.Length < 4 || pin.Length > 6)
-                    {
-                        ModelState.AddModelError("", "Security PIN must be 4-6 digits");
-                        return View(student);
-                    }
-
-                    HttpContext.Session.SetString("PendingUserPin", pin);
+                    HttpContext.Session.SetString("PendingUserEmail", student.Email ?? "");
+                    HttpContext.Session.SetString("PendingUserPassword", student.Password ?? "");
+                    HttpContext.Session.SetString("PendingUserName", student.Name ?? "");
+                    HttpContext.Session.SetString("PendingUserAge", student.Age.ToString() ?? "18");
+                    HttpContext.Session.SetString("PendingUserCourse", student.Course ?? "General");
+                    HttpContext.Session.SetString("PendingUserRole", student.Role ?? "Private");
+                    HttpContext.Session.SetString("PendingUserWidgets", widgetsCsv);
 
                     HttpContext.Session.SetString("OtpPurpose", "StudentCreation");
                     HttpContext.Session.SetString("OtpCode", otp);
@@ -233,7 +297,6 @@ namespace JsonCrudApp.Controllers
                 }
                 ModelState.AddModelError("Email", "User with this email already exists");
             }
-
             return View(student);
         }
 

@@ -33,7 +33,7 @@ namespace JsonCrudApp.Services
             return HashPassword(password) == hash;
         }
 
-        public bool RegisterStudent(string email, string password, string name = "New Student", int age = 18, string course = "General", string role = "User")
+        public bool RegisterStudent(string email, string password, string name = "New Student", int age = 18, string course = "General", string role = "Private")
         {
             if (UserExists(email)) return false;
 

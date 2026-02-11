@@ -21,7 +21,7 @@ namespace JsonCrudApp.Models
 
         public string? Course { get; set; }
 
-        public string Role { get; set; } = "User";
+        public string Role { get; set; } = "Private";
 
         public string? WidgetPermissions { get; set; }
         public string? SecurityPinHash { get; set; }

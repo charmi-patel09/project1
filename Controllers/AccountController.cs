@@ -47,6 +47,7 @@ namespace JsonCrudApp.Controllers
                     // Store in session for verification
                     HttpContext.Session.SetString("PendingUserEmail", model.Email);
                     HttpContext.Session.SetString("PendingUserPassword", model.Password); // Store password temporarily
+                    HttpContext.Session.SetString("PendingUserPin", model.SecurityPin); // Store PIN
                     HttpContext.Session.SetString("OtpPurpose", "Registration");
                     HttpContext.Session.SetString("OtpCode", otp);
                     HttpContext.Session.SetString("OtpExpiry", expiry.ToString("O"));
@@ -96,12 +97,31 @@ namespace JsonCrudApp.Controllers
 
                     if (purpose == "Registration")
                     {
+                        string? pin = HttpContext.Session.GetString("PendingUserPin");
                         // Finalize Registration
-                        _authService.RegisterStudent(email, password);
+                        var newStudent = new Student
+                        {
+                            Email = email,
+                            Password = password,
+                            Name = "New Student",
+                            Age = 18,
+                            Course = "General",
+                            Role = "Private"
+                        };
+
+                        if (!string.IsNullOrEmpty(pin))
+                        {
+                            newStudent.SecurityPinHash = _authService.HashPassword(pin);
+                            newStudent.IsSecurityEnabled = true;
+                        }
+
+                        _authService.RegisterStudent(newStudent);
+                        HttpContext.Session.Remove("PendingUserPin");
 
                         // Auto-login & Log Activity
                         HttpContext.Session.SetString("StudentUser", email);
-                        HttpContext.Session.SetString("Role", "User");
+                        HttpContext.Session.SetString("Role", "Private");
+                        HttpContext.Session.SetString("PinVerified", "false"); // Initial state
                         _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Registration Visit
 
                         TempData["SuccessMessage"] = "Account created successfully";
@@ -113,7 +133,7 @@ namespace JsonCrudApp.Controllers
                         string name = HttpContext.Session.GetString("PendingUserName") ?? "New Student";
                         string ageStr = HttpContext.Session.GetString("PendingUserAge") ?? "18";
                         string course = HttpContext.Session.GetString("PendingUserCourse") ?? "General";
-                        string role = HttpContext.Session.GetString("PendingUserRole") ?? "User";
+                        string role = HttpContext.Session.GetString("PendingUserRole") ?? "Private";
                         string widgets = HttpContext.Session.GetString("PendingUserWidgets") ?? "";
                         string? pin = HttpContext.Session.GetString("PendingUserPin");
                         int age = int.TryParse(ageStr, out int a) ? a : 18;
@@ -160,6 +180,7 @@ namespace JsonCrudApp.Controllers
                         // Auto-login & Log Activity for new user (if not created by Admin)
                         HttpContext.Session.SetString("StudentUser", email);
                         HttpContext.Session.SetString("Role", role);
+                        HttpContext.Session.SetString("PinVerified", "false");
 
                         _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Creation Visit
 
@@ -169,7 +190,8 @@ namespace JsonCrudApp.Controllers
 
                     // For Login flow (if OTP is used for login)
                     HttpContext.Session.SetString("StudentUser", email);
-                    HttpContext.Session.SetString("Role", "User");
+                    HttpContext.Session.SetString("Role", "Private");
+                    HttpContext.Session.SetString("PinVerified", "false");
                     _userActivityService.LogVisit(email, "/Account/Login (OTP)");
 
                     return RedirectToAction("Dashboard", "Home");
@@ -213,7 +235,8 @@ namespace JsonCrudApp.Controllers
                 {
                     // Login successful
                     HttpContext.Session.SetString("StudentUser", model.Email!);
-                    HttpContext.Session.SetString("Role", student?.Role ?? "User");
+                    HttpContext.Session.SetString("Role", student?.Role ?? "Private");
+                    HttpContext.Session.SetString("PinVerified", "false"); // PIN required after login
                     _userActivityService.LogVisit(model.Email!, "/Account/Login");
                     return RedirectToAction("Dashboard", "Home");
                 }

@@ -92,7 +92,10 @@ namespace JsonCrudApp.Services
                     UserEmail = g.Key,
                     VisitCount = g.Count(),
                     LastSeen = g.Max(v => v.Timestamp),
-                    UserType = (students.TryGetValue(g.Key, out var s) && s.Role == "Admin") ? "Administrator" : "Normal User"
+                    UserType = students.TryGetValue(g.Key, out var s) ?
+                               (s.Role == "Admin" ? "Administrator" :
+                                s.Role == "Private" ? "Private User" :
+                                s.Role == "Guest" ? "Guest User" : "Normal User") : "Normal User"
                 })
                 .OrderByDescending(s => s.LastSeen)
                 .ToList();

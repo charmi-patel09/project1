@@ -84,12 +84,12 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="badge @(user.UserType == "Administrator" ? "bg-primary" : "bg-secondary")">@user.UserType</span>
+                                    <span
+                                        class="badge @(user.UserType == "Administrator" ? "bg-primary" : user.UserType == "Private User" ? "bg-success" : "bg-secondary")">@user.UserType</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge rounded-pill bg-light text-dark border visit-badge" 
-                                          onclick="showDetails('@user.UserEmail')" 
-                                          title="View Details">
+                                    <span class="badge rounded-pill bg-light text-dark border visit-badge"
+                                        onclick="showDetails('@user.UserEmail')" title="View Details">
                                         @user.VisitCount
                                     </span>
                                 </td>

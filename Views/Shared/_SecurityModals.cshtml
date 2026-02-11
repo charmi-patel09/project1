@@ -1,16 +1,32 @@
 @using Microsoft.AspNetCore.Http
 <!-- Security PIN Modals -->
-<div id="pinModal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:10000; align-items:center; justify-content:center;">
-    <div class="pin-card" style="background:var(--bg-card); border:1px solid var(--border-primary); border-radius:24px; padding:40px; width:100%; max-width:400px; box-shadow:var(--shadow-2xl); text-align:center;">
+<div id="pinModal" class="modal-overlay"
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:10000; align-items:center; justify-content:center;">
+    <div class="pin-card"
+        style="background:var(--bg-card); border:1px solid var(--border-primary); border-radius:24px; padding:40px; width:100%; max-width:400px; box-shadow:var(--shadow-2xl); text-align:center;">
         <div id="verifyPinMode" style="display:none;">
             <i class="fas fa-lock" style="font-size:3rem; color:var(--accent-warning); margin-bottom:20px;"></i>
             <h2 style="color:var(--text-bright); margin-bottom:10px;">Verification Required</h2>
             <p style="color:var(--text-muted); margin-bottom:30px;">Enter your PIN to access this module.</p>
-            <div class="form-row" style="margin-bottom:25px;">
-                <input type="password" id="verifyPinInput" class="modern-input" placeholder="••••••" maxlength="6" style="text-align:center; font-size:2rem; letter-spacing:10px;">
+            
+            <div id="pinInputArea">
+                <div class="form-row" style="margin-bottom:25px;">
+                    <input type="password" id="verifyPinInput" class="modern-input" placeholder="••••••" maxlength="6"
+                        style="text-align:center; font-size:2rem; letter-spacing:10px;">
+                </div>
+                <button id="btnSubmitUnlockPin" class="btn-primary"
+                    style="width:100%; padding:15px; border-radius:12px;">Unlock Module</button>
             </div>
-            <button onclick="submitVerifyPin()" class="btn-primary" style="width:100%; padding:15px; border-radius:12px;">Unlock Module</button>
-            <button onclick="closePinModal()" class="btn-icon" style="margin-top:20px; color:var(--text-muted); background:transparent;">Cancel Access</button>
+
+            <div id="noPinMessage" style="display:none; margin-bottom:20px;">
+                <div style="background:rgba(215, 58, 73, 0.1); border:1px solid var(--accent-danger); border-radius:12px; padding:15px; color:var(--accent-danger);">
+                    <i class="fas fa-exclamation-triangle"></i> Security PIN not configured
+                </div>
+                <p style="color:var(--text-muted); margin-top:15px; font-size:0.85rem;">Please contact an administrator to set up your security PIN.</p>
+            </div>
+
+            <button onclick="closePinModal()" class="btn-icon"
+                style="margin-top:20px; color:var(--text-muted); background:transparent;">Cancel Access</button>
         </div>
         <div id="pinErrorMessage" style="color:var(--accent-danger); margin-top:15px; font-size:0.9rem;"></div>
     </div>
@@ -20,14 +36,39 @@
     let pendingWidgetAction = null;
     let isPinVerified = sessionStorage.getItem('isPinVerified') === 'true';
 
+    // point 1: Proper event listener
+    document.addEventListener('DOMContentLoaded', () => {
+        const unlockBtn = document.getElementById('btnSubmitUnlockPin');
+        if (unlockBtn) {
+            unlockBtn.addEventListener('click', submitVerifyPin);
+        }
+
+        const pinInput = document.getElementById('verifyPinInput');
+        if (pinInput) {
+            pinInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') submitVerifyPin();
+            });
+        }
+
+        // Point 5: Require PIN again only after logout or page refresh
+        // Note: sessionStorage persists on refresh by default.
+        // If we want it to require PIN on refresh, we can check performance navigation type.
+        if (performance.getEntriesByType("navigation")[0]?.type === 'reload') {
+            sessionStorage.removeItem('isPinVerified');
+            isPinVerified = false;
+        }
+    });
+
     async function syncSecurityState() {
+        if (isPinVerified) return { isVerified: true }; // Optimization: check sessionStorage first
+
         try {
             const res = await fetch('/Security/CheckPinStatus');
             const data = await res.json();
             if (data.isVerified) {
                 isPinVerified = true;
                 sessionStorage.setItem('isPinVerified', 'true');
-            } else if (isPinVerified && !data.isVerified) {
+            } else {
                 isPinVerified = false;
                 sessionStorage.removeItem('isPinVerified');
             }
@@ -37,57 +78,92 @@
 
     function closePinModal() {
         document.getElementById('pinModal').style.display = 'none';
+        document.getElementById('verifyPinInput').value = '';
+        document.getElementById('pinErrorMessage').innerText = '';
         pendingWidgetAction = null;
     }
 
     async function submitVerifyPin() {
         const pin = document.getElementById('verifyPinInput').value;
         const err = document.getElementById('pinErrorMessage');
-        
+
         if (!pin) {
             err.innerText = "PIN is required";
             return;
         }
 
-        const res = await fetch('/Security/VerifyPin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `pin=${pin}`
-        });
-        const data = await res.json();
-        if (data.success) {
-            isPinVerified = true;
-            sessionStorage.setItem('isPinVerified', 'true');
-            closePinModal();
-            if (pendingWidgetAction) {
-                if (typeof pendingWidgetAction === 'function') {
-                    pendingWidgetAction();
-                } else if (typeof window[pendingWidgetAction] === 'function') {
-                    window[pendingWidgetAction]();
+        try {
+            // Point 2: Send to backend
+            const res = await fetch('/Security/VerifyPin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `pin=${encodeURIComponent(pin)}`
+            });
+            const data = await res.json();
+
+            if (data.success) {
+                // Point 3: Success logic
+                isPinVerified = true;
+                sessionStorage.setItem('isPinVerified', 'true');
+                closePinModal();
+
+                // Point 3: Automatically open requested module
+                if (pendingWidgetAction) {
+                    if (typeof pendingWidgetAction === 'function') {
+                        pendingWidgetAction();
+                    } else if (typeof window[pendingWidgetAction] === 'function') {
+                        window[pendingWidgetAction]();
+                    }
+                    pendingWidgetAction = null;
                 }
+            } else {
+                // Point 4: Incorrect - show error without closing
+                err.innerText = data.message || "Incorrect PIN";
+                document.getElementById('verifyPinInput').value = '';
+                document.getElementById('verifyPinInput').focus();
             }
-            if (window.location.pathname.includes('Dashboard')) {
-                location.reload(); 
-            }
-        } else {
-            err.innerText = data.message;
-            document.getElementById('verifyPinInput').value = '';
+        } catch (e) {
+            err.innerText = "Connection error";
         }
     }
 
     async function secureAccess(action) {
-        const status = await syncSecurityState();
+        // First check local state
         if (isPinVerified) {
-            if (typeof action === 'function') action();
-            else if (typeof window[action] === 'function') window[action]();
+            executePendingAction(action);
             return;
         }
+
+        // Then sync with server to be sure
+        const status = await syncSecurityState();
+        if (status.isVerified) {
+            executePendingAction(action);
+            return;
+        }
+
         document.getElementById('pinModal').style.display = 'flex';
         document.getElementById('pinErrorMessage').innerText = '';
         pendingWidgetAction = action;
-        
-        document.getElementById('verifyPinMode').style.display = 'block';
-        document.getElementById('verifyPinInput').focus();
+
+        const verifyMode = document.getElementById('verifyPinMode');
+        const pinInputArea = document.getElementById('pinInputArea');
+        const noPinMessage = document.getElementById('noPinMessage');
+
+        verifyMode.style.display = 'block';
+
+        if (status.hasPin) {
+            pinInputArea.style.display = 'block';
+            noPinMessage.style.display = 'none';
+            document.getElementById('verifyPinInput').focus();
+        } else {
+            pinInputArea.style.display = 'none';
+            noPinMessage.style.display = 'block';
+        }
+    }
+
+    function executePendingAction(action) {
+        if (typeof action === 'function') action();
+        else if (typeof window[action] === 'function') window[action]();
     }
 </script>
 

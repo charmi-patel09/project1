@@ -17,6 +17,7 @@
     }
     
     bool IsAdmin = role == "Admin";
+    bool HasPin = ViewBag.HasPin ?? false;
 }
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -149,18 +150,54 @@
                     <div class="title-text"><h3>Notes</h3></div>
                 </div>
                 <div class="tool-body" id="notesBody" style="gap: 16px; display: flex; flex-direction: column;">
-                    <div class="hub-controls"><button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%"><i class="fas fa-plus"></i> <span>New Note</span></button></div>
-                    <div id="noteFormArea" style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);" class="slide-in">
-                        <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">New Note</div>
-                        <input type="hidden" id="noteId">
-                        <div class="form-row" style="margin-bottom:12px;"><input type="text" id="noteTitle" class="modern-input" placeholder="Title"></div>
-                        <div class="form-row" style="margin-bottom:12px;"><textarea id="noteDesc" class="modern-input" rows="3" placeholder="Details"></textarea></div>
-                        <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
-                            <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
-                            <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
+                    @if (!IsAdmin)
+                    {
+                        <div class="locked-state" style="padding:40px; text-align:center; background:rgba(0,0,0,0.2); border-radius:16px; border:1px dashed var(--border-dim); height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                            <i class="fas @(HasPin ? "fa-lock" : "fa-user-lock")" style="font-size:2.5rem; color:@(HasPin ? "var(--accent-warning)" : "var(--accent-danger)"); margin-bottom:15px; display:block;"></i>
+                            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">@(HasPin ? "Security Verification Required" : "Security PIN not configured")</p>
+                            @if (HasPin)
+                            {
+                                <button onclick="secureAccess('initNotes')" class="btn-primary" style="padding:10px 24px; font-size:0.9rem; border-radius:10px; width:auto;">
+                                    <i class="fas fa-key"></i> Unlock Module
+                                </button>
+                            }
+                            else
+                            {
+                                <div style="background:rgba(239, 68, 68, 0.1); border:1px solid var(--accent-danger); border-radius:10px; padding:10px 20px; color:var(--accent-danger); font-size:0.85rem;">
+                                    <i class="fas fa-exclamation-triangle"></i> Contact Admin to enable access
+                                </div>
+                            }
                         </div>
-                    </div>
-                    <div class="notes-list" id="notesList"><div class="loading-state">Syncing...</div></div>
+                        <template id="notesBodyTemplate">
+                            <div class="hub-controls"><button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%"><i class="fas fa-plus"></i> <span>New Note</span></button></div>
+                            <div id="noteFormArea" style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);" class="slide-in">
+                                <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">New Note</div>
+                                <input type="hidden" id="noteId">
+                                <div class="form-row" style="margin-bottom:12px;"><input type="text" id="noteTitle" class="modern-input" placeholder="Title"></div>
+                                <div class="form-row" style="margin-bottom:12px;"><textarea id="noteDesc" class="modern-input" rows="3" placeholder="Details"></textarea></div>
+                                <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
+                                    <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
+                                    <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="notes-list" id="notesList"><div class="loading-state">Syncing...</div></div>
+                        </template>
+                    }
+                    else
+                    {
+                        <div class="hub-controls"><button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%"><i class="fas fa-plus"></i> <span>New Note</span></button></div>
+                        <div id="noteFormArea" style="display:none; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);" class="slide-in">
+                            <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">New Note</div>
+                            <input type="hidden" id="noteId">
+                            <div class="form-row" style="margin-bottom:12px;"><input type="text" id="noteTitle" class="modern-input" placeholder="Title"></div>
+                            <div class="form-row" style="margin-bottom:12px;"><textarea id="noteDesc" class="modern-input" rows="3" placeholder="Details"></textarea></div>
+                            <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
+                                <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
+                                <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="notes-list" id="notesList"><div class="loading-state">Syncing...</div></div>
+                    }
                 </div>
             </section>
             }
@@ -235,8 +272,9 @@
                         <div class="d-flex gap-2">
                             <div class="search-field flex-grow-1" style="position:relative;">
                                 <i class="fas fa-search"></i>
-                                <input type="text" id="emergencyInput" class="modern-input"
+                                <input type="text" id="emergencyInput" name="emergency_search" class="modern-input"
                                     placeholder="Type Country Name..." autocomplete="off"
+                                    value=""
                                     oninput="handleEmergencySearch()">
                                 <div id="emergencyDropdown" class="dropdown-suggestions"></div>
                             </div>
@@ -275,69 +313,156 @@
                 </div>
 
                 <div class="tool-body" id="habitBody">
-                    <div id="habitList" class="habit-list" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
-                        <div class="loading-state">Syncing Habits...</div>
-                    </div>
-
-                    <div class="add-habit-section" style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
-                        <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
-                            <div class="form-row" style="margin-bottom:8px;">
-                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Habit Name</label>
-                                <input type="text" id="newHabitName" class="modern-input" placeholder="e.g. Morning Jog" style="padding:10px;">
-                            </div>
-                            
-                            <div class="form-row" style="margin-bottom:8px;">
-                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Description / Goal</label>
-                                <input type="text" id="newHabitGoal" class="modern-input" placeholder="e.g. Run 3 miles" style="padding:10px;">
-                            </div>
-
-                            <div class="form-row" style="margin-bottom:8px;">
-                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Start Date</label>
-                                <input type="date" id="newHabitStartDate" class="modern-input" style="padding:10px;">
-                            </div>
-
-                            <div class="form-row" style="margin-bottom:8px;">
-                                <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Frequency</label>
-                                <select id="newHabitType" class="modern-select" onchange="toggleCustomDaysInput()" style="padding:10px;">
-                                    <option value="Daily">Daily</option>
-                                    <option value="Custom">Custom Days</option>
-                                </select>
+                    @if (!IsAdmin)
+                    {
+                        <div class="locked-state" style="padding:40px; text-align:center; background:rgba(0,0,0,0.2); border-radius:16px; border:1px dashed var(--border-dim); height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                            <i class="fas @(HasPin ? "fa-lock" : "fa-user-lock")" style="font-size:2.5rem; color:@(HasPin ? "var(--accent-warning)" : "var(--accent-danger)"); margin-bottom:15px; display:block;"></i>
+                            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">@(HasPin ? "Security Verification Required" : "Security PIN not configured")</p>
+                            @if (HasPin)
+                            {
+                                <button onclick="secureAccess('initHabits')" class="btn-primary" style="padding:10px 24px; font-size:0.9rem; border-radius:10px; width:auto;">
+                                    <i class="fas fa-key"></i> Unlock Module
+                                </button>
+                            }
+                            else
+                            {
+                                <div style="background:rgba(239, 68, 68, 0.1); border:1px solid var(--accent-danger); border-radius:10px; padding:10px 20px; color:var(--accent-danger); font-size:0.85rem;">
+                                    <i class="fas fa-exclamation-triangle"></i> Contact Admin to enable access
+                                </div>
+                            }
+                        </div>
+                        <template id="habitBodyTemplate">
+                            <div id="habitList" class="habit-list" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                                <div class="loading-state">Syncing Habits...</div>
                             </div>
 
-                            <div id="customDaysInput" style="display:none; margin-bottom:12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
-                                <label style="font-size:0.8rem; margin-bottom:8px; display:block; opacity:0.7;">Select Active Days</label>
-                                <div class="days-grid" style="display:flex; gap:8px; flex-wrap:wrap; justify-content: space-between;">
-                                    <label class="day-checkbox"><input type="checkbox" value="Monday"> <span>M</span></label>
-                                    <label class="day-checkbox"><input type="checkbox" value="Tuesday"> <span>T</span></label>
-                                    <label class="day-checkbox"><input type="checkbox" value="Wednesday"> <span>W</span></label>
-                                    <label class="day-checkbox"><input type="checkbox" value="Thursday"> <span>T</span></label>
-                                    <label class="day-checkbox"><input type="checkbox" value="Friday"> <span>F</span></label>
-                                    <label class="day-checkbox"><input type="checkbox" value="Saturday"> <span>S</span></label>
-                                    <label class="day-checkbox"><input type="checkbox" value="Sunday"> <span>S</span></label>
+                            <div class="add-habit-section" style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
+                                <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
+                                    <div class="form-row" style="margin-bottom:8px;">
+                                        <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Habit Name</label>
+                                        <input type="text" id="newHabitName" class="modern-input" placeholder="e.g. Morning Jog" style="padding:10px;">
+                                    </div>
+                                    
+                                    <div class="form-row" style="margin-bottom:8px;">
+                                        <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Description / Goal</label>
+                                        <input type="text" id="newHabitGoal" class="modern-input" placeholder="e.g. Run 3 miles" style="padding:10px;">
+                                    </div>
+
+                                    <div class="form-row" style="margin-bottom:8px;">
+                                        <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Start Date</label>
+                                        <input type="date" id="newHabitStartDate" class="modern-input" style="padding:10px;">
+                                    </div>
+
+                                    <div class="form-row" style="margin-bottom:8px;">
+                                        <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Frequency</label>
+                                        <select id="newHabitType" class="modern-select" onchange="toggleCustomDaysInput()" style="padding:10px;">
+                                            <option value="Daily">Daily</option>
+                                            <option value="Custom">Custom Days</option>
+                                        </select>
+                                    </div>
+
+                                    <div id="customDaysInput" style="display:none; margin-bottom:12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                                        <label style="font-size:0.8rem; margin-bottom:8px; display:block; opacity:0.7;">Select Active Days</label>
+                                        <div class="days-grid" style="display:flex; gap:8px; flex-wrap:wrap; justify-content: space-between;">
+                                            <label class="day-checkbox"><input type="checkbox" value="Monday"> <span>M</span></label>
+                                            <label class="day-checkbox"><input type="checkbox" value="Tuesday"> <span>T</span></label>
+                                            <label class="day-checkbox"><input type="checkbox" value="Wednesday"> <span>W</span></label>
+                                            <label class="day-checkbox"><input type="checkbox" value="Thursday"> <span>T</span></label>
+                                            <label class="day-checkbox"><input type="checkbox" value="Friday"> <span>F</span></label>
+                                            <label class="day-checkbox"><input type="checkbox" value="Saturday"> <span>S</span></label>
+                                            <label class="day-checkbox"><input type="checkbox" value="Sunday"> <span>S</span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="action-group" style="margin-top:12px; display: flex; gap: 8px;">
+                                        <button onclick="saveNewHabit()" class="btn-primary" style="flex:1; border-radius:8px;">
+                                            Create
+                                        </button>
+                                        <button onclick="toggleAddHabitForm()" class="btn-secondary" style="flex:1; border-radius:8px; background: rgba(255,255,255,0.1);">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex; gap:10px;">
+                                    <button id="showAddHabitBtn" onclick="toggleAddHabitForm()" class="btn-secondary"
+                                        style="flex:1; border-radius:12px; padding:12px;">
+                                        <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Habit
+                                    </button>
+                                    <button onclick="openHabitVault()" class="btn-secondary" title="View All Saved Habits"
+                                        style="width:auto; padding:0 20px; border-radius:12px;">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    }
+                    else
+                    {
+                        <div id="habitList" class="habit-list" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                            <div class="loading-state">Syncing Habits...</div>
+                        </div>
+
+                        <div class="add-habit-section" style="margin-top:20px; border-top:1px solid var(--glass-border); padding-top:16px;">
+                            <div id="addHabitForm" style="display:none; transition:all 0.3s ease;">
+                                <div class="form-row" style="margin-bottom:8px;">
+                                    <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Habit Name</label>
+                                    <input type="text" id="newHabitName" class="modern-input" placeholder="e.g. Morning Jog" style="padding:10px;">
+                                </div>
+                                
+                                <div class="form-row" style="margin-bottom:8px;">
+                                    <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Description / Goal</label>
+                                    <input type="text" id="newHabitGoal" class="modern-input" placeholder="e.g. Run 3 miles" style="padding:10px;">
+                                </div>
+
+                                <div class="form-row" style="margin-bottom:8px;">
+                                    <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Start Date</label>
+                                    <input type="date" id="newHabitStartDate" class="modern-input" style="padding:10px;">
+                                </div>
+
+                                <div class="form-row" style="margin-bottom:8px;">
+                                    <label style="font-size:0.8rem; margin-bottom:4px; display:block; opacity:0.7;">Frequency</label>
+                                    <select id="newHabitType" class="modern-select" onchange="toggleCustomDaysInput()" style="padding:10px;">
+                                        <option value="Daily">Daily</option>
+                                        <option value="Custom">Custom Days</option>
+                                    </select>
+                                </div>
+
+                                <div id="customDaysInput" style="display:none; margin-bottom:12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                                    <label style="font-size:0.8rem; margin-bottom:8px; display:block; opacity:0.7;">Select Active Days</label>
+                                    <div class="days-grid" style="display:flex; gap:8px; flex-wrap:wrap; justify-content: space-between;">
+                                        <label class="day-checkbox"><input type="checkbox" value="Monday"> <span>M</span></label>
+                                        <label class="day-checkbox"><input type="checkbox" value="Tuesday"> <span>T</span></label>
+                                        <label class="day-checkbox"><input type="checkbox" value="Wednesday"> <span>W</span></label>
+                                        <label class="day-checkbox"><input type="checkbox" value="Thursday"> <span>T</span></label>
+                                        <label class="day-checkbox"><input type="checkbox" value="Friday"> <span>F</span></label>
+                                        <label class="day-checkbox"><input type="checkbox" value="Saturday"> <span>S</span></label>
+                                        <label class="day-checkbox"><input type="checkbox" value="Sunday"> <span>S</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="action-group" style="margin-top:12px; display: flex; gap: 8px;">
+                                    <button onclick="saveNewHabit()" class="btn-primary" style="flex:1; border-radius:8px;">
+                                        Create
+                                    </button>
+                                    <button onclick="toggleAddHabitForm()" class="btn-secondary" style="flex:1; border-radius:8px; background: rgba(255,255,255,0.1);">
+                                        Cancel
+                                    </button>
                                 </div>
                             </div>
 
-                            <div class="action-group" style="margin-top:12px; display: flex; gap: 8px;">
-                                <button onclick="saveNewHabit()" class="btn-primary" style="flex:1; border-radius:8px;">
-                                    Create
+                            <div style="display:flex; gap:10px;">
+                                <button id="showAddHabitBtn" onclick="toggleAddHabitForm()" class="btn-secondary"
+                                    style="flex:1; border-radius:12px; padding:12px;">
+                                    <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Habit
                                 </button>
-                                <button onclick="toggleAddHabitForm()" class="btn-secondary" style="flex:1; border-radius:8px; background: rgba(255,255,255,0.1);">
-                                    Cancel
+                                <button onclick="openHabitVault()" class="btn-secondary" title="View All Saved Habits"
+                                    style="width:auto; padding:0 20px; border-radius:12px;">
+                                    <i class="fas fa-list"></i>
                                 </button>
                             </div>
                         </div>
-
-                        <div style="display:flex; gap:10px;">
-                            <button id="showAddHabitBtn" onclick="toggleAddHabitForm()" class="btn-secondary"
-                                style="flex:1; border-radius:12px; padding:12px;">
-                                <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Habit
-                            </button>
-                            <button onclick="openHabitVault()" class="btn-secondary" title="View All Saved Habits"
-                                style="width:auto; padding:0 20px; border-radius:12px;">
-                                <i class="fas fa-list"></i>
-                            </button>
-                        </div>
-                    </div>
+                    }
                 </div>
             </section>
             }
@@ -355,76 +480,170 @@
                 </div>
 
                 <div class="tool-body" id="pdfBody">
-                    <!-- File Input -->
-                    <div class="form-row" style="margin-bottom: 12px;">
-                        <label>Select Files</label>
-                        <input type="file" id="pdfInputFile" class="modern-input" accept=".jpg,.jpeg,.png,.doc,.docx,.txt" multiple style="padding: 10px;">
-                    </div>
-                    
-                    <!-- Format & Merge -->
-                    <div class="form-grid-2" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-bottom: 12px; align-items: center;">
-                        <div class="form-row" style="margin:0;">
-                            <label>Format</label>
-                            <select id="pdfTargetFormat" class="modern-select">
-                                <option value="pdf">PDF Document</option>
-                                <option value="jpg">JPG Image</option>
+                    @if (!IsAdmin)
+                    {
+                        <div class="locked-state" style="padding:40px; text-align:center; background:rgba(0,0,0,0.2); border-radius:16px; border:1px dashed var(--border-dim); height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                            <i class="fas @(HasPin ? "fa-lock" : "fa-user-lock")" style="font-size:2.5rem; color:@(HasPin ? "var(--accent-warning)" : "var(--accent-danger)"); margin-bottom:15px; display:block;"></i>
+                            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">@(HasPin ? "Security Verification Required" : "Security PIN not configured")</p>
+                            @if (HasPin)
+                            {
+                                <button onclick="secureAccess('initPdfHistory')" class="btn-primary" style="padding:10px 24px; font-size:0.9rem; border-radius:10px; width:auto;">
+                                    <i class="fas fa-key"></i> Unlock Module
+                                </button>
+                            }
+                            else
+                            {
+                                <div style="background:rgba(239, 68, 68, 0.1); border:1px solid var(--accent-danger); border-radius:10px; padding:10px 20px; color:var(--accent-danger); font-size:0.85rem;">
+                                    <i class="fas fa-exclamation-triangle"></i> Contact Admin to enable access
+                                </div>
+                            }
+                        </div>
+                        <template id="pdfBodyTemplate">
+                            <!-- File Input -->
+                            <div class="form-row" style="margin-bottom: 12px;">
+                                <label>Select Files</label>
+                                <input type="file" id="pdfInputFile" class="modern-input" accept=".jpg,.jpeg,.png,.doc,.docx,.txt" multiple style="padding: 10px;">
+                            </div>
+                            
+                            <!-- Format & Merge -->
+                            <div class="form-grid-2" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-bottom: 12px; align-items: center;">
+                                <div class="form-row" style="margin:0;">
+                                    <label>Format</label>
+                                    <select id="pdfTargetFormat" class="modern-select">
+                                        <option value="pdf">PDF Document</option>
+                                        <option value="jpg">JPG Image</option>
+                                    </select>
+                                </div>
+                                <div class="form-row" style="margin:0; text-align: center;">
+                                    <label style="display:block; margin-bottom:4px;">Merge</label>
+                                    <div class="custom-checkbox" id="pdfMergeCheck" onclick="this.classList.toggle('checked')" style="width: 24px; height: 24px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-dim); border-radius: 6px; cursor: pointer;">
+                                        <i class="fas fa-check" style="font-size: 0.8rem;"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PDF Options (Size/Orientation) -->
+                            <div id="pdfOptionsRow" class="form-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div class="form-row" style="margin:0;">
+                                    <label>Page Size</label>
+                                    <select id="pdfPageSize" class="modern-select">
+                                        <option value="A4">A4 (210x297)</option>
+                                        <option value="Letter">Letter (8.5x11)</option>
+                                    </select>
+                                </div>
+                                <div class="form-row" style="margin:0;">
+                                    <label>Orientation</label>
+                                    <select id="pdfOrientation" class="modern-select">
+                                        <option value="Portrait">Portrait</option>
+                                        <option value="Landscape">Landscape</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Quality -->
+                            <div class="form-row" style="margin-bottom: 20px;">
+                                <label>Image Quality</label>
+                                <select id="pdfQuality" class="modern-select">
+                                    <option value="Standard">Standard (Web)</option>
+                                    <option value="High">High (Print)</option>
+                                </select>
+                            </div>
+
+                            <div class="action-row" style="margin-bottom: 16px;">
+                                <button onclick="convertFileToPdf()" class="btn-primary" style="width: 100%; border-radius: 12px; height: 48px; font-weight: 700;">
+                                    <i class="fas fa-magic"></i> Convert File
+                                </button>
+                            </div>
+
+                            <!-- Result Messaging (Hidden by default, used only for critical errors) -->
+                            <div id="pdfResult" class="result-box" style="margin-bottom: 20px; display: none; align-items: center; justify-content: center;">
+                            </div>
+
+                            <!-- Converted Files List Section -->
+                            <div id="pdfListSection" style="display:none; margin-top: 24px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
+                                    <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin:0;">Converted Files</h4>
+                                    <button onclick="clearPdfList()" style="background:none; border:none; color:var(--text-muted); font-size:0.8rem; cursor:pointer; padding:4px;" title="Clear List">Clear All</button>
+                                </div>
+                                <div id="pdfFilesListContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                                    <!-- Dynamic Content -->
+                                </div>
+                            </div>
+                        </template>
+                    }
+                    else
+                    {
+                        <!-- File Input -->
+                        <div class="form-row" style="margin-bottom: 12px;">
+                            <label>Select Files</label>
+                            <input type="file" id="pdfInputFile" class="modern-input" accept=".jpg,.jpeg,.png,.doc,.docx,.txt" multiple style="padding: 10px;">
+                        </div>
+                        
+                        <!-- Format & Merge -->
+                        <div class="form-grid-2" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-bottom: 12px; align-items: center;">
+                            <div class="form-row" style="margin:0;">
+                                <label>Format</label>
+                                <select id="pdfTargetFormat" class="modern-select">
+                                    <option value="pdf">PDF Document</option>
+                                    <option value="jpg">JPG Image</option>
+                                </select>
+                            </div>
+                            <div class="form-row" style="margin:0; text-align: center;">
+                                <label style="display:block; margin-bottom:4px;">Merge</label>
+                                <div class="custom-checkbox" id="pdfMergeCheck" onclick="this.classList.toggle('checked')" style="width: 24px; height: 24px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-dim); border-radius: 6px; cursor: pointer;">
+                                    <i class="fas fa-check" style="font-size: 0.8rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PDF Options (Size/Orientation) -->
+                        <div id="pdfOptionsRow" class="form-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                            <div class="form-row" style="margin:0;">
+                                <label>Page Size</label>
+                                <select id="pdfPageSize" class="modern-select">
+                                    <option value="A4">A4 (210x297)</option>
+                                    <option value="Letter">Letter (8.5x11)</option>
+                                </select>
+                            </div>
+                            <div class="form-row" style="margin:0;">
+                                <label>Orientation</label>
+                                <select id="pdfOrientation" class="modern-select">
+                                    <option value="Portrait">Portrait</option>
+                                    <option value="Landscape">Landscape</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Quality -->
+                        <div class="form-row" style="margin-bottom: 20px;">
+                            <label>Image Quality</label>
+                            <select id="pdfQuality" class="modern-select">
+                                <option value="Standard">Standard (Web)</option>
+                                <option value="High">High (Print)</option>
                             </select>
                         </div>
-                        <div class="form-row" style="margin:0; text-align: center;">
-                             <label style="display:block; margin-bottom:4px;">Merge</label>
-                             <div class="custom-checkbox" id="pdfMergeCheck" onclick="this.classList.toggle('checked')" style="width: 24px; height: 24px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-dim); border-radius: 6px; cursor: pointer;">
-                                 <i class="fas fa-check" style="font-size: 0.8rem;"></i>
-                             </div>
-                        </div>
-                    </div>
 
-                    <!-- PDF Options (Size/Orientation) -->
-                    <div id="pdfOptionsRow" class="form-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-                        <div class="form-row" style="margin:0;">
-                            <label>Page Size</label>
-                            <select id="pdfPageSize" class="modern-select">
-                                <option value="A4">A4 (210x297)</option>
-                                <option value="Letter">Letter (8.5x11)</option>
-                            </select>
+                        <div class="action-row" style="margin-bottom: 16px;">
+                            <button onclick="convertFileToPdf()" class="btn-primary" style="width: 100%; border-radius: 12px; height: 48px; font-weight: 700;">
+                                <i class="fas fa-magic"></i> Convert File
+                            </button>
                         </div>
-                        <div class="form-row" style="margin:0;">
-                            <label>Orientation</label>
-                            <select id="pdfOrientation" class="modern-select">
-                                <option value="Portrait">Portrait</option>
-                                <option value="Landscape">Landscape</option>
-                            </select>
+
+                        <!-- Result Messaging (Hidden by default, used only for critical errors) -->
+                        <div id="pdfResult" class="result-box" style="margin-bottom: 20px; display: none; align-items: center; justify-content: center;">
                         </div>
-                    </div>
 
-                    <!-- Quality -->
-                     <div class="form-row" style="margin-bottom: 20px;">
-                        <label>Image Quality</label>
-                        <select id="pdfQuality" class="modern-select">
-                            <option value="Standard">Standard (Web)</option>
-                            <option value="High">High (Print)</option>
-                        </select>
-                    </div>
-
-                    <div class="action-row" style="margin-bottom: 16px;">
-                        <button onclick="convertFileToPdf()" class="btn-primary" style="width: 100%; border-radius: 12px; height: 48px; font-weight: 700;">
-                            <i class="fas fa-magic"></i> Convert File
-                        </button>
-                    </div>
-
-                    <!-- Result Messaging (Hidden by default, used only for critical errors) -->
-                    <div id="pdfResult" class="result-box" style="margin-bottom: 20px; display: none; align-items: center; justify-content: center;">
-                    </div>
-
-                    <!-- Converted Files List Section -->
-                    <div id="pdfListSection" style="display:none; margin-top: 24px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
-                            <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin:0;">Converted Files</h4>
-                            <button onclick="clearPdfList()" style="background:none; border:none; color:var(--text-muted); font-size:0.8rem; cursor:pointer; padding:4px;" title="Clear List">Clear All</button>
+                        <!-- Converted Files List Section -->
+                        <div id="pdfListSection" style="display:none; margin-top: 24px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
+                                <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin:0;">Converted Files</h4>
+                                <button onclick="clearPdfList()" style="background:none; border:none; color:var(--text-muted); font-size:0.8rem; cursor:pointer; padding:4px;" title="Clear List">Clear All</button>
+                            </div>
+                            <div id="pdfFilesListContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                                <!-- Dynamic Content -->
+                            </div>
                         </div>
-                        <div id="pdfFilesListContainer" style="display: flex; flex-direction: column; gap: 8px;">
-                            <!-- Dynamic Content -->
-                        </div>
-                    </div>
+                    }
                 </div>
             </section>
             }
@@ -884,6 +1103,7 @@
             }
 
             async function initPdfHistory() {
+                if (typeof ensureWidgetUnlocked === 'function') ensureWidgetUnlocked('pdfBody');
                 try {
                     const res = await fetch('/Tools/GetUserPdfs');
                     if(res.ok) {
@@ -1346,6 +1566,7 @@
             let currentNotes = [];
 
             async function initNotes() {
+                if (typeof ensureWidgetUnlocked === 'function') ensureWidgetUnlocked('notesBody');
                 fetchNotes();
             }
 
@@ -2011,6 +2232,7 @@
             let editingHabitId = null;
 
             async function initHabits() {
+                if (typeof ensureWidgetUnlocked === 'function') ensureWidgetUnlocked('habitBody');
                 try {
                     const res = await fetch('/Habit/GetHabits');
                     if (res.status === 401) return; // Not logged in
@@ -2341,17 +2563,54 @@
 
 
 
-            function renderLockedState(containerId, actionName) {
+            const widgetContentCache = {};
+
+            function ensureWidgetUnlocked(containerId) {
+                const container = document.getElementById(containerId);
+                if (container) {
+                    if (widgetContentCache[containerId]) {
+                        container.innerHTML = widgetContentCache[containerId];
+                    } else {
+                        const template = document.getElementById(containerId + 'Template');
+                        if (template) {
+                            container.innerHTML = template.innerHTML;
+                            widgetContentCache[containerId] = template.innerHTML;
+                        }
+                    }
+                }
+            }
+
+            function renderLockedState(containerId, actionName, hasPin = true) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
                 
+                // If not already cached, try to cache from template if it exists
+                if (!widgetContentCache[containerId]) {
+                    const template = document.getElementById(containerId + 'Template');
+                    if (template) {
+                        widgetContentCache[containerId] = template.innerHTML;
+                    } else {
+                        // Fallback: capture current innerHTML (only if it doesn't look like locked-state already)
+                        if (!container.querySelector('.locked-state')) {
+                            widgetContentCache[containerId] = container.innerHTML;
+                        }
+                    }
+                }
+                
+                const message = hasPin ? "Security Verification Required" : "Security PIN not configured";
+                const buttonHtml = hasPin ? `
+                    <button onclick="secureAccess('${actionName}')" class="btn-primary" style="padding:10px 24px; font-size:0.9rem; border-radius:10px; width:auto;">
+                        <i class="fas fa-key"></i> Unlock Module
+                    </button>` : `
+                    <div style="background:rgba(239, 68, 68, 0.1); border:1px solid var(--accent-danger); border-radius:10px; padding:10px 20px; color:var(--accent-danger); font-size:0.85rem;">
+                        <i class="fas fa-exclamation-triangle"></i> Contact Admin to enable access
+                    </div>`;
+
                 container.innerHTML = `
                     <div class="locked-state" style="padding:40px; text-align:center; background:rgba(0,0,0,0.2); border-radius:16px; border:1px dashed var(--border-dim); height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                        <i class="fas fa-lock" style="font-size:2.5rem; color:var(--accent-warning); margin-bottom:15px; display:block;"></i>
-                        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Security Verification Required</p>
-                        <button onclick="secureAccess('${actionName}')" class="btn-primary" style="padding:10px 24px; font-size:0.9rem; border-radius:10px; width:auto;">
-                            <i class="fas fa-key"></i> Unlock Module
-                        </button>
+                        <i class="fas ${hasPin ? 'fa-lock' : 'fa-user-lock'}" style="font-size:2.5rem; color:${hasPin ? 'var(--accent-warning)' : 'var(--accent-danger)'}; margin-bottom:15px; display:block;"></i>
+                        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">${message}</p>
+                        ${buttonHtml}
                     </div>
                 `;
             }
@@ -2362,8 +2621,6 @@
                 if (typeof runChronos === 'function') {
                     runChronos();
                     setInterval(runChronos, 1000);
-                } else {
-                    console.error("runChronos not defined!");
                 }
 
                 // 2. Data Initialization (Fail-safe wrapper)
@@ -2371,16 +2628,18 @@
                 try { initFiscal(); } catch (e) { console.error('Fiscal failed:', e); }
 
                 // Protected Initialization - ALWAYS Locked by default for Notes, Habits, PDF History
+                // This call verifies IF they already unlocked it (unlikely on fresh load as per requirement)
                 syncSecurityState().then(status => {
                     if (status.isVerified) {
                         try { initNotes(); } catch (e) { console.error('Notes failed:', e); }
                         try { initHabits(); } catch (e) { console.error('Habits failed:', e); }
                         try { initPdfHistory(); } catch (e) { console.error('PDF History failed:', e); }
                     } else {
-                        // ALWAYS Lock by default as per new requirement
-                        renderLockedState('notesBody', 'initNotes');
-                        renderLockedState('habitBody', 'initHabits');
-                        renderLockedState('pdfBody', 'initPdfHistory');
+                        // Ensure properly rendered in case Razor didn't (e.g. Admin or legacy edge cases)
+                        // But mostly Razor handles it now for immediate appearance.
+                        renderLockedState('notesBody', 'initNotes', status.hasPin);
+                        renderLockedState('habitBody', 'initHabits', status.hasPin);
+                        renderLockedState('pdfBody', 'initPdfHistory', status.hasPin);
                     }
                 });
 
@@ -2391,6 +2650,13 @@
                 if (fC) fC.onchange = fetchLatestRates;
                 if (tC) tC.onchange = convertCurrency;
                 if (aI) aI.oninput = convertCurrency;
+                
+                // Ensure Emergency Search is explicitly cleared on load
+                const emIn = document.getElementById('emergencyInput');
+                if (emIn) {
+                    emIn.value = '';
+                    emIn.setAttribute('autocomplete', 'off'); // Re-enforce
+                }
             });
             $(document).on('languageChanged', function (e, lang) {
                 console.log('Dashboard detected language change:', lang);

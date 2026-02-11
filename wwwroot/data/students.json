@@ -8,31 +8,31 @@
     "Course": "Administration",
     "Role": "Admin",
     "WidgetPermissions": "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,notes-hub,translator-hub,emergency-hub,habit-hub,pdf-hub",
-    "SecurityPinHash": "QcmR62pmJCwEVBkSRCeBg85Yz0przTcveZ5LnMAYhq8=",
+    "SecurityPinHash": "mvFbM25qlhmShTffMLLmojdlafz51\u002Bdz7M7eZWBlKaA=",
     "IsSecurityEnabled": true
   },
   {
-    "Id": 34,
-    "Email": "projtest28@gmail.com",
-    "Password": "/V9WtAp5o4VwhCjnsyq5lqaBCAoWaiIG51DrSBkYYUU=",
-    "Name": "New Student",
-    "Age": 18,
-    "Course": "General",
-    "Role": "User",
-    "WidgetPermissions": null,
-    "SecurityPinHash": null,
-    "IsSecurityEnabled": false
-  },
-  {
-    "Id": 35,
+    "Id": 27,
     "Email": "pcharmi230@gmail.com",
-    "Password": "5wQqx9Cce8QcjPpXSeQYWPaYBkO8DbGoPMeT0\u002BJNP3c=",
-    "Name": "dhvani",
-    "Age": 18,
+    "Password": "kbTRQoI/fSDF8I32kSLeQ/NfBXqYjZYZ9tMThIXJogM=",
+    "Name": "chams",
+    "Age": 21,
     "Course": "General",
     "Role": "Private",
-    "WidgetPermissions": "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,notes-hub,translator-hub,emergency-hub,habit-hub",
-    "SecurityPinHash": null,
-    "IsSecurityEnabled": false
+    "WidgetPermissions": "global-search-hub,weather-hub,notes-hub,translator-hub,pdf-hub",
+    "SecurityPinHash": "mvFbM25qlhmShTffMLLmojdlafz51\u002Bdz7M7eZWBlKaA=",
+    "IsSecurityEnabled": true
+  },
+  {
+    "Id": 28,
+    "Email": "dhvanibutani09@gmail.com",
+    "Password": "UpnTRpNUod4S9Xn\u002BDhpMQRXS3gUz8Y17rYcGLrvDr9s=",
+    "Name": "dhvani",
+    "Age": 21,
+    "Course": "General",
+    "Role": "Guest",
+    "WidgetPermissions": "currency-hub,translator-hub,habit-hub,pdf-hub",
+    "SecurityPinHash": "mvFbM25qlhmShTffMLLmojdlafz51\u002Bdz7M7eZWBlKaA=",
+    "IsSecurityEnabled": true
   }
 ]

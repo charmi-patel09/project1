@@ -29,12 +29,28 @@
                             <span asp-validation-for="Password" class="text-danger extra-small"></span>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label asp-for="ConfirmPassword" class="form-label text-muted small fw-bold">Confirm
                                 Password</label>
                             <input asp-for="ConfirmPassword" type="password" class="form-control shadow-none py-2"
                                 placeholder="Enter confirm password" required autocomplete="off" />
                             <span asp-validation-for="ConfirmPassword" class="text-danger extra-small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="SecurityPin" class="form-label text-muted small fw-bold">Security PIN (4-6
+                                digits) <span class="fw-normal opacity-75">(Optional)</span></label>
+                            <input asp-for="SecurityPin" type="password" class="form-control shadow-none py-2"
+                                placeholder="••••" autocomplete="off" maxlength="6" />
+                            <span asp-validation-for="SecurityPin" class="text-danger extra-small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="ConfirmSecurityPin" class="form-label text-muted small fw-bold">Confirm
+                                PIN <span class="fw-normal opacity-75">(Optional)</span></label>
+                            <input asp-for="ConfirmSecurityPin" type="password" class="form-control shadow-none py-2"
+                                placeholder="••••" autocomplete="off" maxlength="6" />
+                            <span asp-validation-for="ConfirmSecurityPin" class="text-danger extra-small"></span>
                         </div>
 
                         <div class="d-grid mt-4">
@@ -83,7 +99,8 @@
 
     .form-control {
         background-color: #f8fafc !important;
-        color: #0f172a !important; /* Black/Dark Navy for light theme */
+        color: #0f172a !important;
+        /* Black/Dark Navy for light theme */
         border: 1px solid #e2e8f0 !important;
         transition: all 0.2s ease-in-out !important;
         caret-color: #0f172a !important;
@@ -91,8 +108,8 @@
 
     /* Standard Autofill for light mode */
     .form-control:-webkit-autofill,
-    .form-control:-webkit-autofill:hover, 
-    .form-control:-webkit-autofill:focus, 
+    .form-control:-webkit-autofill:hover,
+    .form-control:-webkit-autofill:focus,
     .form-control:-webkit-autofill:active {
         -webkit-box-shadow: 0 0 0 30px #f8fafc inset !important;
         -webkit-text-fill-color: #0f172a !important;
@@ -153,14 +170,15 @@
 
     [data-theme='dark'] .form-control {
         background-color: #1e293b !important;
-        color: #ffffff !important; /* White text for dark theme */
+        color: #ffffff !important;
+        /* White text for dark theme */
         border-color: #334155 !important;
         caret-color: #ffffff !important;
     }
 
     [data-theme='dark'] .form-control:-webkit-autofill,
-    [data-theme='dark'] .form-control:-webkit-autofill:hover, 
-    [data-theme='dark'] .form-control:-webkit-autofill:focus, 
+    [data-theme='dark'] .form-control:-webkit-autofill:hover,
+    [data-theme='dark'] .form-control:-webkit-autofill:focus,
     [data-theme='dark'] .form-control:-webkit-autofill:active {
         -webkit-box-shadow: 0 0 0 30px #1e293b inset !important;
         -webkit-text-fill-color: #ffffff !important;
