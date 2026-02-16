@@ -159,7 +159,9 @@ namespace JsonCrudApp.Controllers
                         Name = name,
                         Age = 25,
                         Course = "Administration",
-                        Role = "Admin"
+                        Role = "Admin",
+                        // Full permissions for Admin
+                        WidgetPermissions = "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,notes-hub,translator-hub,emergency-hub,habit-hub,pdf-hub,goal-hub"
                     };
 
                     if (!string.IsNullOrEmpty(pin))

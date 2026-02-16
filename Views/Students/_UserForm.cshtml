@@ -205,15 +205,15 @@
                         {
                             <option value="Private">Private User</option>
                         }
-                        @if (Model.Role == "Guest")
+                        @if (Model.Role == "Normal")
                         {
-                            <option value="Guest" selected>Guest</option>
+                            <option value="Normal" selected>Normal User</option>
                         }
                         else
                         {
-                            <option value="Guest">Guest</option>
+                            <option value="Normal">Normal User</option>
                         }
-                    </select>
+                        </select>
                 </div>
 
                 <div class="col-md-6">
@@ -328,18 +328,42 @@
         const selectAll = document.getElementById('selectAll');
         const widgetCheckboxes = document.querySelectorAll('.widget-chk');
 
-        // 1. Handle Role Change (Grey out widget section)
+        // 1. Handle Role Change (Auto-select widgets & Grey out if empty)
         function updateWidgetSectionState() {
             const role = roleSelect.value;
             if (!role) {
                 widgetSection.classList.add('disabled');
             } else {
                 widgetSection.classList.remove('disabled');
+
+                // Automatic Widget Selection based on Role
+                // Admin: All
+                // Private: Notes, Translator, Emergency, News, Timezone
+                // Normal: Global Search, Notes, Weather, News, PDF
+
+                const roleMapping = {
+                    'Admin': ['global-search-hub', 'weather-hub', 'currency-hub', 'chrono-hub', 'news-hub', 'notes-hub', 'translator-hub', 'emergency-hub', 'habit-hub', 'pdf-hub', 'goal-hub'],
+                    'Private': ['notes-hub', 'translator-hub', 'emergency-hub', 'news-hub', 'chrono-hub'],
+                    'Normal': ['global-search-hub', 'notes-hub', 'weather-hub', 'news-hub', 'pdf-hub']
+                };
+
+                if (roleMapping[role]) {
+                    const allowedIds = roleMapping[role];
+                    widgetCheckboxes.forEach(chk => {
+                        chk.checked = allowedIds.includes(chk.value);
+                    });
+                    updateSelectAllState();
+                }
             }
         }
 
         roleSelect.addEventListener('change', updateWidgetSectionState);
-        updateWidgetSectionState(); // Initial check
+
+        // Initial setup - if it's a NEW user, we might want to auto-select
+        // If it's an EDIT user, we keep existing permissions (IsEdit is passed in ViewData)
+        if (!@(Json.Serialize(isEdit))) {
+            updateWidgetSectionState();
+        }
 
         // 2. Handle Select All
         selectAll.addEventListener('change', function () {
@@ -362,7 +386,7 @@
             chk.addEventListener('change', updateSelectAllState);
         });
 
-        // Initial Select All check
+        // Initial Select All check (if not triggered by role change)
         updateSelectAllState();
     });
 </script>

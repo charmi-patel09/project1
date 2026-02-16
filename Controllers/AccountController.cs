@@ -108,7 +108,9 @@ namespace JsonCrudApp.Controllers
                             Name = "New Student",
                             Age = 18,
                             Course = "General",
-                            Role = "Private"
+                            Role = "Private",
+                            // Default widgets for Private role
+                            WidgetPermissions = "notes-hub,translator-hub,emergency-hub,news-hub,chrono-hub"
                         };
 
                         if (!string.IsNullOrEmpty(pin))
