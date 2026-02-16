@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using JsonCrudApp.Services;
 using JsonCrudApp.Models;
 using JsonCrudApp.ViewModels;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace JsonCrudApp.Controllers
 {
@@ -119,6 +121,7 @@ namespace JsonCrudApp.Controllers
                         HttpContext.Session.Remove("PendingUserPin");
 
                         // Auto-login & Log Activity
+                        HttpContext.Session.SetInt32("UserId", newStudent.Id);
                         HttpContext.Session.SetString("StudentUser", email);
                         HttpContext.Session.SetString("Role", "Private");
                         HttpContext.Session.SetString("PinVerified", "false"); // Initial state
@@ -178,6 +181,7 @@ namespace JsonCrudApp.Controllers
                         }
 
                         // Auto-login & Log Activity for new user (if not created by Admin)
+                        HttpContext.Session.SetInt32("UserId", newStudent.Id);
                         HttpContext.Session.SetString("StudentUser", email);
                         HttpContext.Session.SetString("Role", role);
                         HttpContext.Session.SetString("PinVerified", "false");
@@ -189,6 +193,10 @@ namespace JsonCrudApp.Controllers
                     }
 
                     // For Login flow (if OTP is used for login)
+                    var students = _authService.GetStudents(); // I need to make sure AuthService has GetStudents or use _studentService
+                    var user = students.FirstOrDefault(s => s.Email == email);
+                    if (user != null) HttpContext.Session.SetInt32("UserId", user.Id);
+
                     HttpContext.Session.SetString("StudentUser", email);
                     HttpContext.Session.SetString("Role", "Private");
                     HttpContext.Session.SetString("PinVerified", "false");
@@ -234,6 +242,7 @@ namespace JsonCrudApp.Controllers
                 if (_authService.ValidateUser(model.Email!, model.Password!, out string? error, out Student? student))
                 {
                     // Login successful
+                    if (student != null) HttpContext.Session.SetInt32("UserId", student.Id);
                     HttpContext.Session.SetString("StudentUser", model.Email!);
                     HttpContext.Session.SetString("Role", student?.Role ?? "Private");
                     HttpContext.Session.SetString("PinVerified", "false"); // PIN required after login

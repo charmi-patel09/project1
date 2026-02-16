@@ -307,6 +307,11 @@
                                 value="pdf-hub" id="w_pdf" @(HasPermission("pdf-hub") ? "checked" : "")>
                             <label class="form-check-label" for="w_pdf">PDF Converter</label>
                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input widget-chk" type="checkbox" name="selectedWidgets"
+                                value="goal-hub" id="w_goal" @(HasPermission("goal-hub") ? "checked" : "")>
+                            <label class="form-check-label" for="w_goal">Goal Tracker</label>
+                        </div>
                     </div>
                 </div>
             </div>

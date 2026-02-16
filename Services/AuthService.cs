@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
 using System.Linq;
 using JsonCrudApp.Models;
 using System.Security.Cryptography;
@@ -60,6 +61,11 @@ namespace JsonCrudApp.Services
 
             _studentService.AddStudent(student);
             return true;
+        }
+
+        public IEnumerable<Student> GetStudents()
+        {
+            return _studentService.GetStudents();
         }
 
         public bool UserExists(string email)

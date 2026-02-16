@@ -7,32 +7,20 @@
     "Age": 25,
     "Course": "Administration",
     "Role": "Admin",
-    "WidgetPermissions": "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,notes-hub,translator-hub,emergency-hub,habit-hub,pdf-hub",
+    "WidgetPermissions": "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,pdf-hub",
     "SecurityPinHash": "mvFbM25qlhmShTffMLLmojdlafz51\u002Bdz7M7eZWBlKaA=",
     "IsSecurityEnabled": true
   },
   {
     "Id": 27,
     "Email": "pcharmi230@gmail.com",
-    "Password": "kbTRQoI/fSDF8I32kSLeQ/NfBXqYjZYZ9tMThIXJogM=",
-    "Name": "chams",
-    "Age": 21,
+    "Password": "aEh9wpUFKqecUw4oPOaYuMa7G0L/CUQlLhkQ2\u002BzcVCU=",
+    "Name": "New Student",
+    "Age": 18,
     "Course": "General",
     "Role": "Private",
-    "WidgetPermissions": "global-search-hub,weather-hub,notes-hub,translator-hub,pdf-hub",
-    "SecurityPinHash": "mvFbM25qlhmShTffMLLmojdlafz51\u002Bdz7M7eZWBlKaA=",
-    "IsSecurityEnabled": true
-  },
-  {
-    "Id": 28,
-    "Email": "dhvanibutani09@gmail.com",
-    "Password": "UpnTRpNUod4S9Xn\u002BDhpMQRXS3gUz8Y17rYcGLrvDr9s=",
-    "Name": "dhvani",
-    "Age": 21,
-    "Course": "General",
-    "Role": "Guest",
-    "WidgetPermissions": "currency-hub,translator-hub,habit-hub,pdf-hub",
-    "SecurityPinHash": "mvFbM25qlhmShTffMLLmojdlafz51\u002Bdz7M7eZWBlKaA=",
+    "WidgetPermissions": null,
+    "SecurityPinHash": "MYruP\u002B2MnQQNNaf8H6d2\u002BzEwODOqLeiFNU3fPUTY\u002B2k=",
     "IsSecurityEnabled": true
   }
 ]

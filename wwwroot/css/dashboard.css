@@ -270,6 +270,50 @@ body {
     }
 }
 
+
+/* Dual Widget Row Layout */
+.widget-row-dual {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+@media (max-width: 1100px) {
+    .widget-row-dual {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .widget-row-dual {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Trio Widget Row Layout */
+.widget-row-trio {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+@media (max-width: 1100px) {
+    .widget-row-trio {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .widget-row-trio {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 /* Common Card Styles */
 section,
 .tool-card {

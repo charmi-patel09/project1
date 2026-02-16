@@ -1,0 +1,383 @@
+            // --- SMART GOAL TRACKER LOGIC ---
+            let allGoals = [];
+            let selectedGoalId = null;
+            let currentTab = 'strategy';
+
+            async function initGoals() {
+                try {
+                    const res = await fetch('/Goal/GetGoals');
+                    if (res.ok) {
+                        allGoals = await res.json();
+                        renderGoalList();
+                        renderTodayTasks();
+                        updateGoalAnalytics();
+                    }
+                } catch (e) { console.error('Goals failed:', e); }
+            }
+
+            async function updateGoalAnalytics() {
+                try {
+                    const res = await fetch('/Goal/GetAnalytics');
+                    if (res.ok) {
+                        const data = await res.json();
+                        document.getElementById('prodScore').innerText = data.score;
+                        document.getElementById('activeGoalsCount').innerText = data.active;
+                        document.getElementById('successRatio').innerText = data.successRatio;
+                        document.getElementById('weeklyPerf').innerText = data.weeklyPerformance;
+                    }
+                } catch (e) { console.error('Goal Analytics failed:', e); }
+            }
+
+            function renderGoalList() {
+                const container = document.getElementById('goalListContainer');
+                if (!container) return;
+
+                if (allGoals.length === 0) {
+                    container.innerHTML = `<div style="padding: 30px; text-align: center; opacity: 0.6;"><i class="fas fa-bullseye" style="font-size: 2rem; margin-bottom: 10px;"></i><p>No active goals</p></div>`;
+                    return;
+                }
+
+                container.innerHTML = allGoals.map(g => {
+                    const statusColor = g.status === 'Completed' ? 'var(--accent-success)' : 
+                                      (g.status === 'Overdue' ? 'var(--accent-danger)' : 'var(--accent-primary)');
+                    const scheduleColor = g.scheduleStatus === 'Behind Schedule' ? 'var(--accent-danger)' : 
+                                        (g.scheduleStatus === 'Completed' ? 'var(--accent-success)' : 'var(--accent-primary)');
+
+                    const deadline = new Date(g.endDate).toLocaleDateString();
+                    const remainingDays = Math.ceil((new Date(g.endDate) - new Date()) / (1000 * 60 * 60 * 24));
+                    const remainingText = remainingDays > 0 ? `${remainingDays}d left` : (remainingDays === 0 ? 'Due today' : 'Overdue');
+
+                    return `
+                        <div class="goal-item-card" onclick="viewGoalDetails('${g.id}')" style="background:rgba(255,255,255,0.03); border:1px solid var(--border-dim); border-radius:12px; padding:12px; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                                <div>
+                                    <h4 style="margin:0; font-size:0.95rem; color:var(--text-bright);">${g.title}</h4>
+                                    <div style="display:flex; gap:8px; align-items:center; margin-top:2px;">
+                                        <span style="font-size:0.7rem; color:var(--text-muted);">${g.category}</span>
+                                        <span style="font-size:0.65rem; color:${scheduleColor}; text-transform:uppercase; font-weight:700;">• ${g.scheduleStatus}</span>
+                                    </div>
+                                </div>
+                                <span class="badge" style="background:${statusColor}20; color:${statusColor}; font-size:0.7rem; border:1px solid ${statusColor}40;">${g.status}</span>
+                            </div>
+                            <div class="goal-progress-mini" style="margin-bottom:8px;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-dim); margin-bottom:4px;">
+                                    <span>Progress</span>
+                                    <span>${Math.round(g.progress)}%</span>
+                                </div>
+                                <div style="height:6px; background:rgba(0,0,0,0.2); border-radius:3px; overflow:hidden;">
+                                    <div style="height:100%; width:${g.progress}%; background:${statusColor}; transition:width 0.5s ease;"></div>
+                                </div>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; color:var(--text-muted);">
+                                <span><i class="far fa-calendar"></i> ${deadline}</span>
+                                <span style="color:${remainingDays <= 2 ? 'var(--accent-warning)' : 'inherit'}">${remainingText}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            function renderTodayTasks() {
+                const container = document.getElementById('todayTasksContainer');
+                const listSection = document.getElementById('todayTaskList');
+                if (!container || !listSection) return;
+
+                const today = new Date().toDateString();
+                let todayTasks = [];
+
+                allGoals.forEach(g => {
+                    const tasks = g.dailyTasks.filter(t => new Date(t.date).toDateString() === today);
+                    tasks.forEach(t => todayTasks.push({ goalId: g.id, goalTitle: g.title, ...t }));
+                });
+
+                if (todayTasks.length === 0) {
+                    listSection.style.display = 'none';
+                    return;
+                }
+
+                listSection.style.display = 'block';
+                const completedCount = todayTasks.filter(t => t.isCompleted).length;
+                const progress = Math.round((completedCount / todayTasks.length) * 100);
+                document.getElementById('todayProgress').innerText = `${progress}% Done Today`;
+
+                container.innerHTML = todayTasks.map(t => `
+                    <div class="daily-task-item" style="padding:10px; background:rgba(255,255,255,0.04); border:1px solid var(--border-dim); border-radius:10px; display:flex; align-items:center; gap:12px; cursor:default;">
+                        <div onclick="toggleDailyTask('${t.goalId}', '${t.id}', ${!t.isCompleted})" style="width:20px; height:20px; border-radius:6px; border:2px solid ${t.isCompleted ? 'var(--accent-success)' : 'var(--border-dim)'}; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--accent-success);">
+                            ${t.isCompleted ? '<i class="fas fa-check" style="font-size:0.75rem;"></i>' : ''}
+                        </div>
+                        <div style="flex:1; overflow:hidden;">
+                            <div style="font-size:0.8rem; color:${t.isCompleted ? 'var(--text-muted)' : 'var(--text-bright)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.content}</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim); display:flex; justify-content:space-between;">
+                                <span>${t.goalTitle}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            async function toggleDailyTask(goalId, taskId, isCompleted) {
+                try {
+                    const res = await fetch(`/Goal/UpdateDailyTask?goalId=${goalId}&taskId=${taskId}&isCompleted=${isCompleted}`, {
+                        method: 'POST'
+                    });
+                    if (res.ok) {
+                        await initGoals();
+                        if (selectedGoalId === goalId) viewGoalDetails(goalId);
+                    }
+                } catch (e) { console.error('Toggle task failed:', e); }
+            }
+
+            function openGoalModal() {
+                document.getElementById('goalModal').style.display = 'flex';
+                document.getElementById('goalStart').valueAsDate = new Date();
+                const end = new Date();
+                end.setDate(end.getDate() + 7);
+                document.getElementById('goalEnd').valueAsDate = end;
+                document.getElementById('goalWarning').style.display = 'none';
+            }
+
+            function closeGoalModal() {
+                document.getElementById('goalModal').style.display = 'none';
+                document.getElementById('goalTitle').value = '';
+                document.getElementById('goalDesc').value = '';
+            }
+
+            async function saveSmartGoal() {
+                const goal = {
+                    title: document.getElementById('goalTitle').value,
+                    description: document.getElementById('goalDesc').value,
+                    category: document.getElementById('goalCategory').value,
+                    priority: document.getElementById('goalPriority').value,
+                    startDate: document.getElementById('goalStart').value,
+                    endDate: document.getElementById('goalEnd').value
+                };
+
+                if (!goal.title) return alert("Title is required");
+
+                try {
+                    const res = await fetch('/Goal/CreateGoal', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(goal)
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        closeGoalModal();
+                        initGoals();
+                    } else {
+                        document.getElementById('goalWarning').style.display = 'block';
+                        document.getElementById('goalWarningText').innerText = data.message;
+                    }
+                } catch (e) { console.error('Save goal failed:', e); }
+            }
+
+            function viewGoalDetails(id) {
+                const goal = allGoals.find(g => g.id === id);
+                if (!goal) return;
+                selectedGoalId = id;
+
+                document.getElementById('detailTitle').innerText = goal.title;
+                document.getElementById('detailCategory').innerText = goal.category;
+                document.getElementById('detailProgressText').innerText = `${Math.round(goal.progress)}%`;
+                document.getElementById('detailProgressBar').style.width = `${goal.progress}%`;
+                document.getElementById('detailStreak').innerText = `${goal.streak} Day Streak 🔥`;
+                document.getElementById('detailScheduleStatus').innerText = goal.scheduleStatus;
+                
+                const schedColor = goal.scheduleStatus === 'Behind Schedule' ? 'var(--accent-danger)' : 
+                                  (goal.scheduleStatus === 'Completed' ? 'var(--accent-success)' : 'var(--text-dim)');
+                document.getElementById('detailScheduleStatus').style.color = schedColor;
+
+                const completedMilestones = goal.milestones.filter(m => m.isCompleted).length;
+                document.getElementById('milestoneStats').innerText = `${completedMilestones}/${goal.milestones.length} Complete`;
+
+                renderMilestoneList(goal);
+                renderGoalCalendar(goal);
+                renderGoalHeatmap(goal);
+
+                document.getElementById('deadlineWarning').style.display = goal.status === 'Overdue' ? 'block' : 'none';
+                document.getElementById('goalDetailModal').style.display = 'flex';
+                switchGoalTab(currentTab);
+            }
+
+            function renderMilestoneList(goal) {
+                const list = document.getElementById('milestoneList');
+                list.innerHTML = goal.milestones.map(m => `
+                    <div class="milestone-item" onclick="toggleMilestone('${goal.id}', '${m.id}', ${!m.isCompleted})" style="padding:10px; background:rgba(255,255,255,0.02); border:1px solid var(--border-dim); border-radius:10px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all 0.2s;">
+                        <div class="m-check" style="width:18px; height:18px; border-radius:5px; border:2px solid ${m.isCompleted ? 'var(--accent-success)' : 'var(--border-dim)'}; display:flex; align-items:center; justify-content:center; color:var(--accent-success);">
+                            ${m.isCompleted ? '<i class="fas fa-check" style="font-size:0.7rem;"></i>' : ''}
+                        </div>
+                        <div style="flex:1;">
+                            <div style="font-size:0.8rem; color:${m.isCompleted ? 'var(--text-muted)' : 'var(--text-bright)'}; text-decoration:${m.isCompleted ? 'line-through' : 'none'};">${m.title}</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);">Due: ${new Date(m.dueDate).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function renderGoalCalendar(goal) {
+                const grid = document.getElementById('goalCalendar');
+                if (!grid) return;
+
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                let html = '';
+                // Headers
+                ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(d => {
+                    html += `<div style="text-align:center; font-size:0.65rem; padding:4px; color:var(--text-muted); font-weight:700;">${d}</div>`;
+                });
+
+                // Empty slots
+                for (let i = 0; i < firstDay; i++) html += '<div></div>';
+
+                // Days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const date = new Date(year, month, day);
+                    const dateStr = date.toDateString();
+                    const tasks = goal.dailyTasks.filter(t => new Date(t.date).toDateString() === dateStr);
+                    
+                    let bg = 'rgba(255,255,255,0.05)';
+                    let border = 'none';
+                    let color = 'var(--text-dim)';
+
+                    if (tasks.length > 0) {
+                        const done = tasks.filter(t => t.isCompleted).length;
+                        if (done === tasks.length) bg = 'rgba(16, 185, 129, 0.3)'; // Green
+                        else if (done > 0) bg = 'rgba(16, 185, 129, 0.1)'; // Light Green
+                        else if (date < today) bg = 'rgba(239, 68, 68, 0.2)'; // Red (Missed)
+                    }
+
+                    if (dateStr === today.toDateString()) {
+                        border = '1px solid gold';
+                        color = 'var(--text-bright)';
+                    } else if (date > today) {
+                        bg = 'rgba(255,255,255,0.02)';
+                    }
+
+                    html += `
+                        <div onclick="showDayTasks('${goal.id}', '${dateStr}')" style="aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.75rem; background:${bg}; border:${border}; border-radius:6px; color:${color}; cursor:pointer; transition:all 0.2s;">
+                            ${day}
+                        </div>
+                    `;
+                }
+                grid.innerHTML = html;
+            }
+
+            function showDayTasks(goalId, dateStr) {
+                const goal = allGoals.find(g => g.id === goalId);
+                const tasks = goal.dailyTasks.filter(t => new Date(t.date).toDateString() === dateStr);
+                const container = document.getElementById('selectedDayTasksContainer');
+                
+                document.getElementById('selectedDateTitle').innerText = `Action Plan: ${new Date(dateStr).toLocaleDateString()}`;
+                
+                if (tasks.length === 0) {
+                    container.innerHTML = `<div style="font-size:0.75rem; color:var(--text-muted); padding:10px; text-align:center;">No tasks scheduled for this day.</div>`;
+                } else {
+                    container.innerHTML = tasks.map(t => `
+                        <div class="daily-task-item" style="padding:8px; background:rgba(255,255,255,0.03); border:1px solid var(--border-dim); border-radius:8px; display:flex; align-items:center; gap:10px;">
+                            <div onclick="toggleDailyTask('${goalId}', '${t.id}', ${!t.isCompleted})" style="width:16px; height:16px; border-radius:4px; border:1px solid ${t.isCompleted ? 'var(--accent-success)' : 'var(--border-dim)'}; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--accent-success);">
+                                ${t.isCompleted ? '<i class="fas fa-check" style="font-size:0.6rem;"></i>' : ''}
+                            </div>
+                            <span style="font-size:0.75rem; color:${t.isCompleted ? 'var(--text-muted)' : 'var(--text-bright)'}; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.content}</span>
+                        </div>
+                    `).join('');
+                }
+                document.getElementById('selectedDayTasks').style.display = 'block';
+            }
+
+            function renderGoalHeatmap(goal) {
+                const container = document.getElementById('heatmapContainer');
+                if (!container) return;
+
+                // Last 90 days heatmap
+                const heatmapDays = [];
+                for (let i = 89; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    heatmapDays.push(date.toDateString());
+                }
+
+                container.innerHTML = heatmapDays.map(dateStr => {
+                    const tasks = goal.dailyTasks.filter(t => new Date(t.date).toDateString() === dateStr);
+                    let color = 'rgba(255,255,255,0.05)';
+                    let title = `${new Date(dateStr).toLocaleDateString()}: No Tasks`;
+
+                    if (tasks.length > 0) {
+                        const done = tasks.filter(t => t.isCompleted).length;
+                        const ratio = done / tasks.length;
+                        if (ratio === 1) color = '#10b981';
+                        else if (ratio > 0.5) color = '#059669';
+                        else if (ratio > 0) color = '#065f46';
+                        else if (new Date(dateStr) < new Date().setHours(0,0,0,0)) color = '#450a0a'; // Missed
+                        title = `${new Date(dateStr).toLocaleDateString()}: ${done}/${tasks.length} Done`;
+                    }
+
+                    return `<div title="${title}" style="width:10px; height:10px; background:${color}; border-radius:2px;"></div>`;
+                }).join('');
+            }
+
+            function switchGoalTab(tab) {
+                currentTab = tab;
+                document.querySelectorAll('.goal-tab-content').forEach(c => c.style.display = 'none');
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.style.color = 'var(--text-muted)';
+                    b.style.borderBottom = 'none';
+                });
+
+                document.getElementById(`goalTab_${tab}`).style.display = 'block';
+                const activeBtn = document.getElementById(`tab_${tab}`);
+                activeBtn.classList.add('active');
+                activeBtn.style.color = 'var(--text-bright)';
+                activeBtn.style.borderBottom = '2px solid gold';
+            }
+
+            async function redistributeTasks() {
+                if (!selectedGoalId) return;
+                if (!confirm("Redistribute all missed tasks across future dates? This will lower your 'Behind Schedule' penalty.")) return;
+                
+                try {
+                    const res = await fetch(`/Goal/RedistributeTasks?goalId=${selectedGoalId}`, { method: 'POST' });
+                    if (res.ok) {
+                        await initGoals();
+                        viewGoalDetails(selectedGoalId);
+                    }
+                } catch (e) { console.error('Redistribute failed:', e); }
+            }
+
+            async function toggleMilestone(goalId, milestoneId, isCompleted) {
+                try {
+                    const res = await fetch(`/Goal/UpdateMilestone?goalId=${goalId}&milestoneId=${milestoneId}&isCompleted=${isCompleted}`, {
+                        method: 'POST'
+                    });
+                    if (res.ok) {
+                        await initGoals();
+                        if (selectedGoalId === goalId) viewGoalDetails(goalId);
+                    }
+                } catch (e) { console.error('Toggle failed:', e); }
+            }
+
+            function closeGoalDetailModal() {
+                document.getElementById('goalDetailModal').style.display = 'none';
+                document.getElementById('selectedDayTasks').style.display = 'none';
+                selectedGoalId = null;
+            }
+
+            function confirmDeleteGoal() {
+                if (confirm("Permanently delete this goal and all tracking history?")) {
+                    deleteGoal(selectedGoalId);
+                }
+            }
+
+            async function deleteGoal(id) {
+                try {
+                    const res = await fetch(`/Goal/DeleteGoal?id=${id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        closeGoalDetailModal();
+                        initGoals();
+                    }
+                } catch (e) { console.error('Delete failed:', e); }
+            }

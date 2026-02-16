@@ -8,7 +8,7 @@
             <i class="fas fa-lock" style="font-size:3rem; color:var(--accent-warning); margin-bottom:20px;"></i>
             <h2 style="color:var(--text-bright); margin-bottom:10px;">Verification Required</h2>
             <p style="color:var(--text-muted); margin-bottom:30px;">Enter your PIN to access this module.</p>
-            
+
             <div id="pinInputArea">
                 <div class="form-row" style="margin-bottom:25px;">
                     <input type="password" id="verifyPinInput" class="modern-input" placeholder="••••••" maxlength="6"
@@ -19,10 +19,12 @@
             </div>
 
             <div id="noPinMessage" style="display:none; margin-bottom:20px;">
-                <div style="background:rgba(215, 58, 73, 0.1); border:1px solid var(--accent-danger); border-radius:12px; padding:15px; color:var(--accent-danger);">
+                <div
+                    style="background:rgba(215, 58, 73, 0.1); border:1px solid var(--accent-danger); border-radius:12px; padding:15px; color:var(--accent-danger);">
                     <i class="fas fa-exclamation-triangle"></i> Security PIN not configured
                 </div>
-                <p style="color:var(--text-muted); margin-top:15px; font-size:0.85rem;">Please contact an administrator to set up your security PIN.</p>
+                <p style="color:var(--text-muted); margin-top:15px; font-size:0.85rem;">Please contact an administrator
+                    to set up your security PIN.</p>
             </div>
 
             <button onclick="closePinModal()" class="btn-icon"
@@ -48,11 +50,13 @@
             pinInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') submitVerifyPin();
             });
+            // Clear error message when user starts typing
+            pinInput.addEventListener('input', () => {
+                document.getElementById('pinErrorMessage').innerText = '';
+            });
         }
 
         // Point 5: Require PIN again only after logout or page refresh
-        // Note: sessionStorage persists on refresh by default.
-        // If we want it to require PIN on refresh, we can check performance navigation type.
         if (performance.getEntriesByType("navigation")[0]?.type === 'reload') {
             sessionStorage.removeItem('isPinVerified');
             isPinVerified = false;
@@ -93,7 +97,6 @@
         }
 
         try {
-            // Point 2: Send to backend
             const res = await fetch('/Security/VerifyPin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -102,22 +105,17 @@
             const data = await res.json();
 
             if (data.success) {
-                // Point 3: Success logic
                 isPinVerified = true;
                 sessionStorage.setItem('isPinVerified', 'true');
+
+                // Execute the pending action BEFORE clearing it in closePinModal
+                const actionToExecute = pendingWidgetAction;
                 closePinModal();
 
-                // Point 3: Automatically open requested module
-                if (pendingWidgetAction) {
-                    if (typeof pendingWidgetAction === 'function') {
-                        pendingWidgetAction();
-                    } else if (typeof window[pendingWidgetAction] === 'function') {
-                        window[pendingWidgetAction]();
-                    }
-                    pendingWidgetAction = null;
+                if (actionToExecute) {
+                    executePendingAction(actionToExecute);
                 }
             } else {
-                // Point 4: Incorrect - show error without closing
                 err.innerText = data.message || "Incorrect PIN";
                 document.getElementById('verifyPinInput').value = '';
                 document.getElementById('verifyPinInput').focus();
