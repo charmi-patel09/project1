@@ -26,13 +26,18 @@ namespace JsonCrudApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateGoal([FromBody] Goal goal)
+        public IActionResult CreateGoalApi([FromBody] Goal goal)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null) return Unauthorized();
 
             goal.UserId = userId.Value;
             goal.CreatedDate = DateTime.Now;
+
+            if (goal.EndDate < goal.StartDate)
+            {
+                return Json(new { success = false, message = "End date cannot be earlier than start date." });
+            }
 
             // Smart Validation
             var duration = (goal.EndDate - goal.StartDate).Days;
@@ -44,6 +49,43 @@ namespace JsonCrudApp.Controllers
 
             _goalService.AddGoal(goal);
             return Json(new { success = true });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateGoal([FromForm] Goal goal)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null) return RedirectToAction("Login", "Account");
+
+            // Perform manual validation instead of relying on automatic ModelState 
+            // which can be triggered by internal system-managed properties.
+            var errors = new List<string>();
+            if (string.IsNullOrWhiteSpace(goal.Title)) errors.Add("Goal title is required.");
+            if (goal.StartDate == default) errors.Add("Start date is required.");
+            if (goal.EndDate == default) errors.Add("End date is required.");
+            if (goal.EndDate < goal.StartDate) errors.Add("End date cannot be earlier than start date.");
+
+            if (errors.Any())
+            {
+                TempData["GoalErrors"] = errors;
+                TempData["ShowGoalModal"] = true;
+                TempData["GoalTitle"] = goal.Title;
+                TempData["GoalDescription"] = goal.Description;
+                TempData["GoalStartDate"] = goal.StartDate.ToString("yyyy-MM-dd");
+                TempData["GoalEndDate"] = goal.EndDate.ToString("yyyy-MM-dd");
+                return RedirectToAction("Dashboard", "Home");
+            }
+
+            goal.UserId = userId.Value;
+            goal.CreatedDate = DateTime.Now;
+
+            // This service method calls SaveAllGoals() internally, 
+            // which is the JSON-equivalent of DbContext.SaveChanges()
+            _goalService.AddGoal(goal);
+
+            TempData["SuccessMessage"] = "Goal initialized successfully!";
+            return RedirectToAction("Dashboard", "Home");
         }
 
         [HttpPost]

@@ -112,8 +112,8 @@ namespace JsonCrudApp.Services
 
         public void AddGoal(Goal goal)
         {
-            // Always generate a full month structure
-            goal.DailyTasks = GenerateMonthlyTaskStructure(goal.StartDate, goal.Title, goal.Id, goal.UserId);
+            // Generate daily breakdown entries between StartDate and EndDate
+            goal.DailyTasks = GenerateDailyBreakdown(goal.StartDate, goal.EndDate, goal.Title, goal.Id, goal.UserId);
 
             if (goal.Milestones == null || !goal.Milestones.Any())
             {
@@ -337,23 +337,25 @@ namespace JsonCrudApp.Services
             return milestones;
         }
 
-        private List<DailyTask> GenerateMonthlyTaskStructure(DateTime startDate, string goalTitle, string goalId, int userId)
+        private List<DailyTask> GenerateDailyBreakdown(DateTime startDate, DateTime endDate, string goalTitle, string goalId, int userId)
         {
             var tasks = new List<DailyTask>();
-            var daysInMonth = DateTime.DaysInMonth(startDate.Year, startDate.Month);
+            var currentDate = startDate.Date;
+            var finalDate = endDate.Date;
 
-            for (int i = 1; i <= daysInMonth; i++)
+            while (currentDate <= finalDate)
             {
-                var date = new DateTime(startDate.Year, startDate.Month, i);
                 tasks.Add(new DailyTask
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserId = userId,
                     GoalId = goalId,
                     Title = $"Focus Session: {goalTitle}",
-                    Date = date,
-                    IsCompleted = false
+                    Date = currentDate,
+                    IsCompleted = false,
+                    CreatedDate = DateTime.Now
                 });
+                currentDate = currentDate.AddDays(1);
             }
             return tasks;
         }

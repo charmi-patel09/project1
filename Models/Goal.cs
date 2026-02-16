@@ -9,7 +9,7 @@ namespace JsonCrudApp.Models
         [Required]
         public int UserId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Goal title is required")]
         public string Title { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
@@ -18,8 +18,10 @@ namespace JsonCrudApp.Models
 
         public string Priority { get; set; } = "Medium"; // Low, Medium, High
 
+        [Required(ErrorMessage = "Start date is required")]
         public DateTime StartDate { get; set; } = DateTime.Today;
 
+        [Required(ErrorMessage = "End date is required")]
         public DateTime EndDate { get; set; } = DateTime.Today.AddDays(7);
 
         public List<Milestone> Milestones { get; set; } = new List<Milestone>();
