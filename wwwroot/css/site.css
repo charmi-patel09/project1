@@ -67,42 +67,193 @@
     /* Typography */
     --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --text-sidebar-heading: var(--text-white);
+    --text-sidebar-sub: rgba(255, 255, 255, 0.8);
+    --text-sidebar-icon: var(--text-white);
 }
 
-/* Global Button Overrides (Sunset Theme) */
-.btn-primary,
-.btn-success,
-.btn-emerald,
-.btn-unlock-widget,
-.btn-create {
-    background: #E17055 !important;
-    color: #ffffff !important;
-    border: none !important;
-    padding: 10px 24px !important;
-    border-radius: 12px !important;
-    font-weight: 700 !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 12px rgba(255, 94, 98, 0.3) !important;
-    text-shadow: none !important;
+[data-time-theme="morning"] {
+    --bg-color: var(--bg-primary);
+    --card-bg: rgba(255, 250, 245, 0.85);
+    --bg-card: rgba(255, 250, 245, 0.85);
+    --primary-color: var(--accent-primary);
+    --secondary-color: var(--bg-secondary);
+    --text-color: #000000;
+    --text-primary: #000000;
+    --text-primary-rgb: 0, 0, 0;
+    --text-secondary: #2D3436;
+    --text-muted: #4A5568;
+    --text-input: #000000;
+    --text-select: #000000;
+    --border-color: var(--border-primary);
+
+    --bg-primary: #FFF0E6;
+    --bg-secondary: #FFE4D6;
+    --bg-tertiary: rgba(255, 167, 38, 0.1);
+
+    --bg-sidebar-top: #FFB74D;
+    --bg-sidebar-bottom: #FF8A65;
+    --bg-sidebar: var(--bg-sidebar-top);
+
+    --bg-card-tint: rgba(255, 167, 38, 0.08);
+    --bg-hover: rgba(255, 167, 38, 0.15);
+    --bg-active: rgba(255, 167, 38, 0.25);
+
+    --border-accent: #FFA726;
+
+    --accent-primary: #FFA726;
+    --accent-hover: #F57C00;
+
+    --shadow-sm: 0 4px 6px rgba(255, 167, 38, 0.1);
+    --shadow-md: 0 8px 16px rgba(255, 167, 38, 0.15);
+    --shadow-lg: 0 12px 24px rgba(255, 167, 38, 0.2);
+    --shadow-xl: 0 20px 40px rgba(255, 167, 38, 0.3);
+    --shadow-glow: 0 0 20px rgba(255, 167, 38, 0.3);
+
+    --text-primary-rgb: 58, 58, 58;
+    --text-sidebar-heading: var(--text-white);
+    --text-sidebar-sub: rgba(255, 255, 255, 0.8);
+    --text-sidebar-icon: var(--text-white);
 }
 
-.btn-primary:hover,
-.btn-success:hover,
-.btn-emerald:hover,
-.btn-unlock-widget:hover,
-.btn-create:hover {
-    background: #D35400 !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(255, 94, 98, 0.4) !important;
-    color: #ffffff !important;
+[data-time-theme="noon"] {
+    --bg-color: var(--bg-primary);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --bg-card: rgba(255, 255, 255, 0.95);
+    --primary-color: #0288D1;
+    --secondary-color: #F0F9FF;
+    --text-color: #000000;
+    --text-input: #000000;
+    --text-select: #000000;
+    --border-color: #E2E8F0;
+
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #F1F5F9;
+    --bg-tertiary: rgba(2, 136, 209, 0.05);
+
+    --bg-sidebar-top: #E0F2FE;
+    --bg-sidebar-bottom: #BAE6FD;
+    --bg-sidebar: var(--bg-sidebar-top);
+
+    --bg-card-tint: rgba(2, 136, 209, 0.05);
+    --bg-hover: rgba(2, 136, 209, 0.1);
+    --bg-active: rgba(2, 136, 209, 0.15);
+
+    --text-primary: #000000;
+    --text-primary-rgb: 0, 0, 0;
+    --text-secondary: #2D3436;
+    --text-muted: #4A5568;
+
+    --border-primary: #E2E8F0;
+    --border-secondary: #F1F5F9;
+    --border-accent: #0288D1;
+
+    --accent-primary: #0288D1;
+    --accent-primary-rgb: 2, 136, 209;
+    --accent-hover: #075985;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 15px rgba(2, 136, 209, 0.15);
+
+    --text-sidebar-heading: #0F172A;
+    --text-sidebar-sub: #475569;
+    --text-sidebar-icon: #0288D1;
 }
 
-.btn-primary:active,
-.btn-success:active,
-.btn-emerald:active,
-.btn-unlock-widget:active,
-.btn-create:active {
-    transform: translateY(0) !important;
+[data-time-theme="sunset"] {
+    --bg-color: var(--bg-primary);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --bg-card: rgba(255, 255, 255, 0.7);
+    --primary-color: var(--accent-primary);
+    --secondary-color: var(--bg-secondary);
+    --text-color: #000000;
+    --text-primary: #000000;
+    --text-primary-rgb: 0, 0, 0;
+    --text-secondary: #2D3436;
+    --text-muted: #4A5568;
+    --text-input: #000000;
+    --text-select: #000000;
+    --border-color: var(--border-primary);
+
+    --bg-primary: #E17055;
+    --bg-secondary: #D63031;
+    --bg-tertiary: rgba(225, 112, 85, 0.1);
+
+    --bg-sidebar-top: #E17055;
+    --bg-sidebar-bottom: #D63031;
+    --bg-sidebar: var(--bg-sidebar-top);
+
+    --bg-card-tint: rgba(225, 112, 85, 0.15);
+    --bg-hover: rgba(225, 112, 85, 0.2);
+    --bg-active: rgba(225, 112, 85, 0.3);
+
+    --border-accent: #E17055;
+
+    --accent-primary: #E17055;
+    --accent-primary-rgb: 225, 112, 85;
+    --accent-hover: #D35400;
+
+    --shadow-sm: 0 4px 6px rgba(255, 94, 98, 0.1);
+    --shadow-md: 0 8px 16px rgba(255, 94, 98, 0.15);
+    --shadow-lg: 0 12px 24px rgba(255, 94, 98, 0.2);
+    --shadow-xl: 0 20px 40px rgba(255, 94, 98, 0.3);
+    --shadow-glow: 0 0 20px rgba(225, 112, 85, 0.3);
+
+    --text-primary-rgb: 58, 58, 58;
+    --text-sidebar-heading: var(--text-white);
+    --text-sidebar-sub: rgba(255, 255, 255, 0.8);
+    --text-sidebar-icon: var(--text-white);
+}
+
+[data-time-theme="night"] {
+    --bg-color: var(--bg-primary);
+    --card-bg: rgba(16, 19, 42, 0.7);
+    --bg-card: rgba(16, 19, 42, 0.7);
+    --primary-color: var(--accent-primary);
+    --secondary-color: var(--bg-secondary);
+    --text-color: var(--text-primary);
+    --border-color: var(--border-primary);
+
+    --bg-primary: #192A56;
+    --bg-secondary: #0a0b10;
+    --bg-tertiary: rgba(0, 0, 0, 0.2);
+
+    --bg-sidebar-top: #192A56;
+    --bg-sidebar-bottom: #0a0b10;
+    --bg-sidebar: var(--bg-sidebar-top);
+
+    --bg-card-tint: rgba(0, 0, 0, 0.3);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-active: rgba(255, 255, 255, 0.1);
+
+    --border-primary: rgba(255, 255, 255, 0.1);
+    --border-secondary: rgba(255, 255, 255, 0.05);
+    --border-accent: #273C75;
+
+    --text-primary: #E0E0E0;
+    --text-secondary: #BDBDBD;
+    --text-muted: #9E9E9E;
+    --text-heading: #FFFFFF;
+    --text-input: #FFFFFF;
+    --text-select: #FFFFFF;
+
+    --accent-primary: #273C75;
+    --accent-primary-rgb: 39, 60, 117;
+    --accent-hover: #192A56;
+
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 20px rgba(39, 60, 117, 0.3);
+
+    --text-primary-rgb: 224, 224, 224;
+    --text-sidebar-heading: var(--text-white);
+    --text-sidebar-sub: rgba(255, 255, 255, 0.8);
+    --text-sidebar-icon: var(--text-white);
 }
 
 /* === THEME OVERRIDES === */
@@ -184,14 +335,14 @@ body {
     font-family: var(--font-heading);
     font-size: 1.4rem;
     font-weight: 800;
-    color: var(--text-white);
+    color: var(--text-sidebar-heading);
     margin: 0;
     letter-spacing: -0.02em;
 }
 
 .brand-text span {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-sidebar-sub);
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 600;
@@ -225,7 +376,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    color: var(--text-white);
+    color: var(--text-sidebar-icon);
     flex-shrink: 0;
 }
 
@@ -358,8 +509,8 @@ body {
 
 .nav-link.active,
 .nav-link:active {
-    background: linear-gradient(90deg, rgba(88, 166, 255, 0.12) 0%, transparent 100%);
-    color: var(--text-white);
+    background: linear-gradient(90deg, rgba(var(--accent-primary-rgb, 88, 166, 255), 0.12) 0%, transparent 100%);
+    color: var(--text-sidebar-heading);
     font-weight: 600;
 }
 
@@ -1016,4 +1167,18 @@ body.sidebar-open {
 
 .swap-indicator i {
     cursor: pointer;
+}
+
+/* Global Light Theme Font Visibility Fix */
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea,
+[data-theme="light"] .form-control,
+[data-theme="light"] .form-select {
+    color: #000000 !important;
+}
+
+[data-theme="light"] .form-control::placeholder,
+[data-theme="light"] textarea::placeholder {
+    color: rgba(0, 0, 0, 0.6) !important;
 }

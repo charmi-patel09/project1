@@ -8,12 +8,12 @@
     <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="col-11 col-sm-8 col-md-5 col-lg-4 col-xl-3">
             <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-                <div class="card-header bg-light py-4 text-center border-0 border-bottom">
-                    <h3 class="text-dark fw-bold mb-0" data-i18n="VerifyOtp">@Localizer["VerifyOtp"]</h3>
+                <div class="card-header bg-transparent border-0 py-4 text-center border-0 border-bottom">
+                    <h3 class="text-primary fw-bold mb-0" data-i18n="VerifyOtp">@Localizer["VerifyOtp"]</h3>
                     <p class="text-muted small mb-0 mt-1" data-i18n="CheckYourEmailForCode">
                         @Localizer["CheckYourEmailForCode"]</p>
                 </div>
-                <div class="card-body p-4 p-md-5 bg-white">
+                <div class="card-body p-4 p-md-5 bg-transparent border-0">
                     @if (ViewBag.ErrorMessage != null)
                     {
                         <div class="alert alert-danger border-0 rounded-3 mb-4 py-2 px-3 small" role="alert">
@@ -33,7 +33,7 @@
                         <div class="d-grid mt-4">
                             <button type="submit"
                                 class="btn btn-primary btn-lg rounded-3 py-2 fw-bold transition-all shadow-sm border-0"
-                                style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); font-size: 1rem;">
+                                style="font-size: 1rem;">
                                 <span data-i18n="VerifyCode">@Localizer["VerifyCode"]</span>
                             </button>
                         </div>
@@ -120,7 +120,7 @@
     }
 
     [data-theme='dark'] .card-header h3,
-    [data-theme='dark'] .card-header .text-dark {
+    [data-theme='dark'] .card-header .text-primary {
         color: #fff !important;
     }
 
@@ -163,11 +163,11 @@
         color: #ffffff !important;
     }
 
-    [data-theme='dark'] .bg-light {
+    [data-theme='dark'] .bg-transparent border-0 {
         background-color: #1a1a27 !important;
     }
 
-    [data-theme='dark'] .bg-white {
+    [data-theme='dark'] .bg-transparent border-0 {
         background-color: #1e1e2d !important;
     }
 </style>

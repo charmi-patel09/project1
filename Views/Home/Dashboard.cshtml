@@ -72,7 +72,7 @@
         if (IsSecurityEnabled) {
             html += $@"<button onclick=""{btnAction}"" class=""btn-unlock-widget""><i class=""fas fa-key""></i> {btnText}</button>";
         } else {
-             html += $@"<button onclick=""{btnAction}"" class=""btn-unlock-widget"" style=""background:rgba(255,255,255,0.1); color:var(--text-muted); box-shadow:none;""><i class=""fas fa-cog""></i> {btnText}</button>";
+             html += $@"<button onclick=""{btnAction}"" class=""btn-unlock-widget"" background:rgba(255,255,255,0.1); color:var(--text-muted); box-shadow:none;""><i class=""fas fa-cog""></i> {btnText}</button>";
         }
         
         html += "</div>";
@@ -87,10 +87,10 @@
     <div class="dashboard-content">
         @if (TempData["SuccessMessage"] != null)
         {
-            <div id="successNotification" style="margin-bottom: 20px; padding: 15px; background: rgba(16, 185, 129, 0.2); border: 1px solid var(--accent-success); color: var(--accent-success); border-radius: 12px; display: flex; align-items: center; gap: 12px; animation: slideDown 0.4s ease;">
+            <div id="successNotification" style="margin-bottom: 20px; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; animation: slideDown 0.4s ease;">
                 <i class="fas fa-check-circle"></i>
                 <span style="font-weight: 600;">@TempData["SuccessMessage"]</span>
-                <button onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: inherit; cursor: pointer; opacity: 0.6;"><i class="fas fa-times"></i></button>
+                <button onclick="this.parentElement.remove()" style="margin-left: auto; cursor: pointer; opacity: 0.6;"><i class="fas fa-times"></i></button>
             </div>
         }
         <!-- Sacrificial input to draw browser autofill away from real search fields -->
@@ -112,7 +112,7 @@
 
         <!-- Notification Hub -->
         <div id="habitReminderArea" style="position: sticky; top: 20px; z-index: 10000; width: 100%; pointer-events: none; margin-bottom: 20px;">
-            <div id="habitReminderContainer" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; pointer-events: auto; background: var(--bg-elevated); border-radius: 12px;"></div>
+            <div id="habitReminderContainer" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; pointer-events: auto; border-radius: 12px;"></div>
         </div>
 
         <div class="dashboard-grid">
@@ -157,8 +157,8 @@
                             </select>
                             
                             <button id="btnSwapLang" onclick="swapLanguages()" class="btn-icon" title="Swap Languages" 
-                                style="width: 42px; height: 42px; min-width: 42px; border-radius: 50%; background: var(--bg-surface); border: 1px solid var(--border-dim);">
-                                <i class="fas fa-right-left" style="font-size: 0.9rem; color: var(--accent-orange);"></i>
+                                style="width: 42px; height: 42px; min-width: 42px; border-radius: 50%;">
+                                <i class="fas fa-right-left" style="font-size: 0.9rem;"></i>
                             </button>
                             
                             <select id="transTargetLang" class="modern-select" style="flex: 1;" onchange="translateWidget()">
@@ -182,7 +182,7 @@
                                 style="resize:none; padding:14px; font-size:0.95rem; height: 100%; min-height: 90px;"></textarea>
                             
                             <button class="copy-btn" onclick="copyTranslation()" title="Copy" id="btnCopyTrans"
-                                style="position: absolute; bottom: 12px; right: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; width: 32px; height: 32px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                                style="position: absolute; bottom: 12px; right: 12px; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
                                 <i class="fas fa-copy"></i>
                             </button>
                         </div>
@@ -342,14 +342,14 @@
                     <div class="tool-body" id="notesBody" style="height: 100%; display: flex; flex-direction: column;">
                         @if (IsNotesUnlocked) {
                             <div class="hub-controls"><button id="btnNewNote" onclick="toggleNoteForm()" class="btn-primary" style="width:100%"><i class="fas fa-plus"></i> <span>New Note</span></button></div>
-                            <div id="noteFormArea" style="display:none; margin-bottom: 20px; background: var(--bg-elevated); padding: 16px; border-radius: 16px; border: 1px solid var(--border-dim);" class="slide-in">
-                                <div style="margin-bottom: 12px; font-weight: 700; color: var(--accent-purple);" id="formTitle">New Note</div>
+                            <div id="noteFormArea" style="display:none; margin-bottom: 20px; padding: 16px; border-radius: 16px;" class="slide-in">
+                                <div style="margin-bottom: 12px; font-weight: 700;" id="formTitle">New Note</div>
                                 <input type="hidden" id="noteId">
                                 <div class="form-row" style="margin-bottom:12px;"><input type="text" id="noteTitle" class="modern-input" placeholder="Title"></div>
                                 <div class="form-row" style="margin-bottom:12px;"><textarea id="noteDesc" class="modern-input" rows="3" placeholder="Details"></textarea></div>
                                 <div class="action-group" style="width: 100%; display: flex; gap: 10px;">
                                     <button onclick="saveNote()" class="btn-primary" style="flex: 1;">Save</button>
-                                    <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1; border: 1px solid var(--border-dim); background: transparent; color: var(--text-muted);">Cancel</button>
+                                    <button onclick="toggleNoteForm()" class="btn-icon" style="flex: 1;">Cancel</button>
                                 </div>
                             </div>
                             <div class="notes-list" id="notesList" style="flex:1; overflow-y:auto;"><div class="loading-state">Syncing...</div></div>
@@ -376,10 +376,10 @@
                         </div>
                         @if (IsHabitUnlocked) {
                             <div style="display:flex; align-items:center; gap:10px;">
-                                <div id="habitMiniAnalytics" style="display:flex; gap:8px; font-size:0.75rem; color:var(--text-muted); background:var(--bg-elevated); border-radius:12px; border:1px solid var(--border-dim);">
+                                <div id="habitMiniAnalytics" style="display:flex; gap:8px; font-size:0.75rem; border-radius:12px;">
                                     <span title="Total Tasks">T:<b id="habitTotalCount">0</b></span>
-                                    <span title="Completed" style="color:var(--accent-emerald);">D:<b id="habitDoneCount">0</b></span>
-                                    <span title="Pending" style="color:var(--accent-warning);">P:<b id="habitPendingCount">0</b></span>
+                                    <span title="Completed" >D:<b id="habitDoneCount">0</b></span>
+                                    <span title="Pending" >P:<b id="habitPendingCount">0</b></span>
                                 </div>
                                 <button onclick="openHabitCalendar()" class="btn-icon" title="View History"><i class="fas fa-calendar-days"></i></button>
                                 <div id="dailyProgress" style="display:none;">0/0</div>
@@ -461,7 +461,7 @@
                                         </select>
                                     </div>
 
-                                    <div id="customDaysInput" style="display:none; margin-bottom:12px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                                    <div id="customDaysInput" style="display:none; margin-bottom:12px; padding: 10px; border-radius: 8px;">
                                         <label style="font-size:0.8rem; margin-bottom:8px; display:block; opacity:0.7;">Select Active Days</label>
                                         <div class="days-grid" style="display:flex; gap:8px; flex-wrap:wrap; justify-content: space-between;">
                                             <label class="day-checkbox"><input type="checkbox" value="Monday"> <span>M</span></label>
@@ -478,7 +478,7 @@
                                         <button onclick="saveNewHabit()" class="btn-primary" style="flex:1; border-radius:8px;">
                                             Create
                                         </button>
-                                        <button onclick="toggleAddHabitForm()" class="btn-secondary" style="flex:1; border-radius:8px; background: rgba(255,255,255,0.1);">
+                                        <button onclick="toggleAddHabitForm()" class="btn-secondary" style="flex:1; border-radius:8px;">
                                             Cancel
                                         </button>
                                     </div>
@@ -529,7 +529,7 @@
                                 </div>
                                 <div class="form-row" style="margin:0; text-align: center;">
                                     <label style="display:block; margin-bottom:4px;">Merge</label>
-                                    <div class="custom-checkbox" id="pdfMergeCheck" onclick="this.classList.toggle('checked')" style="width: 24px; height: 24px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-dim); border-radius: 6px; cursor: pointer;">
+                                    <div class="custom-checkbox" id="pdfMergeCheck" onclick="this.classList.toggle('checked')" style="width: 24px; height: 24px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer;">
                                         <i class="fas fa-check" style="font-size: 0.8rem;"></i>
                                     </div>
                                 </div>
@@ -575,8 +575,8 @@
                             <!-- Converted Files List Section -->
                             <div id="pdfListSection" style="display:none; margin-top: 24px;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
-                                    <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin:0;">Converted Files</h4>
-                                    <button onclick="clearPdfList()" style="background:none; border:none; color:var(--text-muted); font-size:0.8rem; cursor:pointer; padding:4px;" title="Clear List">Clear All</button>
+                                    <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin:0;">Converted Files</h4>
+                                    <button onclick="clearPdfList()" style="font-size:0.8rem; cursor:pointer; padding:4px;" title="Clear List">Clear All</button>
                                 </div>
                                 <div id="pdfFilesListContainer" style="display: flex; flex-direction: column; gap: 8px;">
                                     <!-- Dynamic Content -->
@@ -643,7 +643,7 @@
                 </div>
                 
                 <!-- Analytics Summary -->
-                <div id="goalAnalytics" class="hub-analytics" style="padding:10px 15px; background:var(--bg-elevated); border-bottom:1px solid var(--border-dim); display:flex; justify-content:space-around; align-items:center; font-size:0.75rem;">
+                <div id="goalAnalytics" class="hub-analytics" style="padding:10px 15px; border-bottom:1px solid var(--border-dim); display:flex; justify-content:space-around; align-items:center; font-size:0.75rem;">
                     <div class="stat-item"><span>Prod. Score</span>: <strong id="prodScore">0</strong>%</div>
                     <div class="stat-item"><span>Active</span>: <strong id="activeGoalsCount">0</strong></div>
                     <div class="stat-item"><span>Success</span>: <strong id="successRatio">0</strong>%</div>
@@ -652,10 +652,10 @@
 
                 <div class="hub-display" style="padding:0; flex:1; display:flex; flex-direction:column; overflow:hidden;">
                     <!-- Today's Action List -->
-                    <div id="todayTaskList" style="padding:15px; border-bottom:1px solid var(--border-dim); background:var(--bg-elevated); display:none;">
-                        <h4 style="margin:0 0 12px 0; font-size:0.85rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; display:flex; justify-content:space-between;">
+                    <div id="todayTaskList" style="padding:15px; border-bottom:1px solid var(--border-dim); display:none;">
+                        <h4 style="margin:0 0 12px 0; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; display:flex; justify-content:space-between;">
                             <span>Action Plan Today</span>
-                            <span id="todayProgress" style="font-weight:normal; color:var(--accent-primary);">0% Done</span>
+                            <span id="todayProgress" style="font-weight:normal;">0% Done</span>
                         </h4>
                         <div id="todayTasksContainer" style="display:flex; flex-direction:column; gap:8px;">
                             <!-- Daily Tasks -->
@@ -683,19 +683,19 @@
 
 
 <!-- PDF Preview Modal -->
-<div id="pdfPreviewModal" class="modal-overlay" style="display:none; z-index: 1100; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-    <div class="modal-content glass-panel" style="max-width: 900px; width: 95%; height: 85vh; display:flex; flex-direction:column; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-dim); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+<div id="pdfPreviewModal" class="modal-overlay" style="display:none; z-index: 1100; position: fixed; top: 0; left: 0; width: 100%; height: 100%; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div class="modal-content glass-panel" style="max-width: 900px; width: 95%; height: 85vh; display:flex; flex-direction:column; border-radius: 12px; box-shadow: 0 20px 50px var(--bg-color);">
         
-        <div class="modal-header" style="padding: 16px 24px; border-bottom: 1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center; background: rgba(255,255,255,0.02);">
+        <div class="modal-header" style="padding: 16px 24px; border-bottom: 1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center;">
             <div style="display:flex; align-items:center; gap:12px; overflow: hidden;">
-                <div class="text-emerald" style="font-size:1.4rem; filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.3));"><i class="fas fa-file-pdf"></i></div>
-                <h3 id="pdfPreviewTitle" style="margin:0; font-size:1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-bright);">Document Preview</h3>
+                <div class="text-emerald" style="font-size:1.4rem; filter: drop-shadow(0 0 8px var(--bg-color));"><i class="fas fa-file-pdf"></i></div>
+                <h3 id="pdfPreviewTitle" style="margin:0; font-size:1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Document Preview</h3>
             </div>
             <button class="icon-btn" onclick="closePdfPreview()" style="font-size: 1.2rem; padding: 8px;"><i class="fas fa-times"></i></button>
         </div>
         
-        <div class="modal-body" style="padding: 0; flex:1; background: #1e1e1e; position: relative; overflow: hidden;">
-             <iframe id="pdfModalFrame" style="width:100%; height:100%; border:none;"></iframe>
+        <div class="modal-body" style="padding: 0; flex:1; position: relative; overflow: hidden;">
+             <iframe id="pdfModalFrame" style="width:100%; height:100%;"></iframe>
         </div>
     </div>
 </div>
@@ -766,7 +766,7 @@
                         <input type="date" name="EndDate" id="goalEnd" class="modern-input" required value="@(TempData["GoalEndDate"] ?? "")">
                     </div>
                 </div>
-                <div class="smart-engine-badge" style="margin-top:15px; background:rgba(255,215,0,0.1); border:1px dashed gold; padding:10px; border-radius:10px; font-size:0.8rem; color:var(--text-bright);">
+                <div class="smart-engine-badge" style="margin-top:15px; padding:10px; border-radius:10px; font-size:0.8rem;">
                     <i class="fas fa-microchip"></i> <span>Smart Engine will automatically divide this goal into realistic milestones.</span>
                 </div>
             </div>
@@ -785,7 +785,7 @@
                 <div id="detailIcon" class="title-icon gold-glow"><i class="fas fa-bullseye"></i></div>
                 <div>
                     <h3 id="detailTitle" style="margin:0;">Goal Title</h3>
-                    <div id="detailCategory" style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Category</div>
+                    <div id="detailCategory" style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;">Category</div>
                 </div>
             </div>
             <button class="icon-btn" onclick="closeGoalDetailModal()"><i class="fas fa-times"></i></button>
@@ -796,8 +796,8 @@
                     <span>Overall Progress</span>
                     <strong id="detailProgressText">0%</strong>
                 </div>
-                <div class="progress-bar-container" style="height:10px; background:rgba(255,255,255,0.05); border-radius:5px; overflow:hidden;">
-                    <div id="detailProgressBar" style="height:100%; background:linear-gradient(90deg, #ffd700, #ff8c00); width:0%; transition: width 0.5s ease;"></div>
+                <div class="progress-bar-container" style="height:10px; border-radius:5px; overflow:hidden;">
+                    <div id="detailProgressBar" style="height:100%; width:0%; transition: width 0.5s ease;"></div>
                 </div>
             </div>
 
@@ -806,31 +806,31 @@
             </div>
 
             <!-- Monthly Overview Section -->
-            <div id="monthlyOverview" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:20px; background:rgba(255,255,255,0.03); border:1px solid var(--border-dim); border-radius:12px; padding:12px; text-align:center;">
+            <div id="monthlyOverview" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:20px; border-radius:12px; padding:12px; text-align:center;">
                 <div class="stat-box">
-                    <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase;">Days</div>
-                    <div id="ovTotalDays" style="font-size:1.1rem; font-weight:700; color:gold;">0</div>
+                    <div style="font-size:0.65rem; text-transform:uppercase;">Days</div>
+                    <div id="ovTotalDays" style="font-size:1.1rem; font-weight:700;">0</div>
                 </div>
                 <div class="stat-box">
-                    <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase;">Done</div>
-                    <div id="ovDoneDays" style="font-size:1.1rem; font-weight:700; color:var(--accent-success);">0</div>
+                    <div style="font-size:0.65rem; text-transform:uppercase;">Done</div>
+                    <div id="ovDoneDays" style="font-size:1.1rem; font-weight:700;">0</div>
                 </div>
                 <div class="stat-box">
-                    <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase;">Missed</div>
-                    <div id="ovMissedDays" style="font-size:1.1rem; font-weight:700; color:var(--accent-danger);">0</div>
+                    <div style="font-size:0.65rem; text-transform:uppercase;">Missed</div>
+                    <div id="ovMissedDays" style="font-size:1.1rem; font-weight:700;">0</div>
                 </div>
                 <div class="stat-box">
-                    <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase;">Monthly %</div>
-                    <div id="ovMonthProgress" style="font-size:1.1rem; font-weight:700; color:var(--accent-primary);">0%</div>
+                    <div style="font-size:0.65rem; text-transform:uppercase;">Monthly %</div>
+                    <div id="ovMonthProgress" style="font-size:1.1rem; font-weight:700;">0%</div>
                 </div>
             </div>
 
             <!-- Goal Tracking Tabs -->
             <div style="display:flex; gap:10px; margin-bottom:15px; border-bottom:1px solid var(--border-dim); padding-bottom:8px;">
-                <button onclick="switchGoalTab('strategy')" class="tab-btn active" id="tab_strategy" style="flex:1; padding:6px; background:none; border:none; color:var(--text-bright); font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Breakdown</button>
-                <button onclick="switchGoalTab('milestones')" class="tab-btn" id="tab_milestones" style="flex:1; padding:6px; background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Milestones</button>
-                <button onclick="switchGoalTab('calendar')" class="tab-btn" id="tab_calendar" style="flex:1; padding:6px; background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Calendar</button>
-                <button onclick="switchGoalTab('analytics')" class="tab-btn" id="tab_analytics" style="flex:1; padding:6px; background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Analytics</button>
+                <button onclick="switchGoalTab('strategy')" class="tab-btn active" id="tab_strategy" style="flex:1; padding:6px; font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Breakdown</button>
+                <button onclick="switchGoalTab('milestones')" class="tab-btn" id="tab_milestones" style="flex:1; padding:6px; font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Milestones</button>
+                <button onclick="switchGoalTab('calendar')" class="tab-btn" id="tab_calendar" style="flex:1; padding:6px; font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Calendar</button>
+                <button onclick="switchGoalTab('analytics')" class="tab-btn" id="tab_analytics" style="flex:1; padding:6px; font-size:0.75rem; cursor:pointer; transition:all 0.2s;">Analytics</button>
             </div>
 
             <!-- Daily Breakdown Tab -->
@@ -849,15 +849,15 @@
 
             <!-- Calendar Tab -->
             <div id="goalTab_calendar" class="goal-tab-content" style="display:none;">
-                <div id="goalCalendar" class="goal-calendar-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; margin-bottom:15px;">
+                <div id="goalCalendar" class="goal-calendar-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; padding:10px; border-radius:8px; margin-bottom:15px;">
                     <!-- Calendar Grid -->
                 </div>
                 <div id="selectedDayTasks" style="border-top:1px solid var(--border-dim); padding-top:12px; display:none;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <h5 id="selectedDateTitle" style="font-size:0.8rem; color:gold; margin:0;">Date Action Plan</h5>
+                        <h5 id="selectedDateTitle" style="font-size:0.8rem; margin:0;">Date Action Plan</h5>
                         <div id="calendarAddTaskContainer" style="display:flex; align-items:center; gap:8px;">
-                            <button id="calendarAddTaskBtn" onclick="addTaskToSelectedDate()" class="btn-icon" style="font-size:0.8rem; color:var(--accent-success);"><i class="fas fa-plus"></i> Add Task</button>
-                            <span id="calendarLimitMsg" style="display:none; font-size:0.65rem; color:var(--text-muted);"><i class="fas fa-info-circle"></i> Daily limit reached</span>
+                            <button id="calendarAddTaskBtn" onclick="addTaskToSelectedDate()" class="btn-icon" style="font-size:0.8rem;"><i class="fas fa-plus"></i> Add Task</button>
+                            <span id="calendarLimitMsg" style="display:none; font-size:0.65rem;"><i class="fas fa-info-circle"></i> Daily limit reached</span>
                         </div>
                     </div>
                     <div id="selectedDayTasksContainer" style="display:flex; flex-direction:column; gap:6px;"></div>
@@ -866,18 +866,18 @@
 
             <!-- Performance/Insights Tab -->
             <div id="goalTab_analytics" class="goal-tab-content" style="display:none;">
-                <h5 style="font-size:0.8rem; color:var(--text-bright); margin-bottom:8px;">90-Day Activity Heatmap</h5>
-                <div id="heatmapContainer" style="display:flex; flex-wrap:wrap; gap:3px; background:rgba(0,0,0,0.1); padding:8px; border-radius:6px; justify-content:center; margin-bottom:20px;"></div>
+                <h5 style="font-size:0.8rem; margin-bottom:8px;">90-Day Activity Heatmap</h5>
+                <div id="heatmapContainer" style="display:flex; flex-wrap:wrap; gap:3px; padding:8px; border-radius:6px; justify-content:center; margin-bottom:20px;"></div>
                 
-                <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.2); padding:15px; border-radius:10px;">
-                    <div style="font-size:1.1rem; color:gold; font-weight:700;"><i class="fas fa-fire"></i> <span id="detailStreak">0 Day Streak 🔥</span></div>
-                    <button onclick="redistributeTasks()" class="btn-secondary" style="font-size:0.75rem; padding:8px 15px; border:1px solid #58a6ff40; border-radius:8px; color:#58a6ff; background:#58a6ff10;">Redistribute Missed Tasks</button>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:15px; border-radius:10px;">
+                    <div style="font-size:1.1rem; font-weight:700;"><i class="fas fa-fire"></i> <span id="detailStreak">0 Day Streak 🔥</span></div>
+                    <button onclick="redistributeTasks()" class="btn-secondary" style="font-size:0.75rem; padding:8px 15px; border-radius:8px;">Redistribute Missed Tasks</button>
                 </div>
             </div>
         </div>
         <div class="modal-footer" style="padding:15px; border-top:1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center;">
             <button onclick="confirmDeleteGoal()" class="btn-icon text-danger" title="Delete Goal"><i class="fas fa-trash-alt"></i></button>
-            <div id="detailScheduleStatus" style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--text-dim);">On Track</div>
+            <div id="detailScheduleStatus" style="font-size:0.8rem; font-weight:700; text-transform:uppercase;">On Track</div>
             <button onclick="closeGoalDetailModal()" class="btn-primary" style="padding:8px 25px; font-size:0.85rem; border-radius:8px;">Close</button>
         </div>
     </div>
@@ -897,11 +897,11 @@
             <input type="hidden" id="editTaskId">
             <input type="hidden" id="editTaskGoalId">
             <div class="form-row" style="margin-bottom:15px;">
-                <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:5px; display:block;">Task Title</label>
+                <label style="font-size:0.8rem; margin-bottom:5px; display:block;">Task Title</label>
                 <input type="text" id="editTaskTitle" class="modern-input" placeholder="What needs to be done?">
             </div>
             <div class="form-row">
-                <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:5px; display:block;">Description</label>
+                <label style="font-size:0.8rem; margin-bottom:5px; display:block;">Description</label>
                 <textarea id="editTaskDesc" class="modern-input" style="height:80px;" placeholder="Optional details..."></textarea>
             </div>
         </div>
@@ -1339,7 +1339,7 @@
                     // Using resultArea for better UI than alert if possible, or keeping alert if preferred.
                     // User requirements: "proper error handling".
                     resultArea.style.display = 'flex';
-                    resultArea.innerHTML = `<div class="error-state" style="color:var(--accent-danger);">Please select a file first.</div>`;
+                    resultArea.innerHTML = `<div class="error-state" >Please select a file first.</div>`;
                     return;
                 }
                 
@@ -1398,7 +1398,7 @@
 
                         // Success Message & Auto Download
                         resultArea.style.display = 'flex';
-                        resultArea.innerHTML = `<div class="success-state" style="color:var(--accent-emerald);"><i class="fas fa-check-circle"></i> Conversion Successful! Downloading...</div>`;
+                        resultArea.innerHTML = `<div class="success-state" ><i class="fas fa-check-circle"></i> Conversion Successful! Downloading...</div>`;
                         
                         // Auto-Download
                         if(data.downloadUrl) {
@@ -1419,13 +1419,13 @@
                         // Handle failure with safe access
                         const msg = data?.message || "PDF conversion failed (Unknown Error)";
                         resultArea.style.display = 'flex';
-                        resultArea.innerHTML = `<div class="error-state" style="color:var(--accent-danger);"><i class="fas fa-exclamation-triangle"></i> ${msg}</div>`;
+                        resultArea.innerHTML = `<div class="error-state" ><i class="fas fa-exclamation-triangle"></i> ${msg}</div>`;
                     }
 
                 } catch (error) {
                     console.error("PDF Conversion Error:", error);
                     resultArea.style.display = 'flex';
-                    resultArea.innerHTML = `<div class="error-state" style="color:var(--accent-danger);">Error: ${error.message || "An unexpected error occurred"}</div>`;
+                    resultArea.innerHTML = `<div class="error-state" >Error: ${error.message || "An unexpected error occurred"}</div>`;
                 } finally {
                     if(btn) {
                         btn.disabled = false;
@@ -1514,7 +1514,7 @@
                             <button class="btn-mini-action preview" onclick="openPdfPreview(${doc.id})" title="Preview Document"><i class="fas fa-eye"></i></button>
                             <button class="btn-mini-action" onclick="editPdfName(${doc.id})" title="Rename"><i class="fas fa-pen"></i></button>
                             <a href="${doc.url}" download="${doc.name}" class="btn-mini-action download" title="Download"><i class="fas fa-download"></i></a>
-                            <button class="btn-mini-action" onclick="deletePdfDoc(${doc.id})" title="Delete" style="color:var(--accent-danger);"><i class="fas fa-trash"></i></button>
+                            <button class="btn-mini-action" onclick="deletePdfDoc(${doc.id})" title="Delete" ><i class="fas fa-trash"></i></button>
                         </div>
                     `;
                     list.appendChild(el);
@@ -1826,7 +1826,7 @@
                 let locHtml = '';
                 if (ctx) {
                     const time = ctx.timezone ? new Date().toLocaleTimeString('en-US', { timeZone: ctx.timezone, hour: '2-digit', minute: '2-digit' }) : '';
-                    locHtml = `<div style="text-align:center; margin-bottom: 12px; color: var(--accent-emerald); background: rgba(52, 211, 153, 0.05); padding: 10px; border-radius: 12px; border: 1px solid rgba(52, 211, 153, 0.1);">
+                    locHtml = `<div style="text-align:center; margin-bottom: 12px; padding: 10px; border-radius: 12px;">
                                    <div style="font-size: 0.65rem; text-transform: uppercase; opacity: 0.7;">Target Location</div>
                                    <div style="font-weight: 700; font-size: 0.9rem;"><i class="fas fa-location-dot"></i> ${ctx.country}, ${ctx.city}</div>
                                    ${time ? `<div style="font-size: 0.75rem; opacity: 0.6; margin-top: 2px;"><i class="fas fa-clock"></i> ${time}</div>` : ''}
@@ -2011,7 +2011,7 @@
                 container.innerHTML = '';
 
                 if (notes.length === 0) {
-                    container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No Notes Found</div>`;
+                    container.innerHTML = `<div style="text-align:center; padding:20px;">No Notes Found</div>`;
                     return;
                 }
 
@@ -2084,15 +2084,15 @@
 
                 // --- BUILD HTML SAFELY ---
 
-                let html = '<div class="result-card slide-in" style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 20px; border: 1px solid var(--border-dim);">';
+                let html = '<div class="result-card slide-in" style="border-radius: 16px; padding: 20px;">';
 
                 // Header
                 html += '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 16px;">';
                 html += '<div>';
-                html += '<div style="font-size: 1.5rem; font-weight: 800; color: var(--text-bright);">' + cityName + '</div>';
+                html += '<div style="font-size: 1.5rem; font-weight: 800;">' + cityName + '</div>';
 
                 let subText = (loc.admin1 || '') + (country ? ', ' + countryName : '');
-                html += '<div style="color: var(--text-muted); font-size: 0.9rem;">' + subText + '</div>';
+                html += '<div style="font-size: 0.9rem;">' + subText + '</div>';
                 html += '</div>';
 
                 if (country && country.flag) {
@@ -2152,7 +2152,7 @@
 
                 // Sync Badge
                 html += '<div style="margin-top:16px; text-align:center;">';
-                html += '<span style="color:var(--accent-success); font-size:0.8rem; display:block; margin-bottom:8px;">';
+                html += '<span style="font-size:0.8rem; display:block; margin-bottom:8px;">';
                 html += '<i class="fas fa-check-circle"></i> Dashboard Synced';
                 html += '</span></div></div>';
 
@@ -2370,7 +2370,7 @@
 
                         const safeVal = val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                         const regex = new RegExp(`(${safeVal})`, 'gi');
-                        const highlighted = match.name.replace(regex, '<span style="color:var(--accent-sky); font-weight:700;">$1</span>');
+                        const highlighted = match.name.replace(regex, '<span style="font-weight:700;">$1</span>');
 
                         let displayMeta = "";
                         if (match.type === 'country') {
@@ -2381,7 +2381,7 @@
 
                         div.innerHTML = `
                                 <div style="display:flex; align-items:center; gap:10px;">
-                                    <span style="font-family:monospace; font-weight:700; color:var(--accent-emerald); background:rgba(52,211,153,0.1); padding:2px 6px; border-radius:4px; font-size:0.8em;">${match.code}</span>
+                                    <span style="font-family:monospace; font-weight:700; padding:2px 6px; border-radius:4px; font-size:0.8em;">${match.code}</span>
                                     <div style="display:flex; flex-direction:column; justify-content:center;">
                                         <div style="line-height:1.2;">${highlighted} ${displayMeta}</div>
                                         ${match.type === 'city' ? `<span style="font-size:0.7em; opacity:0.5; margin-top:2px;">City</span>` : ''}
@@ -2412,7 +2412,7 @@
                 if (normalizedCode) {
                     fetchEmergencyNumbers(normalizedCode, country.name);
                 } else {
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-circle-exclamation" style="color:var(--accent-warning)"></i><p>Emergency data unavailable for <b>${country.name}</b></p></div>`;
+                    container.innerHTML = `<div class="empty-state"><i class="fas fa-circle-exclamation" ></i><p>Emergency data unavailable for <b>${country.name}</b></p></div>`;
                 }
             }
 
@@ -2429,7 +2429,7 @@
 
             async function fetchEmergencyNumbers(code, countryName) {
                 const container = document.getElementById('emergencyResult');
-                container.innerHTML = `<div class="loading-state" style="text-align:center; padding:40px;"><i class="fas fa-circle-notch fa-spin" style="font-size:2rem; color:var(--accent-sky); margin-bottom:10px;"></i><div style="opacity:0.7">Accessing Global Grid...</div></div>`;
+                container.innerHTML = `<div class="loading-state" style="text-align:center; padding:40px;"><i class="fas fa-circle-notch fa-spin" style="font-size:2rem; margin-bottom:10px;"></i><div style="opacity:0.7">Accessing Global Grid...</div></div>`;
 
                 try {
                     const safeCode = code.trim().toUpperCase();
@@ -2440,7 +2440,7 @@
                     renderEmergency(data.data, countryName);
                 } catch (e) {
                     console.error(e);
-                    container.innerHTML = `<div class="empty-state"><i class="fas fa-triangle-exclamation" style="color:#ef4444"></i><p>Emergency Protocols Not Found for <b>${countryName}</b></p></div>`;
+                    container.innerHTML = `<div class="empty-state"><i class="fas fa-triangle-exclamation" ></i><p>Emergency Protocols Not Found for <b>${countryName}</b></p></div>`;
                 }
             }
 
@@ -2460,7 +2460,7 @@
                     if (nums.fire.length === 0) nums.fire = nums.dispatch;
                 }
 
-                let html = `<div style="margin-bottom:12px; font-weight:700; color:var(--text-bright); font-size:1.1rem;"><i class="fas fa-flag" style="margin-right:8px; color:var(--text-muted);"></i> ${countryName}</div><div class="emergency-cards">`;
+                let html = `<div style="margin-bottom:12px; font-weight:700; font-size:1.1rem;"><i class="fas fa-flag" style="margin-right:8px;"></i> ${countryName}</div><div class="emergency-cards">`;
                 
                 const createCard = (label, icon, arr, colorClass) => {
                     if (!arr || arr.length === 0) return '';
@@ -2469,7 +2469,7 @@
                                 <div class="card-icon-wrapper"><i class="fas ${icon}"></i></div>
                                 <div class="em-info"><span class="em-label">${label}</span><span class="em-number">${arr.join(' / ')}</span></div>
                                 <div style="display:flex; gap:6px;">
-                                    <a href="tel:${mainNum}" class="copy-btn" title="Call Now" style="text-decoration:none; display:flex; align-items:center; justify-content:center; color:var(--accent-emerald); background:rgba(52, 211, 153, 0.1);"><i class="fas fa-phone"></i></a>
+                                    <a href="tel:${mainNum}" class="copy-btn" title="Call Now" style="text-decoration:none; display:flex; align-items:center; justify-content:center;"><i class="fas fa-phone"></i></a>
                                     <button class="copy-btn" onclick="navigator.clipboard.writeText('${mainNum}')" title="Copy"><i class="fas fa-copy"></i></button>
                                 </div>
                             </div>`;
@@ -2662,8 +2662,8 @@
                 const el = document.getElementById('dailyProgress');
                 if (el) {
                     el.innerHTML = `<span title="Completed/Missed this week" style="cursor:help; display:flex; gap:10px;">
-                        <span><i class="fas fa-calendar-check" style="color:var(--accent-emerald)"></i> ${data.weeklyCompleted}</span>
-                        <span><i class="fas fa-calendar-times" style="color:var(--accent-danger)"></i> ${data.weeklyMissed}</span>
+                        <span><i class="fas fa-calendar-check" ></i> ${data.weeklyCompleted}</span>
+                        <span><i class="fas fa-calendar-times" ></i> ${data.weeklyMissed}</span>
                     </span>`;
                 }
 
@@ -2710,7 +2710,7 @@
                 if (!list) return;
                 if (!habits || habits.length === 0) {
                     list.innerHTML = `<div class="empty-state">
-                                            <i class="fas fa-seedling" style="color:var(--accent-green)"></i>
+                                            <i class="fas fa-seedling" ></i>
                                             <p>Start building good habits!</p>
                                           </div>`;
                     return;
@@ -2752,23 +2752,23 @@
                                 <div style="display:flex; align-items:flex-start; gap:12px; flex:1;">
                                     <div class="custom-checkbox ${isDoneToday ? 'checked' : ''}" 
                                          onclick="${isActiveDay ? `toggleHabit('${h.id}')` : ''}" 
-                                         style="${!isActiveDay ? 'cursor:not-allowed; border-color:rgba(255,255,255,0.1);' : 'cursor:pointer; position:relative;'}">
+                                         style="${!isActiveDay ? 'cursor:not-allowed; border-' : 'cursor:pointer; position:relative;'}">
                                         ${isDoneToday ? '<i class="fas fa-check"></i>' : (isActiveDay ? '' : '<i class="fas fa-minus" style="font-size:0.6rem; opacity:0.3;"></i>')}
-                                        <span style="position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); font-size:0.6rem; font-weight:700; color:var(--text-muted);">${h.completionPercentage}%</span>
+                                        <span style="position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); font-size:0.6rem; font-weight:700;">${h.completionPercentage}%</span>
                                     </div>
                                     <div style="flex:1;">
                                         <div class="habit-name" style="font-size:0.95rem; display:flex; align-items:center; gap:8px;">
                                             ${escapeHtml(h.name)}
-                                            <span style="font-size:0.6rem; padding:2px 6px; border-radius:4px; background:rgba(0,0,0,0.2); color:var(--text-muted); text-transform:uppercase;">${h.frequencyType}</span>
+                                            <span style="font-size:0.6rem; padding:2px 6px; border-radius:4px; text-transform:uppercase;">${h.frequencyType}</span>
                                         </div>
-                                        <div style="font-size:0.75rem; color:${isDoneToday ? 'var(--accent-emerald)' : 'var(--accent-warning)'}; margin-top:2px; font-weight:600;">Status: ${isDoneToday ? 'Completed' : 'Pending'}</div>
+                                        <div style="font-size:0.75rem; margin-top:2px; font-weight:600;">Status: ${isDoneToday ? 'Completed' : 'Pending'}</div>
                                         <div class="habit-meta" style="margin-top:4px;">
-                                            <span class="badge" style="background:rgba(255,255,255,0.05); color:var(--text-muted); font-size:0.65rem;">${h.category || 'Personal'}</span>
-                                            <span style="margin-left:5px; font-size:0.75rem;"><i class="fas fa-fire" style="color:var(--accent-warning)"></i> ${h.streak}d</span>
+                                            <span class="badge" style="font-size:0.65rem;">${h.category || 'Personal'}</span>
+                                            <span style="margin-left:5px; font-size:0.75rem;"><i class="fas fa-fire" ></i> ${h.streak}d</span>
                                             ${h.reminderTime ? `<span style="margin-left:8px; display:inline-flex; align-items:center; opacity:0.6; font-size:0.7rem;"><i class="far fa-bell" style="margin-right:2px;"></i> ${h.reminderTime}</span>` : ''}
                                         </div>
-                                        ${h.description || h.goal ? `<div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; font-style:italic;">Notes: ${escapeHtml(h.description || h.goal)}</div>` : ''}
-                                        <div style="font-size:0.65rem; color:var(--text-dim); margin-top:4px;">Started: ${new Date(h.startDate).toLocaleDateString()}</div>
+                                        ${h.description || h.goal ? `<div style="font-size:0.8rem; margin-top:6px; font-style:italic;">Notes: ${escapeHtml(h.description || h.goal)}</div>` : ''}
+                                        <div style="font-size:0.65rem; margin-top:4px;">Started: ${new Date(h.startDate).toLocaleDateString()}</div>
                                     </div>
                                 </div>
                                 <div style="display:flex; gap:4px;">
@@ -2986,7 +2986,7 @@
 
                 let html = '';
                 ['S','M','T','W','T','F','S'].forEach(d => {
-                    html += `<div style="text-align:center; font-size:0.6rem; color:var(--text-muted); font-weight:800; padding-bottom:5px;">${d}</div>`;
+                    html += `<div style="text-align:center; font-size:0.6rem; font-weight:800; padding-bottom:5px;">${d}</div>`;
                 });
 
                 for(let i=0; i<firstDay; i++) html += '<div></div>';
@@ -3021,12 +3021,10 @@
 
                     html += `
                         <div onclick="showHabitDayDetails('${dateStr}')" 
-                             style="aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.7rem; border-radius:6px; cursor:pointer; 
-                                    background:${isToday ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255,255,255,0.03)'}; 
-                                    border:${isToday ? '1px solid var(--accent-primary)' : '1px solid transparent'};
+                             style="aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.7rem; border-radius:6px; cursor:pointer;
                                     position:relative;">
                             ${day}
-                            ${statusColor !== 'transparent' ? `<div style="width:4px; height:4px; border-radius:50%; background:${statusColor}; position:absolute; bottom:3px;"></div>` : ''}
+                            ${statusColor !== 'transparent' ? `<div style="width:4px; height:4px; border-radius:50%; position:absolute; bottom:3px;"></div>` : ''}
                         </div>
                     `;
                 }
@@ -3055,23 +3053,23 @@
                 });
 
                 if (habitsForDay.length === 0) {
-                    list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.8rem;">No habits scheduled for this day.</div>`;
+                    list.innerHTML = `<div style="text-align:center; padding:20px; font-size:0.8rem;">No habits scheduled for this day.</div>`;
                     return;
                 }
 
                 list.innerHTML = habitsForDay.map(h => {
                     const isDone = h.completedDates && h.completedDates.some(d => d.startsWith(dateStr));
                     return `
-                        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-dim); border-radius:12px; padding:12px; display:flex; align-items:center; gap:12px;">
-                            <div style="width:16px; height:16px; border-radius:4px; border:2px solid ${isDone ? 'var(--accent-emerald)' : 'var(--border-dim)'}; display:flex; align-items:center; justify-content:center; color:var(--accent-emerald);">
+                        <div style="border-radius:12px; padding:12px; display:flex; align-items:center; gap:12px;">
+                            <div style="width:16px; height:16px; border-radius:4px; display:flex; align-items:center; justify-content:center;">
                                 ${isDone ? '<i class="fas fa-check" style="font-size:0.6rem;"></i>' : ''}
                             </div>
                             <div style="flex:1;">
-                                <div style="font-size:0.85rem; font-weight:600; color:${isDone ? 'var(--text-muted)' : 'var(--text-bright)'}; text-decoration:${isDone ? 'line-through' : 'none'};">${escapeHtml(h.name)}</div>
-                                <div style="font-size:0.65rem; color:${isDone ? 'var(--accent-emerald)' : 'var(--accent-warning)'}; margin-top:2px; font-weight:600;">Status: ${isDone ? 'Completed' : 'Pending'}</div>
+                                <div style="font-size:0.85rem; font-weight:600; text-decoration:${isDone ? 'line-through' : 'none'};">${escapeHtml(h.name)}</div>
+                                <div style="font-size:0.65rem; margin-top:2px; font-weight:600;">Status: ${isDone ? 'Completed' : 'Pending'}</div>
                                 <div style="display:flex; gap:8px; margin-top:4px;">
-                                    <span class="badge" style="font-size:0.6rem; background:rgba(255,255,255,0.05); color:var(--text-muted);">${h.category}</span>
-                                    ${h.reminderTime ? `<span style="font-size:0.6rem; color:var(--text-dim); opacity:0.6;"><i class="far fa-bell"></i> ${h.reminderTime}</span>` : ''}
+                                    <span class="badge" style="font-size:0.6rem;">${h.category}</span>
+                                    ${h.reminderTime ? `<span style="font-size:0.6rem; opacity:0.6;"><i class="far fa-bell"></i> ${h.reminderTime}</span>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -3167,14 +3165,14 @@
                 };
 
                 toast.innerHTML = `
-                    <div style="width:40px; height:40px; background:rgba(255,255,255,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center;">
+                    <div style="width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center;">
                         <i class="fas fa-bell"></i>
                     </div>
                     <div style="flex:1;">
                         <div style="font-weight:700; font-size:0.95rem;">${habit.name}</div>
                         <div style="font-size:0.8rem; opacity:0.8;">${habit.description || habit.goal || 'Keep the streak alive!'}</div>
                     </div>
-                    <button onclick="event.stopPropagation(); this.parentElement.remove();" style="background:none; border:none; color:white; opacity:0.6; cursor:pointer;"><i class="fas fa-times"></i></button>
+                    <button onclick="event.stopPropagation(); this.parentElement.remove();" style="opacity:0.6; cursor:pointer;"><i class="fas fa-times"></i></button>
                 `;
 
                 container.appendChild(toast);
@@ -3309,29 +3307,29 @@
                     const remainingText = remainingDays > 0 ? `${remainingDays}d left` : (remainingDays === 0 ? 'Due today' : 'Overdue');
 
                     return `
-                        <div class="goal-item-card" onclick="viewGoalDetails('${g.id}')" style="background:rgba(255,255,255,0.03); border:1px solid var(--border-dim); border-radius:12px; padding:12px; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden;">
+                        <div class="goal-item-card" onclick="viewGoalDetails('${g.id}')" style="border-radius:12px; padding:12px; cursor:pointer; transition:all 0.3s ease; position:relative; overflow:hidden;">
                             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
                                 <div>
-                                    <h4 style="margin:0; font-size:0.95rem; color:var(--text-bright);">${g.title}</h4>
+                                    <h4 style="margin:0; font-size:0.95rem;">${g.title}</h4>
                                     <div style="display:flex; gap:8px; align-items:center; margin-top:2px;">
-                                        <span style="font-size:0.7rem; color:var(--text-muted);">${g.category}</span>
-                                        <span style="font-size:0.65rem; color:${scheduleColor}; text-transform:uppercase; font-weight:700;">• ${g.scheduleStatus}</span>
+                                        <span style="font-size:0.7rem;">${g.category}</span>
+                                        <span style="font-size:0.65rem; text-transform:uppercase; font-weight:700;">• ${g.scheduleStatus}</span>
                                     </div>
                                 </div>
-                                <span class="badge" style="background:${statusColor}20; color:${statusColor}; font-size:0.7rem; border:1px solid ${statusColor}40;">${g.status}</span>
+                                <span class="badge" style="font-size:0.7rem;">${g.status}</span>
                             </div>
                             <div class="goal-progress-mini" style="margin-bottom:8px;">
-                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-dim); margin-bottom:4px;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;">
                                     <span>Progress</span>
                                     <span>${Math.round(g.progress)}%</span>
                                 </div>
-                                <div style="height:6px; background:rgba(0,0,0,0.2); border-radius:3px; overflow:hidden;">
-                                    <div style="height:100%; width:${g.progress}%; background:${statusColor}; transition:width 0.5s ease;"></div>
+                                <div style="height:6px; border-radius:3px; overflow:hidden;">
+                                    <div style="height:100%; width:${g.progress}%; transition:width 0.5s ease;"></div>
                                 </div>
                             </div>
-                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; color:var(--text-muted);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem;">
                                 <span><i class="far fa-calendar"></i> ${deadline}</span>
-                                <span style="color:${remainingDays <= 2 ? 'var(--accent-warning)' : 'inherit'}">${remainingText}</span>
+                                <span >${remainingText}</span>
                             </div>
                         </div>
                     `;
@@ -3363,13 +3361,13 @@
                 document.getElementById('todayProgress').innerText = `${progress}% Done Today`;
 
                 container.innerHTML = todayTasks.map(t => `
-                    <div class="daily-task-item" style="padding:10px; background:rgba(255,255,255,0.04); border:1px solid var(--border-dim); border-radius:10px; display:flex; align-items:center; gap:12px; cursor:default;">
-                        <div onclick="toggleDailyTask('${t.goalId}', '${t.id}', ${!t.isCompleted})" style="width:20px; height:20px; border-radius:6px; border:2px solid ${t.isCompleted ? 'var(--accent-success)' : 'var(--border-dim)'}; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--accent-success);">
+                    <div class="daily-task-item" style="padding:10px; border-radius:10px; display:flex; align-items:center; gap:12px; cursor:default;">
+                        <div onclick="toggleDailyTask('${t.goalId}', '${t.id}', ${!t.isCompleted})" style="width:20px; height:20px; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                             ${t.isCompleted ? '<i class="fas fa-check" style="font-size:0.75rem;"></i>' : ''}
                         </div>
                         <div style="flex:1; overflow:hidden;">
-                            <div style="font-size:0.8rem; color:${t.isCompleted ? 'var(--text-muted)' : 'var(--text-bright)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.title || t.content}</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim); display:flex; justify-content:space-between;">
+                            <div style="font-size:0.8rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.title || t.content}</div>
+                            <div style="font-size:0.65rem; display:flex; justify-content:space-between;">
                                 <span>${t.goalTitle}</span>
                             </div>
                         </div>
@@ -3468,7 +3466,7 @@
                 if (!container) return;
 
                 if (!goal.milestones || goal.milestones.length === 0) {
-                    container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.8rem;">No milestones generated.</div>';
+                    container.innerHTML = '<div style="text-align:center; padding:20px; font-size:0.8rem;">No milestones generated.</div>';
                     return;
                 }
 
@@ -3477,13 +3475,13 @@
                     const isOverdue = !m.isCompleted && dueDate < new Date().setHours(0,0,0,0);
                     
                     return `
-                        <div class="milestone-item" style="background:rgba(255,255,255,0.03); border:1px solid ${m.isCompleted ? 'var(--accent-success)' : (isOverdue ? 'var(--accent-danger)' : 'var(--border-dim)')}; padding:15px; border-radius:12px; display:flex; gap:15px; align-items:flex-start;">
-                            <div onclick="toggleMilestone('${goal.id}', '${m.id}', ${!m.isCompleted})" style="width:24px; height:24px; border-radius:50%; border:2px solid ${m.isCompleted ? 'var(--accent-success)' : 'var(--border-dim)'}; background:${m.isCompleted ? 'var(--accent-success)' : 'transparent'}; display:flex; align-items:center; justify-content:center; cursor:pointer; color:white; flex-shrink:0;">
+                        <div class="milestone-item" style="padding:15px; border-radius:12px; display:flex; gap:15px; align-items:flex-start;">
+                            <div onclick="toggleMilestone('${goal.id}', '${m.id}', ${!m.isCompleted})" style="width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;">
                                 ${m.isCompleted ? '<i class="fas fa-check" style="font-size:0.8rem;"></i>' : ''}
                             </div>
                             <div style="flex:1;">
-                                <div style="font-weight:600; font-size:0.9rem; color:${m.isCompleted ? 'var(--text-muted)' : 'var(--text-bright)'}; text-decoration:${m.isCompleted ? 'line-through' : 'none'};">${m.title}</div>
-                                <div style="font-size:0.75rem; color:${isOverdue ? 'var(--accent-danger)' : 'var(--text-muted)'}; margin-top:5px;">
+                                <div style="font-weight:600; font-size:0.9rem; text-decoration:${m.isCompleted ? 'line-through' : 'none'};">${m.title}</div>
+                                <div style="font-size:0.75rem; margin-top:5px;">
                                     <i class="far fa-calendar-alt"></i> ${dueDate.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}
                                     ${isOverdue ? ' <span style="font-weight:700;">(OVERDUE)</span>' : ''}
                                 </div>
@@ -3561,31 +3559,31 @@
                     else if (anyDone) statusColor = 'var(--accent-warning)';
 
                     html += `
-                        <div class="day-card" style="background:rgba(255,255,255,0.02); border:1px solid ${isToday ? 'var(--accent-primary)' : 'var(--border-dim)'}; border-radius:10px; overflow:hidden;">
-                            <div onclick="toggleDayCollapse('${dateStr}')" style="padding:12px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; background:${isToday ? 'rgba(56, 189, 248, 0.05)' : 'transparent'};">
+                        <div class="day-card" style="border-radius:10px; overflow:hidden;">
+                            <div onclick="toggleDayCollapse('${dateStr}')" style="padding:12px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
                                 <div style="display:flex; align-items:center; gap:10px;">
-                                    <span style="font-weight:700; color:${isToday ? 'var(--accent-primary)' : 'var(--text-bright)'};">${date.toLocaleDateString('en-US', { day:'numeric', month:'short' })}</span>
-                                    <span style="font-size:0.7rem; color:${statusColor}; text-transform:uppercase; display:flex; align-items:center; gap:5px;">
-                                        <span style="width:6px; height:6px; border-radius:50%; background:${statusColor};"></span>
+                                    <span style="font-weight:700;">${date.toLocaleDateString('en-US', { day:'numeric', month:'short' })}</span>
+                                    <span style="font-size:0.7rem; text-transform:uppercase; display:flex; align-items:center; gap:5px;">
+                                        <span style="width:6px; height:6px; border-radius:50%;"></span>
                                         ${allDone ? 'Completed' : (isPast ? 'Missed' : 'Pending')}
                                     </span>
                                 </div>
                                 <div style="display:flex; align-items:center; gap:10px;">
-                                    <span style="font-size:0.7rem; color:var(--text-dim);">${tasksByDate[dateStr].filter(t => t.isCompleted).length}/${tasksByDate[dateStr].length}</span>
+                                    <span style="font-size:0.7rem;">${tasksByDate[dateStr].filter(t => t.isCompleted).length}/${tasksByDate[dateStr].length}</span>
                                     <i class="fas fa-chevron-down" id="chevron-${dateStr}" style="font-size:0.8rem; transform:${isToday ? 'rotate(180deg)' : 'rotate(0)'}; transition:transform 0.3s;"></i>
                                 </div>
                             </div>
-                            <div id="tasks-${dateStr}" style="display:${isToday ? 'block' : 'none'}; padding:0 12px 12px 12px; border-top:1px solid rgba(255,255,255,0.05);">
+                            <div id="tasks-${dateStr}" style="display:${isToday ? 'block' : 'none'}; padding:0 12px 12px 12px; border-top:1px solid var(--bg-color);">
                                 <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
                                     ${tasks.map(t => `
-                                        <div class="task-row" style="display:flex; align-items:flex-start; gap:10px; background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; group">
-                                            <div onclick="toggleDailyTask('${goal.id}', '${t.id}', ${!t.isCompleted})" style="width:18px; height:18px; border-radius:4px; border:2px solid ${t.isCompleted ? 'var(--accent-success)' : 'var(--border-dim)'}; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--accent-success); margin-top:2px;">
+                                        <div class="task-row" style="display:flex; align-items:flex-start; gap:10px; padding:10px; border-radius:8px; group">
+                                            <div onclick="toggleDailyTask('${goal.id}', '${t.id}', ${!t.isCompleted})" style="width:18px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; cursor:pointer; margin-top:2px;">
                                                 ${t.isCompleted ? '<i class="fas fa-check" style="font-size:0.6rem;"></i>' : ''}
                                             </div>
                                             <div style="flex:1;">
-                                                <div style="font-size:0.85rem; font-weight:600; color:${t.isCompleted ? 'var(--text-muted)' : 'var(--text-bright)'}; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.title || t.content}</div>
-                                                <div style="font-size:0.65rem; color:${t.isCompleted ? 'var(--accent-emerald)' : 'var(--accent-warning)'}; text-transform:capitalize; margin-top:2px; font-weight:600;">Status: ${t.status || (t.isCompleted ? 'completed' : 'pending')}</div>
-                                                ${t.description ? `<div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">${t.description}</div>` : ''}
+                                                <div style="font-size:0.85rem; font-weight:600; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.title || t.content}</div>
+                                                <div style="font-size:0.65rem; text-transform:capitalize; margin-top:2px; font-weight:600;">Status: ${t.status || (t.isCompleted ? 'completed' : 'pending')}</div>
+                                                ${t.description ? `<div style="font-size:0.75rem; margin-top:2px;">${t.description}</div>` : ''}
                                             </div>
                                             <div class="actions" style="display:flex; gap:8px; opacity:0.6;">
                                                 <button onclick="editTaskContent('${goal.id}', '${t.id}', '${(t.title || t.content || '').replace(/'/g, "\\'")}', '${(t.description || '').replace(/'/g, "\\'")}')" class="btn-icon" style="font-size:0.7rem;"><i class="fas fa-edit"></i></button>
@@ -3723,7 +3721,7 @@
 
                 let html = '';
                 ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(d => {
-                    html += `<div style="text-align:center; font-size:0.65rem; padding:4px; color:var(--text-muted); font-weight:700;">${d}</div>`;
+                    html += `<div style="text-align:center; font-size:0.65rem; padding:4px; font-weight:700;">${d}</div>`;
                 });
 
                 for (let i = 0; i < firstDay; i++) html += '<div></div>';
@@ -3745,7 +3743,7 @@
                         const allDone = done === tasks.length;
                         // Color-coded dots: Completed (green), Pending (red/yellow).
                         const dotColor = allDone ? 'var(--accent-emerald)' : (date.getTime() < today ? 'var(--accent-danger)' : 'var(--accent-warning)');
-                        dotHtml = `<div style="width:4px; height:4px; border-radius:50%; background:${dotColor}; position:absolute; bottom:4px;"></div>`;
+                        dotHtml = `<div style="width:4px; height:4px; border-radius:50%; position:absolute; bottom:4px;"></div>`;
                     }
 
                     if (date.getTime() === today) {
@@ -3757,7 +3755,7 @@
                     }
 
                     html += `
-                        <div onclick="showDayTasks('${goal.id}', '${k}')" style="aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.75rem; background:${bg}; border:${border}; border-radius:6px; color:${color}; cursor:pointer; transition:all 0.2s; position:relative;">
+                        <div onclick="showDayTasks('${goal.id}', '${k}')" style="aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.75rem; border-radius:6px; cursor:pointer; transition:all 0.2s; position:relative;">
                             ${day}
                             ${dotHtml}
                         </div>
@@ -3776,19 +3774,19 @@
                 
                 if (container) {
                     if (tasks.length === 0) {
-                        container.innerHTML = `<div style="font-size:0.75rem; color:var(--text-muted); padding:10px; text-align:center;">No tasks for this day.</div>`;
+                        container.innerHTML = `<div style="font-size:0.75rem; padding:10px; text-align:center;">No tasks for this day.</div>`;
                         if (document.getElementById('calendarAddTaskBtn')) document.getElementById('calendarAddTaskBtn').style.display = 'block';
                         if (document.getElementById('calendarLimitMsg')) document.getElementById('calendarLimitMsg').style.display = 'none';
                     } else {
                         container.innerHTML = tasks.map(t => `
-                            <div class="daily-task-item" style="padding:12px; background:rgba(255,255,255,0.04); border:1px solid var(--border-dim); border-radius:10px; display:flex; align-items:flex-start; gap:12px;">
-                                <div onclick="toggleDailyTask('${goalId}', '${t.id}', ${!t.isCompleted})" style="width:20px; height:20px; border-radius:6px; border:2px solid ${t.isCompleted ? 'var(--accent-success)' : 'var(--border-dim)'}; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--accent-success); margin-top:2px;">
+                            <div class="daily-task-item" style="padding:12px; border-radius:10px; display:flex; align-items:flex-start; gap:12px;">
+                                <div onclick="toggleDailyTask('${goalId}', '${t.id}', ${!t.isCompleted})" style="width:20px; height:20px; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer; margin-top:2px;">
                                     ${t.isCompleted ? '<i class="fas fa-check" style="font-size:0.75rem;"></i>' : ''}
                                 </div>
                                 <div style="flex:1;">
-                                    <div style="font-size:0.9rem; font-weight:600; color:${t.isCompleted ? 'var(--text-muted)' : 'var(--text-bright)'}; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.title || t.content}</div>
-                                    <div style="font-size:0.65rem; color:${t.isCompleted ? 'var(--accent-emerald)' : 'var(--accent-warning)'}; text-transform:capitalize; margin-top:2px; font-weight:600;">Status: ${t.status || (t.isCompleted ? 'completed' : 'pending')}</div>
-                                    ${t.description ? `<div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">${t.description}</div>` : ''}
+                                    <div style="font-size:0.9rem; font-weight:600; text-decoration:${t.isCompleted ? 'line-through' : 'none'};">${t.title || t.content}</div>
+                                    <div style="font-size:0.65rem; text-transform:capitalize; margin-top:2px; font-weight:600;">Status: ${t.status || (t.isCompleted ? 'completed' : 'pending')}</div>
+                                    ${t.description ? `<div style="font-size:0.75rem; margin-top:4px;">${t.description}</div>` : ''}
                                 </div>
                                 <div style="display:flex; gap:8px;">
                                     <button onclick="editTaskContent('${goalId}', '${t.id}', '${(t.title || t.content || '').replace(/'/g, "\\'")}', '${(t.description || '').replace(/'/g, "\\'")}')" class="btn-icon"><i class="fas fa-edit"></i></button>
@@ -3839,7 +3837,7 @@
                         title = `${new Date(dateStr).toLocaleDateString()}: ${done}/${tasks.length} Done`;
                     }
 
-                    return `<div title="${title}" style="width:10px; height:10px; background:${color}; border-radius:2px;"></div>`;
+                    return `<div title="${title}" style="width:10px; height:10px; border-radius:2px;"></div>`;
                 }).join('');
             }
 
@@ -3939,7 +3937,7 @@
                         
                         <!-- Real input field for keyboard entry -->
                         <input type="password" id="realPinInput" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="off" 
-                               style="position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: default; border: none; outline: none; caret-color: transparent;">
+                               style="position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: default; outline: none; caret-">
                     </div>
 
                     <div id="pinErrorMessage" class="pin-error"></div>
@@ -3948,12 +3946,12 @@
                         @for (int i = 1; i <= 9; i++) {
                             <button class="btn-icon" onclick="pressPinDigit('@i')" style="height: 50px; font-size: 1.2rem; font-weight:700;">@i</button>
                         }
-                        <button class="btn-icon" onclick="clearPin()" style="height: 50px; color: #ef4444;"><i class="fas fa-backspace"></i></button>
+                        <button class="btn-icon" onclick="clearPin()" style="height: 50px;"><i class="fas fa-backspace"></i></button>
                         <button class="btn-icon" onclick="pressPinDigit('0')" style="height: 50px; font-size: 1.2rem; font-weight:700;">0</button>
-                        <button class="btn-icon" onclick="verifyPin()" style="height: 50px; color: var(--accent-emerald); background: var(--pin-keypad-bg);"><i class="fas fa-check"></i></button>
+                        <button class="btn-icon" onclick="verifyPin()" style="height: 50px;"><i class="fas fa-check"></i></button>
                     </div>
                     <div style="margin-top: 20px; display: flex; justify-content: center;">
-                        <button class="btn-secondary" onclick="closePinModal()" style="padding: 10px 30px; border-radius: 12px; font-weight: 600; background: var(--pin-btn-secondary); border: 1px solid var(--border-dim); width: 100%;">Back</button>
+                        <button class="btn-secondary" onclick="closePinModal()" style="padding: 10px 30px; border-radius: 12px; font-weight: 600; width: 100%;">Back</button>
                     </div>
                 </div>
             </div>
@@ -3963,7 +3961,7 @@
             <div id="setupPinModal" class="modal-overlay" style="display:none; z-index: 15100;">
                 <div class="modal-content glass-panel pin-modal" style="padding: 30px;">
                     <div class="text-center">
-                        <div class="lock-icon-container" style="margin: 0 auto 20px; color: var(--accent-indigo); border-color: var(--accent-indigo); background: rgba(129, 140, 248, 0.1);"><i class="fas fa-key"></i></div>
+                        <div class="lock-icon-container" style="margin: 0 auto 20px; border-"><i class="fas fa-key"></i></div>
                         <h3 style="margin-bottom: 8px;">Enhance Security</h3>
                         <p class="text-muted" style="font-size: 0.85rem;">Create a Security PIN to protect your Notes, Habits, and PDF history.</p>
                     </div>
@@ -3975,7 +3973,7 @@
                         
                         <div class="d-grid mt-4 gap-2">
                             <button type="button" onclick="saveNewSecurityPin()" class="btn-primary" style="height: 48px; font-weight: 700;">Establish Security</button>
-                            <button type="button" onclick="closeSetupPin()" class="btn-icon" style="height: 40px; background:transparent; border:none; color:var(--text-muted);">Skip for now</button>
+                            <button type="button" onclick="closeSetupPin()" class="btn-icon" style="height: 40px;">Skip for now</button>
                         </div>
                     </div>
                 </div>
@@ -4203,8 +4201,8 @@
             <div class="modal-content glass-panel" style="max-width: 800px; width: 95%; height: 80vh; display:flex; flex-direction:column; padding:0; overflow:hidden;">
                 <div class="modal-header" style="padding: 20px 24px; border-bottom: 1px solid var(--border-dim); display:flex; justify-content:space-between; align-items:center;">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="font-size:1.5rem; color:var(--accent-emerald);"><i class="fas fa-calendar-check"></i></div>
-                        <h3 style="margin:0; font-size:1.1rem; color:var(--text-bright);">Habit Tracker History</h3>
+                        <div style="font-size:1.5rem;"><i class="fas fa-calendar-check"></i></div>
+                        <h3 style="margin:0; font-size:1.1rem;">Habit Tracker History</h3>
                     </div>
                     <button class="btn-icon" onclick="closeHabitCalendar()"><i class="fas fa-times"></i></button>
                 </div>
@@ -4215,16 +4213,16 @@
                         <div id="habitCalendarGrid" class="calendar-grid" style="display:grid; grid-template-columns: repeat(7, 1fr); gap:8px;">
                             <!-- Populated by JS -->
                         </div>
-                        <div style="font-size:0.75rem; color:var(--text-muted); display:flex; flex-direction:column; gap:8px; background:rgba(0,0,0,0.1); padding:12px; border-radius:10px;">
-                            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%; background:var(--accent-emerald);"></span> Completed All</div>
-                            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%; background:var(--accent-warning);"></span> Partial / Pending</div>
-                            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%; background:var(--accent-danger);"></span> Missed All</div>
+                        <div style="font-size:0.75rem; display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:10px;">
+                            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%;"></span> Completed All</div>
+                            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%;"></span> Partial / Pending</div>
+                            <div style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%;"></span> Missed All</div>
                         </div>
                     </div>
 
                     <!-- Right: Day Details -->
                     <div style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
-                        <h4 id="habitSelectedDate" style="margin:0 0 15px 0; font-size:0.9rem; color:var(--text-bright);">Details</h4>
+                        <h4 id="habitSelectedDate" style="margin:0 0 15px 0; font-size:0.9rem;">Details</h4>
                         <div id="habitDayDetailsList" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px; padding-right:10px;">
                             <!-- Habit instances for the day -->
                         </div>
@@ -4306,7 +4304,7 @@
             toast.className = 'habit-toast';
             
             toast.innerHTML = `
-                <div style="font-size: 1.2rem; color: #10b981;"><i class="fas fa-bell"></i></div>
+                <div style="font-size: 1.2rem;"><i class="fas fa-bell"></i></div>
                 <div class="habit-toast-content">
                     <div class="habit-toast-title">${title}</div>
                     <div class="habit-toast-msg">${message}</div>

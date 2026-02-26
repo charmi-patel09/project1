@@ -10,7 +10,7 @@
         <header class="main-header">
             <div class="header-brief">
                 <a href="/Home/Dashboard" class="btn-icon"
-                    style="margin-right: 15px; color: var(--text-primary); text-decoration: none;">
+                    style="margin-right: 15px; text-decoration: none;">
                     <i class="fas fa-arrow-left"></i>
                 </a>
                 <div class="status-chip">
@@ -154,38 +154,38 @@
             const l_timezone = await window.translator.translateText("Timezone");
 
             container.innerHTML = `
-                        <div class="result-card slide-in" style="width: 100%; max-width: 800px; background: transparent; border: none; padding: 0;">
+                        <div class="result-card slide-in" style="width: 100%; max-width: 800px; padding: 0;">
 
                             <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px;">
-                                <img src="${flag}" alt="${name} Flag" style="width: 200px; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px;">
+                                <img src="${flag}" alt="${name} Flag" style="width: 200px; height: auto; border-radius: 12px; box-shadow: 0 10px 30px var(--bg-color); margin-bottom: 20px;">
                                 <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 5px;">${t_name}</h2>
-                                <div style="color: var(--text-muted); font-size: 1.1rem;">${t_official}</div>
+                                <div style="font-size: 1.1rem;">${t_official}</div>
                             </div>
 
                             <div class="stats-deep" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                                <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                    <i class="fas fa-landmark" style="font-size: 1.5rem; color: var(--accent-cyan); margin-bottom: 10px;"></i>
+                                <div class="stat-box" style="padding: 20px;">
+                                    <i class="fas fa-landmark" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
                                     <label>${l_capital}</label>
                                     <b style="font-size: 1.2rem;">${t_capital}</b>
                                 </div>
-                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                    <i class="fas fa-globe-americas" style="font-size: 1.5rem; color: var(--accent-indigo); margin-bottom: 10px;"></i>
+                                 <div class="stat-box" style="padding: 20px;">
+                                    <i class="fas fa-globe-americas" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
                                     <label>${l_region}</label>
                                     <b style="font-size: 1.2rem;">${t_region}</b>
                                     <div style="font-size: 0.8rem; opacity: 0.7;">${t_subregion}</div>
                                 </div>
-                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                    <i class="fas fa-users" style="font-size: 1.5rem; color: var(--accent-rose); margin-bottom: 10px;"></i>
+                                 <div class="stat-box" style="padding: 20px;">
+                                    <i class="fas fa-users" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
                                     <label>${l_pop}</label>
                                     <b style="font-size: 1.2rem;">${population}</b>
                                 </div>
-                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                    <i class="fas fa-coins" style="font-size: 1.5rem; color: var(--accent-emerald); margin-bottom: 10px;"></i>
+                                 <div class="stat-box" style="padding: 20px;">
+                                    <i class="fas fa-coins" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
                                     <label>${l_curr}</label>
                                     <b style="font-size: 1.2rem;">${currencySymbol} ${t_curr}</b>
                                 </div>
-                                 <div class="stat-box" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                                    <i class="fas fa-clock" style="font-size: 1.5rem; color: var(--accent-purple); margin-bottom: 10px;"></i>
+                                 <div class="stat-box" style="padding: 20px;">
+                                    <i class="fas fa-clock" style="font-size: 1.5rem; margin-bottom: 10px;"></i>
                                     <label>${l_timezone}</label>
                                     <b style="font-size: 1.2rem;">${timezone}</b>
                                 </div>
@@ -198,7 +198,7 @@
         async function showError(msg) {
             const container = document.getElementById('detailsContainer');
             container.innerHTML = `
-                        <div style="text-align: center; color: var(--accent-danger);">
+                        <div style="text-align: center;">
                             <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
                             <h3 style="margin-bottom: 10px;">Data Link Severed</h3>
                             <p style="font-size: 1.1rem; opacity: 0.8;">${msg}</p>

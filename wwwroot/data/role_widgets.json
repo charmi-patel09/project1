@@ -14,9 +14,5 @@
   {
     "Role": "normal",
     "AllowedWidgets": "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,emergency-hub,habit-hub,pdf-hub,notes-hub,translator-hub,goal-hub"
-  },
-  {
-    "Role": "other",
-    "AllowedWidgets": "global-search-hub,weather-hub,currency-hub,news-hub,pdf-hub,notes-hub,translator-hub,goal-hub"
   }
 ]

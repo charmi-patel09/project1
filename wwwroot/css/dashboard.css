@@ -1,4 +1,5 @@
-﻿:root {
+:root {
+    --widget-box-bg: #eaf4ff;
     /* Luxury Sunset Theme (Unified Sidebar Colors) */
     --bg-obsidian: #E17055;
     --bg-surface: rgba(255, 255, 255, 0.85);
@@ -28,15 +29,124 @@
     /* Security PIN Modal Variables */
     --pin-modal-bg: var(--bg-card);
     --pin-modal-border: var(--border-dim);
-    --pin-digit-bg: var(--bg-elevated);
+    --pin-digit-bg: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     --pin-digit-text: var(--text-pure);
-    --pin-keypad-bg: var(--bg-elevated);
+    --pin-keypad-bg: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     --pin-keypad-text: var(--text-pure);
     --pin-btn-secondary: rgba(0, 0, 0, 0.05);
 
     /* Fonts */
     --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-head: 'Plus Jakarta Sans', sans-serif;
+}
+
+[data-time-theme="morning"] {
+    --widget-box-bg: #fff5ed;
+    --bg-obsidian: #FFA726;
+    --bg-surface: rgba(255, 250, 245, 0.95);
+    --bg-card: rgba(255, 250, 245, 0.85);
+    --bg-shell: #FFF0E6;
+    --bg-elevated: rgba(255, 167, 38, 0.08);
+
+    --border-accent: #FFA726;
+
+    --shadow-soft: 0 20px 60px -12px rgba(255, 167, 38, 0.3);
+    --shadow-card: 0 8px 32px rgba(255, 167, 38, 0.15);
+    --shadow-glow: 0 0 40px rgba(255, 167, 38, 0.2);
+
+    --pin-modal-bg: #FFF5ED;
+    --pin-modal-border: #FFA726;
+    --pin-digit-bg: rgba(255, 167, 38, 0.05);
+    --pin-digit-text: #3A3A3A;
+    --pin-keypad-bg: rgba(255, 167, 38, 0.05);
+    --pin-keypad-text: #3A3A3A;
+}
+
+[data-time-theme="noon"] {
+    --widget-box-bg: #F1F5F9;
+    --bg-obsidian: #0288D1;
+    --bg-surface: #FFFFFF;
+    --bg-card: rgba(255, 255, 255, 0.95);
+    --bg-shell: #F8FAFC;
+    --bg-elevated: rgba(2, 136, 209, 0.05);
+
+    --border-accent: #0288D1;
+    --border-dim: #E2E8F0;
+
+    --text-pure: #0F172A;
+    --text-bright: #1E293B;
+    --text-dim: #475569;
+    --text-muted: #64748B;
+
+    --shadow-soft: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 15px rgba(2, 136, 209, 0.15);
+
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-color: #0F172A;
+
+    --pin-modal-bg: #FFFFFF;
+    --pin-modal-border: #E2E8F0;
+    --pin-digit-bg: #F1F5F9;
+    --pin-digit-text: #0F172A;
+    --pin-keypad-bg: #F1F5F9;
+    --pin-keypad-text: #0F172A;
+}
+
+[data-time-theme="sunset"] {
+    --widget-box-bg: #ffe8dc;
+    --bg-obsidian: #E17055;
+    --bg-surface: rgba(255, 255, 255, 0.85);
+    --bg-card: rgba(255, 255, 255, 0.7);
+    --bg-shell: #E17055;
+    --bg-elevated: rgba(225, 112, 85, 0.15);
+
+    --border-accent: #E17055;
+
+    --shadow-soft: 0 20px 60px -12px rgba(255, 94, 98, 0.3);
+    --shadow-card: 0 8px 32px rgba(255, 94, 98, 0.15);
+    --shadow-glow: 0 0 40px rgba(225, 112, 85, 0.2);
+
+    --pin-modal-bg: #FFFFFF;
+    --pin-modal-border: #E17055;
+    --pin-digit-bg: rgba(225, 112, 85, 0.05);
+    --pin-digit-text: #3A3A3A;
+    --pin-keypad-bg: rgba(225, 112, 85, 0.05);
+    --pin-keypad-text: #3A3A3A;
+}
+
+[data-time-theme="night"] {
+    --widget-box-bg: #1e293b;
+    --bg-obsidian: #10132A;
+    --bg-surface: rgba(16, 19, 42, 0.85);
+    --bg-card: rgba(16, 19, 42, 0.7);
+    --bg-shell: #10132A;
+    --bg-elevated: rgba(0, 0, 0, 0.3);
+
+    --border-accent: #273C75;
+
+    --shadow-soft: 0 20px 60px -12px rgba(39, 60, 117, 0.3);
+    --shadow-card: 0 8px 32px rgba(39, 60, 117, 0.15);
+    --shadow-glow: 0 0 40px rgba(39, 60, 117, 0.2);
+
+    --text-pure: #ffffff;
+    --text-bright: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+
+    --text-color: #f1f5f9;
+
+    --pin-modal-bg: #10132A;
+    --pin-modal-border: #273C75;
+    --pin-digit-bg: #1E293B;
+    --pin-digit-text: #FFFFFF;
+    --pin-keypad-bg: #1E293B;
+    --pin-keypad-text: #FFFFFF;
+}
+
+[data-time-theme="night"] .dashboard-shell {
+    color: var(--text-color);
 }
 
 /* === THEME STABILIZATION === */
@@ -276,7 +386,7 @@ body {
 /* Common Card Styles */
 section,
 .tool-card {
-    background: var(--bg-card);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 20px;
     padding: 24px;
@@ -293,7 +403,7 @@ section::after,
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     border-radius: 20px;
     pointer-events: none;
     z-index: -1;
@@ -342,7 +452,7 @@ li,
 .tool-body::-webkit-scrollbar-thumb,
 .hub-display::-webkit-scrollbar-thumb,
 .news-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 10px;
 }
 
@@ -423,9 +533,9 @@ section:hover {
     border-radius: 18px;
     padding: 2px;
     background: linear-gradient(135deg, currentColor, transparent);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(var(--text-color) 0 0) content-box, linear-gradient(var(--text-color) 0 0);
     -webkit-mask-composite: xor;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(var(--text-color) 0 0) content-box, linear-gradient(var(--text-color) 0 0);
     mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -488,7 +598,7 @@ section:hover .title-icon::after {
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    background: var(--bg-obsidian);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 12px;
     cursor: pointer;
@@ -507,7 +617,7 @@ section:hover .title-icon::after {
 
 .searchable-select-display:hover {
     border-color: var(--border-accent);
-    background: rgba(255, 255, 255, 0.02);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
 }
 
 .searchable-select-display.active {
@@ -520,7 +630,7 @@ section:hover .title-icon::after {
     top: calc(100% + 8px);
     left: 0;
     right: 0;
-    background: var(--bg-card);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 12px;
     box-shadow: var(--shadow-soft);
@@ -544,7 +654,7 @@ section:hover .title-icon::after {
 
 .search-input-wrapper input {
     width: 100%;
-    background: var(--bg-obsidian);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 8px;
     padding: 10px 12px;
@@ -591,7 +701,7 @@ section:hover .title-icon::after {
 
 .option-item.selected {
     background: var(--accent-sky);
-    color: #fff;
+    color: var(--text-color);
 }
 
 .option-group-label {
@@ -627,7 +737,7 @@ section:hover .title-icon::after {
 
 .search-field input {
     width: 100%;
-    background: var(--bg-obsidian);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 14px;
     padding: 15px 16px 15px 50px;
@@ -641,8 +751,8 @@ section:hover .title-icon::after {
 .search-field input:focus {
     outline: none;
     border-color: var(--accent-sky);
-    background: var(--bg-surface);
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1), 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1), 0 4px 12px var(--bg-card-tint);
 }
 
 .search-field input::placeholder {
@@ -655,7 +765,7 @@ section:hover .title-icon::after {
 }
 
 .btn-primary {
-    color: #fff;
+    color: var(--text-color);
     border: none;
     border-radius: 14px;
     padding: 0 32px;
@@ -688,15 +798,15 @@ section:hover .title-icon::after {
 
 .btn-icon:hover {
     transform: translateY(-2px);
-    background: rgba(225, 112, 85, 0.1);
+    background: var(--bg-tertiary);
     border-color: var(--accent-primary);
-    box-shadow: 0 4px 12px rgba(225, 112, 85, 0.2);
+    box-shadow: 0 4px 12px var(--bg-tertiary);
 }
 
 .directory-filter {
     margin-bottom: 24px;
     padding: 12px;
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     border-radius: 14px;
     border: 1px solid var(--border-dim);
 }
@@ -721,7 +831,7 @@ section:hover .title-icon::after {
 }
 
 .primary-result {
-    background: var(--bg-obsidian);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 20px;
     padding: 24px;
     display: flex;
@@ -772,7 +882,7 @@ section:hover .title-icon::after {
     flex-direction: column;
     gap: 10px;
     padding: 20px;
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     border-radius: 16px;
     align-items: flex-start;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -780,7 +890,7 @@ section:hover .title-icon::after {
 }
 
 .stat-box:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-color: rgba(96, 165, 250, 0.2);
     transform: translateY(-2px);
 }
@@ -820,13 +930,13 @@ section:hover .title-icon::after {
 .forecast-node {
     padding: 16px;
     border-radius: 16px;
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     text-align: center;
     transition: background 0.2s;
 }
 
 .forecast-node:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
 }
 
 .forecast-node span {
@@ -888,7 +998,7 @@ section:hover .title-icon::after {
 
 .modern-input,
 .modern-select {
-    background: var(--bg-obsidian);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 12px;
     padding: 14px 16px;
@@ -946,7 +1056,7 @@ section:hover .title-icon::after {
 .form-grid .form-row:hover {
     background: rgba(26, 31, 46, 0.6);
     border-color: var(--border-accent);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--bg-card-tint);
 }
 
 .form-grid .form-row label {
@@ -1025,7 +1135,7 @@ section:hover .title-icon::after {
     align-items: center;
     text-align: center;
     max-width: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--bg-card-tint);
     padding: 16px 20px;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -1059,7 +1169,7 @@ section:hover .title-icon::after {
 .val-sub {
     font-size: 0.75em;
     display: inline-block;
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     padding: 2px 6px;
     border-radius: 4px;
     margin-left: 4px;
@@ -1142,7 +1252,7 @@ section:hover .title-icon::after {
     display: flex;
     justify-content: space-between;
     padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.02);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 8px;
     font-size: 0.8rem;
 }
@@ -1332,24 +1442,24 @@ section:hover .title-icon::after {
 }
 
 .news-list::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 4px;
 }
 
 .news-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 4px;
 }
 
 .news-list::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
 }
 
 .news-item {
     display: flex;
     gap: 16px;
     padding: 16px;
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
     transition: all 0.3s ease;
@@ -1358,10 +1468,10 @@ section:hover .title-icon::after {
 }
 
 .news-item:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     transform: translateY(-2px);
     border-color: rgba(244, 63, 94, 0.3);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px var(--bg-card-tint);
 }
 
 .news-image {
@@ -1421,7 +1531,7 @@ section:hover .title-icon::after {
 }
 
 .note-item {
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 16px;
@@ -1430,7 +1540,7 @@ section:hover .title-icon::after {
 }
 
 .note-item:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-color: var(--accent-purple);
     transform: translateX(4px);
 }
@@ -1519,7 +1629,7 @@ section:hover .title-icon::after {
 }
 
 .modal-content {
-    background: var(--bg-card);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 24px;
     padding: 32px;
@@ -1564,7 +1674,7 @@ section:hover .title-icon::after {
 
 /* UI Updates for Currency and News */
 .modern-select option {
-    background: var(--bg-card);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     color: var(--text-bright);
 }
 
@@ -1616,7 +1726,7 @@ section:hover .title-icon::after {
     align-items: center;
     gap: 16px;
     padding: 16px;
-    background: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 16px;
     border: 1px solid var(--border-dim);
     transition: all 0.3s ease;
@@ -1625,7 +1735,7 @@ section:hover .title-icon::after {
 }
 
 .emergency-number-card:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -1643,7 +1753,7 @@ section:hover .title-icon::after {
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
-    background: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
 }
 
@@ -1736,7 +1846,7 @@ section:hover .title-icon::after {
 
 .copy-btn:hover {
     color: var(--text-bright);
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-color: var(--text-bright);
     transform: scale(1.05);
 }
@@ -1747,7 +1857,7 @@ section:hover .title-icon::after {
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--bg-card);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-accent);
     border-radius: 12px;
     margin-top: 8px;
@@ -1773,7 +1883,7 @@ section:hover .title-icon::after {
 
 .suggestion-item:hover,
 .suggestion-item.active {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     color: var(--text-bright);
 }
 
@@ -1848,7 +1958,7 @@ section:hover .title-icon::after {
 }
 
 .habit-item {
-    background: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 12px;
@@ -1856,7 +1966,7 @@ section:hover .title-icon::after {
 }
 
 .habit-item:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     transform: translateY(-2px);
 }
 
@@ -1925,7 +2035,7 @@ section:hover .title-icon::after {
 
 .progress-bar-bg {
     height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 4px;
     margin-top: 10px;
     overflow: hidden;
@@ -1987,7 +2097,7 @@ section:hover .title-icon::after {
 }
 
 .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
 }
 
 /* ============================================
@@ -2007,7 +2117,7 @@ section:hover .title-icon::after {
     align-items: center;
     justify-content: center;
     border: 1px solid var(--border-dim);
-    background: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     color: var(--text-secondary);
     transition: all 0.2s;
     text-decoration: none;
@@ -2035,7 +2145,7 @@ section:hover .title-icon::after {
 }
 
 .lang-wrapper select {
-    background: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     color: var(--text-secondary);
     border-radius: 10px;
@@ -2058,11 +2168,11 @@ section:hover .title-icon::after {
         top: 65px;
         /* Just below topbar */
         right: 16px;
-        background: var(--bg-surface);
+        background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
         padding: 12px;
         border-radius: 16px;
         border: 1px solid var(--border-dim);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 10px 40px var(--bg-card-tint);
         flex-direction: column;
         min-width: 180px;
         align-items: stretch;
@@ -2103,7 +2213,7 @@ section:hover .title-icon::after {
 [data-theme='light'] .search-field input,
 [data-theme='light'] .modern-input,
 [data-theme='light'] .modern-select {
-    background: #ffffff;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     color: var(--text-pure);
     /* Dark text */
     border-color: var(--border-dim);
@@ -2113,7 +2223,7 @@ section:hover .title-icon::after {
 [data-theme='light'] .search-field input:focus,
 [data-theme='light'] .modern-input:focus,
 [data-theme='light'] .modern-select:focus {
-    background: #ffffff;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-color: var(--accent-sky);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
@@ -2130,7 +2240,7 @@ section:hover .title-icon::after {
 
 /* Light Theme Habit Tracker Fixes */
 [data-theme='light'] .habit-item {
-    background: #ffffff;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -2247,7 +2357,7 @@ section:hover .title-icon::after {
 }
 
 .emergency-display {
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--bg-card-tint);
     border-radius: 12px;
     padding: 16px;
     min-height: 120px;
@@ -2266,7 +2376,7 @@ section:hover .title-icon::after {
 .emergency-number-card {
     display: flex;
     align-items: center;
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     border: 1px solid var(--border-dim);
     padding: 12px;
     border-radius: 12px;
@@ -2288,7 +2398,7 @@ section:hover .title-icon::after {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--bg-elevated);
+    background: var(--bg-card-tint, rgba(0, 0, 0, 0.05));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2329,14 +2439,14 @@ section:hover .title-icon::after {
     top: 100%;
     left: 0;
     width: 100%;
-    background: var(--bg-surface);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid var(--border-dim);
     border-radius: 12px;
     margin-top: 6px;
     max-height: 240px;
     overflow-y: auto;
     z-index: 100;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px var(--bg-card-tint);
     display: none;
 }
 
@@ -2354,7 +2464,7 @@ section:hover .title-icon::after {
 }
 
 .suggestion-item:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
 }
 
 .teal-glow {
@@ -2386,7 +2496,7 @@ section:hover .title-icon::after {
 .pdf-history-item {
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--bg-card-tint);
     border: 1px solid var(--border-dim);
     border-radius: 8px;
     padding: 8px 12px;
@@ -2448,7 +2558,7 @@ section:hover .title-icon::after {
 
 .btn-mini-action:hover {
     color: var(--text-bright);
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
 }
 
 .btn-mini-action.preview:hover {
@@ -2469,7 +2579,7 @@ section:hover .title-icon::after {
     justify-content: center;
     border-radius: 8px;
     color: var(--text-dim);
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid transparent;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2477,7 +2587,7 @@ section:hover .title-icon::after {
 
 .btn-icon-sm:hover {
     color: var(--text-bright);
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-color: var(--border-dim);
 }
 
@@ -2488,7 +2598,7 @@ section:hover .title-icon::after {
 }
 
 .pdf-filename:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 4px;
 }
 
@@ -2519,7 +2629,7 @@ section:hover .title-icon::after {
     /* Obsidian base */
     border: 1px solid var(--pin-modal-border);
     border-radius: 24px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px var(--bg-card-tint);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -2555,13 +2665,13 @@ section:hover .title-icon::after {
     padding: 24px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.01);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     position: relative;
     cursor: pointer;
 }
 
 .vault-card:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
 }
 
 .vault-header-row {
@@ -2611,7 +2721,7 @@ section:hover .title-icon::after {
 
 .vault-progress-track {
     height: 6px;
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 3px;
     overflow: hidden;
 }
@@ -2713,7 +2823,7 @@ section:hover .title-icon::after {
 
 .btn-vault-shimmer {
     flex: 1;
-    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #e6edf3;
     padding: 10px;
@@ -2729,7 +2839,7 @@ section:hover .title-icon::after {
 }
 
 .btn-vault-shimmer:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-color: #34d399;
     transform: translateY(-2px);
 }
@@ -2769,7 +2879,7 @@ section:hover .title-icon::after {
 .lock-screen {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, var(--bg-obsidian) 0%, #1a1a27 100%);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -2778,8 +2888,9 @@ section:hover .title-icon::after {
     z-index: 100;
     padding: 24px;
     text-align: center;
-    border: 1px solid var(--border-dim);
+    border: 1px solid var(--border-accent) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-card);
 }
 
 .lock-screen-header {
@@ -2832,8 +2943,8 @@ section:hover .title-icon::after {
 
 .btn-unlock-widget:hover {
     transform: translateY(-2px);
-    background: #D35400;
-    box-shadow: 0 6px 15px rgba(255, 94, 98, 0.4);
+    background: var(--accent-hover);
+    box-shadow: var(--shadow-glow);
 }
 
 .btn-unlock-widget:active {
@@ -2851,10 +2962,7 @@ section:hover .title-icon::after {
     color: #ef4444;
 }
 
-[data-theme="light"] .lock-screen {
-    background: #f3f4f6;
-    border-color: #d1d5db;
-}
+
 
 .unlock-animation {
     opacity: 0;
@@ -2931,4 +3039,82 @@ section:hover .title-icon::after {
     100% {
         outline: 2px solid transparent;
     }
+}
+
+/* --- WIDGET DYNAMIC BACKGROUND OVERRIDES --- */
+
+/* Parent Widget Cards Background */
+.chrono-hub,
+.currency-hub,
+.weather-hub {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
+}
+
+/* Inner elements: Chronos Sync box, Currency From/To boxes, Weather location box */
+.chrono-hub .searchable-select-display,
+.chrono-hub .searchable-select-dropdown,
+.chrono-hub .options-list,
+.chrono-hub .clock-display,
+.chrono-hub .zone-sync,
+.chrono-hub .modern-select,
+
+.currency-hub .searchable-select-display,
+.currency-hub .searchable-select-dropdown,
+.currency-hub .options-list,
+.currency-hub .modern-input,
+.currency-hub .modern-select,
+
+.weather-hub .search-field,
+.weather-hub .search-field input,
+.weather-hub .primary-result,
+.weather-hub .hub-display {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
+    color: var(--text-color) !important;
+    border-color: var(--accent-primary) !important;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+/* All select/dropdown fields inside these widgets */
+.chrono-hub select,
+.currency-hub select,
+.weather-hub select,
+.chrono-hub input,
+.currency-hub input,
+.weather-hub input,
+.chrono-hub .search-input-wrapper input,
+.currency-hub .search-input-wrapper input {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
+    color: var(--text-color) !important;
+}
+
+/* Force inherit color downward to prevent clashes */
+.chrono-hub *,
+.currency-hub *,
+.weather-hub * {
+    color: inherit;
+}
+
+/* GLOBAL NIGHT THEME FORM & UI OVERRIDES */
+[data-time-theme="night"] input,
+[data-time-theme="night"] select,
+[data-time-theme="night"] textarea,
+[data-time-theme="night"] .form-control,
+[data-time-theme="night"] .form-select,
+[data-time-theme="night"] .btn-utility,
+[data-time-theme="night"] .lang-dropdown-menu,
+[data-time-theme="night"] option {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-accent) !important;
+}
+
+[data-time-theme="night"] ::placeholder {
+    color: var(--text-dim) !important;
+    opacity: 1 !important;
+}
+
+/* BROAD THEME BOX OVERRIDES */
+.card, .bg-card, .table-card, .form-card, .glass-panel, .tool-card, .modern-card, .stat-card, .result-card, .habit-item, .emergency-number-card, .goal-item-card, .day-card, .auth-utility-box, .widget-section-card, .exchange-card, .chrono-hub, .currency-hub, .weather-hub, .options-list, .searchable-select-display, .modern-select, .modern-input, .search-field, .hub-display, .clock-display, .zone-sync, .btn-utility, .lang-dropdown-menu, section, .container, .main-area, .content-wrapper {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
+    border-color: var(--border-primary) !important;
 }

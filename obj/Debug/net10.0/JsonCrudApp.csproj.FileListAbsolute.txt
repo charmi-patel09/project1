@@ -138,7 +138,6 @@ D:\Antigravity\project1\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.
 D:\Antigravity\project1\obj\Debug\net10.0\scopedcss\bundle\JsonCrudApp.styles.css
 D:\Antigravity\project1\obj\Debug\net10.0\scopedcss\projectbundle\JsonCrudApp.bundle.scp.css
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\r4gx7iutpm-{0}-mqp190eezx-mqp190eezx.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\tnzmiypy57-{0}-696xa75rbx-696xa75rbx.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\3efu9kf2fx-{0}-u5be3xaiq4-u5be3xaiq4.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\vprz4gxpzb-{0}-5ru2zi53a9-5ru2zi53a9.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\57w1d53ycq-{0}-wzizn64enk-wzizn64enk.gz
@@ -231,9 +230,10 @@ D:\Antigravity\project1\bin\Debug\net10.0\runtimes\win\lib\net10.0\Microsoft.Win
 D:\Antigravity\project1\obj\Debug\net10.0\JsonCrudApp.csproj.AssemblyReference.cache
 D:\Antigravity\project1\obj\Debug\net10.0\JsonCrud.43C10485.Up2Date
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\yarw8sh6ve-{0}-r0pw9rkuza-r0pw9rkuza.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\1iiq8p0ylg-{0}-iq2ntsegg7-iq2ntsegg7.gz
 D:\Antigravity\project1\obj\Debug\net10.0\compressed\9nhs9xwkoe-{0}-6mgtjik1ql-6mgtjik1ql.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\se1bvjj3ea-{0}-q1sa19i1hn-q1sa19i1hn.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\wynoxkcakm-{0}-2hccl0e9nc-2hccl0e9nc.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\v2947hda20-{0}-v75mzfxgsq-v75mzfxgsq.gz
-D:\Antigravity\project1\obj\Debug\net10.0\compressed\ol3r0fnlur-{0}-mavo2scnxw-mavo2scnxw.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\1iiq8p0ylg-{0}-whgvpjr944-whgvpjr944.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\se1bvjj3ea-{0}-n61i2utyl3-n61i2utyl3.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\tnzmiypy57-{0}-eq5d00izcn-eq5d00izcn.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\wynoxkcakm-{0}-jhccyqjpie-jhccyqjpie.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\v2947hda20-{0}-299ytnengd-299ytnengd.gz
+D:\Antigravity\project1\obj\Debug\net10.0\compressed\ol3r0fnlur-{0}-w7n8llziik-w7n8llziik.gz

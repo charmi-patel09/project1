@@ -6,16 +6,15 @@
     @if (!string.IsNullOrEmpty(Context.Session.GetString("StudentUser")))
     {
         <a href="/TimeTracker" class="btn-utility clock-btn" title="Time Tracker"
-            style="text-decoration: none; color: inherit;">
+            style="text-decoration: none;">
             <i class="fas fa-clock"></i>
         </a>
     }
 
-    <!-- 2. Theme Toggle -->
-    <button id="themeToggle" class="btn-utility" title="Current Theme"
-        style="background: none; border: none; cursor: pointer;">
-        <i class="fas fa-moon"></i>
-    </button>
+    <!-- 2. Time Icon (Read-only status) -->
+    <div id="themeToggle" class="btn-utility" title="Current Time Theme" style="cursor: default;">
+        <i class="fas fa-clock"></i>
+    </div>
 
     <!-- 3. Language Selector -->
     <div class="lang-wrapper" style="position: relative;">
@@ -39,38 +38,70 @@
 
 <script>
     (function () {
-        // Theme Toggle Logic
-        // Use a unique ID or class to avoid conflicts if included multiple times (though unexpected)
-        const toggle = document.getElementById('themeToggle');
-        if (!toggle) return;
-
-        const icon = toggle.querySelector('i');
+        // Time-based Theme Logic
         const html = document.documentElement;
 
-        // 1. Load Saved Theme
-        const saved = localStorage.getItem('appTheme') || 'dark';
-        html.setAttribute('data-theme', saved);
-        updateIcon(saved);
+        function getThemeByTime() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const totalMinutes = h * 60 + m;
 
-        // 2. Toggle Handler (Ensure single binding)
-        toggle.onclick = () => {
-            const current = html.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
+            const morningStart = 5 * 60; // 5:00 AM (300)
+            const noonStart = 11 * 60 + 31; // 11:31 AM (691)
+            const sunsetStart = 17 * 60 + 1; // 5:01 PM (1021)
+            const nightStart = 19 * 60 + 1; // 7:01 PM (1141)
 
-            html.setAttribute('data-theme', next);
-            localStorage.setItem('appTheme', next);
-            updateIcon(next);
-        };
-
-        function updateIcon(theme) {
-            if (theme === 'dark') {
-                icon.className = 'fas fa-moon';
-                toggle.style.color = '';
+            if (totalMinutes >= morningStart && totalMinutes < noonStart) {
+                return 'morning';
+            } else if (totalMinutes >= noonStart && totalMinutes < sunsetStart) {
+                return 'noon';
+            } else if (totalMinutes >= sunsetStart && totalMinutes < nightStart) {
+                return 'sunset';
             } else {
-                icon.className = 'fas fa-sun';
-                toggle.style.color = 'orange';
+                // From 19:01 to 23:59 and 00:00 to 04:59
+                return 'night';
             }
         }
+
+        function getIconForTheme(theme) {
+            switch (theme) {
+                case 'morning': return { class: 'fas fa-sun', color: '#FFB300' };
+                case 'noon': return { class: 'fas fa-sun', color: '#FF8F00' };
+                case 'sunset': return { class: 'fas fa-cloud-sun', color: '#FF5722' };
+                case 'night': return { class: 'fas fa-moon', color: '#E0E0E0' };
+                default: return { class: 'fas fa-clock', color: 'inherit' };
+            }
+        }
+
+        function applyTimeBasedTheme() {
+            const timeTheme = getThemeByTime();
+            const currentTimeTheme = html.getAttribute('data-time-theme');
+
+            if (currentTimeTheme !== timeTheme) {
+                html.setAttribute('data-time-theme', timeTheme);
+
+                // Map to base dark/light for backward compatibility with Razor views
+                const isLight = timeTheme === 'morning' || timeTheme === 'noon';
+                const baseTheme = isLight ? 'light' : 'dark';
+
+                html.setAttribute('data-theme', baseTheme);
+                localStorage.setItem('appTheme', baseTheme);
+
+                // Update icon
+                const iconContainer = document.getElementById('themeToggle');
+                if (iconContainer) {
+                    const iconConfig = getIconForTheme(timeTheme);
+                    iconContainer.innerHTML = `<i class="${iconConfig.class}" ></i>`;
+                }
+            }
+        }
+
+        // Run on load
+        applyTimeBasedTheme();
+
+        // Check every minute (60000ms) to ensure boundary switch is automatic
+        setInterval(applyTimeBasedTheme, 60000);
 
         // Initialize Translator if needed (handled by translator.js usually)
         // Ensure dropdown matches current language

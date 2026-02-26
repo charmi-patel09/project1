@@ -185,7 +185,7 @@ body {
 }
 
 .exchange-card {
-    background: var(--card-bg);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-radius: var(--radius-xl);
     padding: var(--spacing-xl);
     box-shadow: var(--card-shadow);
@@ -248,7 +248,7 @@ body {
     font-family: var(--font-primary);
     font-weight: 500;
     color: #000;
-    background: white;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
     cursor: pointer;
@@ -320,7 +320,7 @@ body {
 
 .amount-input:focus {
     outline: none;
-    background: white;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%) !important;
     border-color: #667eea;
     box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 }
@@ -651,5 +651,5 @@ body {
 }
 .currency-select option {
     color: #000;
-    background: #fff;
+    background: var(--text-color);
 }
