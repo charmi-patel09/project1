@@ -14,6 +14,8 @@ namespace JsonCrudApp.Models
 
         public string Description { get; set; } = string.Empty;
 
+        public string Category { get; set; } = "Personal"; // Personal, Work, Health, etc.
+
         public string FrequencyType { get; set; } = "Daily"; // Daily, Custom
 
         public List<string> CustomDays { get; set; } = new List<string>(); // "Monday", "Tuesday", etc.
@@ -22,8 +24,15 @@ namespace JsonCrudApp.Models
 
         public List<DateTime> CompletedDates { get; set; } = new List<DateTime>();
 
+        public string ReminderTime { get; set; } = string.Empty; // e.g. "08:00"
+
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public string Goal { get; set; } = string.Empty;
+
+        public DateTime? LastReminderDate { get; set; }
+
+        public string ReminderType { get; set; } = "FixedTime"; // FixedTime, AfterDuration
+        public int ReminderDuration { get; set; } = 30; // Default 30 minutes
     }
 }

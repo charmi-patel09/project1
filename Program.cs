@@ -1,6 +1,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+using JsonCrudApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ builder.Services.AddHttpClient<JsonCrudApp.Services.GlobalTranslationService>();
 builder.Services.AddTransient<JsonCrudApp.Services.TimeTrackerService>();
 builder.Services.AddTransient<JsonCrudApp.Services.HabitService>();
 builder.Services.AddTransient<JsonCrudApp.Services.EmergencyService>();
+builder.Services.AddTransient<JsonCrudApp.Services.RoleWidgetService>();
+builder.Services.AddTransient<JsonCrudApp.Services.UserWidgetService>();
 
 builder.Services.AddTransient<JsonCrudApp.Services.UserActivityService>();
 builder.Services.AddTransient<JsonCrudApp.Services.UserPdfService>();
@@ -75,7 +78,7 @@ using (var scope = app.Services.CreateScope())
 
         var students = studentService.GetStudents();
         // Check if any admin exists
-        if (!students.Any(s => s.Role == "Admin"))
+        if (!students.Any(s => s.Role == UserRole.Admin))
         {
             // Create default Super Admin
             // Email: admin@local.com, Password: AdminPassword123!
@@ -85,9 +88,9 @@ using (var scope = app.Services.CreateScope())
                 "Super Admin",
                 99,
                 "System",
-                "Admin"
+                UserRole.Admin
             );
-            Console.WriteLine("Bootstrap: Default Super Admin created (admin@local.com).");
+            // Console.WriteLine("Bootstrap: Default Super Admin created (admin@local.com).");
         }
     }
     catch (Exception ex)

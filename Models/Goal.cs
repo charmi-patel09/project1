@@ -59,6 +59,7 @@ namespace JsonCrudApp.Models
         public string Description { get; set; } = string.Empty;
         public DateTime Date { get; set; }
         public bool IsCompleted { get; set; } = false;
+        public string Status => IsCompleted ? "completed" : "pending";
         public DateTime? CompletedAt { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
     }

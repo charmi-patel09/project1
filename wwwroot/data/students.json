@@ -1,26 +1,38 @@
 [
   {
-    "Id": 26,
-    "Email": "charmimarakana@gmail.com",
-    "Password": "0SJk6swTKk7WFlo6nBRJwH6cp9LGZGzkoCPd9Vb4Qo0=",
+    "Id": 31,
+    "Email": "pcharmi230@gmail.com",
+    "Password": "vLFfghR5tNV3K9DKhmwArV\u002BSbjWAcgZZzIDTnJ0JgCo=",
     "Name": "charmi",
-    "Age": 25,
+    "Age": 21,
     "Course": "Administration",
     "Role": "Admin",
-    "WidgetPermissions": "global-search-hub,weather-hub,currency-hub,chrono-hub,news-hub,pdf-hub",
-    "SecurityPinHash": "mvFbM25qlhmShTffMLLmojdlafz51\u002Bdz7M7eZWBlKaA=",
+    "SecurityPin": null,
+    "SecurityPinHash": "3WVw1Fz8Jdfgvsi07xHaSI2YPQpfp7MPgF7AHwXorrY=",
     "IsSecurityEnabled": true
   },
   {
-    "Id": 27,
-    "Email": "pcharmi230@gmail.com",
-    "Password": "aEh9wpUFKqecUw4oPOaYuMa7G0L/CUQlLhkQ2\u002BzcVCU=",
-    "Name": "chams",
+    "Id": 32,
+    "Email": "dhvanibutani09@gmail.com",
+    "Password": "UpnTRpNUod4S9Xn\u002BDhpMQRXS3gUz8Y17rYcGLrvDr9s=",
+    "Name": "New Student",
     "Age": 18,
     "Course": "General",
-    "Role": "Private",
-    "WidgetPermissions": "",
-    "SecurityPinHash": "MYruP\u002B2MnQQNNaf8H6d2\u002BzEwODOqLeiFNU3fPUTY\u002B2k=",
+    "Role": "Visitor",
+    "SecurityPin": null,
+    "SecurityPinHash": null,
+    "IsSecurityEnabled": false
+  },
+  {
+    "Id": 33,
+    "Email": "charmimarakana@gmail.com",
+    "Password": "I0afF6WuTNrHDVy0P23bg1UPSH/o3UQ5a\u002BOOxgobvFk=",
+    "Name": "charmi",
+    "Age": 21,
+    "Course": "General",
+    "Role": "private",
+    "SecurityPin": null,
+    "SecurityPinHash": "VqOkajuk\u002B3E/0\u002BTPpRpXSKvywmYv77C1qGP97zRXIlU=",
     "IsSecurityEnabled": true
   }
 ]

@@ -37,21 +37,19 @@
                             <span asp-validation-for="ConfirmPassword" class="text-danger extra-small"></span>
                         </div>
 
+                        @*
                         <div class="mb-3">
-                            <label asp-for="SecurityPin" class="form-label text-muted small fw-bold">Security PIN (4-6
-                                digits) <span class="fw-normal opacity-75">(Optional)</span></label>
-                            <input asp-for="SecurityPin" type="password" class="form-control shadow-none py-2"
-                                placeholder="••••" autocomplete="off" maxlength="6" />
-                            <span asp-validation-for="SecurityPin" class="text-danger extra-small"></span>
+                        <label asp-for="SecurityPin" class="form-label text-muted small fw-bold">Security PIN
+                        (Optional)</label>
+                        <input asp-for="SecurityPin" type="password" maxlength="6" class="form-control shadow-none py-2"
+                        placeholder="Set 4-6 digit PIN" autocomplete="off" />
+                        <span asp-validation-for="SecurityPin" class="text-danger extra-small"></span>
+                        <div class="text-muted" style="font-size: 0.65rem; margin-top: 4px;">Used to lock Notes, Habits,
+                        and PDF Converter.</div>
                         </div>
+                        *@
 
-                        <div class="mb-4">
-                            <label asp-for="ConfirmSecurityPin" class="form-label text-muted small fw-bold">Confirm
-                                PIN <span class="fw-normal opacity-75">(Optional)</span></label>
-                            <input asp-for="ConfirmSecurityPin" type="password" class="form-control shadow-none py-2"
-                                placeholder="••••" autocomplete="off" maxlength="6" />
-                            <span asp-validation-for="ConfirmSecurityPin" class="text-danger extra-small"></span>
-                        </div>
+
 
                         <div class="d-grid mt-4">
                             <button type="submit"

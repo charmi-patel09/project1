@@ -67,10 +67,12 @@ namespace JsonCrudApp.Services
             {
                 query.Name = habit.Name;
                 query.Description = habit.Description;
+                query.Category = habit.Category;
                 query.FrequencyType = habit.FrequencyType;
                 query.CustomDays = habit.CustomDays;
                 query.StartDate = habit.StartDate;
                 query.Goal = habit.Goal;
+                query.ReminderTime = habit.ReminderTime;
                 // CompletedDates not updated here usually
                 SaveHabits(habits);
                 return query;
@@ -143,5 +145,142 @@ namespace JsonCrudApp.Services
                 );
             }
         }
+
+        public HabitAnalytics GetAnalytics(string userEmail)
+        {
+            var habits = GetHabitsByUser(userEmail).ToList();
+            var today = DateTime.Today;
+            var last7Days = Enumerable.Range(0, 7).Select(i => today.AddDays(-i)).ToList();
+
+            int totalCompleted = habits.Sum(h => h.CompletedDates.Count);
+            
+            // Missed calculation is tricky. For now, let's say missed are total expected minus completed.
+            // But we only care about missed until today.
+            int totalMissed = 0;
+            int weeklyCompleted = 0;
+            int weeklyMissed = 0;
+
+            foreach (var h in habits)
+            {
+                // Calculate missed since start date
+                var current = h.StartDate.Date;
+                if (current > today) continue;
+
+                while (current <= today)
+                {
+                    if (IsActiveDay(h, current))
+                    {
+                        bool completed = h.CompletedDates.Any(d => d.Date == current);
+                        if (!completed)
+                        {
+                            totalMissed++;
+                            if (last7Days.Contains(current)) weeklyMissed++;
+                        }
+                        else
+                        {
+                            if (last7Days.Contains(current)) weeklyCompleted++;
+                        }
+                    }
+                    current = current.AddDays(1);
+                }
+            }
+
+            return new HabitAnalytics
+            {
+                TotalCompleted = totalCompleted,
+                TotalMissed = totalMissed,
+                WeeklyCompleted = weeklyCompleted,
+                WeeklyMissed = weeklyMissed
+            };
+        }
+
+        private bool IsActiveDay(Habit h, DateTime date)
+        {
+            if (h.FrequencyType == "Daily") return true;
+            if (h.FrequencyType == "Custom")
+            {
+                return h.CustomDays.Contains(date.DayOfWeek.ToString());
+            }
+            return false;
+        }
+
+        public int GetStreak(Habit h)
+        {
+            int streak = 0;
+            var current = DateTime.Today;
+
+            // If it was an active day and not completed, streak is broken.
+            // Exception: if today is active but not yet completed, we check yesterday.
+            
+            if (IsActiveDay(h, current))
+            {
+                if (h.CompletedDates.Any(d => d.Date == current))
+                {
+                    streak++;
+                }
+                else
+                {
+                    // Check if it's the only active day missed. 
+                    // If today is not done but yesterday was done (or not active), streak might still be alive from yesterday.
+                    // Actually, if today IS active and NOT done, the streak of "consecutive completions" is technically 0 for now,
+                    // OR it's whatever it was yesterday if we still have time to complete it today.
+                    // Most apps show the streak up to yesterday if today isn't done yet.
+                }
+            }
+
+            var checkDate = current.AddDays(-1);
+            while (checkDate >= h.StartDate)
+            {
+                if (IsActiveDay(h, checkDate))
+                {
+                    if (h.CompletedDates.Any(d => d.Date == checkDate))
+                    {
+                        streak++;
+                    }
+                    else
+                    {
+                        break; // Streak broken
+                    }
+                }
+                checkDate = checkDate.AddDays(-1);
+            }
+
+            return streak;
+        }
+
+        public double GetCompletionPercentage(Habit h)
+        {
+            var today = DateTime.Today;
+            var start = h.StartDate.Date;
+            if (start > today) return 0;
+
+            int expected = 0;
+            int actual = 0;
+
+            var current = start;
+            while (current <= today)
+            {
+                if (IsActiveDay(h, current))
+                {
+                    expected++;
+                    if (h.CompletedDates.Any(d => d.Date == current))
+                    {
+                        actual++;
+                    }
+                }
+                current = current.AddDays(1);
+            }
+
+            if (expected == 0) return 0;
+            return Math.Round((double)actual / expected * 100, 1);
+        }
+    }
+
+    public class HabitAnalytics
+    {
+        public int TotalCompleted { get; set; }
+        public int TotalMissed { get; set; }
+        public int WeeklyCompleted { get; set; }
+        public int WeeklyMissed { get; set; }
     }
 }

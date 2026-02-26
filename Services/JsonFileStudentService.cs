@@ -30,11 +30,15 @@ namespace JsonCrudApp.Services
 
             using (var jsonFileReader = File.OpenText(JsonFileName))
             {
-                return JsonSerializer.Deserialize<Student[]>(jsonFileReader.ReadToEnd(),
+                var students = JsonSerializer.Deserialize<Student[]>(jsonFileReader.ReadToEnd(),
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     }) ?? Enumerable.Empty<Student>();
+
+                // Optional: Log count for debugging
+                // Console.WriteLine($"[DB_LOAD] Loaded {students.Count()} students.");
+                return students;
             }
         }
 
@@ -52,16 +56,25 @@ namespace JsonCrudApp.Services
             var query = students.FirstOrDefault(x => x.Id == student.Id);
             if (query != null)
             {
+                // Console.WriteLine($"[DB_UPDATE] User: {student.Email} (ID: {student.Id})");
+                // Console.WriteLine($"[DB_UPDATE] OLD Status - Enabled: {query.IsSecurityEnabled}, Hash: {(!string.IsNullOrEmpty(query.SecurityPinHash) ? "YES" : "NO")}");
+                // Console.WriteLine($"[DB_UPDATE] NEW Status - Enabled: {student.IsSecurityEnabled}, Hash: {(!string.IsNullOrEmpty(student.SecurityPinHash) ? "YES" : "NO")}");
+
                 query.Name = student.Name;
                 query.Email = student.Email;
                 query.Password = student.Password;
                 query.Age = student.Age;
                 query.Course = student.Course;
                 query.Role = student.Role;
-                query.WidgetPermissions = student.WidgetPermissions;
                 query.SecurityPinHash = student.SecurityPinHash;
                 query.IsSecurityEnabled = student.IsSecurityEnabled;
+
                 SaveStudents(students);
+                // Console.WriteLine($"[DB_UPDATE] Success for {student.Email}");
+            }
+            else
+            {
+                // Console.WriteLine($"[DB_UPDATE] FAILED: User ID {student.Id} not found.");
             }
         }
 

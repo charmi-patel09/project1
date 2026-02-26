@@ -34,7 +34,7 @@ namespace JsonCrudApp.Services
             return HashPassword(password) == hash;
         }
 
-        public bool RegisterStudent(string email, string password, string name = "New Student", int age = 18, string course = "General", string role = "Private")
+        public bool RegisterStudent(string email, string password, string name = "New Student", int age = 18, string course = "General", string role = "private")
         {
             if (UserExists(email)) return false;
 
@@ -77,7 +77,7 @@ namespace JsonCrudApp.Services
         public bool AnyAdminExists()
         {
             var students = _studentService.GetStudents();
-            return students.Any(s => s.Role == "Admin");
+            return students.Any(s => s.Role == UserRole.Admin);
         }
 
         // Removed Admin-specific methods: GetAdminCredentials, RegisterUser (Admin), GetUserByEmail (Admin), GenerateResetToken, ValidateResetToken, ResetPassword, IncrementAccessFailedCount, ResetAccessFailedCount, ValidateAdmin
@@ -121,29 +121,48 @@ namespace JsonCrudApp.Services
         public bool ValidateResetToken(string email, string token) => false;
         public bool ResetPassword(string email, string newPassword, string token) => false;
 
-        public bool SetPin(string email, string pin)
+        public string HashPin(string pin)
+        {
+            if (string.IsNullOrEmpty(pin)) return string.Empty;
+            return HashPassword(pin);
+        }
+
+        public bool VerifyPin(string pin, string hash)
+        {
+            if (string.IsNullOrEmpty(pin) || string.IsNullOrEmpty(hash)) return false;
+            return HashPin(pin) == hash;
+        }
+
+        public bool SetSecurityPin(string email, string pin)
         {
             var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
-            if (student == null) return false;
+            if (student == null)
+            {
+                // Console.WriteLine($"[SECURITY_SETUP] FAILED: User {email} not found.");
+                return false;
+            }
 
-            student.SecurityPinHash = HashPassword(pin);
-            student.IsSecurityEnabled = true;
+            // Console.WriteLine($"[SECURITY_SETUP] Request for {email}. Pin provided: {(!string.IsNullOrEmpty(pin) ? "YES" : "NO")}");
+
+            if (pin == null) return false;
+
+            if (string.IsNullOrEmpty(pin))
+            {
+                // Optional: Clear PIN if explicitly empty
+                student.SecurityPinHash = null;
+                student.IsSecurityEnabled = false;
+                // Console.WriteLine($"[SECURITY_SETUP] Security DISABLED for {email}");
+            }
+            else
+            {
+                student.SecurityPinHash = HashPin(pin);
+                student.IsSecurityEnabled = true;
+                // Console.WriteLine($"[SECURITY_SETUP] Security ENABLED for {email}");
+            }
+
             _studentService.UpdateStudent(student);
             return true;
         }
 
-        public bool VerifyPin(string email, string pin)
-        {
-            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
-            if (student == null || !student.IsSecurityEnabled || string.IsNullOrEmpty(student.SecurityPinHash)) return false;
-
-            return VerifyPassword(pin, student.SecurityPinHash);
-        }
-
-        public bool HasPin(string email)
-        {
-            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
-            return student != null && student.IsSecurityEnabled;
-        }
     }
 }

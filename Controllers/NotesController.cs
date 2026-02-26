@@ -8,10 +8,12 @@ namespace JsonCrudApp.Controllers
     public class NotesController : BaseController
     {
         private readonly NotesService _notesService;
+        private readonly JsonFileStudentService _studentService;
 
-        public NotesController(NotesService notesService)
+        public NotesController(NotesService notesService, JsonFileStudentService studentService)
         {
             _notesService = notesService;
+            _studentService = studentService;
         }
 
         private string? GetCurrentUserEmail()
@@ -22,10 +24,11 @@ namespace JsonCrudApp.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
-
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
+
+            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            if (!IsAuthorized(student!, "notes-hub")) return Unauthorized();
 
             var notes = _notesService.GetNotesByUser(email).OrderByDescending(n => n.CreatedDate);
             return Ok(notes);
@@ -34,9 +37,11 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Note note)
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
+
+            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            if (!IsAuthorized(student!, "notes-hub")) return Unauthorized();
 
             if (string.IsNullOrWhiteSpace(note.Title) || string.IsNullOrWhiteSpace(note.Description))
             {
@@ -51,9 +56,11 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Update([FromBody] Note note)
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
+
+            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            if (!IsAuthorized(student!, "notes-hub")) return Unauthorized();
 
             note.UserEmail = email; // Ensure we only update for current user
             _notesService.UpdateNote(note);
@@ -63,9 +70,11 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult Delete([FromBody] int id)
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
             var email = GetCurrentUserEmail();
             if (string.IsNullOrEmpty(email)) return Unauthorized();
+
+            var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
+            if (!IsAuthorized(student!, "notes-hub")) return Unauthorized();
 
             _notesService.DeleteNote(id, email);
             return Ok(new { success = true });

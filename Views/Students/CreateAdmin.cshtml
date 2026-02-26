@@ -35,18 +35,15 @@
                         <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Security PIN</label>
-                            <input type="password" name="SecurityPin" class="form-control" placeholder="4-6 digits"
-                                required maxlength="6" autocomplete="new-password" value="" />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Confirm PIN</label>
-                            <input type="password" name="ConfirmSecurityPin" class="form-control"
-                                placeholder="Repeat PIN" required maxlength="6" autocomplete="new-password" value="" />
-                        </div>
+                    <div class="mb-3">
+                        <label asp-for="SecurityPin" class="form-label fw-bold">Security PIN (Optional)</label>
+                        <input asp-for="SecurityPin" type="password" maxlength="6" class="form-control"
+                            placeholder="Set 4-6 digit PIN" autocomplete="off" />
+                        <span asp-validation-for="SecurityPin" class="text-danger small"></span>
+                        <div class="form-text text-muted">Leave blank if no PIN protection is desired.</div>
                     </div>
+
+
 
                     <!-- Hidden fields for defaults if strictly needed, mostly handled in controller -->
 

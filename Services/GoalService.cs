@@ -363,7 +363,7 @@ namespace JsonCrudApp.Services
         public dynamic GetAnalytics(int userId)
         {
             var goals = GetUserGoals(userId);
-            if (!goals.Any()) return new { Score = 0, Completed = 0, Active = 0, Overdue = 0 };
+            if (!goals.Any()) return new { Score = 0, Completed = 0, Active = 0, Overdue = 0, TotalTasks = 0, CompletedTasks = 0, PendingTasks = 0 };
 
             var completed = goals.Count(g => g.Status == "Completed");
             var active = goals.Count(g => g.Status == "In Progress" || g.Status == "Not Started");
@@ -381,11 +381,18 @@ namespace JsonCrudApp.Services
             int totalTasksLast7 = 0;
             int completedTasksLast7 = 0;
 
+            // Global Task Analytics
+            int totalTasksGlobal = 0;
+            int completedTasksGlobal = 0;
+
             foreach (var goal in goals)
             {
                 var recentTasks = goal.DailyTasks.Where(t => t.Date.Date >= last7Days.Last().Date && t.Date.Date <= last7Days.First().Date).ToList();
                 totalTasksLast7 += recentTasks.Count;
                 completedTasksLast7 += recentTasks.Count(t => t.IsCompleted);
+
+                totalTasksGlobal += goal.DailyTasks.Count;
+                completedTasksGlobal += goal.DailyTasks.Count(t => t.IsCompleted);
             }
 
             double weeklyCompletion = totalTasksLast7 > 0 ? (double)completedTasksLast7 / totalTasksLast7 * 100 : 0;
@@ -398,7 +405,10 @@ namespace JsonCrudApp.Services
                 Overdue = overdue,
                 Total = goals.Count,
                 SuccessRatio = Math.Round((double)completed / goals.Count * 100, 1),
-                WeeklyPerformance = Math.Round(weeklyCompletion, 1)
+                WeeklyPerformance = Math.Round(weeklyCompletion, 1),
+                TotalTasks = totalTasksGlobal,
+                CompletedTasks = completedTasksGlobal,
+                PendingTasks = totalTasksGlobal - completedTasksGlobal
             };
         }
     }

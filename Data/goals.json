@@ -47,6 +47,7 @@
         "Description": "",
         "Date": "2026-02-16T00:00:00",
         "IsCompleted": true,
+        "Status": "completed",
         "CompletedAt": "2026-02-16T14:14:45.3452348+05:30",
         "CreatedDate": "2026-02-16T14:14:32.7803674+05:30"
       },
@@ -57,8 +58,9 @@
         "Title": "Focus Session: developer",
         "Description": "",
         "Date": "2026-02-17T00:00:00",
-        "IsCompleted": false,
-        "CompletedAt": null,
+        "IsCompleted": true,
+        "Status": "completed",
+        "CompletedAt": "2026-02-17T12:25:11.1511208+05:30",
         "CreatedDate": "2026-02-16T14:14:32.7803733+05:30"
       },
       {
@@ -69,6 +71,7 @@
         "Description": "",
         "Date": "2026-02-18T00:00:00",
         "IsCompleted": false,
+        "Status": "pending",
         "CompletedAt": null,
         "CreatedDate": "2026-02-16T14:14:32.7803771+05:30"
       },
@@ -80,6 +83,7 @@
         "Description": "",
         "Date": "2026-02-19T00:00:00",
         "IsCompleted": false,
+        "Status": "pending",
         "CompletedAt": null,
         "CreatedDate": "2026-02-16T14:14:32.7803781+05:30"
       },
@@ -91,6 +95,7 @@
         "Description": "",
         "Date": "2026-02-20T00:00:00",
         "IsCompleted": false,
+        "Status": "pending",
         "CompletedAt": null,
         "CreatedDate": "2026-02-16T14:14:32.7803792+05:30"
       },
@@ -102,6 +107,7 @@
         "Description": "",
         "Date": "2026-02-21T00:00:00",
         "IsCompleted": false,
+        "Status": "pending",
         "CompletedAt": null,
         "CreatedDate": "2026-02-16T14:14:32.7803808+05:30"
       },
@@ -113,6 +119,7 @@
         "Description": "",
         "Date": "2026-02-22T00:00:00",
         "IsCompleted": false,
+        "Status": "pending",
         "CompletedAt": null,
         "CreatedDate": "2026-02-16T14:14:32.7803825+05:30"
       },
@@ -124,14 +131,159 @@
         "Description": "",
         "Date": "2026-02-23T00:00:00",
         "IsCompleted": false,
+        "Status": "pending",
         "CompletedAt": null,
         "CreatedDate": "2026-02-16T14:14:32.7803835+05:30"
       }
     ],
-    "Progress": 12.5,
+    "Progress": 25,
     "Status": "In Progress",
     "ScheduleStatus": "On Track",
     "CreatedDate": "2026-02-16T14:14:32.7803541+05:30",
+    "Streak": 2,
+    "LastModified": null
+  },
+  {
+    "Id": "097e18b1-2531-4df8-b281-ea978d01c5db",
+    "UserId": 31,
+    "Title": "developer",
+    "Description": null,
+    "Category": "Personal",
+    "Priority": "Medium",
+    "StartDate": "2026-02-18T00:00:00",
+    "EndDate": "2026-02-25T00:00:00",
+    "Milestones": [
+      {
+        "Id": "7968fc28-4960-419a-af45-c7888ac8b561",
+        "Title": "Phase 1: Achieve key target for developer",
+        "DueDate": "2026-02-19T00:00:00",
+        "IsCompleted": false,
+        "CompletedAt": null
+      },
+      {
+        "Id": "4b4a1901-a0b3-43ec-84a7-d832ec4325b9",
+        "Title": "Phase 2: Achieve key target for developer",
+        "DueDate": "2026-02-20T00:00:00",
+        "IsCompleted": false,
+        "CompletedAt": null
+      },
+      {
+        "Id": "29253146-2052-4db3-a8f0-8e78a1579853",
+        "Title": "Phase 3: Achieve key target for developer",
+        "DueDate": "2026-02-21T00:00:00",
+        "IsCompleted": false,
+        "CompletedAt": null
+      },
+      {
+        "Id": "9b519739-399d-46bb-82fc-ea631545aa3c",
+        "Title": "Phase 4: Achieve key target for developer",
+        "DueDate": "2026-02-25T00:00:00",
+        "IsCompleted": false,
+        "CompletedAt": null
+      }
+    ],
+    "DailyTasks": [
+      {
+        "Id": "bb6dcbc2-9529-4004-93e0-8024322c754a",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-18T00:00:00",
+        "IsCompleted": true,
+        "Status": "completed",
+        "CompletedAt": "2026-02-18T16:57:01.1756959+05:30",
+        "CreatedDate": "2026-02-18T16:55:44.1179862+05:30"
+      },
+      {
+        "Id": "a4ba18b9-3e55-45d2-9b40-0aee91a0cf99",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-19T00:00:00",
+        "IsCompleted": true,
+        "Status": "completed",
+        "CompletedAt": "2026-02-19T16:03:42.4717447+05:30",
+        "CreatedDate": "2026-02-18T16:55:44.1179953+05:30"
+      },
+      {
+        "Id": "f2f85167-458f-490b-8a11-0a5ee4ad5233",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-20T00:00:00",
+        "IsCompleted": true,
+        "Status": "completed",
+        "CompletedAt": "2026-02-20T10:43:33.061081+05:30",
+        "CreatedDate": "2026-02-18T16:55:44.1180016+05:30"
+      },
+      {
+        "Id": "3eb64ebf-8a27-4404-b692-846c91413537",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-21T00:00:00",
+        "IsCompleted": false,
+        "Status": "pending",
+        "CompletedAt": null,
+        "CreatedDate": "2026-02-18T16:55:44.1180055+05:30"
+      },
+      {
+        "Id": "c7eb3edf-97ce-4016-b1ee-cae24953a063",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-22T00:00:00",
+        "IsCompleted": false,
+        "Status": "pending",
+        "CompletedAt": null,
+        "CreatedDate": "2026-02-18T16:55:44.1180063+05:30"
+      },
+      {
+        "Id": "8f3379d8-e072-4d3b-867a-8e3b8aed1bd6",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-23T00:00:00",
+        "IsCompleted": false,
+        "Status": "pending",
+        "CompletedAt": null,
+        "CreatedDate": "2026-02-18T16:55:44.1180155+05:30"
+      },
+      {
+        "Id": "d0bb7e60-8e32-446f-9704-2b883402a62a",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-24T00:00:00",
+        "IsCompleted": false,
+        "Status": "pending",
+        "CompletedAt": null,
+        "CreatedDate": "2026-02-18T16:55:44.1180165+05:30"
+      },
+      {
+        "Id": "bf113f8f-07ba-4121-91fc-f1bc29212563",
+        "UserId": 31,
+        "GoalId": "097e18b1-2531-4df8-b281-ea978d01c5db",
+        "Title": "Focus Session: developer",
+        "Description": "",
+        "Date": "2026-02-25T00:00:00",
+        "IsCompleted": true,
+        "Status": "completed",
+        "CompletedAt": "2026-02-25T11:19:31.8339082+05:30",
+        "CreatedDate": "2026-02-18T16:55:44.1180178+05:30"
+      }
+    ],
+    "Progress": 50,
+    "Status": "Overdue",
+    "ScheduleStatus": "On Track",
+    "CreatedDate": "2026-02-18T16:55:44.1168528+05:30",
     "Streak": 1,
     "LastModified": null
   }

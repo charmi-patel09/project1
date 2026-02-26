@@ -17,11 +17,7 @@ namespace JsonCrudApp.Models
         [Compare("Password", ErrorMessage = "Password and confirm password do not match")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
-        [StringLength(6, MinimumLength = 4, ErrorMessage = "PIN must be 4-6 digits")]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "PIN must be numeric")]
+        [RegularExpression(@"^\d{4,6}$", ErrorMessage = "PIN must be 4-6 digits")]
         public string? SecurityPin { get; set; }
-
-        [Compare("SecurityPin", ErrorMessage = "PINs do not match")]
-        public string? ConfirmSecurityPin { get; set; }
     }
 }

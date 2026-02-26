@@ -2,9 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO.Compression;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.Versioning;
 
 namespace JsonCrudApp.Controllers
 {
+    [SupportedOSPlatform("windows")]
     public class ToolsController : BaseController
     {
         private readonly IWebHostEnvironment _env;
@@ -20,7 +24,7 @@ namespace JsonCrudApp.Controllers
 
         private int GetCurrentUserId()
         {
-            int? id = HttpContext.Session.GetInt32("Id");
+            int? id = HttpContext.Session.GetInt32("UserId");
             if (id.HasValue && id.Value > 0) return id.Value;
 
             string? email = HttpContext.Session.GetString("StudentUser");
@@ -29,7 +33,7 @@ namespace JsonCrudApp.Controllers
                 var student = _studentService.GetStudents().FirstOrDefault(s => s.Email == email);
                 if (student != null)
                 {
-                    HttpContext.Session.SetInt32("Id", student.Id);
+                    HttpContext.Session.SetInt32("UserId", student.Id);
                     return student.Id;
                 }
             }
@@ -39,7 +43,19 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ConvertToPdf(List<IFormFile> files, string targetFormat, bool mergeFiles, string pageSize, string orientation, string quality)
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
+            // 1. Check Session Authentication (Cookie-based, not Bearer token)
+            int userId = GetCurrentUserId();
+            if (userId == 0)
+            {
+                // Not logged in or session expired
+                return Unauthorized(new { success = false, message = "Please login first." });
+            }
+
+            var student = _studentService.GetStudentById(userId);
+            if (!IsAuthorized(student!, "pdf-hub"))
+            {
+                return Json(new { success = false, message = "Access denied or Security PIN verification required." });
+            }
 
             if (files == null || files.Count == 0 || files.Sum(f => f.Length) == 0)
                 return Json(new { success = false, message = "No files uploaded." });
@@ -73,7 +89,12 @@ namespace JsonCrudApp.Controllers
 
                         string outName = "Converted_" + DateTime.Now.Ticks + ".jpg";
                         string p = Path.Combine(tempDir, outName);
-                        using (var s = new FileStream(p, FileMode.Create)) { await f.CopyToAsync(s); }
+
+                        // Properly convert to JPEG if it's a different image format (like PNG)
+                        using (var img = Image.FromStream(f.OpenReadStream()))
+                        {
+                            img.Save(p, ImageFormat.Jpeg);
+                        }
 
                         return Json(new { success = true, downloadUrl = $"/temp_conversions/{outName}", fileName = outName });
                     }
@@ -106,10 +127,7 @@ namespace JsonCrudApp.Controllers
 
                 await System.IO.File.WriteAllBytesAsync(outputPath, pdfBytes);
 
-                await System.IO.File.WriteAllBytesAsync(outputPath, pdfBytes);
-
                 // --- SAVE METADATA ---
-                int userId = GetCurrentUserId();
                 string publicUrl = $"/temp_conversions/{newFileName}";
                 int newPdfId = 0;
 
@@ -143,10 +161,17 @@ namespace JsonCrudApp.Controllers
         [HttpGet]
         public IActionResult GetUserPdfs()
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
-
+            // 1. Auth Check
             int userId = GetCurrentUserId();
-            if (userId == 0) return Unauthorized();
+            if (userId == 0) return Unauthorized(new { success = false, message = "Please login first." });
+
+            var student = _studentService.GetStudentById(userId);
+            if (!IsAuthorized(student!, "pdf-hub"))
+            {
+                return Json(new { success = false, message = "Access denied or Security PIN verification required." });
+            }
+
+
             var pdfs = _pdfService.GetUserPdfs(userId);
             return Json(pdfs);
         }
@@ -154,9 +179,17 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult RenameUserPdf([FromBody] Models.UserPdf model)
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
+            // 1. Auth Check
             int userId = GetCurrentUserId();
-            if (userId == 0) return Unauthorized();
+            if (userId == 0) return Unauthorized(new { success = false, message = "Please login first." });
+
+            var student = _studentService.GetStudentById(userId);
+            if (!IsAuthorized(student!, "pdf-hub"))
+            {
+                return Json(new { success = false, message = "Access denied or Security PIN verification required." });
+            }
+
+
             _pdfService.UpdatePdfName(model.Id, userId, model.FileName);
             return Ok();
         }
@@ -164,15 +197,24 @@ namespace JsonCrudApp.Controllers
         [HttpPost]
         public IActionResult DeleteUserPdf([FromBody] int id)
         {
-            if (!IsPinVerified()) return Unauthorized(new { needsPin = true });
+            // 1. Auth Check
             int userId = GetCurrentUserId();
-            if (userId == 0) return Unauthorized();
+            if (userId == 0) return Unauthorized(new { success = false, message = "Please login first." });
+
+            var student = _studentService.GetStudentById(userId);
+            if (!IsAuthorized(student!, "pdf-hub"))
+            {
+                return Json(new { success = false, message = "Access denied or Security PIN verification required." });
+            }
+
+
             _pdfService.DeletePdf(id, userId);
             return Ok();
         }
     }
 
     // Minimal PDF Generator (No external libraries)
+    [SupportedOSPlatform("windows")]
     public static class SimplePdfGenerator
     {
         public static async Task<byte[]> GeneratePdf(List<IFormFile> files, string pageSize = "A4", string orientation = "Portrait")
@@ -264,8 +306,27 @@ namespace JsonCrudApp.Controllers
 
                             int imgObjId = currentId++;
 
-                            // 1. Get Image Dimensions
-                            var (w, h) = GetJpegDimensions(imgBytes);
+                            // 1. Get Image Dimensions & Normalize to JPEG for PDF embedding
+                            int w, h;
+                            if (ext == ".png")
+                            {
+                                // Convert PNG to JPEG to embed in PDF using DCTDecode
+                                using (var msPng = new MemoryStream(imgBytes))
+                                using (var originalImg = Image.FromStream(msPng))
+                                {
+                                    w = originalImg.Width;
+                                    h = originalImg.Height;
+                                    using (var jpegStream = new MemoryStream())
+                                    {
+                                        originalImg.Save(jpegStream, ImageFormat.Jpeg);
+                                        imgBytes = jpegStream.ToArray();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                (w, h) = GetJpegDimensions(imgBytes);
+                            }
 
                             // 2. Create Image Object
                             string imgDict = $"<< /Type /XObject /Subtype /Image /Width {w} /Height {h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length {imgBytes.Length} >>\nstream\n";
@@ -462,7 +523,7 @@ namespace JsonCrudApp.Controllers
 
         private static bool IsImage(string ext)
         {
-            return ext == ".jpg" || ext == ".jpeg";
+            return ext == ".jpg" || ext == ".jpeg" || ext == ".png";
         }
 
         private static string ExtractTextFromDocx(Stream stream)

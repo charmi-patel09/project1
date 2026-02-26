@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace JsonCrudApp.Models
 {
@@ -21,10 +22,13 @@ namespace JsonCrudApp.Models
 
         public string? Course { get; set; }
 
-        public string Role { get; set; } = "Private";
+        public string Role { get; set; } = "private";
 
-        public string? WidgetPermissions { get; set; }
+
+        [RegularExpression(@"^\d{4,6}$", ErrorMessage = "PIN must be 4-6 digits")]
+        public string? SecurityPin { get; set; }
+
         public string? SecurityPinHash { get; set; }
-        public bool IsSecurityEnabled { get; set; }
+        public bool IsSecurityEnabled { get; set; } = false;
     }
 }

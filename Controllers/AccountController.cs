@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using JsonCrudApp.Services;
 using JsonCrudApp.Models;
@@ -17,12 +18,17 @@ namespace JsonCrudApp.Controllers
         private readonly OtpService _otpService;
         private readonly UserActivityService _userActivityService;
 
-        public AccountController(AuthService authService, EmailService emailService, OtpService otpService, UserActivityService userActivityService)
+        private readonly RoleWidgetService _roleWidgetService;
+        private readonly UserWidgetService _userWidgetService;
+
+        public AccountController(AuthService authService, EmailService emailService, OtpService otpService, UserActivityService userActivityService, RoleWidgetService roleWidgetService, UserWidgetService userWidgetService)
         {
             _authService = authService;
             _emailService = emailService;
             _otpService = otpService;
             _userActivityService = userActivityService;
+            _roleWidgetService = roleWidgetService;
+            _userWidgetService = userWidgetService;
         }
 
         [HttpGet]
@@ -49,10 +55,13 @@ namespace JsonCrudApp.Controllers
                     // Store in session for verification
                     HttpContext.Session.SetString("PendingUserEmail", model.Email);
                     HttpContext.Session.SetString("PendingUserPassword", model.Password); // Store password temporarily
-                    HttpContext.Session.SetString("PendingUserPin", model.SecurityPin); // Store PIN
                     HttpContext.Session.SetString("OtpPurpose", "Registration");
                     HttpContext.Session.SetString("OtpCode", otp);
                     HttpContext.Session.SetString("OtpExpiry", expiry.ToString("O"));
+                    if (!string.IsNullOrEmpty(model.SecurityPin))
+                    {
+                        HttpContext.Session.SetString("PendingSecurityPin", model.SecurityPin);
+                    }
 
                     return RedirectToAction("VerifyOtp");
                 }
@@ -97,114 +106,101 @@ namespace JsonCrudApp.Controllers
                     HttpContext.Session.Remove("OtpPurpose");
                     HttpContext.Session.Remove("PendingUserType");
 
-                    if (purpose == "Registration")
+                    if (purpose == "Registration" || purpose == "StudentCreation")
                     {
-                        string? pin = HttpContext.Session.GetString("PendingUserPin");
-                        // Finalize Registration
-                        var newStudent = new Student
-                        {
-                            Email = email,
-                            Password = password,
-                            Name = "New Student",
-                            Age = 18,
-                            Course = "General",
-                            Role = "Private",
-                            // Default widgets for Private role
-                            WidgetPermissions = "notes-hub,translator-hub,emergency-hub,news-hub,chrono-hub"
-                        };
+                        Student newStudent;
+                        string roleValue;
 
-                        if (!string.IsNullOrEmpty(pin))
+                        if (purpose == "Registration")
                         {
-                            newStudent.SecurityPinHash = _authService.HashPassword(pin);
-                            newStudent.IsSecurityEnabled = true;
+                            roleValue = UserRole.Visitor;
+                            newStudent = new Student
+                            {
+                                Email = email,
+                                Password = password,
+                                Name = "New Student",
+                                Age = 18,
+                                Course = "General",
+                                Role = roleValue
+                            };
+                        }
+                        else // StudentCreation
+                        {
+                            string name = HttpContext.Session.GetString("PendingUserName") ?? "New Student";
+                            string ageStr = HttpContext.Session.GetString("PendingUserAge") ?? "18";
+                            string course = HttpContext.Session.GetString("PendingUserCourse") ?? "General";
+                            roleValue = HttpContext.Session.GetString("PendingUserRole") ?? UserRole.@private;
+
+                            newStudent = new Student
+                            {
+                                Email = email,
+                                Password = password,
+                                Name = name,
+                                Age = int.Parse(ageStr),
+                                Course = course,
+                                Role = roleValue
+                            };
+
+                            // Clear creation-specific data
+                            HttpContext.Session.Remove("PendingUserName");
+                            HttpContext.Session.Remove("PendingUserAge");
+                            HttpContext.Session.Remove("PendingUserCourse");
+                            HttpContext.Session.Remove("PendingUserRole");
                         }
 
-                        _authService.RegisterStudent(newStudent);
-                        HttpContext.Session.Remove("PendingUserPin");
-
-                        // Auto-login & Log Activity
-                        HttpContext.Session.SetInt32("UserId", newStudent.Id);
-                        HttpContext.Session.SetString("StudentUser", email);
-                        HttpContext.Session.SetString("Role", "Private");
-                        HttpContext.Session.SetString("PinVerified", "false"); // Initial state
-                        _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Registration Visit
-
-                        TempData["SuccessMessage"] = "Account created successfully";
-                        return RedirectToAction("Dashboard", "Home");
-                    }
-
-                    if (purpose == "StudentCreation")
-                    {
-                        string name = HttpContext.Session.GetString("PendingUserName") ?? "New Student";
-                        string ageStr = HttpContext.Session.GetString("PendingUserAge") ?? "18";
-                        string course = HttpContext.Session.GetString("PendingUserCourse") ?? "General";
-                        string role = HttpContext.Session.GetString("PendingUserRole") ?? "Private";
-                        string widgets = HttpContext.Session.GetString("PendingUserWidgets") ?? "";
-                        string? pin = HttpContext.Session.GetString("PendingUserPin");
-                        int age = int.TryParse(ageStr, out int a) ? a : 18;
-
-                        // Finalize Creation
-                        // If Admin, ensure Course is Administration
-                        if (role == "Admin") course = "Administration";
-
-                        var newStudent = new Student
-                        {
-                            Email = email,
-                            Password = password,
-                            Name = name,
-                            Age = age,
-                            Course = course,
-                            Role = role,
-                            WidgetPermissions = widgets
-                        };
-
+                        string? pin = HttpContext.Session.GetString("PendingSecurityPin");
                         if (!string.IsNullOrEmpty(pin))
                         {
-                            newStudent.SecurityPinHash = _authService.HashPassword(pin);
+                            newStudent.SecurityPinHash = _authService.HashPin(pin);
                             newStudent.IsSecurityEnabled = true;
+                            HttpContext.Session.Remove("PendingSecurityPin");
                         }
 
                         _authService.RegisterStudent(newStudent);
 
-                        // Clear creation-specific data
-                        HttpContext.Session.Remove("PendingUserName");
-                        HttpContext.Session.Remove("PendingUserAge");
-                        HttpContext.Session.Remove("PendingUserCourse");
-                        HttpContext.Session.Remove("PendingUserRole");
-                        HttpContext.Session.Remove("PendingUserWidgets");
-                        HttpContext.Session.Remove("PendingUserPin");
+                        // Strict Role-Based Widget Assignment
+                        var roleWidgets = _roleWidgetService.GetWidgetsByRole(roleValue);
+                        if (roleWidgets != null)
+                        {
+                            HttpContext.Session.SetString("WidgetPermissions", roleWidgets.AllowedWidgets);
+                        }
 
-                        // Check if currently logged in as Admin
+                        // Check if currently logged in as Admin (only relevant for StudentCreation)
                         string? currentRole = HttpContext.Session.GetString("Role");
-                        if (currentRole == "Admin")
+                        if (currentRole == UserRole.Admin && purpose == "StudentCreation")
                         {
                             TempData["SuccessMessage"] = "User created successfully";
                             return RedirectToAction("Index", "Students");
                         }
 
-                        // Auto-login & Log Activity for new user (if not created by Admin)
+                        // Auto-login & Log Activity
                         HttpContext.Session.SetInt32("UserId", newStudent.Id);
                         HttpContext.Session.SetString("StudentUser", email);
-                        HttpContext.Session.SetString("Role", role);
-                        HttpContext.Session.SetString("PinVerified", "false");
-
-                        _userActivityService.LogVisit(email, "/Account/VerifyOtp"); // Log Creation Visit
+                        HttpContext.Session.SetString("Role", roleValue);
+                        _userActivityService.LogVisit(email, "/Account/VerifyOtp");
 
                         TempData["SuccessMessage"] = "Account created successfully";
                         return RedirectToAction("Dashboard", "Home");
                     }
 
                     // For Login flow (if OTP is used for login)
-                    var students = _authService.GetStudents(); // I need to make sure AuthService has GetStudents or use _studentService
+                    var students = _authService.GetStudents();
                     var user = students.FirstOrDefault(s => s.Email == email);
-                    if (user != null) HttpContext.Session.SetInt32("UserId", user.Id);
+                    if (user != null)
+                    {
+                        HttpContext.Session.SetInt32("UserId", user.Id);
+                        HttpContext.Session.SetString("StudentUser", email);
+                        HttpContext.Session.SetString("Role", user.Role);
 
-                    HttpContext.Session.SetString("StudentUser", email);
-                    HttpContext.Session.SetString("Role", "Private");
-                    HttpContext.Session.SetString("PinVerified", "false");
-                    _userActivityService.LogVisit(email, "/Account/Login (OTP)");
+                        var roleWidgets = _roleWidgetService.GetWidgetsByRole(user.Role);
+                        if (roleWidgets != null)
+                        {
+                            HttpContext.Session.SetString("WidgetPermissions", roleWidgets.AllowedWidgets);
+                        }
 
-                    return RedirectToAction("Dashboard", "Home");
+                        _userActivityService.LogVisit(email, "/Account/Login (OTP)");
+                        return RedirectToAction("Dashboard", "Home");
+                    }
                 }
                 else if (DateTime.Now > expiry)
                 {
@@ -244,10 +240,30 @@ namespace JsonCrudApp.Controllers
                 if (_authService.ValidateUser(model.Email!, model.Password!, out string? error, out Student? student))
                 {
                     // Login successful
-                    if (student != null) HttpContext.Session.SetInt32("UserId", student.Id);
-                    HttpContext.Session.SetString("StudentUser", model.Email!);
-                    HttpContext.Session.SetString("Role", student?.Role ?? "Private");
-                    HttpContext.Session.SetString("PinVerified", "false"); // PIN required after login
+                    if (student != null)
+                    {
+                        HttpContext.Session.SetInt32("UserId", student.Id);
+                        HttpContext.Session.SetString("StudentUser", model.Email!);
+                        HttpContext.Session.SetString("Role", student.Role);
+                        HttpContext.Session.SetString("IsSecurityEnabled", student.IsSecurityEnabled.ToString().ToLower());
+
+                        // Reset secure states on new login
+                        HttpContext.Session.Remove("PinVerified");
+                        HttpContext.Session.Remove("IsUnlocked");
+                        // Also clear any previous widget unlock states
+                        HttpContext.Session.Remove("Unlocked_habit-hub");
+                        HttpContext.Session.Remove("Unlocked_pdf-hub");
+                        HttpContext.Session.Remove("Unlocked_notes-hub");
+                        HttpContext.Session.SetInt32("PinAttempts", 0);
+
+                        // Strict Role-Based Widget Logic
+                        var roleWidgets = _roleWidgetService.GetWidgetsByRole(student.Role);
+                        if (roleWidgets != null)
+                        {
+                            HttpContext.Session.SetString("WidgetPermissions", roleWidgets.AllowedWidgets);
+                        }
+                    }
+
                     _userActivityService.LogVisit(model.Email!, "/Account/Login");
                     return RedirectToAction("Dashboard", "Home");
                 }
@@ -305,6 +321,66 @@ namespace JsonCrudApp.Controllers
         public IActionResult ResetPassword(ResetPasswordViewModel model)
         {
             return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public IActionResult VerifyPin(string pin, string? targetWidget = null)
+        {
+            var userEmail = HttpContext.Session.GetString("StudentUser");
+            if (string.IsNullOrEmpty(userEmail)) return Json(new { success = false, message = "Session expired" });
+
+            var students = _authService.GetStudents();
+            var user = students.FirstOrDefault(s => s.Email == userEmail);
+
+            if (user == null) return Json(new { success = false, message = "User not found" });
+
+            if (!user.IsSecurityEnabled)
+            {
+                if (!string.IsNullOrEmpty(targetWidget))
+                {
+                    HttpContext.Session.SetString($"Unlocked_{targetWidget}", "true");
+                }
+                return Json(new { success = true });
+            }
+
+            // Check attempts
+            int attempts = HttpContext.Session.GetInt32("PinAttempts") ?? 0;
+            if (attempts >= 5) return Json(new { success = false, message = "Too many attempts. Please try again later." });
+
+            bool isCorrect = _authService.VerifyPin(pin, user.SecurityPinHash!);
+            if (isCorrect)
+            {
+                if (!string.IsNullOrEmpty(targetWidget))
+                {
+                    HttpContext.Session.SetString($"Unlocked_{targetWidget}", "true");
+                    // Also store in sessionStorage via JS after this returns
+                }
+
+                // Explicitly ensure global flags are NOT set
+                HttpContext.Session.Remove("IsUnlocked");
+                HttpContext.Session.Remove("PinVerified");
+
+                HttpContext.Session.Remove("PinAttempts");
+                return Json(new { success = true });
+            }
+
+            attempts++;
+            HttpContext.Session.SetInt32("PinAttempts", attempts);
+            return Json(new { success = false, message = $"Incorrect PIN. {5 - attempts} attempts remaining." });
+        }
+
+        [HttpPost]
+        public IActionResult SetupSecurityPin([FromForm] string pin)
+        {
+            var userEmail = HttpContext.Session.GetString("StudentUser");
+            if (string.IsNullOrEmpty(userEmail)) return Json(new { success = false, message = "Session expired" });
+
+            if (_authService.SetSecurityPin(userEmail, pin))
+            {
+                return Json(new { success = true });
+            }
+
+            return Json(new { success = false, message = "Failed to update security settings." });
         }
     }
 }

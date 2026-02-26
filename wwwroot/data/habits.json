@@ -4,22 +4,29 @@
     "UserEmail": "charmimarakana@gmail.com",
     "Name": "running",
     "Description": "",
+    "Category": "Personal",
     "FrequencyType": "Daily",
     "CustomDays": [],
     "StartDate": "2026-02-03T00:00:00",
     "CompletedDates": [
       "2026-02-03T00:00:00Z",
       "2026-02-04T00:00:00Z",
-      "2026-02-05T00:00:00Z"
+      "2026-02-05T00:00:00Z",
+      "2026-02-17T00:00:00Z"
     ],
+    "ReminderTime": "",
     "CreatedDate": "2026-02-03T12:07:26.457646+05:30",
-    "Goal": ""
+    "Goal": "",
+    "LastReminderDate": null,
+    "ReminderType": "FixedTime",
+    "ReminderDuration": 30
   },
   {
     "Id": "7398d5c6-540b-4eb3-806e-cfc40a3d9d3a",
     "UserEmail": "charmimarakana@gmail.com",
     "Name": "walk",
     "Description": "",
+    "Category": "Personal",
     "FrequencyType": "Custom",
     "CustomDays": [
       "Monday",
@@ -31,14 +38,19 @@
     "CompletedDates": [
       "2026-02-04T00:00:00Z"
     ],
+    "ReminderTime": "",
     "CreatedDate": "2026-02-03T12:07:47.0203665+05:30",
-    "Goal": ""
+    "Goal": "",
+    "LastReminderDate": null,
+    "ReminderType": "FixedTime",
+    "ReminderDuration": 30
   },
   {
     "Id": "33bdfa82-11ae-4011-a2ce-d6fcfb002745",
     "UserEmail": "charmimarakana@gmail.com",
     "Name": "code",
     "Description": "",
+    "Category": "Personal",
     "FrequencyType": "Daily",
     "CustomDays": [],
     "StartDate": "2026-02-03T00:00:00",
@@ -47,33 +59,70 @@
       "2026-02-04T00:00:00Z",
       "2026-02-05T00:00:00Z"
     ],
+    "ReminderTime": "",
     "CreatedDate": "2026-02-03T12:13:24.3320383+05:30",
-    "Goal": ""
+    "Goal": "",
+    "LastReminderDate": null,
+    "ReminderType": "FixedTime",
+    "ReminderDuration": 30
   },
   {
-    "Id": "f4ca12c0-f870-4a21-979a-b8a76000e681",
+    "Id": "93a6e4eb-4005-4b7e-aac7-87c44a95f5eb",
     "UserEmail": "pcharmi230@gmail.com",
-    "Name": "work",
+    "Name": "running",
     "Description": "",
+    "Category": "Personal",
     "FrequencyType": "Daily",
     "CustomDays": [],
-    "StartDate": "2026-02-04T00:00:00",
+    "StartDate": "2026-02-18T00:00:00",
     "CompletedDates": [
-      "2026-02-05T00:00:00Z"
+      "2026-02-18T00:00:00Z",
+      "2026-02-19T00:00:00Z",
+      "2026-02-24T00:00:00Z"
     ],
-    "CreatedDate": "2026-02-04T17:30:55.816246+05:30",
-    "Goal": ""
+    "ReminderTime": "",
+    "CreatedDate": "2026-02-18T12:31:41.6765153+05:30",
+    "Goal": "",
+    "LastReminderDate": null,
+    "ReminderType": "FixedTime",
+    "ReminderDuration": 30
   },
   {
-    "Id": "42631b59-e7a9-4810-95d0-dec31d39a664",
+    "Id": "aca7da98-b1e0-482c-a28a-145b1eb3e844",
     "UserEmail": "pcharmi230@gmail.com",
-    "Name": "other",
-    "Description": "",
+    "Name": "water",
+    "Description": "2 glass",
+    "Category": "Health",
     "FrequencyType": "Daily",
     "CustomDays": [],
-    "StartDate": "2026-02-04T00:00:00",
-    "CompletedDates": [],
-    "CreatedDate": "2026-02-04T17:31:14.9281404+05:30",
-    "Goal": ""
+    "StartDate": "2026-02-15T00:00:00",
+    "CompletedDates": [
+      "2026-02-24T00:00:00Z"
+    ],
+    "ReminderTime": "13:36",
+    "CreatedDate": "2026-02-20T11:38:10.3319356+05:30",
+    "Goal": "2 glass",
+    "LastReminderDate": null,
+    "ReminderType": "AfterDuration",
+    "ReminderDuration": 60
+  },
+  {
+    "Id": "93eaebef-e614-4cb8-8765-83a9f976775e",
+    "UserEmail": "pcharmi230@gmail.com",
+    "Name": "reading",
+    "Description": "2 pages",
+    "Category": "Personal",
+    "FrequencyType": "Daily",
+    "CustomDays": [],
+    "StartDate": "2026-02-23T00:00:00",
+    "CompletedDates": [
+      "2026-02-25T00:00:00Z"
+    ],
+    "ReminderTime": "12:50",
+    "CreatedDate": "2026-02-25T12:37:26.2669744+05:30",
+    "Goal": "2 pages",
+    "LastReminderDate": null,
+    "ReminderType": "FixedTime",
+    "ReminderDuration": 0
   }
 ]
